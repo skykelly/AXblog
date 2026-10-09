@@ -69,5 +69,12 @@ AI 산업 전체의 기술·제품·경쟁·확산 구조를 추적한다. 고�
   - 추적 지표 값 확보 6/8 (T3 업무형 Agent 이용량 미공개, T8 한국은 사건으로 추적)
   - 아티클: [`i2/article_r1.html`](i2/article_r1.html)
 
+### I3 · AI Industry & Economics
+- **R1 (2026-10-09, 기준 회차):** 기록 30건 (지표 8 · 사건 7 · 해석 7 · 전망 8 — 낙관·비관 시나리오 2 + 세부 판정 전망 6)
+  - 한 줄 답: 투자(빅테크 설비투자 연 7천억 달러+)가 확인된 AI 매출(약 1,420억 달러, 상한값)보다 약 5배 크지만, 매출이 더 빨리 늘어 간격이 좁혀지기 시작. 이익은 칩·메모리(NVIDIA 매출총이익률 75%, SK하이닉스 영업이익률 76%)에 집중, 모델 층은 Anthropic 흑자 vs OpenAI 손실.
+  - 층별 주도권: 칩·메모리 = 굳어짐 / 클라우드·도구 = 경합 / 모델 = 흔들림 / 앱 = 자료 부족
+  - 추적 지표 값 확보 8/8 (비상장사 매출·손익은 보도 기준 잠정치)
+  - 아티클: [`i3/article_r1.html`](i3/article_r1.html)
+
 ## 파일
 질문 폴더(`i1/` …)의 구성은 Customer Lab과 같다: `request_r1.md`, `records.jsonl`, `build_records.py`, `render_article.py`, `article_r1.html`. 공통 스타일은 저장소 루트의 `lib/article.css`.

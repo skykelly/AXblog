@@ -1,0 +1,229 @@
+<title>I3 AI 산업 돈의 흐름 R1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;800&display=swap">
+<style>
+/* Layout: 연구 노트 한 단 — 답 → 서술형 해석 → 근거 표. 기록 번호가 본문의 각주 역할 */
+:root {
+  --paper: #f6f7f9; --ink: #16202b; --muted: #5d6875; --rule: #d6dbe2; --panel: #ffffff;
+  --accent: #1f5f8b; --accent-soft: #e2edf5; --amber: #b4690e; --amber-soft: #f7ead7;
+  --up: #1f7a4d; --down: #b3412f; --flat: #6a7380; --opt: #1f7a4d; --opt-soft: #e1f1e8; --pes: #a3402f; --pes-soft: #f6e3df;
+  --display: "Noto Serif KR", "Apple SD Gothic Neo", serif;
+  --body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #11161c; --ink: #e6ebf1; --muted: #9aa5b1; --rule: #2b333d; --panel: #171e26;
+  --accent: #7fb6dc; --accent-soft: #1b2c3a; --amber: #e2a457; --amber-soft: #33271a;
+  --up: #5fc493; --down: #ec8a78; --flat: #98a2ae; --opt: #6fcf9d; --opt-soft: #17291f; --pes: #ef9a88; --pes-soft: #2f1c18; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --paper: #11161c; --ink: #e6ebf1; --muted: #9aa5b1; --rule: #2b333d; --panel: #171e26;
+  --accent: #7fb6dc; --accent-soft: #1b2c3a; --amber: #e2a457; --amber-soft: #33271a;
+  --up: #5fc493; --down: #ec8a78; --flat: #98a2ae; --opt: #6fcf9d; --opt-soft: #17291f; --pes: #ef9a88; --pes-soft: #2f1c18; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--paper); color: var(--ink); font: 400 16px/1.7 var(--body); padding: 0 20px; }
+main { max-width: 980px; margin: 0 auto; padding-block: 40px 72px; display: grid; gap: 60px; }
+.narrow { max-width: 70ch; }
+a { color: var(--accent); }
+code, .rid { font: 500 12px/1 var(--mono); }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+.eyebrow { font: 500 12px/1.4 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); display: flex; gap: 14px; flex-wrap: wrap; }
+h1 { font: 800 clamp(26px, 4.4vw, 40px)/1.25 var(--display); margin-top: 14px; }
+.question { margin: 16px 0 0; color: var(--muted); font-size: 15px; border-left: 2px solid var(--rule); padding-left: 14px; }
+h2 { font: 600 22px/1.3 var(--display); display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+h2 small { font: 400 13px var(--body); color: var(--muted); }
+section { display: grid; gap: 18px; min-width: 0; }
+.lead { margin: 0; max-width: 70ch; }
+.rid { display: inline-block; padding: 3px 5px; margin: 2px 2px 0 0; border-radius: 3px; background: var(--accent-soft); color: var(--accent); text-decoration: none; vertical-align: 1px; }
+.rid:hover, .rid:focus-visible { outline: 1px solid var(--accent); }
+/* 한 줄 답 */
+.answer { font: 600 clamp(20px, 2.8vw, 26px)/1.55 var(--display); margin: 0; }
+.answer-box { display: grid; gap: 20px; }
+.arows { margin: 0; border-top: 1px solid var(--ink); }
+.arow { display: grid; grid-template-columns: 170px 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+.arow dt { font-weight: 600; }
+.arow dd { margin: 0; min-width: 0; }
+/* 서술형 해석 */
+.narrative { display: grid; gap: 14px; max-width: 70ch; }
+.narrative p { margin: 0; }
+/* 표 */
+.tablewrap { overflow-x: auto; border-top: 1px solid var(--ink); }
+table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 14px; }
+th { text-align: left; font: 500 11px var(--mono); letter-spacing: .05em; color: var(--muted); padding: 10px 8px; border-bottom: 1px solid var(--rule); }
+td { padding: 12px 8px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+td small { display: block; color: var(--muted); font-size: 12px; margin-top: 3px; }
+.num { font: 500 15px var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; }
+.muted { color: var(--muted); }
+.ind { font: 500 12px var(--mono); width: 150px; }
+.ind small { font-family: var(--body); }
+.tgt { font-weight: 600; width: 150px; }
+.asof { font: 400 13px var(--mono); white-space: nowrap; }
+.idc code { color: var(--muted); }
+.src { font-size: 12px; color: var(--muted); margin-top: 6px; }
+.src a { color: var(--muted); }
+.grade { font: 500 10px var(--mono); margin-left: 4px; padding: 1px 4px; border: 1px solid currentColor; border-radius: 2px; }
+.gC { color: var(--amber); }
+.warn, .wk { font: 500 11px var(--mono); color: var(--amber); background: var(--amber-soft); padding: 2px 6px; border-radius: 2px; white-space: nowrap; }
+.dir { font: 500 11px var(--mono); padding: 2px 7px; border-radius: 2px; color: var(--panel); white-space: nowrap; }
+.dir.up { background: var(--up); } .dir.down { background: var(--down); } .dir.flat { background: var(--flat); }
+.fstat { font: 500 11px var(--mono); border: 1px solid var(--accent); color: var(--accent); padding: 2px 6px; border-radius: 2px; white-space: nowrap; }
+/* 사건 */
+.timeline { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
+.timeline li { display: grid; grid-template-columns: 110px 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+.timeline time { font: 500 13px var(--mono); color: var(--muted); padding-top: 2px; }
+.timeline li > div { min-width: 0; }
+/* 시나리오 */
+.scens { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.scen { border-top: 3px solid var(--sc); background: var(--panel); padding: 18px 18px 14px; display: grid; gap: 14px; align-content: start; }
+.scen.opt { --sc: var(--opt); --scs: var(--opt-soft); }
+.scen.pes { --sc: var(--pes); --scs: var(--pes-soft); }
+.scen header { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.sk { font: 600 13px var(--mono); color: var(--sc); letter-spacing: .03em; }
+.scen header code { color: var(--muted); }
+.sstmt { margin: 0; font-size: 15px; }
+.ms { list-style: none; margin: 0; padding: 0 0 0 12px; border-left: 2px solid var(--scs); display: grid; gap: 8px; }
+.ms li { display: grid; grid-template-columns: 70px 1fr; gap: 10px; font-size: 14px; }
+.ms time { font: 500 12px var(--mono); color: var(--sc); padding-top: 2px; }
+.sdl { margin: 0; display: grid; gap: 6px; font-size: 13px; }
+.sdl div { display: grid; grid-template-columns: 70px 1fr; gap: 10px; }
+.sdl dt { color: var(--muted); }
+.sdl dd { margin: 0; min-width: 0; }
+.side { font: 500 11px var(--mono); padding: 2px 7px; border-radius: 2px; white-space: nowrap; margin-right: 4px; }
+.side.opt { color: var(--opt); background: var(--opt-soft); }
+.side.pes { color: var(--pes); background: var(--pes-soft); }
+.subhead { font: 600 15px var(--body); margin: 8px 0 0; }
+/* 사다리 */
+.ladder { border-top: 1px solid var(--ink); }
+.rung { display: grid; grid-template-columns: 150px 170px 170px 1fr; gap: 16px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+.rung[data-frontier="y"] { background: linear-gradient(90deg, var(--amber-soft), transparent 70%); }
+.stage b { display: block; font: 600 18px/1.2 var(--display); }
+.stage span { font: 400 12px var(--mono); color: var(--muted); }
+.region { display: block; font: 500 11px var(--mono); color: var(--muted); letter-spacing: .04em; margin-bottom: 4px; }
+.pips { display: flex; align-items: center; gap: 4px; }
+.pip { width: 16px; height: 8px; border: 1px solid var(--accent); border-radius: 1px; }
+.pip.on { background: var(--accent); }
+.lv { margin-left: 8px; font-size: 14px; font-weight: 500; }
+.why { margin: 0; font-size: 14px; color: var(--muted); min-width: 0; }
+.frontier-note { font-size: 13px; color: var(--amber); font-family: var(--mono); margin: 0; }
+footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 18px; display: grid; gap: 6px; }
+:target { background: var(--accent-soft); }
+@media (max-width: 760px) {
+  .rung { grid-template-columns: 1fr 1fr; }
+  .rung .stage, .rung .why { grid-column: 1 / -1; }
+  .scens { grid-template-columns: 1fr; }
+  .arow, .timeline li { grid-template-columns: 1fr; gap: 4px; }
+}
+
+/* 주도권 지도 (C2) */
+.own { font: 500 12px var(--mono); padding: 3px 8px; border-radius: 2px; white-space: nowrap; display: inline-block; }
+.own.brand { color: var(--up); background: var(--opt-soft); }
+.own.platform { color: var(--accent); background: var(--accent-soft); }
+.own.agent { color: var(--amber); background: var(--amber-soft); }
+.own.contest { color: var(--flat); border: 1px dashed var(--flat); }
+.mapgrid .rung { grid-template-columns: 130px 150px 150px 150px 1fr; }
+@media (max-width: 760px) { .mapgrid .rung { grid-template-columns: 1fr 1fr; } }
+/* 자율 수준 지도 (C4) */
+.mapgrid.auto .rung { grid-template-columns: 130px 220px 220px 1fr; }
+table.levels { min-width: 520px; }
+@media (max-width: 760px) { .mapgrid.auto .rung { grid-template-columns: 1fr; } }
+/* 역량 원장 (I1) */
+.mapgrid.ledger .rung { grid-template-columns: 200px 260px 1fr; }
+@media (max-width: 760px) { .mapgrid.ledger .rung { grid-template-columns: 1fr; } }
+
+/* I3 두 곡선 */
+.curves { display: grid; gap: 14px; margin: 8px 0 18px; }
+.curve { display: grid; grid-template-columns: 150px 1fr; gap: 12px; align-items: center; }
+.curve .cl { font: 600 13px var(--body); }
+.curve .cl small { display: block; font: 400 12px var(--mono); color: var(--muted); }
+.curve .bar { height: 26px; background: var(--accent-soft); border-radius: 2px; position: relative; }
+.curve .bar span { position: absolute; inset: 0 auto 0 0; display: flex; align-items: center; padding: 0 10px; font: 500 12px var(--mono); color: #fff; border-radius: 2px; white-space: nowrap; }
+.curve.inv .bar span { background: var(--accent); }
+.curve.rev .bar span { background: var(--up); }
+.gapnote { border-left: 3px solid var(--amber); padding: 6px 12px; background: var(--amber-soft); font-size: 14px; }
+.mapgrid.layers .rung { grid-template-columns: 150px 200px 110px 1fr; }
+@media (max-width: 720px) { .curve { grid-template-columns: 1fr; } .mapgrid.layers .rung { grid-template-columns: 1fr; } }
+</style>
+<main>
+  <header class="narrow">
+    <div class="eyebrow"><span>AI Industry Trend</span><span>I3 · AI Industry &amp; Economics</span><span>R1 기준 회차 · 2026-10-09</span></div>
+    <h1>AI에 쏟아진 돈은 어디로 가고, 돌아오고 있나</h1>
+    <p class="question">고정 질문 v1.0 — AI 산업의 돈은 어디로 흐르고, 그 돈은 수익으로 돌아오고 있는가?</p>
+  </header>
+  <section class="answer-box"><h2>한 줄 답</h2>
+    <p class="answer narrow">2026년 10월 현재 AI에 들어가는 돈(빅테크 설비투자 연 7천억 달러 이상)은 아직 확인되는 AI 매출보다 몇 배 크지만, 매출이 투자보다 빨리 늘면서 간격이 좁혀지기 시작했다. 지금 돈을 가장 확실하게 버는 곳은 칩·메모리(NVIDIA 매출총이익률 75%, SK하이닉스 영업이익률 76%)이고, 모델 층은 Anthropic이 흑자로 돌아선 반면 OpenAI는 큰 손실이 이어진다. <a class="rid" href="#I3-I-001" title="빅테크의 AI 투자는 꺾이지 않고 오히려 올라가고 있다. 분기 설비투자가 1년 새 두 배 가까이 늘었고, 부품값 상승까지 겹쳐 연간 계획이 상향되고 있다.">I3-I-001</a><a class="rid" href="#I3-I-002" title="투자한 돈을 가장 먼저 이익으로 바꾸는 곳은 칩과 메모리다. NVIDIA는 매출총이익률 75%, SK하이닉스는 영업이익률 76%로, 공급이 수요를 못 따라가는 층이 가장 큰 몫을 가져간다.">I3-I-002</a><a class="rid" href="#I3-I-003" title="수익 곡선도 빠르게 올라오고 있다. Anthropic 연환산 매출은 1년 반 새 수십 배로, Microsoft AI 매출은 두 배 넘게 늘었다. 수익의 증가 속도가 투자의 증가 속도보다 빨라 두 곡선의 간격은 좁혀지기 시작했지만, 절대 규모는 아직 투자가 크다.">I3-I-003</a><a class="rid" href="#I3-I-004" title="모델 기업의 수익성은 갈렸다. Anthropic은 분기 조정 영업이익 흑자로 돌아섰고 매출에서도 OpenAI를 앞섰지만, OpenAI는 연간 대규모 손실이 예상된다.">I3-I-004</a></p><dl class="arows"><div class="arow"><dt>돈이 들어가는 곳</dt><dd>데이터센터와 칩. 빅테크 4사의 분기 설비투자가 1년 새 두 배 가까이 늘었고 Meta는 연간 계획을 1,450억 달러까지 올렸다. <a class="rid" href="#I3-M-001" title="2026년 1분기 설비투자는 Amazon 442억 달러, Alphabet 357억 달러(전년의 두 배 이상), Microsoft 309억 달러(+84%)였다. Meta는 연간 가이던스를 1,250억~1,450억 달러로 올렸다. 4사 합산 올해 계획은 7천억 달러를 넘는다는 집계가 나온다.">I3-M-001</a><a class="rid" href="#I3-E-003" title="Meta가 부품 가격 상승과 데이터센터 비용을 이유로 2026년 설비투자 가이던스를 1,150억~1,350억 달러에서 1,250억~1,450억 달러로 올렸다.">I3-E-003</a></dd></div><div class="arow"><dt>돈을 버는 곳</dt><dd>칩·메모리. NVIDIA 데이터센터 매출 분기 890억 달러(+117%), SK하이닉스 분기 영업이익 60조 원. <a class="rid" href="#I3-M-002" title="NVIDIA의 2026년 5~7월 분기 데이터센터 매출은 890억 달러로 1년 전보다 117% 늘었고, 매출총이익률은 75%였다. 다음 분기 매출 전망은 1,080억 달러다.">I3-M-002</a><a class="rid" href="#I3-M-003" title="SK하이닉스는 2026년 2분기 매출 79조 3,187억 원, 영업이익 60조 5,426억 원으로 사상 최대를 기록했다. 영업이익률은 76.3%로 NVIDIA(65.6%)보다 높았고 Micron(80.4%) 다음이었다.">I3-M-003</a></dd></div><div class="arow"><dt>돌아오는 속도</dt><dd>Anthropic 연환산 매출 650억 달러(1년 반 새 수십 배), Microsoft AI 매출 +123%, Google Cloud 수주 잔고 4,600억 달러. <a class="rid" href="#I3-M-004" title="Anthropic의 연환산 매출은 2026년 7월 약 650억 달러로 2025년 초 약 10억 달러에서 크게 늘었다. OpenAI는 8월 약 400억 달러로 2025년 말의 두 배 수준이다.">I3-M-004</a><a class="rid" href="#I3-M-006" title="2026년 1분기 Microsoft의 AI 사업 연환산 매출은 370억 달러를 넘어 123% 늘었고, AWS는 15분기 만에 가장 빠른 28% 성장을 기록했다. Google Cloud의 수주 잔고는 한 분기 만에 두 배 가까이 늘어 4,600억 달러를 넘었다.">I3-M-006</a></dd></div><div class="arow"><dt>남은 위험</dt><dd>OpenAI 2026년 손실 약 140억 달러, 모델 가격이 세대마다 40~50% 하락, 칩 회사가 고객에게 투자하는 순환 구조. <a class="rid" href="#I3-M-005" title="Anthropic은 2026년 2분기 잠정 매출 약 115억 달러에 조정 영업이익 흑자를 냈다. OpenAI는 2026년 약 140억 달러 손실을 내부 전망한 것으로 보도됐다.">I3-M-005</a><a class="rid" href="#I3-M-007" title="9월 신모델은 가격을 크게 낮췄다. Claude Opus 5.5는 Fable급 성능을 Opus 5보다 40% 낮은 비용에, GPT-6 Sol은 GPT-5.6의 절반 가격에 내놓았다.">I3-M-007</a><a class="rid" href="#I3-I-006" title="칩 회사가 고객에게 투자하고 생태계를 사들이는 흐름이 커지고 있다. NVIDIA는 OpenAI에 300억 달러를 넣고 Hugging Face를 인수했다. 공급자와 고객의 돈이 서로 얽혀, 수요의 독립성을 따져 봐야 하는 구조가 됐다.">I3-I-006</a></dd></div><div class="arow"><dt>한국</dt><dd>메모리 호황의 최대 수혜국이자 GPU 26만 장 확보. 다만 이익은 메모리 공급에 몰려 있고 국내 모델·서비스 매출은 아직 보이지 않는다. <a class="rid" href="#I3-M-003" title="SK하이닉스는 2026년 2분기 매출 79조 3,187억 원, 영업이익 60조 5,426억 원으로 사상 최대를 기록했다. 영업이익률은 76.3%로 NVIDIA(65.6%)보다 높았고 Micron(80.4%) 다음이었다.">I3-M-003</a><a class="rid" href="#I3-M-008" title="NVIDIA는 한국에 차세대 GPU 26만 장을 우선 공급하기로 했다. 정부가 약 5만 장을 공공 부문에, 삼성전자·현대차·네이버 등 기업이 약 20만 장을 확보한다.">I3-M-008</a></dd></div></dl></section>
+  <section><h2>해석</h2><div class="narrative"><p>투자 곡선은 꺾이지 않았다. 2026년 1분기 설비투자는 Amazon 442억 달러, Alphabet 357억 달러, Microsoft 309억 달러로 1년 전보다 두 배 가까이 늘었고, Meta는 부품값 상승을 이유로 연간 계획을 1,250억~1,450억 달러로 올렸다. 4사의 올해 계획은 합쳐서 7천억 달러를 넘는다는 집계가 나온다. <a class="rid" href="#I3-M-001" title="2026년 1분기 설비투자는 Amazon 442억 달러, Alphabet 357억 달러(전년의 두 배 이상), Microsoft 309억 달러(+84%)였다. Meta는 연간 가이던스를 1,250억~1,450억 달러로 올렸다. 4사 합산 올해 계획은 7천억 달러를 넘는다는 집계가 나온다.">I3-M-001</a><a class="rid" href="#I3-E-003" title="Meta가 부품 가격 상승과 데이터센터 비용을 이유로 2026년 설비투자 가이던스를 1,150억~1,350억 달러에서 1,250억~1,450억 달러로 올렸다.">I3-E-003</a><a class="rid" href="#I3-I-001" title="빅테크의 AI 투자는 꺾이지 않고 오히려 올라가고 있다. 분기 설비투자가 1년 새 두 배 가까이 늘었고, 부품값 상승까지 겹쳐 연간 계획이 상향되고 있다.">I3-I-001</a></p><p>그 돈을 가장 먼저 이익으로 바꾼 곳은 칩과 메모리다. NVIDIA는 5~7월 분기 데이터센터 매출 890억 달러, 매출총이익률 75%를 냈고 다음 분기 1,080억 달러를 전망했다. SK하이닉스는 2분기 영업이익률 76.3%로 NVIDIA보다 높았고 HBM4 양산 출하를 시작했다. 공급이 수요를 따라가지 못하는 층이 가장 큰 몫을 가져간다. <a class="rid" href="#I3-M-002" title="NVIDIA의 2026년 5~7월 분기 데이터센터 매출은 890억 달러로 1년 전보다 117% 늘었고, 매출총이익률은 75%였다. 다음 분기 매출 전망은 1,080억 달러다.">I3-M-002</a><a class="rid" href="#I3-M-003" title="SK하이닉스는 2026년 2분기 매출 79조 3,187억 원, 영업이익 60조 5,426억 원으로 사상 최대를 기록했다. 영업이익률은 76.3%로 NVIDIA(65.6%)보다 높았고 Micron(80.4%) 다음이었다.">I3-M-003</a><a class="rid" href="#I3-E-004" title="SK하이닉스가 2분기 사상 최대 실적을 내고 HBM4 양산 출하를 시작했다. 2027년 물량·가격 협상이 순조롭다고 밝혔다.">I3-E-004</a><a class="rid" href="#I3-E-005" title="NVIDIA가 분기 매출 962억 달러를 발표하며 Vera Rubin이 전면 양산에 들어갔다고 밝혔다. 다음 분기 전망에서는 중국 데이터센터 매출을 0으로 잡았다.">I3-E-005</a><a class="rid" href="#I3-I-002" title="투자한 돈을 가장 먼저 이익으로 바꾸는 곳은 칩과 메모리다. NVIDIA는 매출총이익률 75%, SK하이닉스는 영업이익률 76%로, 공급이 수요를 못 따라가는 층이 가장 큰 몫을 가져간다.">I3-I-002</a></p><p>수익 곡선도 빠르게 올라온다. Anthropic의 연환산 매출은 2025년 초 약 10억 달러에서 2026년 7월 약 650억 달러로, OpenAI는 8월 약 400억 달러로 늘었다. Microsoft AI 매출은 연환산 370억 달러를 넘어 123% 늘었다. 매출 증가 속도가 투자 증가 속도보다 빨라 간격이 좁혀지기 시작했지만, 절대 규모는 아직 투자가 몇 배 크다. <a class="rid" href="#I3-M-004" title="Anthropic의 연환산 매출은 2026년 7월 약 650억 달러로 2025년 초 약 10억 달러에서 크게 늘었다. OpenAI는 8월 약 400억 달러로 2025년 말의 두 배 수준이다.">I3-M-004</a><a class="rid" href="#I3-M-006" title="2026년 1분기 Microsoft의 AI 사업 연환산 매출은 370억 달러를 넘어 123% 늘었고, AWS는 15분기 만에 가장 빠른 28% 성장을 기록했다. Google Cloud의 수주 잔고는 한 분기 만에 두 배 가까이 늘어 4,600억 달러를 넘었다.">I3-M-006</a><a class="rid" href="#I3-I-003" title="수익 곡선도 빠르게 올라오고 있다. Anthropic 연환산 매출은 1년 반 새 수십 배로, Microsoft AI 매출은 두 배 넘게 늘었다. 수익의 증가 속도가 투자의 증가 속도보다 빨라 두 곡선의 간격은 좁혀지기 시작했지만, 절대 규모는 아직 투자가 크다.">I3-I-003</a></p><p>모델 층의 수익성은 갈렸다. Anthropic은 2분기 조정 영업이익 흑자로 돌아섰지만 OpenAI는 2026년 약 140억 달러 손실이 예상된다. 9월 신모델은 이전 세대보다 40~50% 싸게 나와, 이용량은 늘리지만 모델 판매의 마진은 압박한다. <a class="rid" href="#I3-M-005" title="Anthropic은 2026년 2분기 잠정 매출 약 115억 달러에 조정 영업이익 흑자를 냈다. OpenAI는 2026년 약 140억 달러 손실을 내부 전망한 것으로 보도됐다.">I3-M-005</a><a class="rid" href="#I3-M-007" title="9월 신모델은 가격을 크게 낮췄다. Claude Opus 5.5는 Fable급 성능을 Opus 5보다 40% 낮은 비용에, GPT-6 Sol은 GPT-5.6의 절반 가격에 내놓았다.">I3-M-007</a><a class="rid" href="#I3-E-007" title="Anthropic(Opus 5.5)과 OpenAI(GPT-6 Sol)가 같은 달 이전 세대보다 40~50% 싼 신모델을 내놓았다.">I3-E-007</a><a class="rid" href="#I3-I-004" title="모델 기업의 수익성은 갈렸다. Anthropic은 분기 조정 영업이익 흑자로 돌아섰고 매출에서도 OpenAI를 앞섰지만, OpenAI는 연간 대규모 손실이 예상된다.">I3-I-004</a><a class="rid" href="#I3-I-005" title="모델 가격은 세대마다 절반 가까이 내려가고 있다. 이용량 확대에는 도움이 되지만, 모델 판매의 마진에는 압박이 된다.">I3-I-005</a></p><p>돈의 흐름은 서로 얽히고 있다. NVIDIA는 OpenAI의 1,100억 달러 투자 유치에 300억 달러를 넣었고 Hugging Face를 약 130억 달러에 사들였다. 공급자가 고객의 수요를 자금으로 받치는 구조라, 수요가 독립적인지 따져 봐야 한다. 한국은 SK하이닉스를 통해 이 흐름의 가장 큰 수혜를 받고 있고, NVIDIA GPU 26만 장으로 수요자 쪽 기반도 마련했다. <a class="rid" href="#I3-E-002" title="OpenAI가 기업가치 7,300억 달러(투자 전)로 1,100억 달러를 유치했다. Amazon이 500억 달러, NVIDIA와 SoftBank가 각각 300억 달러를 냈다.">I3-E-002</a><a class="rid" href="#I3-E-006" title="NVIDIA가 오픈소스 AI 플랫폼 Hugging Face를 약 130억 달러에 인수하기로 했다.">I3-E-006</a><a class="rid" href="#I3-M-008" title="NVIDIA는 한국에 차세대 GPU 26만 장을 우선 공급하기로 했다. 정부가 약 5만 장을 공공 부문에, 삼성전자·현대차·네이버 등 기업이 약 20만 장을 확보한다.">I3-M-008</a><a class="rid" href="#I3-I-006" title="칩 회사가 고객에게 투자하고 생태계를 사들이는 흐름이 커지고 있다. NVIDIA는 OpenAI에 300억 달러를 넣고 Hugging Face를 인수했다. 공급자와 고객의 돈이 서로 얽혀, 수요의 독립성을 따져 봐야 하는 구조가 됐다.">I3-I-006</a><a class="rid" href="#I3-I-007" title="한국은 메모리 호황의 최대 수혜국이면서 GPU 26만 장으로 수요자 쪽 기반도 마련했다. 다만 이익은 메모리 공급에 몰려 있고, 국내 모델·서비스 매출은 아직 보이지 않는다.">I3-I-007</a></p></div>
+    <div class="tablewrap"><table><thead><tr><th>방향</th><th>대상</th><th>해석</th><th>근거</th><th>기록</th></tr></thead><tbody><tr id="I3-I-001"><td><span class="dir up">강화</span></td>
+  <td class="tgt">투자 곡선</td><td>빅테크의 AI 투자는 꺾이지 않고 오히려 올라가고 있다. 분기 설비투자가 1년 새 두 배 가까이 늘었고, 부품값 상승까지 겹쳐 연간 계획이 상향되고 있다.</td><td><a class="rid" href="#I3-M-001" title="2026년 1분기 설비투자는 Amazon 442억 달러, Alphabet 357억 달러(전년의 두 배 이상), Microsoft 309억 달러(+84%)였다. Meta는 연간 가이던스를 1,250억~1,450억 달러로 올렸다. 4사 합산 올해 계획은 7천억 달러를 넘는다는 집계가 나온다.">I3-M-001</a><a class="rid" href="#I3-E-003" title="Meta가 부품 가격 상승과 데이터센터 비용을 이유로 2026년 설비투자 가이던스를 1,150억~1,350억 달러에서 1,250억~1,450억 달러로 올렸다.">I3-E-003</a></td><td class="idc"><code>I3-I-001</code></td></tr><tr id="I3-I-002"><td><span class="dir up">강화</span></td>
+  <td class="tgt">이익이 먼저 나는 곳</td><td>투자한 돈을 가장 먼저 이익으로 바꾸는 곳은 칩과 메모리다. NVIDIA는 매출총이익률 75%, SK하이닉스는 영업이익률 76%로, 공급이 수요를 못 따라가는 층이 가장 큰 몫을 가져간다.</td><td><a class="rid" href="#I3-M-002" title="NVIDIA의 2026년 5~7월 분기 데이터센터 매출은 890억 달러로 1년 전보다 117% 늘었고, 매출총이익률은 75%였다. 다음 분기 매출 전망은 1,080억 달러다.">I3-M-002</a><a class="rid" href="#I3-M-003" title="SK하이닉스는 2026년 2분기 매출 79조 3,187억 원, 영업이익 60조 5,426억 원으로 사상 최대를 기록했다. 영업이익률은 76.3%로 NVIDIA(65.6%)보다 높았고 Micron(80.4%) 다음이었다.">I3-M-003</a><a class="rid" href="#I3-E-004" title="SK하이닉스가 2분기 사상 최대 실적을 내고 HBM4 양산 출하를 시작했다. 2027년 물량·가격 협상이 순조롭다고 밝혔다.">I3-E-004</a></td><td class="idc"><code>I3-I-002</code></td></tr><tr id="I3-I-003"><td><span class="dir up">강화</span></td>
+  <td class="tgt">수익 곡선</td><td>수익 곡선도 빠르게 올라오고 있다. Anthropic 연환산 매출은 1년 반 새 수십 배로, Microsoft AI 매출은 두 배 넘게 늘었다. 수익의 증가 속도가 투자의 증가 속도보다 빨라 두 곡선의 간격은 좁혀지기 시작했지만, 절대 규모는 아직 투자가 크다.</td><td><a class="rid" href="#I3-M-004" title="Anthropic의 연환산 매출은 2026년 7월 약 650억 달러로 2025년 초 약 10억 달러에서 크게 늘었다. OpenAI는 8월 약 400억 달러로 2025년 말의 두 배 수준이다.">I3-M-004</a><a class="rid" href="#I3-M-006" title="2026년 1분기 Microsoft의 AI 사업 연환산 매출은 370억 달러를 넘어 123% 늘었고, AWS는 15분기 만에 가장 빠른 28% 성장을 기록했다. Google Cloud의 수주 잔고는 한 분기 만에 두 배 가까이 늘어 4,600억 달러를 넘었다.">I3-M-006</a><a class="rid" href="#I3-M-001" title="2026년 1분기 설비투자는 Amazon 442억 달러, Alphabet 357억 달러(전년의 두 배 이상), Microsoft 309억 달러(+84%)였다. Meta는 연간 가이던스를 1,250억~1,450억 달러로 올렸다. 4사 합산 올해 계획은 7천억 달러를 넘는다는 집계가 나온다.">I3-M-001</a></td><td class="idc"><code>I3-I-003</code></td></tr><tr id="I3-I-004"><td><span class="dir flat">중립</span></td>
+  <td class="tgt">모델 기업 수익성</td><td>모델 기업의 수익성은 갈렸다. Anthropic은 분기 조정 영업이익 흑자로 돌아섰고 매출에서도 OpenAI를 앞섰지만, OpenAI는 연간 대규모 손실이 예상된다.</td><td><a class="rid" href="#I3-M-005" title="Anthropic은 2026년 2분기 잠정 매출 약 115억 달러에 조정 영업이익 흑자를 냈다. OpenAI는 2026년 약 140억 달러 손실을 내부 전망한 것으로 보도됐다.">I3-M-005</a><a class="rid" href="#I3-M-004" title="Anthropic의 연환산 매출은 2026년 7월 약 650억 달러로 2025년 초 약 10억 달러에서 크게 늘었다. OpenAI는 8월 약 400억 달러로 2025년 말의 두 배 수준이다.">I3-M-004</a></td><td class="idc"><code>I3-I-004</code></td></tr><tr id="I3-I-005"><td><span class="dir down">약화</span></td>
+  <td class="tgt">모델 가격</td><td>모델 가격은 세대마다 절반 가까이 내려가고 있다. 이용량 확대에는 도움이 되지만, 모델 판매의 마진에는 압박이 된다.</td><td><a class="rid" href="#I3-M-007" title="9월 신모델은 가격을 크게 낮췄다. Claude Opus 5.5는 Fable급 성능을 Opus 5보다 40% 낮은 비용에, GPT-6 Sol은 GPT-5.6의 절반 가격에 내놓았다.">I3-M-007</a><a class="rid" href="#I3-E-007" title="Anthropic(Opus 5.5)과 OpenAI(GPT-6 Sol)가 같은 달 이전 세대보다 40~50% 싼 신모델을 내놓았다.">I3-E-007</a></td><td class="idc"><code>I3-I-005</code></td></tr><tr id="I3-I-006"><td><span class="dir flat">중립</span></td>
+  <td class="tgt">순환 투자와 수직 확장</td><td>칩 회사가 고객에게 투자하고 생태계를 사들이는 흐름이 커지고 있다. NVIDIA는 OpenAI에 300억 달러를 넣고 Hugging Face를 인수했다. 공급자와 고객의 돈이 서로 얽혀, 수요의 독립성을 따져 봐야 하는 구조가 됐다.</td><td><a class="rid" href="#I3-E-002" title="OpenAI가 기업가치 7,300억 달러(투자 전)로 1,100억 달러를 유치했다. Amazon이 500억 달러, NVIDIA와 SoftBank가 각각 300억 달러를 냈다.">I3-E-002</a><a class="rid" href="#I3-E-006" title="NVIDIA가 오픈소스 AI 플랫폼 Hugging Face를 약 130억 달러에 인수하기로 했다.">I3-E-006</a></td><td class="idc"><code>I3-I-006</code></td></tr><tr id="I3-I-007"><td><span class="dir up">강화</span></td>
+  <td class="tgt">한국</td><td>한국은 메모리 호황의 최대 수혜국이면서 GPU 26만 장으로 수요자 쪽 기반도 마련했다. 다만 이익은 메모리 공급에 몰려 있고, 국내 모델·서비스 매출은 아직 보이지 않는다.</td><td><a class="rid" href="#I3-M-003" title="SK하이닉스는 2026년 2분기 매출 79조 3,187억 원, 영업이익 60조 5,426억 원으로 사상 최대를 기록했다. 영업이익률은 76.3%로 NVIDIA(65.6%)보다 높았고 Micron(80.4%) 다음이었다.">I3-M-003</a><a class="rid" href="#I3-M-008" title="NVIDIA는 한국에 차세대 GPU 26만 장을 우선 공급하기로 했다. 정부가 약 5만 장을 공공 부문에, 삼성전자·현대차·네이버 등 기업이 약 20만 장을 확보한다.">I3-M-008</a><a class="rid" href="#I3-E-001" title="NVIDIA가 APEC 기간에 한국 정부와 주요 기업에 차세대 GPU 26만 장을 우선 공급하겠다고 밝혔다.">I3-E-001</a></td><td class="idc"><code>I3-I-007</code></td></tr></tbody></table></div></section>
+  <section><h2>주요 사건 <small>최신순 · 원문 확인된 것만</small></h2><p class="lead">8~9월에 흐름이 한꺼번에 드러났다. NVIDIA가 분기 매출 962억 달러를 발표한 직후 Hugging Face 인수를 밝혔고, 같은 달 Anthropic과 OpenAI는 이전보다 40~50% 싼 신모델을 냈다. 그 앞에는 OpenAI의 1,100억 달러 투자 유치(2월)와 SK하이닉스의 사상 최대 실적(7월)이 있다.</p><ul class="timeline"><li id="I3-E-006"><time>2026-09-03</time><div><b>NVIDIA</b> NVIDIA가 오픈소스 AI 플랫폼 Hugging Face를 약 130억 달러에 인수하기로 했다.
+  <div class="src"><a href="https://news.bloomberglaw.com/crypto/nvidia-agrees-to-13-billion-deal-for-ai-platform-hugging-face" target="_blank" rel="noopener">Bloomberg Law</a><span class="grade gB">B</span> <code>I3-E-006</code></div></div></li><li id="I3-E-007"><time>2026-09</time><div><b>Anthropic·OpenAI</b> Anthropic(Opus 5.5)과 OpenAI(GPT-6 Sol)가 같은 달 이전 세대보다 40~50% 싼 신모델을 내놓았다.
+  <div class="src"><a href="https://af.net/realtime/september-2026-ai-releases-claude-opus-5-5-gpt-6-sol-and-more/" target="_blank" rel="noopener">ThursdAI (2026년 9월 출시 정리)</a><span class="grade gB">B</span> <code>I3-E-007</code></div></div></li><li id="I3-E-005"><time>2026-08-26</time><div><b>NVIDIA</b> NVIDIA가 분기 매출 962억 달러를 발표하며 Vera Rubin이 전면 양산에 들어갔다고 밝혔다. 다음 분기 전망에서는 중국 데이터센터 매출을 0으로 잡았다.
+  <div class="src"><a href="https://www.sec.gov/Archives/edgar/data/0001045810/000104581026000073/q2fy27pr.htm" target="_blank" rel="noopener">NVIDIA 실적 발표 (SEC 8-K)</a><span class="grade gA">A</span> <code>I3-E-005</code></div></div></li><li id="I3-E-004"><time>2026-07-29</time><div><b>SK하이닉스</b> SK하이닉스가 2분기 사상 최대 실적을 내고 HBM4 양산 출하를 시작했다. 2027년 물량·가격 협상이 순조롭다고 밝혔다.
+  <div class="src"><a href="https://www.newsis.com/view/NISX20260729_0003728008" target="_blank" rel="noopener">뉴시스 (SK하이닉스 공시)</a><span class="grade gB">B</span> <code>I3-E-004</code></div></div></li><li id="I3-E-003"><time>2026-04</time><div><b>Meta</b> Meta가 부품 가격 상승과 데이터센터 비용을 이유로 2026년 설비투자 가이던스를 1,150억~1,350억 달러에서 1,250억~1,450억 달러로 올렸다.
+  <div class="src"><a href="https://finance.yahoo.com/sectors/technology/articles/hyperscalers-hit-700-billion-2026-111243744.html" target="_blank" rel="noopener">Yahoo Finance</a><span class="grade gB">B</span> <code>I3-E-003</code></div></div></li><li id="I3-E-002"><time>2026-02-27</time><div><b>OpenAI</b> OpenAI가 기업가치 7,300억 달러(투자 전)로 1,100억 달러를 유치했다. Amazon이 500억 달러, NVIDIA와 SoftBank가 각각 300억 달러를 냈다.
+  <div class="src"><a href="https://techcrunch.com/2026/02/27/chatgpt-reaches-900m-weekly-active-users" target="_blank" rel="noopener">TechCrunch</a><span class="grade gB">B</span> <code>I3-E-002</code></div></div></li><li id="I3-E-001"><time>2025-10-31</time><div><b>NVIDIA·한국 정부</b> NVIDIA가 APEC 기간에 한국 정부와 주요 기업에 차세대 GPU 26만 장을 우선 공급하겠다고 밝혔다.
+  <div class="src"><a href="https://mobile.newsis.com/view/NISX20251101_0003386182" target="_blank" rel="noopener">뉴시스</a><span class="grade gB">B</span> <code>I3-E-001</code></div></div></li></ul></section>
+  <section><h2>전망 <small>2027년 말까지, 수익이 투자를 따라잡을까</small></h2><p class="lead">2027년 말을 기준으로 두 시나리오를 세웠다. 갈림길은 모델 기업의 매출이 손실과 가격 인하를 이기고 계속 늘어나는지, 그리고 빅테크가 2027년에도 투자를 늘리는지다. 세부 전망 가운데 가장 이른 판정은 10~11월 SK하이닉스·NVIDIA 실적이다.</p>
+    <div class="scens"><article class="scen opt" id="I3-F-101"><header><span class="sk">낙관 · Optimistic</span><code>I3-F-101</code></header>
+  <p class="sstmt">2027년 말까지 수익 곡선이 투자 곡선을 따라잡기 시작한다. 프런티어 연구소 매출 합계가 연 2,000억 달러를 넘고 연간 흑자 기업이 나오며, 빅테크는 2027년에도 투자를 늘린다. 칩·메모리의 높은 이익도 유지된다.</p><ol class="ms"><li><time>2026-11</time><span>NVIDIA·SK하이닉스 다음 분기 실적이 직전 분기 이상</span></li><li><time>2027-01</time><span>Anthropic 연환산 매출 1,000억 달러 이상</span></li><li><time>2027-02</time><span>빅테크 2027년 설비투자 계획이 2026년보다 큼</span></li></ol>
+  <dl class="sdl"><div><dt>판정 시점</dt><dd>2027-12-31</dd></div><div><dt>판정 방법</dt><dd>세 가지 중 두 가지 이상 충족 시 적중: (1) Anthropic+OpenAI 연환산 매출 합계 2,000억 달러 이상 (2) 둘 중 하나의 연간 영업이익(조정 포함) 흑자 공식 확인 (3) 빅테크 4사 2027년 설비투자 계획 합계가 2026년보다 큼</dd></div>
+  <div><dt>전제</dt><dd>거시 경기 침체나 수출 통제 확대로 수요가 급감하지 않을 경우</dd></div><div><dt>근거</dt><dd><a class="rid" href="#I3-M-004" title="Anthropic의 연환산 매출은 2026년 7월 약 650억 달러로 2025년 초 약 10억 달러에서 크게 늘었다. OpenAI는 8월 약 400억 달러로 2025년 말의 두 배 수준이다.">I3-M-004</a><a class="rid" href="#I3-M-005" title="Anthropic은 2026년 2분기 잠정 매출 약 115억 달러에 조정 영업이익 흑자를 냈다. OpenAI는 2026년 약 140억 달러 손실을 내부 전망한 것으로 보도됐다.">I3-M-005</a><a class="rid" href="#I3-M-001" title="2026년 1분기 설비투자는 Amazon 442억 달러, Alphabet 357억 달러(전년의 두 배 이상), Microsoft 309억 달러(+84%)였다. Meta는 연간 가이던스를 1,250억~1,450억 달러로 올렸다. 4사 합산 올해 계획은 7천억 달러를 넘는다는 집계가 나온다.">I3-M-001</a><a class="rid" href="#I3-M-002" title="NVIDIA의 2026년 5~7월 분기 데이터센터 매출은 890억 달러로 1년 전보다 117% 늘었고, 매출총이익률은 75%였다. 다음 분기 매출 전망은 1,080억 달러다.">I3-M-002</a></dd></div></dl></article><article class="scen pes" id="I3-F-102"><header><span class="sk">비관 · Pessimistic</span><code>I3-F-102</code></header>
+  <p class="sstmt">2027년 말까지 가격 인하와 손실 탓에 수익 곡선의 기울기가 꺾이고, 빅테크가 투자 속도를 조정하며 일부 데이터센터 계획이 미뤄진다. 메모리 가격이 내려가 공급망 이익도 줄어든다.</p><ol class="ms"><li><time>2027-02</time><span>빅테크 2027년 설비투자 계획이 2026년 수준 이하</span></li><li><time>2027-03</time><span>OpenAI 2026년 손실이 전망보다 큼</span></li><li><time>2027-06</time><span>대형 데이터센터 프로젝트 취소·연기 발표</span></li></ol>
+  <dl class="sdl"><div><dt>판정 시점</dt><dd>2027-12-31</dd></div><div><dt>판정 방법</dt><dd>낙관 시나리오의 판정 조건 세 가지 중 하나 이하만 충족 시 적중</dd></div>
+  <div><dt>전제</dt><dd>없음</dd></div><div><dt>근거</dt><dd><a class="rid" href="#I3-M-007" title="9월 신모델은 가격을 크게 낮췄다. Claude Opus 5.5는 Fable급 성능을 Opus 5보다 40% 낮은 비용에, GPT-6 Sol은 GPT-5.6의 절반 가격에 내놓았다.">I3-M-007</a><a class="rid" href="#I3-M-005" title="Anthropic은 2026년 2분기 잠정 매출 약 115억 달러에 조정 영업이익 흑자를 냈다. OpenAI는 2026년 약 140억 달러 손실을 내부 전망한 것으로 보도됐다.">I3-M-005</a><a class="rid" href="#I3-E-002" title="OpenAI가 기업가치 7,300억 달러(투자 전)로 1,100억 달러를 유치했다. Amazon이 500억 달러, NVIDIA와 SoftBank가 각각 300억 달러를 냈다.">I3-E-002</a></dd></div></dl></article></div>
+    <h3 class="subhead">세부 판정 근거</h3>
+    <p class="lead muted">각 세부 전망이 적중하거나 빗나갔을 때 어느 시나리오 쪽 신호인지 표시했다. 확인 시점이 오면 확인 방법대로 판정한다.</p>
+    <div class="tablewrap"><table><thead><tr><th>세부 전망</th><th>확인 시점</th><th>적중 시</th><th>빗나갈 시</th><th>상태</th><th>근거</th></tr></thead><tbody><tr id="I3-F-005"><td class="stmt">SK하이닉스의 2026년 3분기 영업이익은 2분기(60조 5,426억 원) 이상일 것이다.<small>확인 방법: SK하이닉스 3분기 실적 공시 확인</small></td>
+  <td class="asof">2026-10-31</td><td><span class="side opt">낙관</span></td><td><span class="muted">—</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#I3-M-003" title="SK하이닉스는 2026년 2분기 매출 79조 3,187억 원, 영업이익 60조 5,426억 원으로 사상 최대를 기록했다. 영업이익률은 76.3%로 NVIDIA(65.6%)보다 높았고 Micron(80.4%) 다음이었다.">I3-M-003</a><a class="rid" href="#I3-E-004" title="SK하이닉스가 2분기 사상 최대 실적을 내고 HBM4 양산 출하를 시작했다. 2027년 물량·가격 협상이 순조롭다고 밝혔다.">I3-E-004</a></td></tr><tr id="I3-F-001"><td class="stmt">NVIDIA의 2026년 8~10월 분기 매출은 가이던스 하단(1,058억 달러) 이상일 것이다.<small>확인 방법: NVIDIA 3분기(FY2027) 실적 발표 확인</small></td>
+  <td class="asof">2026-11-30</td><td><span class="side opt">낙관</span></td><td><span class="side pes">비관</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#I3-M-002" title="NVIDIA의 2026년 5~7월 분기 데이터센터 매출은 890억 달러로 1년 전보다 117% 늘었고, 매출총이익률은 75%였다. 다음 분기 매출 전망은 1,080억 달러다.">I3-M-002</a></td></tr><tr id="I3-F-003"><td class="stmt">Anthropic의 연환산 매출은 2026년 말 1,000억 달러 이상으로 보도될 것이다.<small>확인 방법: 회사 발표 또는 주요 언론(Bloomberg 등) 보도 확인</small></td>
+  <td class="asof">2027-01-31</td><td><span class="side opt">낙관</span></td><td><span class="side pes">비관</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#I3-M-004" title="Anthropic의 연환산 매출은 2026년 7월 약 650억 달러로 2025년 초 약 10억 달러에서 크게 늘었다. OpenAI는 8월 약 400억 달러로 2025년 말의 두 배 수준이다.">I3-M-004</a></td></tr><tr id="I3-F-002"><td class="stmt">빅테크 4사의 2027년 설비투자 계획 합계는 2026년보다 클 것이다.<small>확인 방법: Amazon·Microsoft·Alphabet·Meta 2026년 4분기 실적 발표의 2027년 계획 확인</small></td>
+  <td class="asof">2027-02-28</td><td><span class="side opt">낙관</span></td><td><span class="side pes">비관</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#I3-M-001" title="2026년 1분기 설비투자는 Amazon 442억 달러, Alphabet 357억 달러(전년의 두 배 이상), Microsoft 309억 달러(+84%)였다. Meta는 연간 가이던스를 1,250억~1,450억 달러로 올렸다. 4사 합산 올해 계획은 7천억 달러를 넘는다는 집계가 나온다.">I3-M-001</a><a class="rid" href="#I3-E-003" title="Meta가 부품 가격 상승과 데이터센터 비용을 이유로 2026년 설비투자 가이던스를 1,150억~1,350억 달러에서 1,250억~1,450억 달러로 올렸다.">I3-E-003</a></td></tr><tr id="I3-F-004"><td class="stmt">OpenAI의 2026년 실제 손실은 내부 전망(약 140억 달러)보다 클 것으로 보도될 것이다.<small>확인 방법: 회사 발표 또는 주요 언론 보도 확인</small></td>
+  <td class="asof">2027-03-31</td><td><span class="side pes">비관</span></td><td><span class="muted">—</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#I3-M-005" title="Anthropic은 2026년 2분기 잠정 매출 약 115억 달러에 조정 영업이익 흑자를 냈다. OpenAI는 2026년 약 140억 달러 손실을 내부 전망한 것으로 보도됐다.">I3-M-005</a></td></tr><tr id="I3-F-006"><td class="stmt">2027년 6월 말까지 빅테크나 OpenAI가 대형 AI 데이터센터 프로젝트의 취소나 연기를 공식 발표할 것이다.<small>확인 방법: 각 사 공식 발표·실적 발표 확인</small></td>
+  <td class="asof">2027-06-30</td><td><span class="side pes">비관</span></td><td><span class="muted">—</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#I3-M-001" title="2026년 1분기 설비투자는 Amazon 442억 달러, Alphabet 357억 달러(전년의 두 배 이상), Microsoft 309억 달러(+84%)였다. Meta는 연간 가이던스를 1,250억~1,450억 달러로 올렸다. 4사 합산 올해 계획은 7천억 달러를 넘는다는 집계가 나온다.">I3-M-001</a><a class="rid" href="#I3-M-005" title="Anthropic은 2026년 2분기 잠정 매출 약 115억 달러에 조정 영업이익 흑자를 냈다. OpenAI는 2026년 약 140억 달러 손실을 내부 전망한 것으로 보도됐다.">I3-M-005</a></td></tr></tbody></table></div></section>
+  <section><h2>두 곡선과 층별 주도권 <small>투자 vs 수익 · 가치사슬 층별</small></h2><p class="lead">두 곡선을 같은 단위(연 달러)로 놓았다. 투자 곡선은 빅테크 4사의 2026년 설비투자 계획, 수익 곡선은 원문으로 확인된 AI 서비스 연환산 매출의 합이다. 수익 쪽은 Microsoft AI 매출에 OpenAI 매출 일부가 겹칠 수 있어 상한값으로 읽어야 한다.</p>
+    <div class="curves"><div class="curve inv"><div class="cl">투자 곡선<small>빅테크 4사 설비투자</small></div>
+  <div><div class="bar"><span style="width:100%">7,000억 달러 이상 / 연</span></div><p class="why">증가 속도: 1분기 전년 대비 +84~100% 이상 <a class="rid" href="#I3-M-001" title="2026년 1분기 설비투자는 Amazon 442억 달러, Alphabet 357억 달러(전년의 두 배 이상), Microsoft 309억 달러(+84%)였다. Meta는 연간 가이던스를 1,250억~1,450억 달러로 올렸다. 4사 합산 올해 계획은 7천억 달러를 넘는다는 집계가 나온다.">I3-M-001</a></p></div></div><div class="curve rev"><div class="cl">수익 곡선<small>Anthropic+OpenAI+MS AI 연환산</small></div>
+  <div><div class="bar"><span style="width:20%">약 1,420억 달러 / 연</span></div><p class="why">증가 속도: Anthropic 1년 반 새 수십 배, MS AI +123% <a class="rid" href="#I3-M-004" title="Anthropic의 연환산 매출은 2026년 7월 약 650억 달러로 2025년 초 약 10억 달러에서 크게 늘었다. OpenAI는 8월 약 400억 달러로 2025년 말의 두 배 수준이다.">I3-M-004</a><a class="rid" href="#I3-M-006" title="2026년 1분기 Microsoft의 AI 사업 연환산 매출은 370억 달러를 넘어 123% 늘었고, AWS는 15분기 만에 가장 빠른 28% 성장을 기록했다. Google Cloud의 수주 잔고는 한 분기 만에 두 배 가까이 늘어 4,600억 달러를 넘었다.">I3-M-006</a></p></div></div></div><p class="gapnote">판정: 규모는 투자가 약 5배 크지만, 수익이 더 빨리 늘어 간격은 좁혀지기 시작했다 (R1 기준값).</p>
+    <h3 class="subhead">가치사슬 층별 주도권</h3><p class="lead">가치사슬 층마다 지금 돈을 가장 많이 가져가는 쪽과 그 자리가 굳어지는지 흔들리는지를 판정했다. 앱 층은 매출이 확인된 독립 앱 기업이 아직 없어 이번 회차에서는 비워 두었다.</p>
+    <div class="ladder mapgrid layers"><div class="rung"><div class="stage"><b>칩</b></div><div class="lvcell">NVIDIA</div>
+  <div class="lvcell"><span class="own brand">굳어짐</span></div><p class="why">데이터센터 매출 분기 890억 달러, 매출총이익률 75%, Vera Rubin 전면 양산 <a class="rid" href="#I3-M-002" title="NVIDIA의 2026년 5~7월 분기 데이터센터 매출은 890억 달러로 1년 전보다 117% 늘었고, 매출총이익률은 75%였다. 다음 분기 매출 전망은 1,080억 달러다.">I3-M-002</a><a class="rid" href="#I3-E-005" title="NVIDIA가 분기 매출 962억 달러를 발표하며 Vera Rubin이 전면 양산에 들어갔다고 밝혔다. 다음 분기 전망에서는 중국 데이터센터 매출을 0으로 잡았다.">I3-E-005</a></p></div><div class="rung"><div class="stage"><b>메모리</b></div><div class="lvcell">SK하이닉스·Micron</div>
+  <div class="lvcell"><span class="own brand">굳어짐</span></div><p class="why">영업이익률 76~80%, HBM4 양산 출하, 2027년 물량 협상 순조 <a class="rid" href="#I3-M-003" title="SK하이닉스는 2026년 2분기 매출 79조 3,187억 원, 영업이익 60조 5,426억 원으로 사상 최대를 기록했다. 영업이익률은 76.3%로 NVIDIA(65.6%)보다 높았고 Micron(80.4%) 다음이었다.">I3-M-003</a><a class="rid" href="#I3-E-004" title="SK하이닉스가 2분기 사상 최대 실적을 내고 HBM4 양산 출하를 시작했다. 2027년 물량·가격 협상이 순조롭다고 밝혔다.">I3-E-004</a></p></div><div class="rung"><div class="stage"><b>클라우드·데이터센터</b></div><div class="lvcell">Microsoft·AWS·Google</div>
+  <div class="lvcell"><span class="own contest">경합</span></div><p class="why">모두 투자를 늘리는 중. MS AI +123%, AWS +28%, Google 수주 잔고 4,600억 달러 <a class="rid" href="#I3-M-006" title="2026년 1분기 Microsoft의 AI 사업 연환산 매출은 370억 달러를 넘어 123% 늘었고, AWS는 15분기 만에 가장 빠른 28% 성장을 기록했다. Google Cloud의 수주 잔고는 한 분기 만에 두 배 가까이 늘어 4,600억 달러를 넘었다.">I3-M-006</a><a class="rid" href="#I3-M-001" title="2026년 1분기 설비투자는 Amazon 442억 달러, Alphabet 357억 달러(전년의 두 배 이상), Microsoft 309억 달러(+84%)였다. Meta는 연간 가이던스를 1,250억~1,450억 달러로 올렸다. 4사 합산 올해 계획은 7천억 달러를 넘는다는 집계가 나온다.">I3-M-001</a></p></div><div class="rung"><div class="stage"><b>모델</b></div><div class="lvcell">Anthropic이 매출 선두</div>
+  <div class="lvcell"><span class="own agent">흔들림</span></div><p class="why">Anthropic 650억 달러·흑자 vs OpenAI 400억 달러·손실, 가격은 세대마다 40~50% 하락 <a class="rid" href="#I3-M-004" title="Anthropic의 연환산 매출은 2026년 7월 약 650억 달러로 2025년 초 약 10억 달러에서 크게 늘었다. OpenAI는 8월 약 400억 달러로 2025년 말의 두 배 수준이다.">I3-M-004</a><a class="rid" href="#I3-M-005" title="Anthropic은 2026년 2분기 잠정 매출 약 115억 달러에 조정 영업이익 흑자를 냈다. OpenAI는 2026년 약 140억 달러 손실을 내부 전망한 것으로 보도됐다.">I3-M-005</a><a class="rid" href="#I3-M-007" title="9월 신모델은 가격을 크게 낮췄다. Claude Opus 5.5는 Fable급 성능을 Opus 5보다 40% 낮은 비용에, GPT-6 Sol은 GPT-5.6의 절반 가격에 내놓았다.">I3-M-007</a></p></div><div class="rung"><div class="stage"><b>도구·생태계</b></div><div class="lvcell">NVIDIA의 수직 확장</div>
+  <div class="lvcell"><span class="own contest">경합</span></div><p class="why">Hugging Face 인수로 칩 회사가 개발자 생태계로 내려옴 <a class="rid" href="#I3-E-006" title="NVIDIA가 오픈소스 AI 플랫폼 Hugging Face를 약 130억 달러에 인수하기로 했다.">I3-E-006</a></p></div><div class="rung"><div class="stage"><b>앱</b></div><div class="lvcell">—</div>
+  <div class="lvcell"><span class="own contest">자료 부족</span></div><p class="why">독립 AI 앱 기업의 매출·이익 원문 미확보 </p></div></div></section>
+  <section><h2>핵심 지표 <small>추적 지표 8/8개 값 확보</small></h2><p class="lead">추적 지표 8개 중 8개의 값을 원문으로 확인했다. 상장사 실적은 공시 기준이고, OpenAI·Anthropic 같은 비상장사의 매출과 손익은 투자자 대상 잠정치를 보도한 것이라 주의 표시를 달았다. 빅테크 설비투자 합계는 집계 기관마다 차이가 있다.</p>
+    <div class="tablewrap"><table><thead><tr><th>추적 지표</th><th>내용 · 출처</th><th style="text-align:right">현재값</th><th>기준 시점</th><th>기록</th></tr></thead><tbody><tr id="I3-M-001"><td class="ind">I3-T1<small>빅테크 AI 설비투자</small></td>
+  <td class="stmt">2026년 1분기 설비투자는 Amazon 442억 달러, Alphabet 357억 달러(전년의 두 배 이상), Microsoft 309억 달러(+84%)였다. Meta는 연간 가이던스를 1,250억~1,450억 달러로 올렸다. 4사 합산 올해 계획은 7천억 달러를 넘는다는 집계가 나온다. <span class="warn">충돌·주의</span><div class="src"><a href="https://finance.yahoo.com/sectors/technology/articles/hyperscalers-hit-700-billion-2026-111243744.html" target="_blank" rel="noopener">Yahoo Finance</a><span class="grade gB">B</span></div></td>
+  <td class="num">7000 억 달러 이상(4사 2026 계획, 집계)</td><td class="asof">2026-Q1<small>US</small></td><td class="idc"><code>I3-M-001</code></td></tr><tr id="I3-M-002"><td class="ind">I3-T2<small>데이터센터 가속기 매출</small></td>
+  <td class="stmt">NVIDIA의 2026년 5~7월 분기 데이터센터 매출은 890억 달러로 1년 전보다 117% 늘었고, 매출총이익률은 75%였다. 다음 분기 매출 전망은 1,080억 달러다. <div class="src"><a href="https://www.sec.gov/Archives/edgar/data/0001045810/000104581026000073/q2fy27pr.htm" target="_blank" rel="noopener">NVIDIA 실적 발표 (SEC 8-K)</a><span class="grade gA">A</span></div></td>
+  <td class="num">890 억 달러(분기)</td><td class="asof">2026-07<small>GLOBAL</small></td><td class="idc"><code>I3-M-002</code></td></tr><tr id="I3-M-003"><td class="ind">I3-T3<small>메모리 수익성</small></td>
+  <td class="stmt">SK하이닉스는 2026년 2분기 매출 79조 3,187억 원, 영업이익 60조 5,426억 원으로 사상 최대를 기록했다. 영업이익률은 76.3%로 NVIDIA(65.6%)보다 높았고 Micron(80.4%) 다음이었다. <div class="src"><a href="https://www.newsis.com/view/NISX20260729_0003728008" target="_blank" rel="noopener">뉴시스 (SK하이닉스 공시)</a><span class="grade gB">B</span></div></td>
+  <td class="num">76.3% (영업이익률)</td><td class="asof">2026-Q2<small>KR</small></td><td class="idc"><code>I3-M-003</code></td></tr><tr id="I3-M-004"><td class="ind">I3-T4<small>프런티어 연구소 매출</small></td>
+  <td class="stmt">Anthropic의 연환산 매출은 2026년 7월 약 650억 달러로 2025년 초 약 10억 달러에서 크게 늘었다. OpenAI는 8월 약 400억 달러로 2025년 말의 두 배 수준이다. <span class="warn">충돌·주의</span><div class="src"><a href="https://www.sovereignmagazine.com/article/anthropic-65-billion-run-rate-ai-bubble-case" target="_blank" rel="noopener">Sovereign Magazine (Bloomberg·Fortune·The Information 인용)</a><span class="grade gB">B</span></div></td>
+  <td class="num">650 억 달러(Anthropic 연환산)</td><td class="asof">2026-07<small>US</small></td><td class="idc"><code>I3-M-004</code></td></tr><tr id="I3-M-005"><td class="ind">I3-T5<small>프런티어 연구소 수익성</small></td>
+  <td class="stmt">Anthropic은 2026년 2분기 잠정 매출 약 115억 달러에 조정 영업이익 흑자를 냈다. OpenAI는 2026년 약 140억 달러 손실을 내부 전망한 것으로 보도됐다. <span class="warn">충돌·주의</span><div class="src"><a href="https://www.sovereignmagazine.com/article/anthropic-65-billion-run-rate-ai-bubble-case" target="_blank" rel="noopener">Sovereign Magazine (Bloomberg·Fortune·The Information 인용)</a><span class="grade gB">B</span></div></td>
+  <td class="num">-140 억 달러(OpenAI 2026 손실 전망)</td><td class="asof">2026-08<small>US</small></td><td class="idc"><code>I3-M-005</code></td></tr><tr id="I3-M-006"><td class="ind">I3-T6<small>클라우드 AI 매출</small></td>
+  <td class="stmt">2026년 1분기 Microsoft의 AI 사업 연환산 매출은 370억 달러를 넘어 123% 늘었고, AWS는 15분기 만에 가장 빠른 28% 성장을 기록했다. Google Cloud의 수주 잔고는 한 분기 만에 두 배 가까이 늘어 4,600억 달러를 넘었다. <div class="src"><a href="https://finance.yahoo.com/sectors/technology/articles/hyperscalers-hit-700-billion-2026-111243744.html" target="_blank" rel="noopener">Yahoo Finance</a><span class="grade gB">B</span></div></td>
+  <td class="num">370 억 달러(Microsoft AI 연환산)</td><td class="asof">2026-Q1<small>US</small></td><td class="idc"><code>I3-M-006</code></td></tr><tr id="I3-M-007"><td class="ind">I3-T7<small>모델 가격</small></td>
+  <td class="stmt">9월 신모델은 가격을 크게 낮췄다. Claude Opus 5.5는 Fable급 성능을 Opus 5보다 40% 낮은 비용에, GPT-6 Sol은 GPT-5.6의 절반 가격에 내놓았다. <div class="src"><a href="https://af.net/realtime/september-2026-ai-releases-claude-opus-5-5-gpt-6-sol-and-more/" target="_blank" rel="noopener">ThursdAI (2026년 9월 출시 정리)</a><span class="grade gB">B</span></div></td>
+  <td class="num">-50% (GPT-6 Sol, 전 세대 대비)</td><td class="asof">2026-09<small>GLOBAL</small></td><td class="idc"><code>I3-M-007</code></td></tr><tr id="I3-M-008"><td class="ind">I3-T8<small>한국 AI 공급망·인프라</small></td>
+  <td class="stmt">NVIDIA는 한국에 차세대 GPU 26만 장을 우선 공급하기로 했다. 정부가 약 5만 장을 공공 부문에, 삼성전자·현대차·네이버 등 기업이 약 20만 장을 확보한다. <span class="warn">충돌·주의</span><div class="src"><a href="https://mobile.newsis.com/view/NISX20251101_0003386182" target="_blank" rel="noopener">뉴시스</a><span class="grade gB">B</span></div></td>
+  <td class="num">26 만 장</td><td class="asof">2025-10<small>KR</small></td><td class="idc"><code>I3-M-008</code></td></tr></tbody></table></div></section>
+  <section><h2>미확인·경고 <small>본문 판단에서 빼거나 주의해서 쓴 기록</small></h2>
+    <div class="tablewrap"><table><thead><tr><th>기록</th><th>구분</th><th>진술</th><th>사유</th></tr></thead><tbody><tr><td><code>I3-M-001</code></td><td><span class="wk">주의</span></td><td>2026년 1분기 설비투자는 Amazon 442억 달러, Alphabet 357억 달러(전년의 두 배 이상), Microsoft 309억 달러(+84%)였다. Meta는 연간 가이던스를 1,250억~1,450억 달러로 올렸다. 4사 합산 올해 계획은 7천억 달러를 넘는다는 집계가 나온다.</td><td class="muted">4사 합산치는 집계 기관마다 6,500억~7,250억 달러로 다름</td></tr><tr><td><code>I3-M-004</code></td><td><span class="wk">주의</span></td><td>Anthropic의 연환산 매출은 2026년 7월 약 650억 달러로 2025년 초 약 10억 달러에서 크게 늘었다. OpenAI는 8월 약 400억 달러로 2025년 말의 두 배 수준이다.</td><td class="muted">감사받지 않은 잠정치 — 주요 언론 보도 기준</td></tr><tr><td><code>I3-M-005</code></td><td><span class="wk">주의</span></td><td>Anthropic은 2026년 2분기 잠정 매출 약 115억 달러에 조정 영업이익 흑자를 냈다. OpenAI는 2026년 약 140억 달러 손실을 내부 전망한 것으로 보도됐다.</td><td class="muted">회사 공식 재무제표 아님 — 보도 기준</td></tr><tr><td><code>I3-M-008</code></td><td><span class="wk">주의</span></td><td>NVIDIA는 한국에 차세대 GPU 26만 장을 우선 공급하기로 했다. 정부가 약 5만 장을 공공 부문에, 삼성전자·현대차·네이버 등 기업이 약 20만 장을 확보한다.</td><td class="muted">공급 기간·기업별 배분 미공개, 공공+기업 합이 25만 장으로 총량과 차이</td></tr><tr><td><code>I3-E-007</code></td><td><span class="wk">주의</span></td><td>Anthropic(Opus 5.5)과 OpenAI(GPT-6 Sol)가 같은 달 이전 세대보다 40~50% 싼 신모델을 내놓았다.</td><td class="muted">정확한 출시일은 원문에 없음</td></tr></tbody></table></div></section>
+  <footer>
+    <span>이 글은 4유형 기록 30건(지표 8 · 사건 7 · 해석 7 · 전망 8)에서 생성했습니다. 문장 옆 번호를 누르면 해당 기록으로 이동합니다.</span>
+        <span>출처 등급 A = 1차 조사·공식 발표, B = 주요 언론·2차 보도, C = 블로그·출처 불명(원문 확인 전까지 판단에 쓰지 않음).</span>
+  </footer>
+</main>

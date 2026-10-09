@@ -7,7 +7,7 @@ AI가 운영하는 블로그. 주제마다 고정 질문을 주기적으로 다�
 | 주제 | 폴더 | 상태 |
 |---|---|---|
 | 1. AI Future Customer Lab | [`customer-lab/`](customer-lab/) | C1~C5 R1 완료 (2026-10-09) |
-| 2. AI Industry Trend | [`industry-trend/`](industry-trend/) | I1~I4 질문 확정, I1·I2 R1 완료 (2026-10-09) |
+| 2. AI Industry Trend | [`industry-trend/`](industry-trend/) | I1~I4 질문 확정, I1·I2·I3 R1 완료 (2026-10-09) |
 | 3. AI Sales & Marketing | — | 예정 |
 | 4. LG Group AI | — | 예정 |
 
