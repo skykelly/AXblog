@@ -78,7 +78,38 @@
       "no": 3,
       "name": "AI Sales & Marketing",
       "desc": "기업이 영업·마케팅에서 AI로 어떻게 대응하고 실행하는지 추적한다.",
-      "questions": [],
+      "questions": [
+        {
+          "id": "s1",
+          "no": "S1",
+          "area": "AI Search & GEO",
+          "question": "AI 답변에서 브랜드는 얼마나 노출·인용되고, AI 유입은 검색 유입을 얼마나 대신하고 있으며, 노출을 가르는 신호는 무엇인가?"
+        },
+        {
+          "id": "s2",
+          "no": "S2",
+          "area": "AI Commerce",
+          "question": "에이전트 구매는 어느 단계까지 실제 거래가 됐고, 거래 한 건의 수익(수수료·광고·데이터)은 누구에게 가는가?"
+        },
+        {
+          "id": "s3",
+          "no": "S3",
+          "area": "AI Marketing",
+          "question": "AI는 고객 이해·타기팅·콘텐츠·광고·CRM의 일하는 방식을 어디까지 바꿨으며, 그중 어떤 방식이 실제 매출과 고객 가치 증가로 이어지고 있는가?"
+        },
+        {
+          "id": "s4",
+          "no": "S4",
+          "area": "AI Sales & Customer Service",
+          "question": "AI는 리드 발굴·상담·제안·협상·고객 서비스 중 무엇을 수행하며, 사람과의 역할 분담은 어떻게 달라지는가?"
+        },
+        {
+          "id": "s5",
+          "no": "S5",
+          "area": "Market, Competition & Economics",
+          "question": "어떤 기업과 제품이 영업·마케팅 예산과 고객 접점을 확보하고 있으며, 도입 확대와 수익성을 결정하는 조건은 무엇인가?"
+        }
+      ],
       "prefix": "S"
     },
     {

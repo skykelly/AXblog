@@ -138,3 +138,11 @@ table.levels { min-width: 520px; }
 .gapnote { border-left: 3px solid var(--amber); padding: 6px 12px; background: var(--amber-soft); font-size: 14px; }
 .mapgrid.layers .rung { grid-template-columns: 150px 200px 110px 1fr; }
 @media (max-width: 720px) { .curve { grid-template-columns: 1fr; } .mapgrid.layers .rung { grid-template-columns: 1fr; } }
+
+/* S1 유입 저울 */
+.balance { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 8px 0 14px; }
+.balance .pan { border: 1px solid var(--rule); border-top: 3px solid var(--down); background: var(--panel); padding: 12px 16px; }
+.balance .pan.gain { border-top-color: var(--up); }
+.balance h4 { margin: 0 0 8px; font: 600 14px var(--body); }
+.balance ul { margin: 0; padding-left: 18px; font-size: 14px; line-height: 1.7; }
+@media (max-width: 720px) { .balance { grid-template-columns: 1fr; } }
