@@ -112,6 +112,15 @@ footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--rule)
   .scens { grid-template-columns: 1fr; }
   .arow, .timeline li { grid-template-columns: 1fr; gap: 4px; }
 }
+
+/* 주도권 지도 (Q2) */
+.own { font: 500 12px var(--mono); padding: 3px 8px; border-radius: 2px; white-space: nowrap; display: inline-block; }
+.own.brand { color: var(--up); background: var(--opt-soft); }
+.own.platform { color: var(--accent); background: var(--accent-soft); }
+.own.agent { color: var(--amber); background: var(--amber-soft); }
+.own.contest { color: var(--flat); border: 1px dashed var(--flat); }
+.mapgrid .rung { grid-template-columns: 130px 150px 150px 150px 1fr; }
+@media (max-width: 760px) { .mapgrid .rung { grid-template-columns: 1fr 1fr; } }
 </style>
 <main>
   <header class="narrow">
