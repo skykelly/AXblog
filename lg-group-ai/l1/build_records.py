@@ -19,6 +19,7 @@ SRC = {
  "ms_plan": {"url": "https://www.datacenterdynamics.com/en/news/microsoft-to-use-lg-electronics-cooling-infrastructure-in-some-ai-data-centers", "publisher": "DatacenterDynamics", "date": "2025-04-21", "grade": "B"},
  "ms_show": {"url": "https://www.koreaherald.com/article/10882162", "publisher": "Korea Herald", "date": "2026-09-22", "grade": "B"},
  "lge_ir": {"url": "https://www.lge.co.kr/kr/upload/admin/investment/result/2026_Q2_Earnings%20Release%20of%20LGE_KR.pdf", "publisher": "LG전자 2분기 실적 자료 (IR)", "date": "2026-07-30", "grade": "A"},
+ "ms_tmm": {"url": "https://economist.co.kr/article/view/ecn202609220008", "publisher": "이코노미스트 (LG 발표)", "date": "2026-09-22", "grade": "B"},
  "vertiv": {"url": "https://www.marketbeat.com/instant-alerts/vertiv-q2-earnings-call-highlights-2026-08-01/", "publisher": "MarketBeat (Vertiv 2분기 실적)", "date": "2026-08-01", "grade": "B"},
 }
 def src(*keys): return [dict(SRC[k], key=k) for k in keys]
@@ -84,6 +85,11 @@ add(id="L1-E-010", type="사건", importance=3, statement="LG전자가 북미 Ai
 add(id="L1-E-011", type="사건", importance=3, statement="LG전자가 2분기 실적 자료에서 NVIDIA향 CDU(냉각수 분배장치) 일부 모델의 인증을 마쳤다고 밝혔다.",
     date="2026-07-30", actor="LG전자", sources=src("lge_ir"), verified=True)
 
+add(id="L1-E-012", type="사건", importance=3, statement="LG그룹 사장단이 Microsoft 본사에서 전략적 파트너십을 확대했다. Microsoft의 글로벌 데이터센터 확장에 LG가 냉각·전력·IT 인프라를 공급할 기회를 함께 찾기로 했다. 계약 금액·물량은 공개되지 않았다.",
+    date="2026-09-21", actor="LG·Microsoft", sources=src("ms_tmm"), verified=True, check_flags=["공급 계약 아닌 '기회 탐색' 합의"])
+add(id="L1-E-013", type="사건", importance=3, statement="LG전자의 대용량 CDU와 LG에너지솔루션의 ESS가 NVIDIA의 AI 팩토리 프로그램 'DSX Ready' 제품에 포함됐다.",
+    date="2026-09-21", actor="LG전자·LG에너지솔루션", sources=src("ms_tmm"), verified=True)
+
 # ---------- 해석 (I) ----------
 add(id="L1-I-001", type="해석", importance=3, target="냉각", direction="강화",
     statement="냉각은 '계약(고객 공개)' 단계에 들어섰다. 북미 Air Control Concept과의 5GW 장기 공급 계약, 상반기 수주 6,000억 원 이상이 확인됐다. 다만 AI 데이터센터 냉각 매출은 아직 따로 공개되지 않았고, CDU는 NVIDIA향 일부 모델 인증을 마쳤지만 공급 계약은 공개되지 않았다.",
@@ -104,8 +110,8 @@ add(id="L1-I-006", type="해석", importance=2, target="One LG 패키지", direc
     statement="계열사 역할 분담은 NVIDIA 협력에서 정식화됐다(U+ 운영, CNS 설계·구축, 전자 냉각, 엔솔 전력). 실제로 묶어 판 첫 사례는 그룹 내부다. 파주 AIDC에 LG전자 냉각이 들어가고, DC Grid는 LG전자·엔솔이 함께 만든다. 외부 고객 대상 패키지 수주는 아직 확인되지 않는다.",
     basis=["L1-E-007", "L1-E-006", "L1-E-005"])
 add(id="L1-I-007", type="해석", importance=2, target="Microsoft", direction="중립",
-    statement="Microsoft와의 냉각 협력은 '계획·협의' 단계로 남아 있다. 2025년 4월 냉각 설비를 쓸 계획이 알려졌고 12월 기술 시연이 있었지만, 계약 규모나 주문은 공개되지 않았다. '연간 수십억 달러' 보도는 원문으로 확인되지 않는다.",
-    basis=["L1-E-001", "L1-E-002"])
+    statement="Microsoft와의 냉각 협력은 '협의' 단계로 남아 있다. 2025년 4월 냉각 설비를 쓸 계획이 알려졌고, 12월 기술 시연을 거쳐 2026년 9월 사장단이 냉각·전력·IT 공급 기회를 함께 찾기로 했지만, 주문·금액은 공개되지 않았다. '연간 수십억 달러' 보도는 원문으로 확인되지 않는다.",
+    basis=["L1-E-001", "L1-E-002", "L1-E-012"])
 add(id="L1-I-008", type="해석", importance=2, target="글로벌 비교", direction="중립",
     statement="LG 냉각 사업은 빠르게 크지만 규모는 아직 작다. Vertiv의 분기 매출은 약 33억 달러로, LG전자 ES사업본부 전체 분기 매출(약 2조 7천억 원)보다 크다. LG의 AI 데이터센터 냉각 수주는 반기 6,000억 원 수준이다. 경쟁사가 직접 칩 냉각 인수로 포트폴리오를 넓히는 만큼, CDU 공급망 진입이 LG의 다음 관문이다.",
     basis=["L1-M-009", "L1-M-001", "L1-M-002"])

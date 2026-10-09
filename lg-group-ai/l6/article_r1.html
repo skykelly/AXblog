@@ -1,0 +1,261 @@
+<title>L6 LG 글로벌 AI 동맹 R1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;800&display=swap">
+<style>
+/* Layout: 연구 노트 한 단 — 답 → 서술형 해석 → 근거 표. 기록 번호가 본문의 각주 역할 */
+:root {
+  --paper: #f6f7f9; --ink: #16202b; --muted: #5d6875; --rule: #d6dbe2; --panel: #ffffff;
+  --accent: #1f5f8b; --accent-soft: #e2edf5; --amber: #b4690e; --amber-soft: #f7ead7;
+  --up: #1f7a4d; --down: #b3412f; --flat: #6a7380; --opt: #1f7a4d; --opt-soft: #e1f1e8; --pes: #a3402f; --pes-soft: #f6e3df;
+  --display: "Noto Serif KR", "Apple SD Gothic Neo", serif;
+  --body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #11161c; --ink: #e6ebf1; --muted: #9aa5b1; --rule: #2b333d; --panel: #171e26;
+  --accent: #7fb6dc; --accent-soft: #1b2c3a; --amber: #e2a457; --amber-soft: #33271a;
+  --up: #5fc493; --down: #ec8a78; --flat: #98a2ae; --opt: #6fcf9d; --opt-soft: #17291f; --pes: #ef9a88; --pes-soft: #2f1c18; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --paper: #11161c; --ink: #e6ebf1; --muted: #9aa5b1; --rule: #2b333d; --panel: #171e26;
+  --accent: #7fb6dc; --accent-soft: #1b2c3a; --amber: #e2a457; --amber-soft: #33271a;
+  --up: #5fc493; --down: #ec8a78; --flat: #98a2ae; --opt: #6fcf9d; --opt-soft: #17291f; --pes: #ef9a88; --pes-soft: #2f1c18; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--paper); color: var(--ink); font: 400 16px/1.7 var(--body); padding: 0 20px; }
+main { max-width: 980px; margin: 0 auto; padding-block: 40px 72px; display: grid; gap: 60px; }
+.narrow { max-width: 70ch; }
+a { color: var(--accent); }
+code, .rid { font: 500 12px/1 var(--mono); }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+.eyebrow { font: 500 12px/1.4 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); display: flex; gap: 14px; flex-wrap: wrap; }
+h1 { font: 800 clamp(26px, 4.4vw, 40px)/1.25 var(--display); margin-top: 14px; }
+.question { margin: 16px 0 0; color: var(--muted); font-size: 15px; border-left: 2px solid var(--rule); padding-left: 14px; }
+h2 { font: 600 22px/1.3 var(--display); display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+h2 small { font: 400 13px var(--body); color: var(--muted); }
+section { display: grid; gap: 18px; min-width: 0; }
+.lead { margin: 0; max-width: 70ch; }
+.rid { display: inline-block; padding: 3px 5px; margin: 2px 2px 0 0; border-radius: 3px; background: var(--accent-soft); color: var(--accent); text-decoration: none; vertical-align: 1px; }
+.rid:hover, .rid:focus-visible { outline: 1px solid var(--accent); }
+/* 한 줄 답 */
+.answer { font: 600 clamp(20px, 2.8vw, 26px)/1.55 var(--display); margin: 0; }
+.answer-box { display: grid; gap: 20px; }
+.arows { margin: 0; border-top: 1px solid var(--ink); }
+.arow { display: grid; grid-template-columns: 170px 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+.arow dt { font-weight: 600; }
+.arow dd { margin: 0; min-width: 0; }
+/* 서술형 해석 */
+.narrative { display: grid; gap: 14px; max-width: 70ch; }
+.narrative p { margin: 0; }
+/* 표 */
+.tablewrap { overflow-x: auto; border-top: 1px solid var(--ink); }
+table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 14px; }
+th { text-align: left; font: 500 11px var(--mono); letter-spacing: .05em; color: var(--muted); padding: 10px 8px; border-bottom: 1px solid var(--rule); }
+td { padding: 12px 8px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+td small { display: block; color: var(--muted); font-size: 12px; margin-top: 3px; }
+.num { font: 500 15px var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; }
+.muted { color: var(--muted); }
+.ind { font: 500 12px var(--mono); width: 150px; }
+.ind small { font-family: var(--body); }
+.tgt { font-weight: 600; width: 150px; }
+.asof { font: 400 13px var(--mono); white-space: nowrap; }
+.idc code { color: var(--muted); }
+.src { font-size: 12px; color: var(--muted); margin-top: 6px; }
+.src a { color: var(--muted); }
+.grade { font: 500 10px var(--mono); margin-left: 4px; padding: 1px 4px; border: 1px solid currentColor; border-radius: 2px; }
+.gC { color: var(--amber); }
+.warn, .wk { font: 500 11px var(--mono); color: var(--amber); background: var(--amber-soft); padding: 2px 6px; border-radius: 2px; white-space: nowrap; }
+.dir { font: 500 11px var(--mono); padding: 2px 7px; border-radius: 2px; color: var(--panel); white-space: nowrap; }
+.dir.up { background: var(--up); } .dir.down { background: var(--down); } .dir.flat { background: var(--flat); }
+.fstat { font: 500 11px var(--mono); border: 1px solid var(--accent); color: var(--accent); padding: 2px 6px; border-radius: 2px; white-space: nowrap; }
+/* 사건 */
+.timeline { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
+.timeline li { display: grid; grid-template-columns: 110px 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+.timeline time { font: 500 13px var(--mono); color: var(--muted); padding-top: 2px; }
+.timeline li > div { min-width: 0; }
+/* 시나리오 */
+.scens { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.scen { border-top: 3px solid var(--sc); background: var(--panel); padding: 18px 18px 14px; display: grid; gap: 14px; align-content: start; }
+.scen.opt { --sc: var(--opt); --scs: var(--opt-soft); }
+.scen.pes { --sc: var(--pes); --scs: var(--pes-soft); }
+.scen header { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.sk { font: 600 13px var(--mono); color: var(--sc); letter-spacing: .03em; }
+.scen header code { color: var(--muted); }
+.sstmt { margin: 0; font-size: 15px; }
+.ms { list-style: none; margin: 0; padding: 0 0 0 12px; border-left: 2px solid var(--scs); display: grid; gap: 8px; }
+.ms li { display: grid; grid-template-columns: 70px 1fr; gap: 10px; font-size: 14px; }
+.ms time { font: 500 12px var(--mono); color: var(--sc); padding-top: 2px; }
+.sdl { margin: 0; display: grid; gap: 6px; font-size: 13px; }
+.sdl div { display: grid; grid-template-columns: 70px 1fr; gap: 10px; }
+.sdl dt { color: var(--muted); }
+.sdl dd { margin: 0; min-width: 0; }
+.side { font: 500 11px var(--mono); padding: 2px 7px; border-radius: 2px; white-space: nowrap; margin-right: 4px; }
+.side.opt { color: var(--opt); background: var(--opt-soft); }
+.side.pes { color: var(--pes); background: var(--pes-soft); }
+.subhead { font: 600 15px var(--body); margin: 8px 0 0; }
+/* 사다리 */
+.ladder { border-top: 1px solid var(--ink); }
+.rung { display: grid; grid-template-columns: 150px 170px 170px 1fr; gap: 16px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+.rung[data-frontier="y"] { background: linear-gradient(90deg, var(--amber-soft), transparent 70%); }
+.stage b { display: block; font: 600 18px/1.2 var(--display); }
+.stage span { font: 400 12px var(--mono); color: var(--muted); }
+.region { display: block; font: 500 11px var(--mono); color: var(--muted); letter-spacing: .04em; margin-bottom: 4px; }
+.pips { display: flex; align-items: center; gap: 4px; }
+.pip { width: 16px; height: 8px; border: 1px solid var(--accent); border-radius: 1px; }
+.pip.on { background: var(--accent); }
+.lv { margin-left: 8px; font-size: 14px; font-weight: 500; }
+.why { margin: 0; font-size: 14px; color: var(--muted); min-width: 0; }
+.frontier-note { font-size: 13px; color: var(--amber); font-family: var(--mono); margin: 0; }
+footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 18px; display: grid; gap: 6px; }
+:target { background: var(--accent-soft); }
+@media (max-width: 760px) {
+  .rung { grid-template-columns: 1fr 1fr; }
+  .rung .stage, .rung .why { grid-column: 1 / -1; }
+  .scens { grid-template-columns: 1fr; }
+  .arow, .timeline li { grid-template-columns: 1fr; gap: 4px; }
+}
+
+/* 주도권 지도 (C2) */
+.own { font: 500 12px var(--mono); padding: 3px 8px; border-radius: 2px; white-space: nowrap; display: inline-block; }
+.own.brand { color: var(--up); background: var(--opt-soft); }
+.own.platform { color: var(--accent); background: var(--accent-soft); }
+.own.agent { color: var(--amber); background: var(--amber-soft); }
+.own.contest { color: var(--flat); border: 1px dashed var(--flat); }
+.mapgrid .rung { grid-template-columns: 130px 150px 150px 150px 1fr; }
+@media (max-width: 760px) { .mapgrid .rung { grid-template-columns: 1fr 1fr; } }
+/* 자율 수준 지도 (C4) */
+.mapgrid.auto .rung { grid-template-columns: 130px 220px 220px 1fr; }
+table.levels { min-width: 520px; }
+@media (max-width: 760px) { .mapgrid.auto .rung { grid-template-columns: 1fr; } }
+/* 역량 원장 (I1) */
+.mapgrid.ledger .rung { grid-template-columns: 200px 260px 1fr; }
+@media (max-width: 760px) { .mapgrid.ledger .rung { grid-template-columns: 1fr; } }
+
+/* I3 두 곡선 */
+.curves { display: grid; gap: 14px; margin: 8px 0 18px; }
+.curve { display: grid; grid-template-columns: 150px 1fr; gap: 12px; align-items: center; }
+.curve .cl { font: 600 13px var(--body); }
+.curve .cl small { display: block; font: 400 12px var(--mono); color: var(--muted); }
+.curve .bar { height: 26px; background: var(--accent-soft); border-radius: 2px; position: relative; }
+.curve .bar span { position: absolute; inset: 0 auto 0 0; display: flex; align-items: center; padding: 0 10px; font: 500 12px var(--mono); color: #fff; border-radius: 2px; white-space: nowrap; }
+.curve.inv .bar span { background: var(--accent); }
+.curve.rev .bar span { background: var(--up); }
+.gapnote { border-left: 3px solid var(--amber); padding: 6px 12px; background: var(--amber-soft); font-size: 14px; }
+.mapgrid.layers .rung { grid-template-columns: 150px 200px 110px 1fr; }
+@media (max-width: 720px) { .curve { grid-template-columns: 1fr; } .mapgrid.layers .rung { grid-template-columns: 1fr; } }
+
+/* S1 유입 저울 */
+.balance { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 8px 0 14px; }
+.balance .pan { border: 1px solid var(--rule); border-top: 3px solid var(--down); background: var(--panel); padding: 12px 16px; }
+.balance .pan.gain { border-top-color: var(--up); }
+.balance h4 { margin: 0 0 8px; font: 600 14px var(--body); }
+.balance ul { margin: 0; padding-left: 18px; font-size: 14px; line-height: 1.7; }
+@media (max-width: 720px) { .balance { grid-template-columns: 1fr; } }
+</style>
+<main>
+  <header class="narrow">
+    <div class="eyebrow"><span>LG Group AI</span><span>L6 · Global AI Alliance / Open Innovation</span><span>R1 기준 회차 · 2026-10-09</span></div>
+    <h1>LG의 AI 동맹은 무엇을 바꾸고 있나</h1>
+    <p class="question">고정 질문 v1.0 — LG는 자체 AI 역량과 외부 파트너를 어떻게 결합하며, 협력이 기술·고객·공급망·시장 접근에 어떤 변화를 만드는가?</p>
+  </header>
+  <section class="answer-box"><h2>한 줄 답</h2>
+    <p class="answer narrow">2026년 10월 현재 LG의 AI 동맹 가운데 상용 계약까지 간 것은 LG가 &#x27;고객&#x27;인 협력이다. Palantir(그룹 PoC → 본 계약)와 Anthropic(그룹 통합 Claude 계약)이 그렇다. LG가 &#x27;공급자&#x27;가 되는 협력은 공급망 입구에 섰다. NVIDIA와는 세 분야·여섯 계열사가 공동개발 중이고 LG전자 CDU와 엔솔 ESS가 DSX Ready에 들어갔으며, Microsoft와는 9월 냉각·전력·IT 공급 기회를 함께 찾기로 했다. 다만 의사결정(Palantir)·로봇 두뇌(Skild·GR00T)·컴퓨팅(NVIDIA) 같은 핵심층은 외부에 기대고 있다. <a class="rid" href="#L6-I-001" title="상용 계약까지 간 협력은 LG가 &#x27;고객&#x27;인 경우다. Palantir와 Anthropic은 그룹 도입 계약으로 이어졌지만, LG가 &#x27;공급자&#x27;가 되는 NVIDIA·Microsoft 협력은 공동개발·공급 기회 탐색 단계다. 협력이 LG의 매출로 바뀌는 것은 아직 이르다.">L6-I-001</a><a class="rid" href="#L6-I-002" title="NVIDIA는 가장 넓은 축이다. 세 분야에 여섯 계열사가 참여하고, LG전자 CDU와 LG에너지솔루션 ESS가 DSX Ready 제품에 들어가 NVIDIA 기반 AI 팩토리의 공급망 입구에 섰다. 레퍼런스 로봇 공동 개발은 피지컬 AI의 기술 접점이다.">L6-I-002</a><a class="rid" href="#L6-I-003" title="Microsoft와의 관계는 LG가 고객이자 공급자 후보인 양면 구조다. LG는 사무직에 Copilot 등을 도입하고, Microsoft 데이터센터에 냉각·전력·IT를 공급할 기회를 찾는다. 공급 쪽은 금액이 공개되지 않은 탐색 단계다.">L6-I-003</a><a class="rid" href="#L6-I-004" title="핵심층을 외부가 쥐고 있다. 의사결정·온톨로지는 Palantir, 로봇 두뇌는 Skild AI와 NVIDIA GR00T, 컴퓨팅은 NVIDIA에 기댄다. LG가 직접 쥔 축은 EXAONE, PhysicalWorks 같은 운영 플랫폼, 그리고 현장 데이터다.">L6-I-004</a></p><dl class="arows"><div class="arow"><dt>상용 계약 (LG가 고객)</dt><dd>Palantir: 계열사 PoC 뒤 본 계약, FDE 조직. Anthropic: 그룹 통합 Claude Enterprise(2023년부터 지분 보유). <a class="rid" href="#L6-E-002" title="LG CNS가 Palantir와 전략적 파트너십을 맺었다. LG 계열사 품질 관리 PoC 뒤 본 계약이 됐고, 전방배치 엔지니어링(FDE) 조직을 만들어 그룹에서 외부로 넓힌다.">L6-E-002</a><a class="rid" href="#L6-E-006" title="LG CNS가 Anthropic과 LG그룹 전 계열사에 적용할 수 있는 Claude Enterprise 통합 계약을 맺었다. LG테크놀로지벤처스는 2023년부터 Anthropic 지분을 갖고 있다.">L6-E-006</a></dd></div><div class="arow"><dt>공급망 입구 (LG가 공급자)</dt><dd>NVIDIA: M.A.P. 세 분야·여섯 계열사, CDU·ESS가 DSX Ready에 포함. Microsoft: 냉각·전력·IT 공급 기회 탐색(금액 미공개). <a class="rid" href="#L6-M-001" title="LG–NVIDIA M.A.P. 협력에는 모빌리티·AI 인프라·피지컬 AI 세 분야에 LG전자·LG이노텍·LG유플러스·LG CNS·LG에너지솔루션·LG AI연구원 여섯 곳이 참여한다. 회동 2주 뒤 30여 명 규모의 워킹그룹이 NVIDIA 본사를 찾아 레퍼런스 로봇 공동 개발 등 우선 과제를 논의했다.">L6-M-001</a><a class="rid" href="#L6-M-002" title="LG전자의 대용량 CDU와 LG에너지솔루션의 ESS가 NVIDIA AI 팩토리 프로그램 &#x27;DSX Ready&#x27; 제품에 포함됐다.">L6-M-002</a><a class="rid" href="#L6-M-003" title="LG그룹은 Microsoft와 AI 데이터센터 인프라(냉각·전력·IT 공급 기회 탐색), 사무직 AX(Copilot 등 도입), 피지컬 AI(제조·물류·모빌리티 모델 학습과 데이터 플라이휠) 세 분야의 전략적 파트너십을 맺었다. 구광모 회장과 계열사 CEO 5명이 참석했다.">L6-M-003</a></dd></div><div class="arow"><dt>공동개발·투자</dt><dd>Skild AI(RFM, 지분 투자), Dexmate(투자 3개월 뒤 물류 실증), D&amp;D Pharmatech·LabGenius(신약), Aeva(라이다), CuspAI(소재). <a class="rid" href="#L6-E-001" title="LG CNS가 Skild AI와 국내 첫 전략적 협력을 맺고, LG테크놀로지벤처스를 통해 지분 투자했다. Skild의 로봇 파운데이션 모델을 제조·물류 데이터로 미세 조정해 산업용 휴머노이드 솔루션을 만든다.">L6-E-001</a><a class="rid" href="#L6-E-007" title="LG CNS가 LX판토스 물류센터 휴머노이드 실증에 3월 투자한 미국 Dexmate의 바퀴형 휴머노이드를 투입하기로 했다.">L6-E-007</a><a class="rid" href="#L6-E-008" title="LG AI연구원이 D&amp;D Pharmatech과, LG화학이 LabGenius와 AI 신약 협력을 잇달아 맺었다. LabGenius와는 선급금·연구비를 내는 라이선스 옵션 계약이다.">L6-E-008</a><a class="rid" href="#L6-E-010" title="LG CNS가 CuspAI 주도 소재 AI 협력체의 창립 멤버이자 국내 플랫폼 공급 파트너가 됐다.">L6-E-010</a></dd></div><div class="arow"><dt>재판매</dt><dd>LG CNS가 ChatGPT Enterprise 약 10곳, Palantir·CuspAI를 외부 고객에 공급. <a class="rid" href="#L6-M-007" title="LG CNS가 재판매하는 ChatGPT Enterprise는 1분기 기준 약 10곳의 고객이 계약했다.">L6-M-007</a><a class="rid" href="#L6-I-006" title="파트너 기술은 LG CNS의 외부 사업이 된다. ChatGPT Enterprise를 약 10곳에 팔았고, Palantir는 FDE 조직으로, CuspAI는 국내 소재 기업 공급으로 재판매한다. 협력이 내재화되기보다 &#x27;유통&#x27;되는 경로다.">L6-I-006</a></dd></div><div class="arow"><dt>종속 위험</dt><dd>의사결정·로봇 두뇌·컴퓨팅은 외부. LG가 쥔 축은 EXAONE, PhysicalWorks, 현장 데이터. <a class="rid" href="#L6-I-004" title="핵심층을 외부가 쥐고 있다. 의사결정·온톨로지는 Palantir, 로봇 두뇌는 Skild AI와 NVIDIA GR00T, 컴퓨팅은 NVIDIA에 기댄다. LG가 직접 쥔 축은 EXAONE, PhysicalWorks 같은 운영 플랫폼, 그리고 현장 데이터다.">L6-I-004</a></dd></div></dl></section>
+  <section><h2>해석</h2><div class="narrative"><p>상용 계약까지 간 협력은 LG가 고객인 쪽이다. LG CNS는 3월 Palantir와 전략적 파트너십을 맺었는데, LG 계열사 품질 관리 PoC를 거쳐 본 계약이 됐다. 6월에는 Anthropic과 그룹 전 계열사에 적용할 수 있는 Claude Enterprise 통합 계약을 맺었다. LG테크놀로지벤처스가 2023년부터 지분을 가진 회사다. 반면 LG가 공급자가 되는 협력은 아직 계약 이전이다. <a class="rid" href="#L6-E-002" title="LG CNS가 Palantir와 전략적 파트너십을 맺었다. LG 계열사 품질 관리 PoC 뒤 본 계약이 됐고, 전방배치 엔지니어링(FDE) 조직을 만들어 그룹에서 외부로 넓힌다.">L6-E-002</a><a class="rid" href="#L6-E-006" title="LG CNS가 Anthropic과 LG그룹 전 계열사에 적용할 수 있는 Claude Enterprise 통합 계약을 맺었다. LG테크놀로지벤처스는 2023년부터 Anthropic 지분을 갖고 있다.">L6-E-006</a><a class="rid" href="#L6-I-001" title="상용 계약까지 간 협력은 LG가 &#x27;고객&#x27;인 경우다. Palantir와 Anthropic은 그룹 도입 계약으로 이어졌지만, LG가 &#x27;공급자&#x27;가 되는 NVIDIA·Microsoft 협력은 공동개발·공급 기회 탐색 단계다. 협력이 LG의 매출로 바뀌는 것은 아직 이르다.">L6-I-001</a></p><p>NVIDIA는 가장 넓은 축이다. 6월 구광모 회장과 젠슨 황 CEO가 모빌리티·AI 인프라·피지컬 AI의 M.A.P. 협력과 레퍼런스 로봇 공동 개발에 합의했고, 여섯 계열사가 참여한다. 2주 뒤 30여 명의 워킹그룹이 NVIDIA 본사를 찾았다. 9월에는 LG전자의 대용량 CDU와 LG에너지솔루션의 ESS가 NVIDIA의 AI 팩토리 프로그램 &#x27;DSX Ready&#x27; 제품에 들어가, NVIDIA 기반 데이터센터의 공급망 입구에 섰다. <a class="rid" href="#L6-E-005" title="구광모 회장과 젠슨 황 CEO가 서울에서 만나 LG–NVIDIA M.A.P.(모빌리티·AI 인프라·피지컬 AI) 협력과 레퍼런스 로봇 공동 개발에 합의했다.">L6-E-005</a><a class="rid" href="#L6-M-001" title="LG–NVIDIA M.A.P. 협력에는 모빌리티·AI 인프라·피지컬 AI 세 분야에 LG전자·LG이노텍·LG유플러스·LG CNS·LG에너지솔루션·LG AI연구원 여섯 곳이 참여한다. 회동 2주 뒤 30여 명 규모의 워킹그룹이 NVIDIA 본사를 찾아 레퍼런스 로봇 공동 개발 등 우선 과제를 논의했다.">L6-M-001</a><a class="rid" href="#L6-E-009" title="LG 계열사 경영진과 실무진 30여 명이 NVIDIA 본사를 찾아 피지컬 AI·로보틱스 우선 과제를 논의했다.">L6-E-009</a><a class="rid" href="#L6-M-002" title="LG전자의 대용량 CDU와 LG에너지솔루션의 ESS가 NVIDIA AI 팩토리 프로그램 &#x27;DSX Ready&#x27; 제품에 포함됐다.">L6-M-002</a><a class="rid" href="#L6-I-002" title="NVIDIA는 가장 넓은 축이다. 세 분야에 여섯 계열사가 참여하고, LG전자 CDU와 LG에너지솔루션 ESS가 DSX Ready 제품에 들어가 NVIDIA 기반 AI 팩토리의 공급망 입구에 섰다. 레퍼런스 로봇 공동 개발은 피지컬 AI의 기술 접점이다.">L6-I-002</a></p><p>Microsoft와는 LG가 고객이자 공급자 후보인 양면 관계다. 9월 LG그룹 사장단이 Microsoft 본사에서 AI 데이터센터·AX·피지컬 AI 세 분야의 전략적 파트너십을 맺었다. LG는 사무직에 Copilot 등을 도입하고, Microsoft 데이터센터에 냉각·전력·IT를 공급할 기회를 함께 찾는다. 공급 쪽은 금액·물량이 공개되지 않은 탐색 단계다. <a class="rid" href="#L6-E-011" title="LG그룹 사장단이 Microsoft 본사에서 사티아 나델라 CEO와 AI 데이터센터·AX·피지컬 AI 세 분야의 전략적 파트너십을 맺었다. 같은 날 LG전자 CDU와 LG에너지솔루션 ESS가 NVIDIA DSX Ready 제품에 포함됐다.">L6-E-011</a><a class="rid" href="#L6-M-003" title="LG그룹은 Microsoft와 AI 데이터센터 인프라(냉각·전력·IT 공급 기회 탐색), 사무직 AX(Copilot 등 도입), 피지컬 AI(제조·물류·모빌리티 모델 학습과 데이터 플라이휠) 세 분야의 전략적 파트너십을 맺었다. 구광모 회장과 계열사 CEO 5명이 참석했다.">L6-M-003</a><a class="rid" href="#L6-I-003" title="Microsoft와의 관계는 LG가 고객이자 공급자 후보인 양면 구조다. LG는 사무직에 Copilot 등을 도입하고, Microsoft 데이터센터에 냉각·전력·IT를 공급할 기회를 찾는다. 공급 쪽은 금액이 공개되지 않은 탐색 단계다.">L6-I-003</a></p><p>CVC 투자는 협력과 실증으로 이어지는 옵션이다. 확인된 AI·로봇 지분 투자는 Anthropic, Skild AI, Dexmate, 스마트레이더시스템 네 건이다. 가장 빠른 전환은 Dexmate로, 3월 투자 뒤 6월 LX판토스 물류 실증에 투입됐다. 파트너 기술은 LG CNS의 외부 사업으로도 흐른다. ChatGPT Enterprise를 약 10곳에 팔았고, CuspAI 소재 AI 협력체(48개 기관)에서는 국내 공급 파트너를 맡았다. <a class="rid" href="#L6-M-004" title="확인된 AI·로봇 지분 투자는 네 건이다. LG테크놀로지벤처스의 Anthropic(2023)·Skild AI(2025) 투자, LG CNS의 Dexmate 투자(2026년 3월), LG이노텍의 4D 이미징 레이더 기업 스마트레이더시스템 지분 4.9%다.">L6-M-004</a><a class="rid" href="#L6-E-007" title="LG CNS가 LX판토스 물류센터 휴머노이드 실증에 3월 투자한 미국 Dexmate의 바퀴형 휴머노이드를 투입하기로 했다.">L6-E-007</a><a class="rid" href="#L6-M-007" title="LG CNS가 재판매하는 ChatGPT Enterprise는 1분기 기준 약 10곳의 고객이 계약했다.">L6-M-007</a><a class="rid" href="#L6-E-010" title="LG CNS가 CuspAI 주도 소재 AI 협력체의 창립 멤버이자 국내 플랫폼 공급 파트너가 됐다.">L6-E-010</a><a class="rid" href="#L6-I-005" title="CVC 투자가 협력과 실증으로 이어지는 경로가 생겼다. 가장 빠른 사례는 Dexmate로, 3월 투자 뒤 6월 LX판토스 물류 실증에 투입됐다. Anthropic은 2023년 투자 뒤 2026년 그룹 통합 계약으로 이어졌다.">L6-I-005</a><a class="rid" href="#L6-I-006" title="파트너 기술은 LG CNS의 외부 사업이 된다. ChatGPT Enterprise를 약 10곳에 팔았고, Palantir는 FDE 조직으로, CuspAI는 국내 소재 기업 공급으로 재판매한다. 협력이 내재화되기보다 &#x27;유통&#x27;되는 경로다.">L6-I-006</a></p><p>빠른 속도의 이면에는 종속 위험이 있다. 구광모 회장이 4월 실리콘밸리(Palantir·Skild), 6월 젠슨 황, 9월 사티아 나델라를 직접 만나며 협력을 끌어올렸지만, 의사결정·온톨로지는 Palantir, 로봇 두뇌는 Skild AI와 NVIDIA GR00T, 컴퓨팅은 NVIDIA에 기댄다. LG가 직접 쥔 축은 EXAONE, PhysicalWorks 같은 운영 플랫폼, 그리고 공장·배터리·차량의 현장 데이터다. <a class="rid" href="#L6-E-003" title="구광모 회장이 실리콘밸리에서 Palantir CEO 알렉스 카프, Skild AI 공동 창업자, LG테크놀로지벤처스 경영진을 만났다. 온톨로지·AI 의사결정 체계와 휴머노이드 시연을 살폈고, 구체적 계약 발표는 없었다.">L6-E-003</a><a class="rid" href="#L6-E-005" title="구광모 회장과 젠슨 황 CEO가 서울에서 만나 LG–NVIDIA M.A.P.(모빌리티·AI 인프라·피지컬 AI) 협력과 레퍼런스 로봇 공동 개발에 합의했다.">L6-E-005</a><a class="rid" href="#L6-E-011" title="LG그룹 사장단이 Microsoft 본사에서 사티아 나델라 CEO와 AI 데이터센터·AX·피지컬 AI 세 분야의 전략적 파트너십을 맺었다. 같은 날 LG전자 CDU와 LG에너지솔루션 ESS가 NVIDIA DSX Ready 제품에 포함됐다.">L6-E-011</a><a class="rid" href="#L6-I-004" title="핵심층을 외부가 쥐고 있다. 의사결정·온톨로지는 Palantir, 로봇 두뇌는 Skild AI와 NVIDIA GR00T, 컴퓨팅은 NVIDIA에 기댄다. LG가 직접 쥔 축은 EXAONE, PhysicalWorks 같은 운영 플랫폼, 그리고 현장 데이터다.">L6-I-004</a><a class="rid" href="#L6-I-007" title="오너가 직접 협력 속도를 끌어올린다. 구광모 회장은 4월 실리콘밸리, 6월 젠슨 황, 9월 사티아 나델라를 직접 만났고, NVIDIA 회동 2주 만에 30여 명의 워킹그룹이 꾸려졌다.">L6-I-007</a></p></div>
+    <div class="tablewrap"><table><thead><tr><th>방향</th><th>대상</th><th>해석</th><th>근거</th><th>기록</th></tr></thead><tbody><tr id="L6-I-001"><td><span class="dir flat">중립</span></td>
+  <td class="tgt">파트너별 단계 분포</td><td>상용 계약까지 간 협력은 LG가 &#x27;고객&#x27;인 경우다. Palantir와 Anthropic은 그룹 도입 계약으로 이어졌지만, LG가 &#x27;공급자&#x27;가 되는 NVIDIA·Microsoft 협력은 공동개발·공급 기회 탐색 단계다. 협력이 LG의 매출로 바뀌는 것은 아직 이르다.</td><td><a class="rid" href="#L6-E-002" title="LG CNS가 Palantir와 전략적 파트너십을 맺었다. LG 계열사 품질 관리 PoC 뒤 본 계약이 됐고, 전방배치 엔지니어링(FDE) 조직을 만들어 그룹에서 외부로 넓힌다.">L6-E-002</a><a class="rid" href="#L6-E-006" title="LG CNS가 Anthropic과 LG그룹 전 계열사에 적용할 수 있는 Claude Enterprise 통합 계약을 맺었다. LG테크놀로지벤처스는 2023년부터 Anthropic 지분을 갖고 있다.">L6-E-006</a><a class="rid" href="#L6-E-005" title="구광모 회장과 젠슨 황 CEO가 서울에서 만나 LG–NVIDIA M.A.P.(모빌리티·AI 인프라·피지컬 AI) 협력과 레퍼런스 로봇 공동 개발에 합의했다.">L6-E-005</a><a class="rid" href="#L6-M-003" title="LG그룹은 Microsoft와 AI 데이터센터 인프라(냉각·전력·IT 공급 기회 탐색), 사무직 AX(Copilot 등 도입), 피지컬 AI(제조·물류·모빌리티 모델 학습과 데이터 플라이휠) 세 분야의 전략적 파트너십을 맺었다. 구광모 회장과 계열사 CEO 5명이 참석했다.">L6-M-003</a></td><td class="idc"><code>L6-I-001</code></td></tr><tr id="L6-I-002"><td><span class="dir up">강화</span></td>
+  <td class="tgt">NVIDIA</td><td>NVIDIA는 가장 넓은 축이다. 세 분야에 여섯 계열사가 참여하고, LG전자 CDU와 LG에너지솔루션 ESS가 DSX Ready 제품에 들어가 NVIDIA 기반 AI 팩토리의 공급망 입구에 섰다. 레퍼런스 로봇 공동 개발은 피지컬 AI의 기술 접점이다.</td><td><a class="rid" href="#L6-M-001" title="LG–NVIDIA M.A.P. 협력에는 모빌리티·AI 인프라·피지컬 AI 세 분야에 LG전자·LG이노텍·LG유플러스·LG CNS·LG에너지솔루션·LG AI연구원 여섯 곳이 참여한다. 회동 2주 뒤 30여 명 규모의 워킹그룹이 NVIDIA 본사를 찾아 레퍼런스 로봇 공동 개발 등 우선 과제를 논의했다.">L6-M-001</a><a class="rid" href="#L6-M-002" title="LG전자의 대용량 CDU와 LG에너지솔루션의 ESS가 NVIDIA AI 팩토리 프로그램 &#x27;DSX Ready&#x27; 제품에 포함됐다.">L6-M-002</a><a class="rid" href="#L6-E-005" title="구광모 회장과 젠슨 황 CEO가 서울에서 만나 LG–NVIDIA M.A.P.(모빌리티·AI 인프라·피지컬 AI) 협력과 레퍼런스 로봇 공동 개발에 합의했다.">L6-E-005</a><a class="rid" href="#L6-E-009" title="LG 계열사 경영진과 실무진 30여 명이 NVIDIA 본사를 찾아 피지컬 AI·로보틱스 우선 과제를 논의했다.">L6-E-009</a></td><td class="idc"><code>L6-I-002</code></td></tr><tr id="L6-I-003"><td><span class="dir up">강화</span></td>
+  <td class="tgt">Microsoft</td><td>Microsoft와의 관계는 LG가 고객이자 공급자 후보인 양면 구조다. LG는 사무직에 Copilot 등을 도입하고, Microsoft 데이터센터에 냉각·전력·IT를 공급할 기회를 찾는다. 공급 쪽은 금액이 공개되지 않은 탐색 단계다.</td><td><a class="rid" href="#L6-M-003" title="LG그룹은 Microsoft와 AI 데이터센터 인프라(냉각·전력·IT 공급 기회 탐색), 사무직 AX(Copilot 등 도입), 피지컬 AI(제조·물류·모빌리티 모델 학습과 데이터 플라이휠) 세 분야의 전략적 파트너십을 맺었다. 구광모 회장과 계열사 CEO 5명이 참석했다.">L6-M-003</a><a class="rid" href="#L6-E-011" title="LG그룹 사장단이 Microsoft 본사에서 사티아 나델라 CEO와 AI 데이터센터·AX·피지컬 AI 세 분야의 전략적 파트너십을 맺었다. 같은 날 LG전자 CDU와 LG에너지솔루션 ESS가 NVIDIA DSX Ready 제품에 포함됐다.">L6-E-011</a></td><td class="idc"><code>L6-I-003</code></td></tr><tr id="L6-I-004"><td><span class="dir down">약화</span></td>
+  <td class="tgt">종속 위험</td><td>핵심층을 외부가 쥐고 있다. 의사결정·온톨로지는 Palantir, 로봇 두뇌는 Skild AI와 NVIDIA GR00T, 컴퓨팅은 NVIDIA에 기댄다. LG가 직접 쥔 축은 EXAONE, PhysicalWorks 같은 운영 플랫폼, 그리고 현장 데이터다.</td><td><a class="rid" href="#L6-E-002" title="LG CNS가 Palantir와 전략적 파트너십을 맺었다. LG 계열사 품질 관리 PoC 뒤 본 계약이 됐고, 전방배치 엔지니어링(FDE) 조직을 만들어 그룹에서 외부로 넓힌다.">L6-E-002</a><a class="rid" href="#L6-E-001" title="LG CNS가 Skild AI와 국내 첫 전략적 협력을 맺고, LG테크놀로지벤처스를 통해 지분 투자했다. Skild의 로봇 파운데이션 모델을 제조·물류 데이터로 미세 조정해 산업용 휴머노이드 솔루션을 만든다.">L6-E-001</a><a class="rid" href="#L6-E-005" title="구광모 회장과 젠슨 황 CEO가 서울에서 만나 LG–NVIDIA M.A.P.(모빌리티·AI 인프라·피지컬 AI) 협력과 레퍼런스 로봇 공동 개발에 합의했다.">L6-E-005</a></td><td class="idc"><code>L6-I-004</code></td></tr><tr id="L6-I-005"><td><span class="dir up">강화</span></td>
+  <td class="tgt">CVC 옵션</td><td>CVC 투자가 협력과 실증으로 이어지는 경로가 생겼다. 가장 빠른 사례는 Dexmate로, 3월 투자 뒤 6월 LX판토스 물류 실증에 투입됐다. Anthropic은 2023년 투자 뒤 2026년 그룹 통합 계약으로 이어졌다.</td><td><a class="rid" href="#L6-M-004" title="확인된 AI·로봇 지분 투자는 네 건이다. LG테크놀로지벤처스의 Anthropic(2023)·Skild AI(2025) 투자, LG CNS의 Dexmate 투자(2026년 3월), LG이노텍의 4D 이미징 레이더 기업 스마트레이더시스템 지분 4.9%다.">L6-M-004</a><a class="rid" href="#L6-E-007" title="LG CNS가 LX판토스 물류센터 휴머노이드 실증에 3월 투자한 미국 Dexmate의 바퀴형 휴머노이드를 투입하기로 했다.">L6-E-007</a><a class="rid" href="#L6-E-006" title="LG CNS가 Anthropic과 LG그룹 전 계열사에 적용할 수 있는 Claude Enterprise 통합 계약을 맺었다. LG테크놀로지벤처스는 2023년부터 Anthropic 지분을 갖고 있다.">L6-E-006</a></td><td class="idc"><code>L6-I-005</code></td></tr><tr id="L6-I-006"><td><span class="dir up">강화</span></td>
+  <td class="tgt">파트너 기술 재판매</td><td>파트너 기술은 LG CNS의 외부 사업이 된다. ChatGPT Enterprise를 약 10곳에 팔았고, Palantir는 FDE 조직으로, CuspAI는 국내 소재 기업 공급으로 재판매한다. 협력이 내재화되기보다 &#x27;유통&#x27;되는 경로다.</td><td><a class="rid" href="#L6-M-007" title="LG CNS가 재판매하는 ChatGPT Enterprise는 1분기 기준 약 10곳의 고객이 계약했다.">L6-M-007</a><a class="rid" href="#L6-E-002" title="LG CNS가 Palantir와 전략적 파트너십을 맺었다. LG 계열사 품질 관리 PoC 뒤 본 계약이 됐고, 전방배치 엔지니어링(FDE) 조직을 만들어 그룹에서 외부로 넓힌다.">L6-E-002</a><a class="rid" href="#L6-E-010" title="LG CNS가 CuspAI 주도 소재 AI 협력체의 창립 멤버이자 국내 플랫폼 공급 파트너가 됐다.">L6-E-010</a></td><td class="idc"><code>L6-I-006</code></td></tr><tr id="L6-I-007"><td><span class="dir up">강화</span></td>
+  <td class="tgt">실행 속도</td><td>오너가 직접 협력 속도를 끌어올린다. 구광모 회장은 4월 실리콘밸리, 6월 젠슨 황, 9월 사티아 나델라를 직접 만났고, NVIDIA 회동 2주 만에 30여 명의 워킹그룹이 꾸려졌다.</td><td><a class="rid" href="#L6-E-003" title="구광모 회장이 실리콘밸리에서 Palantir CEO 알렉스 카프, Skild AI 공동 창업자, LG테크놀로지벤처스 경영진을 만났다. 온톨로지·AI 의사결정 체계와 휴머노이드 시연을 살폈고, 구체적 계약 발표는 없었다.">L6-E-003</a><a class="rid" href="#L6-E-005" title="구광모 회장과 젠슨 황 CEO가 서울에서 만나 LG–NVIDIA M.A.P.(모빌리티·AI 인프라·피지컬 AI) 협력과 레퍼런스 로봇 공동 개발에 합의했다.">L6-E-005</a><a class="rid" href="#L6-E-009" title="LG 계열사 경영진과 실무진 30여 명이 NVIDIA 본사를 찾아 피지컬 AI·로보틱스 우선 과제를 논의했다.">L6-E-009</a><a class="rid" href="#L6-E-011" title="LG그룹 사장단이 Microsoft 본사에서 사티아 나델라 CEO와 AI 데이터센터·AX·피지컬 AI 세 분야의 전략적 파트너십을 맺었다. 같은 날 LG전자 CDU와 LG에너지솔루션 ESS가 NVIDIA DSX Ready 제품에 포함됐다.">L6-E-011</a></td><td class="idc"><code>L6-I-007</code></td></tr></tbody></table></div></section>
+  <section><h2>주요 사건 <small>최신순 · 원문 확인된 것만</small></h2><p class="lead">9월 Microsoft 사장단 파트너십과 NVIDIA DSX Ready 포함이 가장 최근의 큰 사건이다. 6월에는 NVIDIA M.A.P.·Claude Enterprise·신약 협력이 몰렸고, 3월 Palantir 본 계약과 4월 구광모 회장의 실리콘밸리 방문이 그 앞에 있다.</p><ul class="timeline"><li id="L6-E-011"><time>2026-09-21</time><div><b>LG·Microsoft·NVIDIA</b> LG그룹 사장단이 Microsoft 본사에서 사티아 나델라 CEO와 AI 데이터센터·AX·피지컬 AI 세 분야의 전략적 파트너십을 맺었다. 같은 날 LG전자 CDU와 LG에너지솔루션 ESS가 NVIDIA DSX Ready 제품에 포함됐다.
+  <div class="src"><a href="https://economist.co.kr/article/view/ecn202609220008" target="_blank" rel="noopener">이코노미스트 (LG 발표)</a><span class="grade gB">B</span> <code>L6-E-011</code></div></div></li><li id="L6-E-010"><time>2026-07-27</time><div><b>LG CNS</b> LG CNS가 CuspAI 주도 소재 AI 협력체의 창립 멤버이자 국내 플랫폼 공급 파트너가 됐다.
+  <div class="src"><a href="https://view.asiae.co.kr/en/article/2026072710221174471" target="_blank" rel="noopener">Asia Economy (LG CNS 발표)</a><span class="grade gB">B</span> <code>L6-E-010</code></div></div></li><li id="L6-E-009"><time>2026-06-22</time><div><b>LG·NVIDIA</b> LG 계열사 경영진과 실무진 30여 명이 NVIDIA 본사를 찾아 피지컬 AI·로보틱스 우선 과제를 논의했다.
+  <div class="src"><a href="https://www.heraldk.com/article/2026062102354578033" target="_blank" rel="noopener">헤럴드경제</a><span class="grade gB">B</span> <code>L6-E-009</code></div></div></li><li id="L6-E-008"><time>2026-06-18</time><div><b>LG AI연구원·LG화학</b> LG AI연구원이 D&amp;D Pharmatech과, LG화학이 LabGenius와 AI 신약 협력을 잇달아 맺었다. LabGenius와는 선급금·연구비를 내는 라이선스 옵션 계약이다.
+  <div class="src"><a href="https://www.biopharminternational.com/view/lg-ai-research-d-d-pharmatech-partner-to-advance-ai-driven-oral-peptide-drug-discovery" target="_blank" rel="noopener">BioPharm International</a><span class="grade gB">B</span> · <a href="https://www.newspim.com/news/view/20260618000055" target="_blank" rel="noopener">뉴스핌 (LG화학 발표)</a><span class="grade gB">B</span> <code>L6-E-008</code></div></div></li><li id="L6-E-007"><time>2026-06-11</time><div><b>LG CNS</b> LG CNS가 LX판토스 물류센터 휴머노이드 실증에 3월 투자한 미국 Dexmate의 바퀴형 휴머노이드를 투입하기로 했다.
+  <div class="src"><a href="https://www.dailian.co.kr/news/view/1654748/LG-CNSLX%ED%8C%90%ED%86%A0%EC%8A%A4-%EB%AC%BC%EB%A5%98%EC%84%BC%ED%84%B0-%ED%9C%B4%EB%A8%B8%EB%85%B8-2026" target="_blank" rel="noopener">데일리안 (LG CNS 발표)</a><span class="grade gB">B</span> <code>L6-E-007</code></div></div></li><li id="L6-E-006"><time>2026-06-09</time><div><b>LG CNS·Anthropic</b> LG CNS가 Anthropic과 LG그룹 전 계열사에 적용할 수 있는 Claude Enterprise 통합 계약을 맺었다. LG테크놀로지벤처스는 2023년부터 Anthropic 지분을 갖고 있다.
+  <div class="src"><a href="https://view.asiae.co.kr/article/2026060908300307384" target="_blank" rel="noopener">아시아경제 (LG CNS 발표)</a><span class="grade gB">B</span> <code>L6-E-006</code></div></div></li><li id="L6-E-005"><time>2026-06-08</time><div><b>LG·NVIDIA</b> 구광모 회장과 젠슨 황 CEO가 서울에서 만나 LG–NVIDIA M.A.P.(모빌리티·AI 인프라·피지컬 AI) 협력과 레퍼런스 로봇 공동 개발에 합의했다.
+  <div class="src"><a href="https://www.thailand-business-news.com/pr-news/lg-teams-with-nvidia-to-shape-the-future-with-m-a-p-mobility-ai-infra-physical-ai" target="_blank" rel="noopener">PR Newswire (LG 발표)</a><span class="grade gA">A</span> · <a href="https://www.heraldk.com/article/2026062102354578033" target="_blank" rel="noopener">헤럴드경제</a><span class="grade gB">B</span> <code>L6-E-005</code></div></div></li><li id="L6-E-004"><time>2026-04-03</time><div><b>LG에너지솔루션</b> LG에너지솔루션이 GM·Magna·Wipro가 세운 차량 SW 마켓 SDVerse에 배터리 기업 최초로 합류했다.
+  <div class="src"><a href="https://www.heraldk.com/article/2026040215280143224" target="_blank" rel="noopener">헤럴드경제 (LG에너지솔루션 발표)</a><span class="grade gB">B</span> <code>L6-E-004</code></div></div></li><li id="L6-E-003"><time>2026-04-02</time><div><b>LG</b> 구광모 회장이 실리콘밸리에서 Palantir CEO 알렉스 카프, Skild AI 공동 창업자, LG테크놀로지벤처스 경영진을 만났다. 온톨로지·AI 의사결정 체계와 휴머노이드 시연을 살폈고, 구체적 계약 발표는 없었다.
+  <div class="src"><a href="https://www.heraldk.com/article/2026040617000044878" target="_blank" rel="noopener">헤럴드경제 (LG 발표)</a><span class="grade gB">B</span> <code>L6-E-003</code></div></div></li><li id="L6-E-002"><time>2026-03-12</time><div><b>LG CNS·Palantir</b> LG CNS가 Palantir와 전략적 파트너십을 맺었다. LG 계열사 품질 관리 PoC 뒤 본 계약이 됐고, 전방배치 엔지니어링(FDE) 조직을 만들어 그룹에서 외부로 넓힌다.
+  <div class="src"><a href="https://byline.network/2026/03/12-548/" target="_blank" rel="noopener">바이라인네트워크 (LG CNS 발표)</a><span class="grade gB">B</span> <code>L6-E-002</code></div></div></li><li id="L6-E-001"><time>2025-06-17</time><div><b>LG CNS·Skild AI</b> LG CNS가 Skild AI와 국내 첫 전략적 협력을 맺고, LG테크놀로지벤처스를 통해 지분 투자했다. Skild의 로봇 파운데이션 모델을 제조·물류 데이터로 미세 조정해 산업용 휴머노이드 솔루션을 만든다.
+  <div class="src"><a href="https://www.itworld.co.kr/article/4007927/lg-cns-ai-로봇-기업-스킬드ai와-전략적-협력-발표.html" target="_blank" rel="noopener">ITWorld (LG CNS 발표)</a><span class="grade gB">B</span> <code>L6-E-001</code></div></div></li></ul></section>
+  <section><h2>전망 <small>2027년 말까지, 동맹이 공급 계약이 될까</small></h2><p class="lead">2027년 말을 기준으로 두 시나리오를 세웠다. 갈림길은 협력이 LG의 공급 계약(NVIDIA·Microsoft)과 현장 성과(외부 로봇 파운데이션 모델)로 이어지는지, 아니면 회동·MOU·프로그램 참여에 머물며 외부 의존만 깊어지는지다.</p>
+    <div class="scens"><article class="scen opt" id="L6-F-101"><header><span class="sk">낙관 · Optimistic</span><code>L6-F-101</code></header>
+  <p class="sstmt">2027년 말까지 협력이 LG의 공급망 진입과 고객 확보로 이어진다. NVIDIA·Microsoft 관련 LG 제품 공급 계약이 공식화되고, 외부 로봇 파운데이션 모델이 LG 현장에서 성과를 내며, 파트너 기술을 결합한 LG CNS 외부 고객이 늘어난다.</p><ol class="ms"><li><time>2027-01</time><span>레퍼런스 로봇 공개</span></li><li><time>2027-06</time><span>CDU의 DSX 기반 프로젝트 공급, 외부 RFM 로봇 현장 실증 결과</span></li><li><time>2027-12</time><span>Microsoft 공급 계약 공식화</span></li></ol>
+  <dl class="sdl"><div><dt>판정 시점</dt><dd>2027-12-31</dd></div><div><dt>판정 방법</dt><dd>세 가지 중 두 가지 이상 충족 시 적중: (1) NVIDIA 또는 Microsoft 관련 LG 제품 공급 계약 공식 발표 (2) 외부 로봇 파운데이션 모델(Skild·GR00T) 기반 로봇의 LG 현장 실증 결과 공개 (3) 파트너 기술(Palantir·Claude·CuspAI 등)을 결합한 LG CNS 외부 고객 계약 2건 이상 공개</dd></div>
+  <div><dt>전제</dt><dd>미국 수출 통제·관세 변화로 협력이 멈추지 않을 경우</dd></div><div><dt>근거</dt><dd><a class="rid" href="#L6-M-002" title="LG전자의 대용량 CDU와 LG에너지솔루션의 ESS가 NVIDIA AI 팩토리 프로그램 &#x27;DSX Ready&#x27; 제품에 포함됐다.">L6-M-002</a><a class="rid" href="#L6-M-003" title="LG그룹은 Microsoft와 AI 데이터센터 인프라(냉각·전력·IT 공급 기회 탐색), 사무직 AX(Copilot 등 도입), 피지컬 AI(제조·물류·모빌리티 모델 학습과 데이터 플라이휠) 세 분야의 전략적 파트너십을 맺었다. 구광모 회장과 계열사 CEO 5명이 참석했다.">L6-M-003</a><a class="rid" href="#L6-E-001" title="LG CNS가 Skild AI와 국내 첫 전략적 협력을 맺고, LG테크놀로지벤처스를 통해 지분 투자했다. Skild의 로봇 파운데이션 모델을 제조·물류 데이터로 미세 조정해 산업용 휴머노이드 솔루션을 만든다.">L6-E-001</a><a class="rid" href="#L6-E-002" title="LG CNS가 Palantir와 전략적 파트너십을 맺었다. LG 계열사 품질 관리 PoC 뒤 본 계약이 됐고, 전방배치 엔지니어링(FDE) 조직을 만들어 그룹에서 외부로 넓힌다.">L6-E-002</a></dd></div></dl></article><article class="scen pes" id="L6-F-102"><header><span class="sk">비관 · Pessimistic</span><code>L6-F-102</code></header>
+  <p class="sstmt">2027년 말까지 회동·MOU·프로그램 참여는 늘지만 공급 계약과 내재화 성과는 드러나지 않는다. 핵심층(의사결정·로봇 두뇌·컴퓨팅)의 외부 의존이 깊어지고, 협력은 LG CNS의 재판매 매출에 머문다.</p><ol class="ms"><li><time>2027-06</time><span>DSX 기반 공급 미발표</span></li><li><time>2027-06</time><span>외부 RFM 현장 성과 미공개</span></li><li><time>2027-12</time><span>Microsoft 공급 계약 미공식화</span></li></ol>
+  <dl class="sdl"><div><dt>판정 시점</dt><dd>2027-12-31</dd></div><div><dt>판정 방법</dt><dd>낙관 시나리오의 판정 조건 세 가지 중 하나 이하만 충족 시 적중</dd></div>
+  <div><dt>전제</dt><dd>없음</dd></div><div><dt>근거</dt><dd><a class="rid" href="#L6-M-003" title="LG그룹은 Microsoft와 AI 데이터센터 인프라(냉각·전력·IT 공급 기회 탐색), 사무직 AX(Copilot 등 도입), 피지컬 AI(제조·물류·모빌리티 모델 학습과 데이터 플라이휠) 세 분야의 전략적 파트너십을 맺었다. 구광모 회장과 계열사 CEO 5명이 참석했다.">L6-M-003</a><a class="rid" href="#L6-M-007" title="LG CNS가 재판매하는 ChatGPT Enterprise는 1분기 기준 약 10곳의 고객이 계약했다.">L6-M-007</a><a class="rid" href="#L6-E-002" title="LG CNS가 Palantir와 전략적 파트너십을 맺었다. LG 계열사 품질 관리 PoC 뒤 본 계약이 됐고, 전방배치 엔지니어링(FDE) 조직을 만들어 그룹에서 외부로 넓힌다.">L6-E-002</a></dd></div></dl></article></div>
+    <h3 class="subhead">세부 판정 근거</h3>
+    <p class="lead muted">각 세부 전망이 적중하거나 빗나갔을 때 어느 시나리오 쪽 신호인지 표시했다. 확인 시점이 오면 확인 방법대로 판정한다.</p>
+    <div class="tablewrap"><table><thead><tr><th>세부 전망</th><th>확인 시점</th><th>적중 시</th><th>빗나갈 시</th><th>상태</th><th>근거</th></tr></thead><tbody><tr id="L6-F-002"><td class="stmt">LG 계열사는 2026년 말까지 사무직 대상 Microsoft Copilot 도입을 발표할 것이다.<small>확인 방법: 계열사 공식 발표 또는 주요 언론 보도 확인</small></td>
+  <td class="asof">2026-12-31</td><td><span class="side opt">낙관</span></td><td><span class="muted">—</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#L6-M-003" title="LG그룹은 Microsoft와 AI 데이터센터 인프라(냉각·전력·IT 공급 기회 탐색), 사무직 AX(Copilot 등 도입), 피지컬 AI(제조·물류·모빌리티 모델 학습과 데이터 플라이휠) 세 분야의 전략적 파트너십을 맺었다. 구광모 회장과 계열사 CEO 5명이 참석했다.">L6-M-003</a></td></tr><tr id="L6-F-001"><td class="stmt">LG는 2027년 1월 CES까지 NVIDIA와 공동 개발한 레퍼런스 로봇을 공개할 것이다.<small>확인 방법: LG·NVIDIA 공식 발표 또는 CES 2027 전시 확인</small></td>
+  <td class="asof">2027-01-31</td><td><span class="side opt">낙관</span></td><td><span class="muted">—</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#L6-E-005" title="구광모 회장과 젠슨 황 CEO가 서울에서 만나 LG–NVIDIA M.A.P.(모빌리티·AI 인프라·피지컬 AI) 협력과 레퍼런스 로봇 공동 개발에 합의했다.">L6-E-005</a></td></tr><tr id="L6-F-003"><td class="stmt">LG는 2027년 6월 말까지 Skild AI 또는 NVIDIA GR00T 기반 로봇의 LG 현장 실증 결과를 공개할 것이다.<small>확인 방법: LG 계열사 공식 발표 확인</small></td>
+  <td class="asof">2027-06-30</td><td><span class="side opt">낙관</span></td><td><span class="side pes">비관</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#L6-E-001" title="LG CNS가 Skild AI와 국내 첫 전략적 협력을 맺고, LG테크놀로지벤처스를 통해 지분 투자했다. Skild의 로봇 파운데이션 모델을 제조·물류 데이터로 미세 조정해 산업용 휴머노이드 솔루션을 만든다.">L6-E-001</a><a class="rid" href="#L6-E-005" title="구광모 회장과 젠슨 황 CEO가 서울에서 만나 LG–NVIDIA M.A.P.(모빌리티·AI 인프라·피지컬 AI) 협력과 레퍼런스 로봇 공동 개발에 합의했다.">L6-E-005</a></td></tr><tr id="L6-F-004"><td class="stmt">LG테크놀로지벤처스 또는 계열사는 2027년 6월 말까지 로봇·피지컬 AI 스타트업 지분 투자를 한 건 이상 추가 발표할 것이다.<small>확인 방법: 공식 발표 또는 주요 언론 보도 확인</small></td>
+  <td class="asof">2027-06-30</td><td><span class="side opt">낙관</span></td><td><span class="muted">—</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#L6-M-004" title="확인된 AI·로봇 지분 투자는 네 건이다. LG테크놀로지벤처스의 Anthropic(2023)·Skild AI(2025) 투자, LG CNS의 Dexmate 투자(2026년 3월), LG이노텍의 4D 이미징 레이더 기업 스마트레이더시스템 지분 4.9%다.">L6-M-004</a></td></tr><tr id="L6-F-005"><td class="stmt">LG전자 CDU가 NVIDIA DSX 참조 설계 기반 고객 프로젝트에 공급된다는 발표가 2027년 6월 말까지 나올 것이다.<small>확인 방법: LG전자·NVIDIA 공식 발표 확인</small></td>
+  <td class="asof">2027-06-30</td><td><span class="side opt">낙관</span></td><td><span class="side pes">비관</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#L6-M-002" title="LG전자의 대용량 CDU와 LG에너지솔루션의 ESS가 NVIDIA AI 팩토리 프로그램 &#x27;DSX Ready&#x27; 제품에 포함됐다.">L6-M-002</a></td></tr><tr id="L6-F-006"><td class="stmt">LG그룹은 2027년 6월 말까지 Google·Amazon·Meta·OpenAI 가운데 한 곳과 그룹 차원의 전략적 파트너십을 새로 발표할 것이다.<small>확인 방법: LG 공식 발표 확인</small></td>
+  <td class="asof">2027-06-30</td><td><span class="side opt">낙관</span></td><td><span class="muted">—</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#L6-E-011" title="LG그룹 사장단이 Microsoft 본사에서 사티아 나델라 CEO와 AI 데이터센터·AX·피지컬 AI 세 분야의 전략적 파트너십을 맺었다. 같은 날 LG전자 CDU와 LG에너지솔루션 ESS가 NVIDIA DSX Ready 제품에 포함됐다.">L6-E-011</a><a class="rid" href="#L6-E-005" title="구광모 회장과 젠슨 황 CEO가 서울에서 만나 LG–NVIDIA M.A.P.(모빌리티·AI 인프라·피지컬 AI) 협력과 레퍼런스 로봇 공동 개발에 합의했다.">L6-E-005</a></td></tr></tbody></table></div></section>
+  <section><h2>파트너별 협력 단계 <small>단계 판정 · 핵심층 종속 지도</small></h2><p class="lead">파트너마다 발표·MOU → 공동개발·투자 → 실증 → 상용 계약·고객 → 매출·시장 접근 중 어디에 있는지 판정했다. 오른쪽 표시는 그 파트너가 LG 사업의 핵심층(의사결정·로봇 두뇌·컴퓨팅)을 쥐는 정도다. 개별 제품·계약 성과는 L1~L5에 기록한다.</p>
+    <div class="ladder mapgrid auto"><div class="rung"><div class="stage"><b>Palantir (LG CNS)</b></div>
+  <div class="lvcell"><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip"></span><span class="lv">상용 계약·고객</span></span></div>
+  <div class="lvcell"><span class="own agent">종속 높음</span></div>
+  <p class="why">계열사 품질 PoC → 본 계약, FDE 조직. 의사결정·온톨로지층 <a class="rid" href="#L6-E-002" title="LG CNS가 Palantir와 전략적 파트너십을 맺었다. LG 계열사 품질 관리 PoC 뒤 본 계약이 됐고, 전방배치 엔지니어링(FDE) 조직을 만들어 그룹에서 외부로 넓힌다.">L6-E-002</a></p></div><div class="rung"><div class="stage"><b>Anthropic (LG CNS·그룹)</b></div>
+  <div class="lvcell"><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip"></span><span class="lv">상용 계약·고객</span></span></div>
+  <div class="lvcell"><span class="own platform">종속 중간</span></div>
+  <p class="why">Claude Enterprise 그룹 통합 계약, 2023년 지분 투자. OpenAI·EXAONE과 병행 <a class="rid" href="#L6-E-006" title="LG CNS가 Anthropic과 LG그룹 전 계열사에 적용할 수 있는 Claude Enterprise 통합 계약을 맺었다. LG테크놀로지벤처스는 2023년부터 Anthropic 지분을 갖고 있다.">L6-E-006</a></p></div><div class="rung"><div class="stage"><b>OpenAI (LG CNS 재판매)</b></div>
+  <div class="lvcell"><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip"></span><span class="lv">상용 계약·고객</span></span></div>
+  <div class="lvcell"><span class="own brand">종속 낮음</span></div>
+  <p class="why">ChatGPT Enterprise 외부 고객 약 10곳 <a class="rid" href="#L6-M-007" title="LG CNS가 재판매하는 ChatGPT Enterprise는 1분기 기준 약 10곳의 고객이 계약했다.">L6-M-007</a></p></div><div class="rung"><div class="stage"><b>NVIDIA (6개 계열사)</b></div>
+  <div class="lvcell"><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip"></span><span class="pip"></span><span class="lv">실증</span></span></div>
+  <div class="lvcell"><span class="own agent">종속 높음</span></div>
+  <p class="why">M.A.P. 공동개발, CDU 인증·DSX Ready 포함, 레퍼런스 로봇 공동 개발. 컴퓨팅·로봇 모델층 <a class="rid" href="#L6-M-001" title="LG–NVIDIA M.A.P. 협력에는 모빌리티·AI 인프라·피지컬 AI 세 분야에 LG전자·LG이노텍·LG유플러스·LG CNS·LG에너지솔루션·LG AI연구원 여섯 곳이 참여한다. 회동 2주 뒤 30여 명 규모의 워킹그룹이 NVIDIA 본사를 찾아 레퍼런스 로봇 공동 개발 등 우선 과제를 논의했다.">L6-M-001</a><a class="rid" href="#L6-M-002" title="LG전자의 대용량 CDU와 LG에너지솔루션의 ESS가 NVIDIA AI 팩토리 프로그램 &#x27;DSX Ready&#x27; 제품에 포함됐다.">L6-M-002</a></p></div><div class="rung"><div class="stage"><b>Microsoft (그룹)</b></div>
+  <div class="lvcell"><span class="pips"><span class="pip on"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="lv">발표·MOU</span></span></div>
+  <div class="lvcell"><span class="own platform">종속 중간</span></div>
+  <p class="why">사장단 파트너십: 공급 기회 탐색·Copilot 도입·모델 학습 인프라. 금액 미공개 <a class="rid" href="#L6-M-003" title="LG그룹은 Microsoft와 AI 데이터센터 인프라(냉각·전력·IT 공급 기회 탐색), 사무직 AX(Copilot 등 도입), 피지컬 AI(제조·물류·모빌리티 모델 학습과 데이터 플라이휠) 세 분야의 전략적 파트너십을 맺었다. 구광모 회장과 계열사 CEO 5명이 참석했다.">L6-M-003</a></p></div><div class="rung"><div class="stage"><b>Skild AI (LG CNS·LGTV)</b></div>
+  <div class="lvcell"><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="lv">공동개발·투자</span></span></div>
+  <div class="lvcell"><span class="own agent">종속 높음</span></div>
+  <p class="why">로봇 파운데이션 모델 협력·지분 투자. 현장 실증 결과 미공개. 로봇 두뇌층 <a class="rid" href="#L6-E-001" title="LG CNS가 Skild AI와 국내 첫 전략적 협력을 맺고, LG테크놀로지벤처스를 통해 지분 투자했다. Skild의 로봇 파운데이션 모델을 제조·물류 데이터로 미세 조정해 산업용 휴머노이드 솔루션을 만든다.">L6-E-001</a><a class="rid" href="#L6-E-003" title="구광모 회장이 실리콘밸리에서 Palantir CEO 알렉스 카프, Skild AI 공동 창업자, LG테크놀로지벤처스 경영진을 만났다. 온톨로지·AI 의사결정 체계와 휴머노이드 시연을 살폈고, 구체적 계약 발표는 없었다.">L6-E-003</a></p></div><div class="rung"><div class="stage"><b>Dexmate (LG CNS)</b></div>
+  <div class="lvcell"><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip"></span><span class="pip"></span><span class="lv">실증</span></span></div>
+  <div class="lvcell"><span class="own brand">종속 낮음</span></div>
+  <p class="why">3월 투자 → 6월 LX판토스 물류 실증 <a class="rid" href="#L6-E-007" title="LG CNS가 LX판토스 물류센터 휴머노이드 실증에 3월 투자한 미국 Dexmate의 바퀴형 휴머노이드를 투입하기로 했다.">L6-E-007</a></p></div><div class="rung"><div class="stage"><b>D&amp;D Pharmatech · LabGenius</b></div>
+  <div class="lvcell"><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="lv">공동개발·투자</span></span></div>
+  <div class="lvcell"><span class="own brand">종속 낮음</span></div>
+  <p class="why">AI 신약 공동개발, LabGenius 라이선스 옵션 <a class="rid" href="#L6-E-008" title="LG AI연구원이 D&amp;D Pharmatech과, LG화학이 LabGenius와 AI 신약 협력을 잇달아 맺었다. LabGenius와는 선급금·연구비를 내는 라이선스 옵션 계약이다.">L6-E-008</a></p></div><div class="rung"><div class="stage"><b>CuspAI (LG CNS)</b></div>
+  <div class="lvcell"><span class="pips"><span class="pip on"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="lv">발표·MOU</span></span></div>
+  <div class="lvcell"><span class="own platform">종속 중간</span></div>
+  <p class="why">소재 AI 협력체 창립 멤버, 국내 공급 파트너 <a class="rid" href="#L6-E-010" title="LG CNS가 CuspAI 주도 소재 AI 협력체의 창립 멤버이자 국내 플랫폼 공급 파트너가 됐다.">L6-E-010</a></p></div><div class="rung"><div class="stage"><b>SDVerse (LG에너지솔루션)</b></div>
+  <div class="lvcell"><span class="pips"><span class="pip on"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="lv">발표·MOU</span></span></div>
+  <div class="lvcell"><span class="own brand">종속 낮음</span></div>
+  <p class="why">배터리 SW 5종 등록, 고객 미공개 <a class="rid" href="#L6-M-006" title="LG에너지솔루션은 GM 주도 차량 SW 마켓 SDVerse에 배터리 SW 5종을 올렸다.">L6-M-006</a></p></div></div><p class="gapnote">판정: 상용 계약은 LG가 고객인 협력(Palantir·Anthropic·OpenAI)에서, LG가 공급자인 협력(NVIDIA·Microsoft)은 실증·탐색 단계. 핵심층 다섯 중 셋의 종속이 높다 (R1 기준).</p>
+    <h3 class="subhead">핵심층 종속 지도</h3><p class="lead">LG 사업의 핵심층마다 외부 파트너와 LG가 직접 쥔 자산을 나란히 놓았다. 다음 회차부터 오른쪽 칸이 두꺼워지는지(내재화)를 본다.</p>
+    <div class="tablewrap"><table><thead><tr><th>핵심층</th><th>외부 파트너</th><th>LG가 쥔 자산</th><th>종속</th><th>현재 단계</th><th>기록</th></tr></thead><tbody><tr><td class="tgt">의사결정·온톨로지</td><td>Palantir Foundry·AIP</td><td>LG CNS FDE 조직, 그룹 업무 데이터</td><td>높음</td><td>PoC → 본 계약</td><td><a class="rid" href="#L6-E-002" title="LG CNS가 Palantir와 전략적 파트너십을 맺었다. LG 계열사 품질 관리 PoC 뒤 본 계약이 됐고, 전방배치 엔지니어링(FDE) 조직을 만들어 그룹에서 외부로 넓힌다.">L6-E-002</a></td></tr><tr><td class="tgt">업무 AI 모델</td><td>Anthropic Claude, OpenAI</td><td>EXAONE (LG AI연구원)</td><td>중간</td><td>그룹 통합 계약</td><td><a class="rid" href="#L6-E-006" title="LG CNS가 Anthropic과 LG그룹 전 계열사에 적용할 수 있는 Claude Enterprise 통합 계약을 맺었다. LG테크놀로지벤처스는 2023년부터 Anthropic 지분을 갖고 있다.">L6-E-006</a><a class="rid" href="#L6-M-007" title="LG CNS가 재판매하는 ChatGPT Enterprise는 1분기 기준 약 10곳의 고객이 계약했다.">L6-M-007</a></td></tr><tr><td class="tgt">로봇 두뇌</td><td>Skild AI RFM, NVIDIA GR00T</td><td>PhysicalWorks(학습·운영), 현장 데이터</td><td>높음</td><td>공동개발</td><td><a class="rid" href="#L6-E-001" title="LG CNS가 Skild AI와 국내 첫 전략적 협력을 맺고, LG테크놀로지벤처스를 통해 지분 투자했다. Skild의 로봇 파운데이션 모델을 제조·물류 데이터로 미세 조정해 산업용 휴머노이드 솔루션을 만든다.">L6-E-001</a><a class="rid" href="#L6-E-005" title="구광모 회장과 젠슨 황 CEO가 서울에서 만나 LG–NVIDIA M.A.P.(모빌리티·AI 인프라·피지컬 AI) 협력과 레퍼런스 로봇 공동 개발에 합의했다.">L6-E-005</a></td></tr><tr><td class="tgt">컴퓨팅·AI 팩토리</td><td>NVIDIA GPU·DSX</td><td>LG 냉각(CDU)·전력(ESS)이 공급망에 진입</td><td>높음</td><td>DSX Ready 포함</td><td><a class="rid" href="#L6-M-002" title="LG전자의 대용량 CDU와 LG에너지솔루션의 ESS가 NVIDIA AI 팩토리 프로그램 &#x27;DSX Ready&#x27; 제품에 포함됐다.">L6-M-002</a></td></tr><tr><td class="tgt">클라우드·사무 AI</td><td>Microsoft Azure·Copilot</td><td>LG 냉각·전력·IT 공급 후보</td><td>중간</td><td>공급 기회 탐색</td><td><a class="rid" href="#L6-M-003" title="LG그룹은 Microsoft와 AI 데이터센터 인프라(냉각·전력·IT 공급 기회 탐색), 사무직 AX(Copilot 등 도입), 피지컬 AI(제조·물류·모빌리티 모델 학습과 데이터 플라이휠) 세 분야의 전략적 파트너십을 맺었다. 구광모 회장과 계열사 CEO 5명이 참석했다.">L6-M-003</a></td></tr></tbody></table></div></section>
+  <section><h2>핵심 지표 <small>추적 지표 7/8개 값 확보</small></h2><p class="lead">추적 지표 8개 중 7개의 값을 원문으로 확인했다. T3 그룹이 고객인 플랫폼 계약(Palantir·Anthropic)은 사건으로 추적한다. 회동·MOU는 계약과 구분했고, 금액이 공개되지 않은 협력에는 주의 표시를 달았다.</p>
+    <div class="tablewrap"><table><thead><tr><th>추적 지표</th><th>내용 · 출처</th><th style="text-align:right">현재값</th><th>기준 시점</th><th>기록</th></tr></thead><tbody><tr id="L6-M-001"><td class="ind">L6-T1<small>NVIDIA 협력 범위</small></td>
+  <td class="stmt">LG–NVIDIA M.A.P. 협력에는 모빌리티·AI 인프라·피지컬 AI 세 분야에 LG전자·LG이노텍·LG유플러스·LG CNS·LG에너지솔루션·LG AI연구원 여섯 곳이 참여한다. 회동 2주 뒤 30여 명 규모의 워킹그룹이 NVIDIA 본사를 찾아 레퍼런스 로봇 공동 개발 등 우선 과제를 논의했다. <div class="src"><a href="https://www.thailand-business-news.com/pr-news/lg-teams-with-nvidia-to-shape-the-future-with-m-a-p-mobility-ai-infra-physical-ai" target="_blank" rel="noopener">PR Newswire (LG 발표)</a><span class="grade gA">A</span> · <a href="https://www.heraldk.com/article/2026062102354578033" target="_blank" rel="noopener">헤럴드경제</a><span class="grade gB">B</span></div></td>
+  <td class="num">6 곳 (참여 계열사)</td><td class="asof">2026-06<small>GLOBAL</small></td><td class="idc"><code>L6-M-001</code></td></tr><tr id="L6-M-002"><td class="ind">L6-T2<small>파트너 공급망 진입</small></td>
+  <td class="stmt">LG전자의 대용량 CDU와 LG에너지솔루션의 ESS가 NVIDIA AI 팩토리 프로그램 &#x27;DSX Ready&#x27; 제품에 포함됐다. <div class="src"><a href="https://economist.co.kr/article/view/ecn202609220008" target="_blank" rel="noopener">이코노미스트 (LG 발표)</a><span class="grade gB">B</span></div></td>
+  <td class="num">2 개 (DSX Ready 포함 제품군)</td><td class="asof">2026-09<small>GLOBAL</small></td><td class="idc"><code>L6-M-002</code></td></tr><tr id="L6-M-003"><td class="ind">L6-T4<small>Microsoft 협력 범위</small></td>
+  <td class="stmt">LG그룹은 Microsoft와 AI 데이터센터 인프라(냉각·전력·IT 공급 기회 탐색), 사무직 AX(Copilot 등 도입), 피지컬 AI(제조·물류·모빌리티 모델 학습과 데이터 플라이휠) 세 분야의 전략적 파트너십을 맺었다. 구광모 회장과 계열사 CEO 5명이 참석했다. <span class="warn">충돌·주의</span><div class="src"><a href="https://economist.co.kr/article/view/ecn202609220008" target="_blank" rel="noopener">이코노미스트 (LG 발표)</a><span class="grade gB">B</span></div></td>
+  <td class="num">3 분야 (합의 분야)</td><td class="asof">2026-09<small>GLOBAL</small></td><td class="idc"><code>L6-M-003</code></td></tr><tr id="L6-M-004"><td class="ind">L6-T5<small>CVC·전략 투자</small></td>
+  <td class="stmt">확인된 AI·로봇 지분 투자는 네 건이다. LG테크놀로지벤처스의 Anthropic(2023)·Skild AI(2025) 투자, LG CNS의 Dexmate 투자(2026년 3월), LG이노텍의 4D 이미징 레이더 기업 스마트레이더시스템 지분 4.9%다. <span class="warn">충돌·주의</span><div class="src"><a href="https://view.asiae.co.kr/article/2026060908300307384" target="_blank" rel="noopener">아시아경제 (LG CNS 발표)</a><span class="grade gB">B</span> · <a href="https://www.itworld.co.kr/article/4007927/lg-cns-ai-로봇-기업-스킬드ai와-전략적-협력-발표.html" target="_blank" rel="noopener">ITWorld (LG CNS 발표)</a><span class="grade gB">B</span> · <a href="https://www.dailian.co.kr/news/view/1654748/LG-CNSLX%ED%8C%90%ED%86%A0%EC%8A%A4-%EB%AC%BC%EB%A5%98%EC%84%BC%ED%84%B0-%ED%9C%B4%EB%A8%B8%EB%85%B8-2026" target="_blank" rel="noopener">데일리안 (LG CNS 발표)</a><span class="grade gB">B</span> · <a href="https://v.daum.net/v/20260413060304293" target="_blank" rel="noopener">쿠키뉴스</a><span class="grade gB">B</span></div></td>
+  <td class="num">4 건 (확인된 AI·로봇 지분 투자)</td><td class="asof">2026-06<small>GLOBAL</small></td><td class="idc"><code>L6-M-004</code></td></tr><tr id="L6-M-005"><td class="ind">L6-T6<small>연구 협력체</small></td>
+  <td class="stmt">LG CNS가 창립 멤버로 합류한 CuspAI 주도 소재 AI 협력체에는 NVIDIA·Meta·AMD 등 48개 기업·연구기관이 참여한다. <div class="src"><a href="https://view.asiae.co.kr/en/article/2026072710221174471" target="_blank" rel="noopener">Asia Economy (LG CNS 발표)</a><span class="grade gB">B</span></div></td>
+  <td class="num">48 곳 (협력체 참여 기관)</td><td class="asof">2026-07<small>GLOBAL</small></td><td class="idc"><code>L6-M-005</code></td></tr><tr id="L6-M-006"><td class="ind">L6-T7<small>모빌리티 SW 채널</small></td>
+  <td class="stmt">LG에너지솔루션은 GM 주도 차량 SW 마켓 SDVerse에 배터리 SW 5종을 올렸다. <span class="warn">충돌·주의</span><div class="src"><a href="https://www.heraldk.com/article/2026040215280143224" target="_blank" rel="noopener">헤럴드경제 (LG에너지솔루션 발표)</a><span class="grade gB">B</span></div></td>
+  <td class="num">5 종 (등록 배터리 SW)</td><td class="asof">2026-04<small>GLOBAL</small></td><td class="idc"><code>L6-M-006</code></td></tr><tr id="L6-M-007"><td class="ind">L6-T8<small>파트너 기술 재판매</small></td>
+  <td class="stmt">LG CNS가 재판매하는 ChatGPT Enterprise는 1분기 기준 약 10곳의 고객이 계약했다. <div class="src"><a href="https://byline.network/2026/04/30-525/" target="_blank" rel="noopener">바이라인네트워크 (LG CNS 1분기 실적)</a><span class="grade gB">B</span></div></td>
+  <td class="num">10 곳 (ChatGPT Enterprise 고객)</td><td class="asof">2026-04<small>KR</small></td><td class="idc"><code>L6-M-007</code></td></tr></tbody></table></div></section>
+  <section><h2>미확인·경고 <small>본문 판단에서 빼거나 주의해서 쓴 기록</small></h2>
+    <div class="tablewrap"><table><thead><tr><th>기록</th><th>구분</th><th>진술</th><th>사유</th></tr></thead><tbody><tr><td><code>L6-M-003</code></td><td><span class="wk">주의</span></td><td>LG그룹은 Microsoft와 AI 데이터센터 인프라(냉각·전력·IT 공급 기회 탐색), 사무직 AX(Copilot 등 도입), 피지컬 AI(제조·물류·모빌리티 모델 학습과 데이터 플라이휠) 세 분야의 전략적 파트너십을 맺었다. 구광모 회장과 계열사 CEO 5명이 참석했다.</td><td class="muted">계약 금액·조건 미공개</td></tr><tr><td><code>L6-M-004</code></td><td><span class="wk">주의</span></td><td>확인된 AI·로봇 지분 투자는 네 건이다. LG테크놀로지벤처스의 Anthropic(2023)·Skild AI(2025) 투자, LG CNS의 Dexmate 투자(2026년 3월), LG이노텍의 4D 이미징 레이더 기업 스마트레이더시스템 지분 4.9%다.</td><td class="muted">투자 금액 미공개</td></tr><tr><td><code>L6-M-006</code></td><td><span class="wk">주의</span></td><td>LG에너지솔루션은 GM 주도 차량 SW 마켓 SDVerse에 배터리 SW 5종을 올렸다.</td><td class="muted">고객 미공개</td></tr><tr><td><code>L6-E-001</code></td><td><span class="wk">주의</span></td><td>LG CNS가 Skild AI와 국내 첫 전략적 협력을 맺고, LG테크놀로지벤처스를 통해 지분 투자했다. Skild의 로봇 파운데이션 모델을 제조·물류 데이터로 미세 조정해 산업용 휴머노이드 솔루션을 만든다.</td><td class="muted">조사 기간 이전 — 기준선; 투자 금액 미공개</td></tr><tr><td><code>L6-E-002</code></td><td><span class="wk">주의</span></td><td>LG CNS가 Palantir와 전략적 파트너십을 맺었다. LG 계열사 품질 관리 PoC 뒤 본 계약이 됐고, 전방배치 엔지니어링(FDE) 조직을 만들어 그룹에서 외부로 넓힌다.</td><td class="muted">계약 금액·조건 미공개</td></tr><tr><td><code>L6-E-006</code></td><td><span class="wk">주의</span></td><td>LG CNS가 Anthropic과 LG그룹 전 계열사에 적용할 수 있는 Claude Enterprise 통합 계약을 맺었다. LG테크놀로지벤처스는 2023년부터 Anthropic 지분을 갖고 있다.</td><td class="muted">계약 금액·조건 미공개</td></tr><tr><td><code>L6-E-011</code></td><td><span class="wk">주의</span></td><td>LG그룹 사장단이 Microsoft 본사에서 사티아 나델라 CEO와 AI 데이터센터·AX·피지컬 AI 세 분야의 전략적 파트너십을 맺었다. 같은 날 LG전자 CDU와 LG에너지솔루션 ESS가 NVIDIA DSX Ready 제품에 포함됐다.</td><td class="muted">계약 금액·조건 미공개</td></tr></tbody></table></div></section>
+  <footer>
+    <span>이 글은 4유형 기록 33건(지표 7 · 사건 11 · 해석 7 · 전망 8)에서 생성했습니다. 문장 옆 번호를 누르면 해당 기록으로 이동합니다.</span>
+        <span>출처 등급 A = 1차 조사·공식 발표, B = 주요 언론·2차 보도, C = 블로그·출처 불명(원문 확인 전까지 판단에 쓰지 않음).</span>
+  </footer>
+</main>
