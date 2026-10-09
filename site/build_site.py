@@ -1,4 +1,4 @@
-"""AXblog 포털 생성기.
+"""AX Signals 포털 생성기.
 
 - site/catalog.json 의 카테고리·질문 목록을 읽고,
 - 각 질문 폴더(<카테고리>/<질문>/article_rN.html)에서 아티클을 찾아
@@ -54,7 +54,7 @@ SITEBAR_CSS = """
 def wrap_article(art, crumbs, rounds_html, depth):
     head, body = art["html"].split("<main>", 1)
     up = "../" * depth
-    bar = f'<nav class="sitebar" aria-label="사이트"><a href="{up}index.html">AXblog</a><span class="crumb">{crumbs}</span><span class="rounds">{rounds_html}</span></nav>'
+    bar = f'<nav class="sitebar" aria-label="사이트"><a href="{up}index.html">AX Signals</a><span class="crumb">{crumbs}</span><span class="rounds">{rounds_html}</span></nav>'
     return (f'<!doctype html>\n<html lang="ko"><head><meta charset="utf-8">'
             f'<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">'
             f'{head}<style>{SITEBAR_CSS}</style></head><body>{bar}<main>{body}</body></html>')
@@ -183,7 +183,7 @@ footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--rule)
 
 portal = f"""<!doctype html>
 <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>AXblog</title>
+<title>AX Signals</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;800&display=swap">
 <style>{CSS}{PORTAL_CSS}</style></head>
@@ -196,7 +196,7 @@ portal = f"""<!doctype html>
   </header>
   <nav class="catnav" aria-label="카테고리">{nav_html}</nav>
   {sec_html}
-  <footer><span>AXblog · 원본 기록과 생성 스크립트는 GitHub skykelly/AXblog 저장소에 있습니다.</span></footer>
+  <footer><span>AX Signals · 원본 기록과 생성 스크립트는 GitHub skykelly/AXblog 저장소에 있습니다.</span></footer>
 </main></body></html>
 """
 (DIST / "index.html").write_text(portal, encoding="utf-8")
