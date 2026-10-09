@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Q2 고객 접점 주도권 R1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;800&display=swap">
+<style>
+/* Layout: 연구 노트 한 단 — 답 → 서술형 해석 → 근거 표. 기록 번호가 본문의 각주 역할 */
+:root {
+  --paper: #f6f7f9; --ink: #16202b; --muted: #5d6875; --rule: #d6dbe2; --panel: #ffffff;
+  --accent: #1f5f8b; --accent-soft: #e2edf5; --amber: #b4690e; --amber-soft: #f7ead7;
+  --up: #1f7a4d; --down: #b3412f; --flat: #6a7380; --opt: #1f7a4d; --opt-soft: #e1f1e8; --pes: #a3402f; --pes-soft: #f6e3df;
+  --display: "Noto Serif KR", "Apple SD Gothic Neo", serif;
+  --body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #11161c; --ink: #e6ebf1; --muted: #9aa5b1; --rule: #2b333d; --panel: #171e26;
+  --accent: #7fb6dc; --accent-soft: #1b2c3a; --amber: #e2a457; --amber-soft: #33271a;
+  --up: #5fc493; --down: #ec8a78; --flat: #98a2ae; --opt: #6fcf9d; --opt-soft: #17291f; --pes: #ef9a88; --pes-soft: #2f1c18; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --paper: #11161c; --ink: #e6ebf1; --muted: #9aa5b1; --rule: #2b333d; --panel: #171e26;
+  --accent: #7fb6dc; --accent-soft: #1b2c3a; --amber: #e2a457; --amber-soft: #33271a;
+  --up: #5fc493; --down: #ec8a78; --flat: #98a2ae; --opt: #6fcf9d; --opt-soft: #17291f; --pes: #ef9a88; --pes-soft: #2f1c18; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--paper); color: var(--ink); font: 400 16px/1.7 var(--body); padding: 0 20px; }
+main { max-width: 980px; margin: 0 auto; padding-block: 40px 72px; display: grid; gap: 60px; }
+.narrow { max-width: 70ch; }
+a { color: var(--accent); }
+code, .rid { font: 500 12px/1 var(--mono); }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+.eyebrow { font: 500 12px/1.4 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); display: flex; gap: 14px; flex-wrap: wrap; }
+h1 { font: 800 clamp(26px, 4.4vw, 40px)/1.25 var(--display); margin-top: 14px; }
+.question { margin: 16px 0 0; color: var(--muted); font-size: 15px; border-left: 2px solid var(--rule); padding-left: 14px; }
+h2 { font: 600 22px/1.3 var(--display); display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+h2 small { font: 400 13px var(--body); color: var(--muted); }
+section { display: grid; gap: 18px; min-width: 0; }
+.lead { margin: 0; max-width: 70ch; }
+.rid { display: inline-block; padding: 3px 5px; margin: 2px 2px 0 0; border-radius: 3px; background: var(--accent-soft); color: var(--accent); text-decoration: none; vertical-align: 1px; }
+.rid:hover, .rid:focus-visible { outline: 1px solid var(--accent); }
+/* 한 줄 답 */
+.answer { font: 600 clamp(20px, 2.8vw, 26px)/1.55 var(--display); margin: 0; }
+.answer-box { display: grid; gap: 20px; }
+.arows { margin: 0; border-top: 1px solid var(--ink); }
+.arow { display: grid; grid-template-columns: 170px 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+.arow dt { font-weight: 600; }
+.arow dd { margin: 0; min-width: 0; }
+/* 서술형 해석 */
+.narrative { display: grid; gap: 14px; max-width: 70ch; }
+.narrative p { margin: 0; }
+/* 표 */
+.tablewrap { overflow-x: auto; border-top: 1px solid var(--ink); }
+table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 14px; }
+th { text-align: left; font: 500 11px var(--mono); letter-spacing: .05em; color: var(--muted); padding: 10px 8px; border-bottom: 1px solid var(--rule); }
+td { padding: 12px 8px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+td small { display: block; color: var(--muted); font-size: 12px; margin-top: 3px; }
+.num { font: 500 15px var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; }
+.muted { color: var(--muted); }
+.ind { font: 500 12px var(--mono); width: 150px; }
+.ind small { font-family: var(--body); }
+.tgt { font-weight: 600; width: 150px; }
+.asof { font: 400 13px var(--mono); white-space: nowrap; }
+.idc code { color: var(--muted); }
+.src { font-size: 12px; color: var(--muted); margin-top: 6px; }
+.src a { color: var(--muted); }
+.grade { font: 500 10px var(--mono); margin-left: 4px; padding: 1px 4px; border: 1px solid currentColor; border-radius: 2px; }
+.gC { color: var(--amber); }
+.warn, .wk { font: 500 11px var(--mono); color: var(--amber); background: var(--amber-soft); padding: 2px 6px; border-radius: 2px; white-space: nowrap; }
+.dir { font: 500 11px var(--mono); padding: 2px 7px; border-radius: 2px; color: var(--panel); white-space: nowrap; }
+.dir.up { background: var(--up); } .dir.down { background: var(--down); } .dir.flat { background: var(--flat); }
+.fstat { font: 500 11px var(--mono); border: 1px solid var(--accent); color: var(--accent); padding: 2px 6px; border-radius: 2px; white-space: nowrap; }
+/* 사건 */
+.timeline { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
+.timeline li { display: grid; grid-template-columns: 110px 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+.timeline time { font: 500 13px var(--mono); color: var(--muted); padding-top: 2px; }
+.timeline li > div { min-width: 0; }
+/* 시나리오 */
+.scens { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.scen { border-top: 3px solid var(--sc); background: var(--panel); padding: 18px 18px 14px; display: grid; gap: 14px; align-content: start; }
+.scen.opt { --sc: var(--opt); --scs: var(--opt-soft); }
+.scen.pes { --sc: var(--pes); --scs: var(--pes-soft); }
+.scen header { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.sk { font: 600 13px var(--mono); color: var(--sc); letter-spacing: .03em; }
+.scen header code { color: var(--muted); }
+.sstmt { margin: 0; font-size: 15px; }
+.ms { list-style: none; margin: 0; padding: 0 0 0 12px; border-left: 2px solid var(--scs); display: grid; gap: 8px; }
+.ms li { display: grid; grid-template-columns: 70px 1fr; gap: 10px; font-size: 14px; }
+.ms time { font: 500 12px var(--mono); color: var(--sc); padding-top: 2px; }
+.sdl { margin: 0; display: grid; gap: 6px; font-size: 13px; }
+.sdl div { display: grid; grid-template-columns: 70px 1fr; gap: 10px; }
+.sdl dt { color: var(--muted); }
+.sdl dd { margin: 0; min-width: 0; }
+.side { font: 500 11px var(--mono); padding: 2px 7px; border-radius: 2px; white-space: nowrap; margin-right: 4px; }
+.side.opt { color: var(--opt); background: var(--opt-soft); }
+.side.pes { color: var(--pes); background: var(--pes-soft); }
+.subhead { font: 600 15px var(--body); margin: 8px 0 0; }
+/* 사다리 */
+.ladder { border-top: 1px solid var(--ink); }
+.rung { display: grid; grid-template-columns: 150px 170px 170px 1fr; gap: 16px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+.rung[data-frontier="y"] { background: linear-gradient(90deg, var(--amber-soft), transparent 70%); }
+.stage b { display: block; font: 600 18px/1.2 var(--display); }
+.stage span { font: 400 12px var(--mono); color: var(--muted); }
+.region { display: block; font: 500 11px var(--mono); color: var(--muted); letter-spacing: .04em; margin-bottom: 4px; }
+.pips { display: flex; align-items: center; gap: 4px; }
+.pip { width: 16px; height: 8px; border: 1px solid var(--accent); border-radius: 1px; }
+.pip.on { background: var(--accent); }
+.lv { margin-left: 8px; font-size: 14px; font-weight: 500; }
+.why { margin: 0; font-size: 14px; color: var(--muted); min-width: 0; }
+.frontier-note { font-size: 13px; color: var(--amber); font-family: var(--mono); margin: 0; }
+footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 18px; display: grid; gap: 6px; }
+:target { background: var(--accent-soft); }
+@media (max-width: 760px) {
+  .rung { grid-template-columns: 1fr 1fr; }
+  .rung .stage, .rung .why { grid-column: 1 / -1; }
+  .scens { grid-template-columns: 1fr; }
+  .arow, .timeline li { grid-template-columns: 1fr; gap: 4px; }
+}
+
+/* 주도권 지도 (Q2) */
+.own { font: 500 12px var(--mono); padding: 3px 8px; border-radius: 2px; white-space: nowrap; display: inline-block; }
+.own.brand { color: var(--up); background: var(--opt-soft); }
+.own.platform { color: var(--accent); background: var(--accent-soft); }
+.own.agent { color: var(--amber); background: var(--amber-soft); }
+.own.contest { color: var(--flat); border: 1px dashed var(--flat); }
+.mapgrid .rung { grid-template-columns: 130px 150px 150px 150px 1fr; }
+@media (max-width: 760px) { .mapgrid .rung { grid-template-columns: 1fr 1fr; } }
+</style>
+<style>
+.sitebar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper); border-bottom: 1px solid var(--rule);
+  margin: 0 -20px; padding: 10px 20px; display: flex; gap: 14px; align-items: center; flex-wrap: wrap; font: 500 13px/1.4 var(--mono); }
+.sitebar a { color: var(--ink); text-decoration: none; }
+.sitebar a:hover, .sitebar a:focus-visible { text-decoration: underline; }
+.sitebar .crumb { color: var(--muted); }
+.sitebar .rounds { margin-left: auto; display: flex; gap: 8px; }
+.sitebar .rounds a[aria-current="page"] { color: var(--accent); }
+</style></head><body><nav class="sitebar" aria-label="사이트"><a href="../../index.html">AXblog</a><span class="crumb">/ AI Future Customer Lab / Q2</span><span class="rounds"><a href="r1.html" aria-current=page>R1</a></span></nav><main>
+  <header class="narrow">
+    <div class="eyebrow"><span>AI Future Customer Lab</span><span>Q2 · Customer Experience &amp; Commerce</span><span>R1 기준 회차 · 2026-10-09</span></div>
+    <h1>AI 시대, 고객 접점의 주인은 누구인가</h1>
+    <p class="question">고정 질문 v1.0 — 고객 여정(발견·상담·판매·관계) 중 어느 접점이 AI Agent로 넘어가고 있으며, 그 접점의 주도권은 브랜드·플랫폼·고객 Agent 중 누구에게 있는가?</p>
+  </header>
+  <section class="answer-box"><h2>한 줄 답</h2>
+    <p class="answer narrow">2026년 10월 현재 AI로 가장 많이 넘어간 접점은 발견과 상담이다. 발견은 플랫폼이 광고로 팔고, 상담은 고객이 직접 쓰는 범용 AI로 옮겨가 두 곳 모두 브랜드 손을 떠나고 있다. 결제는 플랫폼·리테일러·고객 Agent가 다투는 중이고, 재구매·멤버십 같은 관계 접점만 아직 브랜드에 남아 있다. <a class="rid" href="#Q2-I-001" title="발견 접점은 AI 답변 안으로 옮겨가고 있고, 그 지면은 플랫폼이 광고로 팔기 시작했다. 브랜드는 AI 답변에 노출되려면 플랫폼에 광고비를 내는 구조가 생기고 있다.">Q2-I-001</a><a class="rid" href="#Q2-I-002" title="상담 접점은 브랜드 밖으로 빠져나가고 있다. 고객은 기업 챗봇보다 범용 AI를 세 배 더 많이 쓴다. 다만 87%가 사람 연결을 요구해, 브랜드 상담의 차별점은 &#x27;AI 안내 + 사람 연결&#x27;로 좁혀지고 있다.">Q2-I-002</a><a class="rid" href="#Q2-I-003" title="결제 접점은 아직 주인이 정해지지 않았다. Google은 AI 화면 안 결제로 들어왔고 OpenAI는 결제를 리테일러에게 돌려줬으며, Amazon과 Perplexity는 고객 Agent의 접근권을 놓고 법정에서 다투고 있다.">Q2-I-003</a></p><dl class="arows"><div class="arow"><dt>발견 → 플랫폼</dt><dd>AI 답변 아래에 광고가 붙기 시작했다. ChatGPT는 1월 광고 시험을 발표했고, Amazon은 Rufus 안에 브랜드 스폰서 질문을 넣었다(누른 사람의 약 20%가 대화를 이어감). <a class="rid" href="#Q2-E-002" title="OpenAI가 미국 ChatGPT 무료·Go 요금제에서 광고 시험을 시작한다고 발표했다. 광고는 답변 아래 &#x27;스폰서&#x27; 카드로 붙는다.">Q2-E-002</a><a class="rid" href="#Q2-M-005" title="Rufus 안의 브랜드 스폰서 질문을 누른 쇼핑객의 약 20%가 그 브랜드에 대해 대화를 이어갔다.">Q2-M-005</a></dd></div><div class="arow"><dt>상담 → 고객 Agent</dt><dd>고객은 기업 챗봇보다 ChatGPT·Gemini 같은 범용 AI를 약 3배 더 많이 쓴다. 다만 87%는 사람 상담원 연결을 필수로 본다. <a class="rid" href="#Q2-M-007" title="최근 고객 서비스 상황에서 고객은 기업이 제공한 챗봇보다 ChatGPT·Gemini 같은 서드파티 AI를 약 3배 더 많이 썼다.">Q2-M-007</a><a class="rid" href="#Q2-M-008" title="고객의 87%는 AI로 상담하는 기업이라도 사람 상담원 연결은 반드시 있어야 한다고 답했다.">Q2-M-008</a></dd></div><div class="arow"><dt>판매 → 경합</dt><dd>Google은 AI Mode·Gemini 안 결제를 열었고, OpenAI는 결제를 리테일러에게 돌려줬다. Amazon과 Perplexity는 고객 Agent의 쇼핑 접근권을 놓고 소송 중이며, 8월 항소심은 Agent 쪽 손을 들었다. <a class="rid" href="#Q2-E-001" title="Google이 AI Mode와 Gemini 안에서 결제까지 끝내는 Universal Commerce Protocol과, 브랜드가 자기 목소리로 응대하는 Business Agent를 발표했다.">Q2-E-001</a><a class="rid" href="#Q2-E-004" title="OpenAI가 ChatGPT 대화 안 결제를 접고, 구매를 리테일러 앱과 사이트로 넘겼다.">Q2-E-004</a><a class="rid" href="#Q2-E-010" title="미국 항소법원(제9순회)이 Perplexity 쇼핑 Agent에 대한 가처분을 뒤집었다. Agent는 사용자 지시로 움직이므로 접근 주체는 사용자라고 봤다. 본안 소송은 계속된다.">Q2-E-010</a></dd></div><div class="arow"><dt>관계 → 브랜드 (잠정)</dt><dd>주문·반품·멤버십은 아직 브랜드·리테일러 몫이다. 그러나 Rufus의 반복 구매 설정, 네이버의 멤버십 혜택 추천 계획처럼 플랫폼이 이 영역에도 들어오고 있다. <a class="rid" href="#Q2-E-011" title="Amazon이 Rufus에 생필품 재주문·신제품 추적 같은 반복 쇼핑 작업 설정 기능을 더했다. 설정 가격에 닿으면 자동 구매하는 기능은 이미 있다.">Q2-E-011</a><a class="rid" href="#Q2-E-008" title="네이버 쇼핑 AI 에이전트가 정식 출시됐고, 하반기에 개인화 멤버십 혜택 추천·장바구니·배송 기능을 더하겠다고 밝혔다.">Q2-E-008</a></dd></div><div class="arow"><dt>한국</dt><dd>네이버(검색·쇼핑)와 카카오(카톡·선물하기)가 발견부터 결제까지 자사 안에 묶고 있다. 브랜드는 두 플랫폼에 입점하는 방식으로 Agent 채널에 들어가게 된다. <a class="rid" href="#Q2-E-006" title="카카오가 카카오톡 안에서 검색·추천·결제까지 이어지는 AI 에이전트를 하반기에 내겠다고 밝혔다. 4월부터 &#x27;선물하기&#x27; 연동 베타를 운영 중이다.">Q2-E-006</a><a class="rid" href="#Q2-M-013" title="네이버 쇼핑 AI 에이전트 경유 거래액은 3월 대비 6월에 2.7배 이상 늘었다.">Q2-M-013</a><a class="rid" href="#Q2-I-005" title="한국은 네이버(검색·쇼핑)와 카카오(메신저·선물하기)가 발견부터 결제까지 자사 안에 묶는 방식으로 Agent를 키우고 있다. 브랜드는 두 플랫폼 안에 입점하는 형태로 Agent 채널에 들어가게 된다.">Q2-I-005</a></dd></div></dl></section>
+  <section><h2>해석</h2><div class="narrative"><p>발견 접점은 AI 답변 안으로 옮겨가고, 그 지면을 플랫폼이 광고로 팔기 시작했다. OpenAI는 1월 미국 무료·Go 요금제에서 답변 아래 ‘스폰서’ 카드 광고 시험을 발표했다. Amazon은 쇼핑 Agent Rufus 안에 브랜드 스폰서 질문을 넣었고, 광고 매출은 1분기 172억 달러로 24% 늘었다. 네이버도 4분기 AI탭 광고를 추진한다. 브랜드가 AI 답변에 노출되려면 플랫폼에 비용을 내는 구조가 생기고 있다. <a class="rid" href="#Q2-E-002" title="OpenAI가 미국 ChatGPT 무료·Go 요금제에서 광고 시험을 시작한다고 발표했다. 광고는 답변 아래 &#x27;스폰서&#x27; 카드로 붙는다.">Q2-E-002</a><a class="rid" href="#Q2-M-005" title="Rufus 안의 브랜드 스폰서 질문을 누른 쇼핑객의 약 20%가 그 브랜드에 대해 대화를 이어갔다.">Q2-M-005</a><a class="rid" href="#Q2-M-004" title="Amazon 광고 매출은 2026년 1분기 172억 달러로 전년 대비 24% 늘었다.">Q2-M-004</a><a class="rid" href="#Q2-E-007" title="네이버가 AI탭을 전체 이용자에게 정식 출시했고, 4분기에 AI탭 광고 도입을 추진한다고 밝혔다.">Q2-E-007</a><a class="rid" href="#Q2-I-001" title="발견 접점은 AI 답변 안으로 옮겨가고 있고, 그 지면은 플랫폼이 광고로 팔기 시작했다. 브랜드는 AI 답변에 노출되려면 플랫폼에 광고비를 내는 구조가 생기고 있다.">Q2-I-001</a></p><p>상담 접점은 브랜드 밖으로 빠져나가고 있다. Gartner가 3,566명을 조사한 결과, 고객은 최근 서비스 상황에서 기업 챗봇보다 범용 AI를 약 3배 더 많이 썼고, 생성형 AI 이용자의 58%는 AI에게 대신 일을 처리시킨 적이 있었다. 반면 87%는 사람 상담원 연결을 필수로 봤다. 브랜드 상담의 역할은 ‘AI 안내 후 사람 연결’로 좁혀지고 있다. <a class="rid" href="#Q2-M-007" title="최근 고객 서비스 상황에서 고객은 기업이 제공한 챗봇보다 ChatGPT·Gemini 같은 서드파티 AI를 약 3배 더 많이 썼다.">Q2-M-007</a><a class="rid" href="#Q2-M-009" title="생성형 AI를 쓰는 고객의 58%가 AI에게 자기 대신 일을 처리시킨 경험이 있다(B2B는 74%).">Q2-M-009</a><a class="rid" href="#Q2-M-008" title="고객의 87%는 AI로 상담하는 기업이라도 사람 상담원 연결은 반드시 있어야 한다고 답했다.">Q2-M-008</a><a class="rid" href="#Q2-I-002" title="상담 접점은 브랜드 밖으로 빠져나가고 있다. 고객은 기업 챗봇보다 범용 AI를 세 배 더 많이 쓴다. 다만 87%가 사람 연결을 요구해, 브랜드 상담의 차별점은 &#x27;AI 안내 + 사람 연결&#x27;로 좁혀지고 있다.">Q2-I-002</a></p><p>판매 접점은 아직 주인이 정해지지 않았다. Google은 1월 Universal Commerce Protocol로 AI Mode와 Gemini 안 결제를 열었고, Shopify·Walmart·Target 등 20곳 이상이 참여했다. OpenAI는 3월 대화 안 결제를 접고 구매를 리테일러에게 돌려줬다. Amazon은 3월 Perplexity 쇼핑 Agent를 막는 가처분을 받아냈지만, 8월 항소심은 Agent가 사용자 지시로 움직인다며 이를 뒤집었다. <a class="rid" href="#Q2-E-001" title="Google이 AI Mode와 Gemini 안에서 결제까지 끝내는 Universal Commerce Protocol과, 브랜드가 자기 목소리로 응대하는 Business Agent를 발표했다.">Q2-E-001</a><a class="rid" href="#Q2-M-010" title="Google의 Universal Commerce Protocol에는 발표 시점에 20곳 이상이 참여했고, Shopify·Walmart·Target·Etsy·Wayfair가 공동 개발했다.">Q2-M-010</a><a class="rid" href="#Q2-E-004" title="OpenAI가 ChatGPT 대화 안 결제를 접고, 구매를 리테일러 앱과 사이트로 넘겼다.">Q2-E-004</a><a class="rid" href="#Q2-E-003" title="미국 법원이 Perplexity의 쇼핑 Agent(Comet)가 Amazon에서 대신 쇼핑하는 것을 막는 가처분을 내렸다.">Q2-E-003</a><a class="rid" href="#Q2-E-010" title="미국 항소법원(제9순회)이 Perplexity 쇼핑 Agent에 대한 가처분을 뒤집었다. Agent는 사용자 지시로 움직이므로 접근 주체는 사용자라고 봤다. 본안 소송은 계속된다.">Q2-E-010</a><a class="rid" href="#Q2-I-003" title="결제 접점은 아직 주인이 정해지지 않았다. Google은 AI 화면 안 결제로 들어왔고 OpenAI는 결제를 리테일러에게 돌려줬으며, Amazon과 Perplexity는 고객 Agent의 접근권을 놓고 법정에서 다투고 있다.">Q2-I-003</a></p><p>지금 가장 앞선 쇼핑 Agent는 외부 범용 AI가 아니라 플랫폼 자체 Agent다. Amazon Rufus는 2025년 고객 3억 명이 썼고 연환산 약 120억 달러의 증분 매출을 냈다. 2026년 1분기 월간 이용자는 115% 늘었고, Rufus 사용자는 구매를 끝낼 가능성이 60% 높다. <a class="rid" href="#Q2-M-001" title="Amazon 쇼핑 Agent Rufus는 2025년 고객 3억 명이 썼고, 연환산 약 120억 달러의 증분 매출을 만들었다.">Q2-M-001</a><a class="rid" href="#Q2-M-002" title="2026년 1분기 Rufus 월간 이용자는 전년 대비 115%, 이용 활동(engagement)은 400% 늘었다.">Q2-M-002</a><a class="rid" href="#Q2-M-003" title="Amazon에 따르면 Rufus를 쓰는 고객은 구매를 끝낼 가능성이 60% 높다.">Q2-M-003</a><a class="rid" href="#Q2-I-004" title="지금 가장 앞선 쇼핑 Agent는 외부 범용 AI가 아니라 Amazon Rufus 같은 플랫폼 자체 Agent다. 이용자·매출·전환 모두 숫자로 확인되고, 스폰서 질문으로 광고까지 붙었다.">Q2-I-004</a></p><p>한국은 대형 플랫폼이 Agent를 자사 안에 키우는 길로 가고 있다. 네이버 쇼핑 AI 에이전트 경유 거래액은 3개월 만에 2.7배가 됐고, 카카오는 카톡 안 검색·추천·결제 Agent를 하반기에 내겠다고 했다(연말 이용 가능자 3,100만 명 예상). 결제 인프라는 아직 준비 단계로, 한국 카드사 6곳이 Visa의 Agent 결제 시험 프로그램에 들어갔지만 일반 소비자 상용 거래는 없다. <a class="rid" href="#Q2-M-013" title="네이버 쇼핑 AI 에이전트 경유 거래액은 3월 대비 6월에 2.7배 이상 늘었다.">Q2-M-013</a><a class="rid" href="#Q2-E-006" title="카카오가 카카오톡 안에서 검색·추천·결제까지 이어지는 AI 에이전트를 하반기에 내겠다고 밝혔다. 4월부터 &#x27;선물하기&#x27; 연동 베타를 운영 중이다.">Q2-E-006</a><a class="rid" href="#Q2-M-012" title="카카오는 카카오톡 AI 에이전트를 쓸 수 있는 이용자가 2026년 말 3,100만 명(1분기 카톡 MAU 4,958만 명의 약 62%)이 될 것으로 봤다.">Q2-M-012</a><a class="rid" href="#Q2-M-011" title="Visa의 Agent 결제 준비 프로그램에 아태 50곳 이상이 참여했고, 한국에서는 하나·현대·KB국민·삼성·신한카드와 카카오뱅크가 이름을 올렸다.">Q2-M-011</a><a class="rid" href="#Q2-I-005" title="한국은 네이버(검색·쇼핑)와 카카오(메신저·선물하기)가 발견부터 결제까지 자사 안에 묶는 방식으로 Agent를 키우고 있다. 브랜드는 두 플랫폼 안에 입점하는 형태로 Agent 채널에 들어가게 된다.">Q2-I-005</a><a class="rid" href="#Q2-I-006" title="Agent 결제의 인프라는 준비 단계다. 한국 카드사 6곳이 Visa 프로그램에 들어갔지만 시험 환경 검증이 1단계이고, 일반 소비자 상용 거래는 아직 없다.">Q2-I-006</a></p></div>
+    <div class="tablewrap"><table><thead><tr><th>방향</th><th>대상</th><th>해석</th><th>근거</th><th>기록</th></tr></thead><tbody><tr id="Q2-I-001"><td><span class="dir up">강화</span></td>
+  <td class="tgt">발견 접점</td><td>발견 접점은 AI 답변 안으로 옮겨가고 있고, 그 지면은 플랫폼이 광고로 팔기 시작했다. 브랜드는 AI 답변에 노출되려면 플랫폼에 광고비를 내는 구조가 생기고 있다.</td><td><a class="rid" href="#Q2-E-002" title="OpenAI가 미국 ChatGPT 무료·Go 요금제에서 광고 시험을 시작한다고 발표했다. 광고는 답변 아래 &#x27;스폰서&#x27; 카드로 붙는다.">Q2-E-002</a><a class="rid" href="#Q2-M-005" title="Rufus 안의 브랜드 스폰서 질문을 누른 쇼핑객의 약 20%가 그 브랜드에 대해 대화를 이어갔다.">Q2-M-005</a><a class="rid" href="#Q2-M-004" title="Amazon 광고 매출은 2026년 1분기 172억 달러로 전년 대비 24% 늘었다.">Q2-M-004</a><a class="rid" href="#Q2-E-007" title="네이버가 AI탭을 전체 이용자에게 정식 출시했고, 4분기에 AI탭 광고 도입을 추진한다고 밝혔다.">Q2-E-007</a></td><td class="idc"><code>Q2-I-001</code></td></tr><tr id="Q2-I-002"><td><span class="dir up">강화</span></td>
+  <td class="tgt">상담 접점</td><td>상담 접점은 브랜드 밖으로 빠져나가고 있다. 고객은 기업 챗봇보다 범용 AI를 세 배 더 많이 쓴다. 다만 87%가 사람 연결을 요구해, 브랜드 상담의 차별점은 &#x27;AI 안내 + 사람 연결&#x27;로 좁혀지고 있다.</td><td><a class="rid" href="#Q2-M-007" title="최근 고객 서비스 상황에서 고객은 기업이 제공한 챗봇보다 ChatGPT·Gemini 같은 서드파티 AI를 약 3배 더 많이 썼다.">Q2-M-007</a><a class="rid" href="#Q2-M-008" title="고객의 87%는 AI로 상담하는 기업이라도 사람 상담원 연결은 반드시 있어야 한다고 답했다.">Q2-M-008</a><a class="rid" href="#Q2-M-009" title="생성형 AI를 쓰는 고객의 58%가 AI에게 자기 대신 일을 처리시킨 경험이 있다(B2B는 74%).">Q2-M-009</a></td><td class="idc"><code>Q2-I-002</code></td></tr><tr id="Q2-I-003"><td><span class="dir flat">중립</span></td>
+  <td class="tgt">판매 접점</td><td>결제 접점은 아직 주인이 정해지지 않았다. Google은 AI 화면 안 결제로 들어왔고 OpenAI는 결제를 리테일러에게 돌려줬으며, Amazon과 Perplexity는 고객 Agent의 접근권을 놓고 법정에서 다투고 있다.</td><td><a class="rid" href="#Q2-E-001" title="Google이 AI Mode와 Gemini 안에서 결제까지 끝내는 Universal Commerce Protocol과, 브랜드가 자기 목소리로 응대하는 Business Agent를 발표했다.">Q2-E-001</a><a class="rid" href="#Q2-E-004" title="OpenAI가 ChatGPT 대화 안 결제를 접고, 구매를 리테일러 앱과 사이트로 넘겼다.">Q2-E-004</a><a class="rid" href="#Q2-E-003" title="미국 법원이 Perplexity의 쇼핑 Agent(Comet)가 Amazon에서 대신 쇼핑하는 것을 막는 가처분을 내렸다.">Q2-E-003</a><a class="rid" href="#Q2-E-010" title="미국 항소법원(제9순회)이 Perplexity 쇼핑 Agent에 대한 가처분을 뒤집었다. Agent는 사용자 지시로 움직이므로 접근 주체는 사용자라고 봤다. 본안 소송은 계속된다.">Q2-E-010</a></td><td class="idc"><code>Q2-I-003</code></td></tr><tr id="Q2-I-004"><td><span class="dir up">강화</span></td>
+  <td class="tgt">플랫폼 자체 Agent</td><td>지금 가장 앞선 쇼핑 Agent는 외부 범용 AI가 아니라 Amazon Rufus 같은 플랫폼 자체 Agent다. 이용자·매출·전환 모두 숫자로 확인되고, 스폰서 질문으로 광고까지 붙었다.</td><td><a class="rid" href="#Q2-M-001" title="Amazon 쇼핑 Agent Rufus는 2025년 고객 3억 명이 썼고, 연환산 약 120억 달러의 증분 매출을 만들었다.">Q2-M-001</a><a class="rid" href="#Q2-M-002" title="2026년 1분기 Rufus 월간 이용자는 전년 대비 115%, 이용 활동(engagement)은 400% 늘었다.">Q2-M-002</a><a class="rid" href="#Q2-M-003" title="Amazon에 따르면 Rufus를 쓰는 고객은 구매를 끝낼 가능성이 60% 높다.">Q2-M-003</a><a class="rid" href="#Q2-M-005" title="Rufus 안의 브랜드 스폰서 질문을 누른 쇼핑객의 약 20%가 그 브랜드에 대해 대화를 이어갔다.">Q2-M-005</a></td><td class="idc"><code>Q2-I-004</code></td></tr><tr id="Q2-I-005"><td><span class="dir up">강화</span></td>
+  <td class="tgt">한국 주도권</td><td>한국은 네이버(검색·쇼핑)와 카카오(메신저·선물하기)가 발견부터 결제까지 자사 안에 묶는 방식으로 Agent를 키우고 있다. 브랜드는 두 플랫폼 안에 입점하는 형태로 Agent 채널에 들어가게 된다.</td><td><a class="rid" href="#Q2-E-006" title="카카오가 카카오톡 안에서 검색·추천·결제까지 이어지는 AI 에이전트를 하반기에 내겠다고 밝혔다. 4월부터 &#x27;선물하기&#x27; 연동 베타를 운영 중이다.">Q2-E-006</a><a class="rid" href="#Q2-M-012" title="카카오는 카카오톡 AI 에이전트를 쓸 수 있는 이용자가 2026년 말 3,100만 명(1분기 카톡 MAU 4,958만 명의 약 62%)이 될 것으로 봤다.">Q2-M-012</a><a class="rid" href="#Q2-M-013" title="네이버 쇼핑 AI 에이전트 경유 거래액은 3월 대비 6월에 2.7배 이상 늘었다.">Q2-M-013</a><a class="rid" href="#Q2-E-007" title="네이버가 AI탭을 전체 이용자에게 정식 출시했고, 4분기에 AI탭 광고 도입을 추진한다고 밝혔다.">Q2-E-007</a><a class="rid" href="#Q2-E-008" title="네이버 쇼핑 AI 에이전트가 정식 출시됐고, 하반기에 개인화 멤버십 혜택 추천·장바구니·배송 기능을 더하겠다고 밝혔다.">Q2-E-008</a></td><td class="idc"><code>Q2-I-005</code></td></tr><tr id="Q2-I-006"><td><span class="dir flat">중립</span></td>
+  <td class="tgt">Agent 결제 인프라</td><td>Agent 결제의 인프라는 준비 단계다. 한국 카드사 6곳이 Visa 프로그램에 들어갔지만 시험 환경 검증이 1단계이고, 일반 소비자 상용 거래는 아직 없다.</td><td><a class="rid" href="#Q2-M-011" title="Visa의 Agent 결제 준비 프로그램에 아태 50곳 이상이 참여했고, 한국에서는 하나·현대·KB국민·삼성·신한카드와 카카오뱅크가 이름을 올렸다.">Q2-M-011</a><a class="rid" href="#Q2-E-005" title="Visa가 한국을 포함한 아태 10개 시장에서 카드 발급사용 Agent 결제 준비 프로그램을 시작했다.">Q2-E-005</a></td><td class="idc"><code>Q2-I-006</code></td></tr></tbody></table></div></section>
+  <section><h2>주요 사건 <small>최신순 · 원문 확인된 것만</small></h2><p class="lead">1월에 플랫폼들이 AI 화면 안 결제(Google)와 광고(OpenAI)를 함께 열었다. 3월 이후에는 결제와 고객 접근권을 누가 쥐느냐를 두고 후퇴(OpenAI)와 법적 공방(Amazon·Perplexity)이 이어졌다. 한국에서는 5~6월 카카오와 네이버가 자사 안 Agent 계획을 내놓았다.</p><ul class="timeline"><li id="Q2-E-010"><time>2026-08-04</time><div><b>Amazon·Perplexity</b> 미국 항소법원(제9순회)이 Perplexity 쇼핑 Agent에 대한 가처분을 뒤집었다. Agent는 사용자 지시로 움직이므로 접근 주체는 사용자라고 봤다. 본안 소송은 계속된다.
+  <div class="src"><a href="https://www.eweek.com/news/perplexity-ai-shopping-agent-returns-amazon/" target="_blank" rel="noopener">eWeek (Reuters 인용)</a><span class="grade gB">B</span> <code>Q2-E-010</code></div></div></li><li id="Q2-E-009"><time>2026-07-14</time><div><b>LG유플러스</b> LG유플러스가 조회·판단·실행까지 하는 에이전틱 AI 상담봇과 상담 품질 사전 검증 도구를 공개했다.
+  <div class="src"><a href="https://www.newsis.com/view/NISX20260714_0003707948" target="_blank" rel="noopener">뉴시스</a><span class="grade gB">B</span> <code>Q2-E-009</code></div></div></li><li id="Q2-E-007"><time>2026-06-25</time><div><b>네이버</b> 네이버가 AI탭을 전체 이용자에게 정식 출시했고, 4분기에 AI탭 광고 도입을 추진한다고 밝혔다.
+  <div class="src"><a href="https://www.segye.com/newsView/20260626507402" target="_blank" rel="noopener">세계일보</a><span class="grade gB">B</span> <code>Q2-E-007</code></div></div></li><li id="Q2-E-008"><time>2026-06-25</time><div><b>네이버</b> 네이버 쇼핑 AI 에이전트가 정식 출시됐고, 하반기에 개인화 멤버십 혜택 추천·장바구니·배송 기능을 더하겠다고 밝혔다.
+  <div class="src"><a href="https://byline.network/2026/07/0701-2/" target="_blank" rel="noopener">바이라인네트워크</a><span class="grade gB">B</span> <code>Q2-E-008</code></div></div></li><li id="Q2-E-006"><time>2026-05-07</time><div><b>카카오</b> 카카오가 카카오톡 안에서 검색·추천·결제까지 이어지는 AI 에이전트를 하반기에 내겠다고 밝혔다. 4월부터 &#x27;선물하기&#x27; 연동 베타를 운영 중이다.
+  <div class="src"><a href="https://v.daum.net/v/20260507121150759" target="_blank" rel="noopener">다음 뉴스 (카카오 1분기 실적 발표)</a><span class="grade gB">B</span> <code>Q2-E-006</code></div></div></li><li id="Q2-E-005"><time>2026-04-30</time><div><b>Visa</b> Visa가 한국을 포함한 아태 10개 시장에서 카드 발급사용 Agent 결제 준비 프로그램을 시작했다.
+  <div class="src"><a href="https://www.visa.com.sg/about-visa/newsroom/press-releases/visa-launches-agentic-ready-program-in-asia-pacific-with-over-50-partners-advancing-agentic-commerce.html" target="_blank" rel="noopener">Visa 보도자료</a><span class="grade gA">A</span> <code>Q2-E-005</code></div></div></li><li id="Q2-E-011"><time>2026-04</time><div><b>Amazon</b> Amazon이 Rufus에 생필품 재주문·신제품 추적 같은 반복 쇼핑 작업 설정 기능을 더했다. 설정 가격에 닿으면 자동 구매하는 기능은 이미 있다.
+  <div class="src"><a href="https://www.modernretail.co/technology/amazon-says-its-ai-shopping-assistant-is-gaining-traction-with-rufus-users-up-115/" target="_blank" rel="noopener">Modern Retail (Amazon 실적 발표)</a><span class="grade gB">B</span> <code>Q2-E-011</code></div></div></li><li id="Q2-E-003"><time>2026-03-09</time><div><b>Amazon·Perplexity</b> 미국 법원이 Perplexity의 쇼핑 Agent(Comet)가 Amazon에서 대신 쇼핑하는 것을 막는 가처분을 내렸다.
+  <div class="src"><a href="https://www.geekwire.com/2026/judge-blocks-perplexitys-ai-bot-from-shopping-on-amazon-in-early-test-of-agentic-commerce/" target="_blank" rel="noopener">GeekWire</a><span class="grade gB">B</span> <code>Q2-E-003</code></div></div></li><li id="Q2-E-004"><time>2026-03</time><div><b>OpenAI</b> OpenAI가 ChatGPT 대화 안 결제를 접고, 구매를 리테일러 앱과 사이트로 넘겼다.
+  <div class="src"><a href="https://forklog.com/en/openai-abandons-instant-checkout-feature-in-chatgpt/amp" target="_blank" rel="noopener">ForkLog (The Information 인용)</a><span class="grade gB">B</span> <code>Q2-E-004</code></div></div></li><li id="Q2-E-002"><time>2026-01-16</time><div><b>OpenAI</b> OpenAI가 미국 ChatGPT 무료·Go 요금제에서 광고 시험을 시작한다고 발표했다. 광고는 답변 아래 &#x27;스폰서&#x27; 카드로 붙는다.
+  <div class="src"><a href="https://siliconangle.com/2026/01/16/openai-start-testing-chatgpt-ads-across-free-go-tiers/" target="_blank" rel="noopener">SiliconANGLE (OpenAI 발표)</a><span class="grade gB">B</span> <code>Q2-E-002</code></div></div></li><li id="Q2-E-001"><time>2026-01-11</time><div><b>Google</b> Google이 AI Mode와 Gemini 안에서 결제까지 끝내는 Universal Commerce Protocol과, 브랜드가 자기 목소리로 응대하는 Business Agent를 발표했다.
+  <div class="src"><a href="https://www.androidauthority.com/google-universal-commerce-protocol-announcement-3631662" target="_blank" rel="noopener">Android Authority (Google 발표)</a><span class="grade gB">B</span> <code>Q2-E-001</code></div></div></li></ul></section>
+  <section><h2>전망 <small>2027년 말까지, 고객 접점의 주인은 누가 될까</small></h2><p class="lead">브랜드 입장에서 2027년 말을 기준으로 두 시나리오를 세웠다. 갈림길은 두 가지다. 고객 Agent의 쇼핑 접근권이 법적으로 유지되는가, 그리고 한국 메신저·포털 Agent가 외부 브랜드몰에 결제를 열어주는가.</p>
+    <div class="scens"><article class="scen opt" id="Q2-F-101"><header><span class="sk">낙관 · Optimistic</span><code>Q2-F-101</code></header>
+  <p class="sstmt">(브랜드 관점) 2027년 말까지 Agent 채널이 여러 플랫폼과 개방 규격으로 나뉜다. 고객 Agent의 쇼핑 접근권이 법적으로 유지되고, 브랜드는 UCP 같은 개방 규격과 자체 Agent로 여러 AI 창구에 직접 연결해 판매·관계 접점을 지킨다. 한국에서도 카카오·네이버 Agent가 외부 브랜드몰 결제를 연결한다.</p><ol class="ms"><li><time>2026-12</time><span>카카오톡 AI 에이전트 정식 출시, 외부 커머스 결제 연결</span></li><li><time>2027-06</time><span>Perplexity 쇼핑 Agent의 Amazon 접근 유지, 한국 카드사 Agent 결제 상용 출시</span></li><li><time>2027-12</time><span>브랜드 자체 Agent가 Google·ChatGPT 등 여러 AI 창구에서 직접 응대·판매</span></li></ol>
+  <dl class="sdl"><div><dt>판정 시점</dt><dd>2027-12-31</dd></div><div><dt>판정 방법</dt><dd>세 가지 중 두 가지 이상 충족 시 적중: (1) 고객 Agent의 대형 마켓플레이스 쇼핑 접근이 법원 명령으로 막히지 않음 (2) 브랜드 자체 Agent가 둘 이상의 AI 플랫폼에서 일반 이용자에게 제공됨 (3) 한국 메신저·포털 Agent에 외부 브랜드몰 결제 연결</dd></div>
+  <div><dt>전제</dt><dd>대형 플랫폼이 외부 Agent 차단을 기술적으로 강화하지 않을 경우</dd></div><div><dt>근거</dt><dd><a class="rid" href="#Q2-E-001" title="Google이 AI Mode와 Gemini 안에서 결제까지 끝내는 Universal Commerce Protocol과, 브랜드가 자기 목소리로 응대하는 Business Agent를 발표했다.">Q2-E-001</a><a class="rid" href="#Q2-E-010" title="미국 항소법원(제9순회)이 Perplexity 쇼핑 Agent에 대한 가처분을 뒤집었다. Agent는 사용자 지시로 움직이므로 접근 주체는 사용자라고 봤다. 본안 소송은 계속된다.">Q2-E-010</a><a class="rid" href="#Q2-M-010" title="Google의 Universal Commerce Protocol에는 발표 시점에 20곳 이상이 참여했고, Shopify·Walmart·Target·Etsy·Wayfair가 공동 개발했다.">Q2-M-010</a><a class="rid" href="#Q2-E-006" title="카카오가 카카오톡 안에서 검색·추천·결제까지 이어지는 AI 에이전트를 하반기에 내겠다고 밝혔다. 4월부터 &#x27;선물하기&#x27; 연동 베타를 운영 중이다.">Q2-E-006</a></dd></div></dl></article><article class="scen pes" id="Q2-F-102"><header><span class="sk">비관 · Pessimistic</span><code>Q2-F-102</code></header>
+  <p class="sstmt">(브랜드 관점) 2027년 말까지 소수 플랫폼이 발견부터 결제까지 장악한다. AI 답변 안 노출은 광고로 사야 하고, 쇼핑 Agent는 Amazon Rufus·네이버·카카오처럼 플랫폼 자체 Agent가 주도한다. 브랜드는 판매 데이터와 고객 관계를 플랫폼에 넘기고 상품 공급자 위치로 밀린다.</p><ol class="ms"><li><time>2026-12</time><span>네이버 AI탭 광고 출시, ChatGPT 광고 미국 밖으로 확대</span></li><li><time>2027-02</time><span>Amazon Rufus 기여 매출이 2025년보다 커짐</span></li><li><time>2027-12</time><span>고객 상담의 첫 창구가 기업 챗봇이 아닌 범용 AI로 굳어짐</span></li></ol>
+  <dl class="sdl"><div><dt>판정 시점</dt><dd>2027-12-31</dd></div><div><dt>판정 방법</dt><dd>낙관 시나리오의 판정 조건 세 가지 중 하나 이하만 충족 시 적중</dd></div>
+  <div><dt>전제</dt><dd>없음</dd></div><div><dt>근거</dt><dd><a class="rid" href="#Q2-E-002" title="OpenAI가 미국 ChatGPT 무료·Go 요금제에서 광고 시험을 시작한다고 발표했다. 광고는 답변 아래 &#x27;스폰서&#x27; 카드로 붙는다.">Q2-E-002</a><a class="rid" href="#Q2-M-001" title="Amazon 쇼핑 Agent Rufus는 2025년 고객 3억 명이 썼고, 연환산 약 120억 달러의 증분 매출을 만들었다.">Q2-M-001</a><a class="rid" href="#Q2-M-004" title="Amazon 광고 매출은 2026년 1분기 172억 달러로 전년 대비 24% 늘었다.">Q2-M-004</a><a class="rid" href="#Q2-M-007" title="최근 고객 서비스 상황에서 고객은 기업이 제공한 챗봇보다 ChatGPT·Gemini 같은 서드파티 AI를 약 3배 더 많이 썼다.">Q2-M-007</a><a class="rid" href="#Q2-E-007" title="네이버가 AI탭을 전체 이용자에게 정식 출시했고, 4분기에 AI탭 광고 도입을 추진한다고 밝혔다.">Q2-E-007</a></dd></div></dl></article></div>
+    <h3 class="subhead">세부 판정 근거</h3>
+    <p class="lead muted">각 세부 전망이 적중하거나 빗나갔을 때 어느 시나리오 쪽 신호인지 표시했다. 확인 시점이 오면 확인 방법대로 판정한다.</p>
+    <div class="tablewrap"><table><thead><tr><th>세부 전망</th><th>확인 시점</th><th>적중 시</th><th>빗나갈 시</th><th>상태</th><th>근거</th></tr></thead><tbody><tr id="Q2-F-001"><td class="stmt">네이버는 2026년 안에 AI탭 광고 상품을 출시할 것이다.<small>확인 방법: 네이버 보도자료·실적발표에서 AI탭 광고 출시 확인</small></td>
+  <td class="asof">2026-12-31</td><td><span class="side pes">비관</span></td><td><span class="muted">—</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#Q2-E-007" title="네이버가 AI탭을 전체 이용자에게 정식 출시했고, 4분기에 AI탭 광고 도입을 추진한다고 밝혔다.">Q2-E-007</a></td></tr><tr id="Q2-F-002"><td class="stmt">카카오톡 AI 에이전트는 2026년 안에 정식 출시되며, 선물하기 외 외부 커머스 결제 연결을 포함할 것이다.<small>확인 방법: 카카오 발표에서 정식 출시와 외부 커머스(자사 외 쇼핑몰) 결제 연결 여부 확인</small></td>
+  <td class="asof">2026-12-31</td><td><span class="side opt">낙관</span></td><td><span class="side pes">비관</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#Q2-E-006" title="카카오가 카카오톡 안에서 검색·추천·결제까지 이어지는 AI 에이전트를 하반기에 내겠다고 밝혔다. 4월부터 &#x27;선물하기&#x27; 연동 베타를 운영 중이다.">Q2-E-006</a><a class="rid" href="#Q2-M-012" title="카카오는 카카오톡 AI 에이전트를 쓸 수 있는 이용자가 2026년 말 3,100만 명(1분기 카톡 MAU 4,958만 명의 약 62%)이 될 것으로 봤다.">Q2-M-012</a></td></tr><tr id="Q2-F-004"><td class="stmt">Amazon이 발표하는 2026년 Rufus 기여 매출은 2025년(연환산 약 120억 달러)보다 클 것이다.<small>확인 방법: Amazon 2026년 4분기 실적 발표의 Rufus 매출 기여 수치 확인</small></td>
+  <td class="asof">2027-02-28</td><td><span class="side pes">비관</span></td><td><span class="muted">—</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#Q2-M-001" title="Amazon 쇼핑 Agent Rufus는 2025년 고객 3억 명이 썼고, 연환산 약 120억 달러의 증분 매출을 만들었다.">Q2-M-001</a><a class="rid" href="#Q2-M-002" title="2026년 1분기 Rufus 월간 이용자는 전년 대비 115%, 이용 활동(engagement)은 400% 늘었다.">Q2-M-002</a></td></tr><tr id="Q2-F-003"><td class="stmt">2027년 6월 말까지 Perplexity 쇼핑 Agent의 Amazon 이용이 다시 법원 명령으로 막히지 않을 것이다.<small>확인 방법: Amazon v. Perplexity 소송의 법원 명령·합의 내용 확인</small></td>
+  <td class="asof">2027-06-30</td><td><span class="side opt">낙관</span></td><td><span class="side pes">비관</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#Q2-E-010" title="미국 항소법원(제9순회)이 Perplexity 쇼핑 Agent에 대한 가처분을 뒤집었다. Agent는 사용자 지시로 움직이므로 접근 주체는 사용자라고 봤다. 본안 소송은 계속된다.">Q2-E-010</a><a class="rid" href="#Q2-E-003" title="미국 법원이 Perplexity의 쇼핑 Agent(Comet)가 Amazon에서 대신 쇼핑하는 것을 막는 가처분을 내렸다.">Q2-E-003</a></td></tr><tr id="Q2-F-006"><td class="stmt">2027년 6월 말까지 한국 카드사 중 1곳 이상이 일반 소비자 대상 AI Agent 결제를 상용 출시할 것이다.<small>확인 방법: 국내 카드사·Visa·Mastercard 발표에서 일반 소비자 대상 Agent 결제 상용 출시 확인</small></td>
+  <td class="asof">2027-06-30</td><td><span class="side opt">낙관</span></td><td><span class="muted">—</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#Q2-M-011" title="Visa의 Agent 결제 준비 프로그램에 아태 50곳 이상이 참여했고, 한국에서는 하나·현대·KB국민·삼성·신한카드와 카카오뱅크가 이름을 올렸다.">Q2-M-011</a><a class="rid" href="#Q2-E-005" title="Visa가 한국을 포함한 아태 10개 시장에서 카드 발급사용 Agent 결제 준비 프로그램을 시작했다.">Q2-E-005</a></td></tr><tr id="Q2-F-005"><td class="stmt">Gartner의 다음 고객 조사에서도 고객은 기업 챗봇보다 서드파티 AI를 더 많이 쓸 것이다.<small>확인 방법: Gartner 2027 고객 서비스 조사의 서드파티 AI 대 기업 챗봇 이용 비교 확인</small></td>
+  <td class="asof">2027-09-30</td><td><span class="side pes">비관</span></td><td><span class="muted">—</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#Q2-M-007" title="최근 고객 서비스 상황에서 고객은 기업이 제공한 챗봇보다 ChatGPT·Gemini 같은 서드파티 AI를 약 3배 더 많이 썼다.">Q2-M-007</a></td></tr></tbody></table></div></section>
+  <section><h2>접점별 주도권 지도 <small>AI 이전 정도 · 누가 쥐고 있나</small></h2><p class="lead">발견과 상담은 이미 확산 단계로 브랜드 밖에 있고, 판매는 주인을 다투는 중이며, 관계만 브랜드에 남아 있다. 한국은 판매까지 플랫폼 쪽으로 기울어 있다.</p>
+    <div class="ladder mapgrid"><div class="rung"><div class="stage"><b>발견</b><span>Discovery</span></div>
+  <div class="lvcell"><span class="region">AI 이전 정도</span><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip"></span><span class="lv">확산</span></span></div>
+  <div class="lvcell"><span class="region">주도권 · 글로벌</span><span class="own platform">플랫폼</span></div>
+  <div class="lvcell"><span class="region">주도권 · 한국</span><span class="own platform">플랫폼</span></div>
+  <p class="why">AI 답변 아래 광고, Rufus 스폰서 질문. 한국은 네이버 AI탭 광고 4분기 추진. <a class="rid" href="#Q2-E-002" title="OpenAI가 미국 ChatGPT 무료·Go 요금제에서 광고 시험을 시작한다고 발표했다. 광고는 답변 아래 &#x27;스폰서&#x27; 카드로 붙는다.">Q2-E-002</a><a class="rid" href="#Q2-M-005" title="Rufus 안의 브랜드 스폰서 질문을 누른 쇼핑객의 약 20%가 그 브랜드에 대해 대화를 이어갔다.">Q2-M-005</a><a class="rid" href="#Q2-E-007" title="네이버가 AI탭을 전체 이용자에게 정식 출시했고, 4분기에 AI탭 광고 도입을 추진한다고 밝혔다.">Q2-E-007</a></p></div><div class="rung"><div class="stage"><b>상담</b><span>Consultation</span></div>
+  <div class="lvcell"><span class="region">AI 이전 정도</span><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip"></span><span class="lv">확산</span></span></div>
+  <div class="lvcell"><span class="region">주도권 · 글로벌</span><span class="own agent">고객 Agent</span></div>
+  <div class="lvcell"><span class="region">주도권 · 한국</span><span class="own brand">브랜드</span></div>
+  <p class="why">범용 AI 이용이 기업 챗봇의 3배. 한국은 기업 AICC 중심으로 보이나 이용 데이터는 아직 없음. <a class="rid" href="#Q2-M-007" title="최근 고객 서비스 상황에서 고객은 기업이 제공한 챗봇보다 ChatGPT·Gemini 같은 서드파티 AI를 약 3배 더 많이 썼다.">Q2-M-007</a><a class="rid" href="#Q2-E-009" title="LG유플러스가 조회·판단·실행까지 하는 에이전틱 AI 상담봇과 상담 품질 사전 검증 도구를 공개했다.">Q2-E-009</a></p></div><div class="rung"><div class="stage"><b>판매</b><span>Commerce</span></div>
+  <div class="lvcell"><span class="region">AI 이전 정도</span><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip"></span><span class="pip"></span><span class="lv">얼리어답터</span></span></div>
+  <div class="lvcell"><span class="region">주도권 · 글로벌</span><span class="own contest">경합</span></div>
+  <div class="lvcell"><span class="region">주도권 · 한국</span><span class="own platform">플랫폼</span></div>
+  <p class="why">Google은 AI 안 결제, OpenAI는 리테일러로, Amazon은 외부 Agent와 소송. 한국은 네이버·카카오 자사 결제. <a class="rid" href="#Q2-E-001" title="Google이 AI Mode와 Gemini 안에서 결제까지 끝내는 Universal Commerce Protocol과, 브랜드가 자기 목소리로 응대하는 Business Agent를 발표했다.">Q2-E-001</a><a class="rid" href="#Q2-E-004" title="OpenAI가 ChatGPT 대화 안 결제를 접고, 구매를 리테일러 앱과 사이트로 넘겼다.">Q2-E-004</a><a class="rid" href="#Q2-E-010" title="미국 항소법원(제9순회)이 Perplexity 쇼핑 Agent에 대한 가처분을 뒤집었다. Agent는 사용자 지시로 움직이므로 접근 주체는 사용자라고 봤다. 본안 소송은 계속된다.">Q2-E-010</a><a class="rid" href="#Q2-E-006" title="카카오가 카카오톡 안에서 검색·추천·결제까지 이어지는 AI 에이전트를 하반기에 내겠다고 밝혔다. 4월부터 &#x27;선물하기&#x27; 연동 베타를 운영 중이다.">Q2-E-006</a></p></div><div class="rung"><div class="stage"><b>관계</b><span>Relationship</span></div>
+  <div class="lvcell"><span class="region">AI 이전 정도</span><span class="pips"><span class="pip on"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="lv">실험</span></span></div>
+  <div class="lvcell"><span class="region">주도권 · 글로벌</span><span class="own brand">브랜드</span></div>
+  <div class="lvcell"><span class="region">주도권 · 한국</span><span class="own brand">브랜드</span></div>
+  <p class="why">주문·반품·멤버십은 브랜드 몫. Rufus 반복 구매, 네이버 멤버십 혜택 추천이 진입 중. <a class="rid" href="#Q2-E-011" title="Amazon이 Rufus에 생필품 재주문·신제품 추적 같은 반복 쇼핑 작업 설정 기능을 더했다. 설정 가격에 닿으면 자동 구매하는 기능은 이미 있다.">Q2-E-011</a><a class="rid" href="#Q2-E-008" title="네이버 쇼핑 AI 에이전트가 정식 출시됐고, 하반기에 개인화 멤버십 혜택 추천·장바구니·배송 기능을 더하겠다고 밝혔다.">Q2-E-008</a></p></div></div></section>
+  <section><h2>핵심 지표 <small>추적 지표 6/8개 값 확보</small></h2><p class="lead">추적 지표 8개 중 6개의 값을 원문으로 확인했다. Q2-I5 브랜드 자체 AI Agent 도입, Q2-I6 외부 Agent 차단·허용은 이번 회차에 수치를 찾지 못했다. 외부 Agent 차단·허용은 주요 사건(Amazon·Perplexity 소송)으로 추적하고, 브랜드 자체 Agent 도입 건수는 다음 간단 조사에서 집계한다.</p>
+    <div class="tablewrap"><table><thead><tr><th>추적 지표</th><th>내용 · 출처</th><th style="text-align:right">현재값</th><th>기준 시점</th><th>기록</th></tr></thead><tbody><tr id="Q2-M-001"><td class="ind">Q2-I1<small>플랫폼 자체 쇼핑 Agent 규모</small></td>
+  <td class="stmt">Amazon 쇼핑 Agent Rufus는 2025년 고객 3억 명이 썼고, 연환산 약 120억 달러의 증분 매출을 만들었다. <div class="src"><a href="https://www.modernretail.co/technology/amazon-says-its-ai-shopping-assistant-is-gaining-traction-with-rufus-users-up-115/" target="_blank" rel="noopener">Modern Retail (Amazon 실적 발표)</a><span class="grade gB">B</span></div></td>
+  <td class="num">120 억 달러(연환산 증분 매출)</td><td class="asof">2025<small>US/GLOBAL</small></td><td class="idc"><code>Q2-M-001</code></td></tr><tr id="Q2-M-002"><td class="ind">Q2-I1<small>플랫폼 자체 쇼핑 Agent 규모</small></td>
+  <td class="stmt">2026년 1분기 Rufus 월간 이용자는 전년 대비 115%, 이용 활동(engagement)은 400% 늘었다. <div class="src"><a href="https://www.modernretail.co/technology/amazon-says-its-ai-shopping-assistant-is-gaining-traction-with-rufus-users-up-115/" target="_blank" rel="noopener">Modern Retail (Amazon 실적 발표)</a><span class="grade gB">B</span></div></td>
+  <td class="num">115% YoY(MAU)</td><td class="asof">2026-Q1<small>US/GLOBAL</small></td><td class="idc"><code>Q2-M-002</code></td></tr><tr id="Q2-M-003"><td class="ind">Q2-I1<small>플랫폼 자체 쇼핑 Agent 규모</small></td>
+  <td class="stmt">Amazon에 따르면 Rufus를 쓰는 고객은 구매를 끝낼 가능성이 60% 높다. <div class="src"><a href="https://www.modernretail.co/technology/amazon-says-its-ai-shopping-assistant-is-gaining-traction-with-rufus-users-up-115/" target="_blank" rel="noopener">Modern Retail (Amazon 실적 발표)</a><span class="grade gB">B</span></div></td>
+  <td class="num">60% (구매 완료 가능성 차이)</td><td class="asof">2026-02<small>US/GLOBAL</small></td><td class="idc"><code>Q2-M-003</code></td></tr><tr id="Q2-M-005"><td class="ind">Q2-I2<small>AI 답변 내 광고</small></td>
+  <td class="stmt">Rufus 안의 브랜드 스폰서 질문을 누른 쇼핑객의 약 20%가 그 브랜드에 대해 대화를 이어갔다. <div class="src"><a href="https://www.modernretail.co/technology/amazon-says-its-ai-shopping-assistant-is-gaining-traction-with-rufus-users-up-115/" target="_blank" rel="noopener">Modern Retail (Amazon 실적 발표)</a><span class="grade gB">B</span></div></td>
+  <td class="num">20%</td><td class="asof">2026-Q1<small>US</small></td><td class="idc"><code>Q2-M-005</code></td></tr><tr id="Q2-M-006"><td class="ind">Q2-I2<small>AI 답변 내 광고</small></td>
+  <td class="stmt">외부 모니터링 기준 2026년 7월 초 미국 ChatGPT 응답의 약 51%에 광고가 붙었다. <span class="warn">충돌·주의</span><div class="src"><a href="https://cloro.dev/blog/chatgpt-ads-rollout-2026/" target="_blank" rel="noopener">cloro 모니터링 블로그</a><span class="grade gC">C</span></div></td>
+  <td class="num">51%</td><td class="asof">2026-07<small>US</small></td><td class="idc"><code>Q2-M-006</code></td></tr><tr id="Q2-M-010"><td class="ind">Q2-I3<small>Agent 거래 프로토콜·결제망</small></td>
+  <td class="stmt">Google의 Universal Commerce Protocol에는 발표 시점에 20곳 이상이 참여했고, Shopify·Walmart·Target·Etsy·Wayfair가 공동 개발했다. <div class="src"><a href="https://www.androidauthority.com/google-universal-commerce-protocol-announcement-3631662" target="_blank" rel="noopener">Android Authority (Google 발표)</a><span class="grade gB">B</span></div></td>
+  <td class="num">20 곳 이상</td><td class="asof">2026-01<small>US</small></td><td class="idc"><code>Q2-M-010</code></td></tr><tr id="Q2-M-011"><td class="ind">Q2-I3<small>Agent 거래 프로토콜·결제망</small></td>
+  <td class="stmt">Visa의 Agent 결제 준비 프로그램에 아태 50곳 이상이 참여했고, 한국에서는 하나·현대·KB국민·삼성·신한카드와 카카오뱅크가 이름을 올렸다. <span class="warn">충돌·주의</span><div class="src"><a href="https://www.visa.com.sg/about-visa/newsroom/press-releases/visa-launches-agentic-ready-program-in-asia-pacific-with-over-50-partners-advancing-agentic-commerce.html" target="_blank" rel="noopener">Visa 보도자료</a><span class="grade gA">A</span></div></td>
+  <td class="num">6 곳(한국)</td><td class="asof">2026-04<small>KR/APAC</small></td><td class="idc"><code>Q2-M-011</code></td></tr><tr id="Q2-M-007"><td class="ind">Q2-I4<small>상담 접점의 AI 이용 구조</small></td>
+  <td class="stmt">최근 고객 서비스 상황에서 고객은 기업이 제공한 챗봇보다 ChatGPT·Gemini 같은 서드파티 AI를 약 3배 더 많이 썼다. <div class="src"><a href="https://gcom.pdo.aws.gartner.com/en/newsroom/press-releases/2026-08-04-gartner-survey-finds-87-percent-of-customers-say-companies-using-genai-for-customer-service-must-provide-access-to-a-human-agent0" target="_blank" rel="noopener">Gartner 보도자료</a><span class="grade gA">A</span></div></td>
+  <td class="num">3 배</td><td class="asof">2026-02~03<small>GLOBAL</small></td><td class="idc"><code>Q2-M-007</code></td></tr><tr id="Q2-M-008"><td class="ind">Q2-I4<small>상담 접점의 AI 이용 구조</small></td>
+  <td class="stmt">고객의 87%는 AI로 상담하는 기업이라도 사람 상담원 연결은 반드시 있어야 한다고 답했다. <div class="src"><a href="https://gcom.pdo.aws.gartner.com/en/newsroom/press-releases/2026-08-04-gartner-survey-finds-87-percent-of-customers-say-companies-using-genai-for-customer-service-must-provide-access-to-a-human-agent0" target="_blank" rel="noopener">Gartner 보도자료</a><span class="grade gA">A</span></div></td>
+  <td class="num">87%</td><td class="asof">2026-02~03<small>GLOBAL</small></td><td class="idc"><code>Q2-M-008</code></td></tr><tr id="Q2-M-009"><td class="ind">Q2-I4<small>상담 접점의 AI 이용 구조</small></td>
+  <td class="stmt">생성형 AI를 쓰는 고객의 58%가 AI에게 자기 대신 일을 처리시킨 경험이 있다(B2B는 74%). <div class="src"><a href="https://gcom.pdo.aws.gartner.com/en/newsroom/press-releases/2026-08-04-gartner-survey-finds-87-percent-of-customers-say-companies-using-genai-for-customer-service-must-provide-access-to-a-human-agent0" target="_blank" rel="noopener">Gartner 보도자료</a><span class="grade gA">A</span></div></td>
+  <td class="num">58%</td><td class="asof">2026-02~03<small>GLOBAL</small></td><td class="idc"><code>Q2-M-009</code></td></tr><tr id="Q2-M-012"><td class="ind">Q2-I7<small>한국 메신저·포털 커머스 Agent</small></td>
+  <td class="stmt">카카오는 카카오톡 AI 에이전트를 쓸 수 있는 이용자가 2026년 말 3,100만 명(1분기 카톡 MAU 4,958만 명의 약 62%)이 될 것으로 봤다. <div class="src"><a href="https://v.daum.net/v/20260507121150759" target="_blank" rel="noopener">다음 뉴스 (카카오 1분기 실적 발표)</a><span class="grade gB">B</span></div></td>
+  <td class="num">3100 만 명(예상)</td><td class="asof">2026-05<small>KR</small></td><td class="idc"><code>Q2-M-012</code></td></tr><tr id="Q2-M-013"><td class="ind">Q2-I7<small>한국 메신저·포털 커머스 Agent</small></td>
+  <td class="stmt">네이버 쇼핑 AI 에이전트 경유 거래액은 3월 대비 6월에 2.7배 이상 늘었다. <div class="src"><a href="https://byline.network/2026/07/0701-2/" target="_blank" rel="noopener">바이라인네트워크</a><span class="grade gB">B</span></div></td>
+  <td class="num">2.7 배</td><td class="asof">2026-06<small>KR</small></td><td class="idc"><code>Q2-M-013</code></td></tr><tr id="Q2-M-004"><td class="ind">Q2-I8<small>리테일 미디어 매출</small></td>
+  <td class="stmt">Amazon 광고 매출은 2026년 1분기 172억 달러로 전년 대비 24% 늘었다. <div class="src"><a href="https://www.modernretail.co/technology/amazon-says-its-ai-shopping-assistant-is-gaining-traction-with-rufus-users-up-115/" target="_blank" rel="noopener">Modern Retail (Amazon 실적 발표)</a><span class="grade gB">B</span></div></td>
+  <td class="num">24% YoY</td><td class="asof">2026-Q1<small>GLOBAL</small></td><td class="idc"><code>Q2-M-004</code></td></tr></tbody></table></div></section>
+  <section><h2>미확인·경고 <small>본문 판단에서 빼거나 주의해서 쓴 기록</small></h2>
+    <div class="tablewrap"><table><thead><tr><th>기록</th><th>구분</th><th>진술</th><th>사유</th></tr></thead><tbody><tr><td><code>Q2-M-006</code></td><td><span class="wk">원문 미확인</span></td><td>외부 모니터링 기준 2026년 7월 초 미국 ChatGPT 응답의 약 51%에 광고가 붙었다.</td><td class="muted">출처 등급 C(단일 모니터링 업체) — 판단 근거에서 제외</td></tr><tr><td><code>Q2-M-011</code></td><td><span class="wk">주의</span></td><td>Visa의 Agent 결제 준비 프로그램에 아태 50곳 이상이 참여했고, 한국에서는 하나·현대·KB국민·삼성·신한카드와 카카오뱅크가 이름을 올렸다.</td><td class="muted">국가 구분은 회사명으로 추정</td></tr></tbody></table></div></section>
+  <footer>
+    <span>이 글은 4유형 기록 38건(지표 13 · 사건 11 · 해석 6 · 전망 8)에서 생성했습니다. 문장 옆 번호를 누르면 해당 기록으로 이동합니다.</span>
+    <span>주도권 구분: 브랜드 = 제조사·리테일러 자체 채널, 플랫폼 = 검색·AI 서비스·마켓플레이스·메신저, 고객 Agent = 고객이 직접 고르는 범용 AI·브라우저 Agent.</span>
+    <span>출처 등급 A = 1차 조사·공식 발표, B = 주요 언론·2차 보도, C = 블로그·출처 불명(원문 확인 전까지 판단에 쓰지 않음).</span>
+  </footer>
+</main>
+</body></html>

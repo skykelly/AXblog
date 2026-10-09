@@ -1,0 +1,114 @@
+
+<title>AXblog</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;800&display=swap">
+<style>
+/* Layout: 연구 노트 한 단 — 답 → 서술형 해석 → 근거 표. 기록 번호가 본문의 각주 역할 */
+:root {
+  --paper: #f6f7f9; --ink: #16202b; --muted: #5d6875; --rule: #d6dbe2; --panel: #ffffff;
+  --accent: #1f5f8b; --accent-soft: #e2edf5; --amber: #b4690e; --amber-soft: #f7ead7;
+  --up: #1f7a4d; --down: #b3412f; --flat: #6a7380; --opt: #1f7a4d; --opt-soft: #e1f1e8; --pes: #a3402f; --pes-soft: #f6e3df;
+  --display: "Noto Serif KR", "Apple SD Gothic Neo", serif;
+  --body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #11161c; --ink: #e6ebf1; --muted: #9aa5b1; --rule: #2b333d; --panel: #171e26;
+  --accent: #7fb6dc; --accent-soft: #1b2c3a; --amber: #e2a457; --amber-soft: #33271a;
+  --up: #5fc493; --down: #ec8a78; --flat: #98a2ae; --opt: #6fcf9d; --opt-soft: #17291f; --pes: #ef9a88; --pes-soft: #2f1c18; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --paper: #11161c; --ink: #e6ebf1; --muted: #9aa5b1; --rule: #2b333d; --panel: #171e26;
+  --accent: #7fb6dc; --accent-soft: #1b2c3a; --amber: #e2a457; --amber-soft: #33271a;
+  --up: #5fc493; --down: #ec8a78; --flat: #98a2ae; --opt: #6fcf9d; --opt-soft: #17291f; --pes: #ef9a88; --pes-soft: #2f1c18; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--paper); color: var(--ink); font: 400 16px/1.7 var(--body); padding: 0 20px; }
+main { max-width: 980px; margin: 0 auto; padding-block: 40px 72px; display: grid; gap: 60px; }
+.narrow { max-width: 70ch; }
+a { color: var(--accent); }
+code, .rid { font: 500 12px/1 var(--mono); }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+.eyebrow { font: 500 12px/1.4 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); display: flex; gap: 14px; flex-wrap: wrap; }
+h1 { font: 800 clamp(26px, 4.4vw, 40px)/1.25 var(--display); margin-top: 14px; }
+.question { margin: 16px 0 0; color: var(--muted); font-size: 15px; border-left: 2px solid var(--rule); padding-left: 14px; }
+h2 { font: 600 22px/1.3 var(--display); display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+h2 small { font: 400 13px var(--body); color: var(--muted); }
+section { display: grid; gap: 18px; min-width: 0; }
+.lead { margin: 0; max-width: 70ch; }
+.rid { display: inline-block; padding: 3px 5px; margin: 2px 2px 0 0; border-radius: 3px; background: var(--accent-soft); color: var(--accent); text-decoration: none; vertical-align: 1px; }
+.rid:hover, .rid:focus-visible { outline: 1px solid var(--accent); }
+
+/* Layout: 신문 목차 — 카테고리 번호를 큰 숫자로, 질문은 번호 열 + 본문 열의 2단 목록 */
+.portal { max-width: 1080px; }
+.masthead { display: grid; gap: 14px; padding-bottom: 28px; border-bottom: 2px solid var(--ink); }
+.masthead h1 { font: 800 clamp(40px, 7vw, 72px)/1 var(--display); letter-spacing: -0.01em; }
+.masthead .tag { font-size: 17px; max-width: 60ch; margin: 0; }
+.stats { display: flex; gap: 22px; flex-wrap: wrap; font: 500 13px var(--mono); color: var(--muted); }
+.stats b { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+.method { font-size: 14px; color: var(--muted); margin: 0; max-width: 72ch; }
+.catnav { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; border-bottom: 1px solid var(--rule); }
+.catnav a { padding: 12px 14px 12px 0; text-decoration: none; color: var(--ink); font-size: 14px; display: grid; gap: 2px; border-right: 1px solid var(--rule); padding-left: 14px; }
+.catnav a:first-child { padding-left: 0; }
+.catnav a:last-child { border-right: 0; }
+.catnav b { font: 600 12px var(--mono); color: var(--accent); }
+.catnav span { font: 400 12px var(--mono); color: var(--muted); }
+.catnav a:hover b, .catnav a:focus-visible b { text-decoration: underline; }
+.cat { display: grid; gap: 0; scroll-margin-top: 20px; }
+.cathead { display: grid; grid-template-columns: auto 1fr auto; gap: 18px; align-items: end; padding-bottom: 14px; border-bottom: 1px solid var(--ink); }
+.catno { font: 800 56px/0.9 var(--display); color: var(--accent); }
+.cathead h2 { font: 600 24px/1.2 var(--display); }
+.cathead p { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
+.catcount { font: 500 12px var(--mono); color: var(--muted); white-space: nowrap; }
+.qlist { list-style: none; margin: 0; padding: 0; }
+.qrow { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--rule); }
+.qno b { display: block; font: 600 22px/1.1 var(--mono); }
+.qno span { font: 400 12px var(--mono); color: var(--muted); }
+.qbody { display: grid; gap: 8px; min-width: 0; }
+.qbody h3 { font: 600 20px/1.35 var(--display); }
+.qbody h3 a { color: var(--ink); text-decoration: none; background-image: linear-gradient(var(--accent), var(--accent)); background-size: 0 2px; background-repeat: no-repeat; background-position: 0 100%; transition: background-size .2s; }
+.qbody h3 a:hover, .qbody h3 a:focus-visible { background-size: 100% 2px; }
+.qq { margin: 0; color: var(--muted); font-size: 14px; }
+.qa { margin: 0; font-size: 15px; border-left: 2px solid var(--accent); padding-left: 12px; max-width: 75ch; }
+.qmeta { margin: 0; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; font: 400 12px var(--mono); color: var(--muted); }
+.pill { font: 500 11px var(--mono); padding: 2px 7px; border-radius: 2px; border: 1px solid var(--rule); color: var(--muted); }
+.pill.live { border-color: var(--accent); color: var(--accent); }
+.qrow.planned .qno b { color: var(--muted); }
+.qrow.planned .qq { font-size: 15px; }
+.empty { margin: 0; padding: 20px 0; color: var(--muted); font-size: 14px; border-bottom: 1px solid var(--rule); }
+footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 18px; }
+@media (prefers-reduced-motion: reduce) { .qbody h3 a { transition: none; } }
+@media (max-width: 760px) {
+  .catnav { grid-template-columns: 1fr 1fr; }
+  .catnav a { border-right: 0; padding-left: 0; }
+  .cathead { grid-template-columns: auto 1fr; }
+  .catcount { grid-column: 1 / -1; }
+  .qrow { grid-template-columns: 1fr; gap: 8px; }
+}
+</style><main class="portal">
+  <header class="masthead">
+    <h1>AXblog</h1>
+    <p class="tag">AI가 고정 질문을 주기적으로 다시 조사하고, 근거 기록에서 글을 쓰는 블로그</p>
+    <div class="stats"><span>카테고리 <b>4</b></span><span>질문 <b>5</b></span><span>발행 아티클 <b>3</b></span><span>근거 기록 <b>105</b>건</span><span>최근 업데이트 <b>2026-10-09</b></span></div>
+    <p class="method">각 질문은 정해진 문장 그대로 매달 다시 조사합니다. 조사 결과는 지표·사건·해석·전망 기록으로 쪼개 저장하고, 아티클은 그 기록에서만 만들어집니다. 글 속 번호를 누르면 근거 기록과 원문 출처로 이동합니다.</p>
+  </header>
+  <nav class="catnav" aria-label="카테고리"><a href="#customer-lab"><b>01</b> AI Future Customer Lab <span>3/5</span></a><a href="#industry-trend"><b>02</b> AI Industry Trend <span>0/0</span></a><a href="#sales-marketing"><b>03</b> AI Sales &amp; Marketing <span>0/0</span></a><a href="#lg-group-ai"><b>04</b> LG Group AI <span>0/0</span></a></nav>
+  <section class="cat" id="customer-lab"><header class="cathead"><span class="catno">01</span>
+  <div><h2>AI Future Customer Lab</h2><p>고객과 시장이 AI로 어떻게 바뀌는지를 추적한다.</p></div><span class="catcount">아티클 3개 · 질문 5개</span></header><ol class="qlist"><li class="qrow"><div class="qno"><b>Q1</b><span>Consumer Decision Making</span></div>
+  <div class="qbody"><h3><a href="customer-lab/q1/r1.html">AI는 고객의 쇼핑을 어디까지 대신하고 있나</a></h3>
+  <p class="qq">소비자는 탐색 → 답변 → 추천 → 결정 → 위임 중 어느 단계까지 AI에 맡기고 있으며, 검색엔진·브랜드 사이트의 역할은 얼마나 줄었는가?</p>
+  <p class="qa">2026년 10월 현재 AI가 대신하는 일은 ‘찾아보고 후보를 추려주는 것’까지다. 무엇을 살지 정하고 결제하는 일은 소비자가 직접 하며, 결제까지 AI에 맡기겠다는 소비자는 9%에 그친다.</p>
+  <p class="qmeta"><span class="pill live">R1</span><time>2026-10-09</time><span>기록 40건</span><span>질문 v1.0</span></p></div></li><li class="qrow"><div class="qno"><b>Q2</b><span>Customer Experience &amp; Commerce</span></div>
+  <div class="qbody"><h3><a href="customer-lab/q2/r1.html">AI 시대, 고객 접점의 주인은 누구인가</a></h3>
+  <p class="qq">고객 여정(발견·상담·판매·관계) 중 어느 접점이 AI Agent로 넘어가고 있으며, 그 접점의 주도권은 브랜드·플랫폼·고객 Agent 중 누구에게 있는가?</p>
+  <p class="qa">2026년 10월 현재 AI로 가장 많이 넘어간 접점은 발견과 상담이다. 발견은 플랫폼이 광고로 팔고, 상담은 고객이 직접 쓰는 범용 AI로 옮겨가 두 곳 모두 브랜드 손을 떠나고 있다. 결제는 플랫폼·리테일러·고객 Agent가 다투는 중이고, 재구매·멤버십 같은 관계 접점만 아직 브랜드에 남아 있다.</p>
+  <p class="qmeta"><span class="pill live">R1</span><time>2026-10-09</time><span>기록 38건</span><span>질문 v1.0</span></p></div></li><li class="qrow"><div class="qno"><b>Q3</b><span>Content, Information &amp; Trust</span></div>
+  <div class="qbody"><h3><a href="customer-lab/q3/r1.html">AI가 만든 정보, 소비자는 믿는가</a></h3>
+  <p class="qq">소비자가 구매 판단에 쓰는 정보의 원천은 사람이 만든 것에서 AI가 만든 것으로 어디까지 옮겨갔고, 소비자는 그것을 믿는가?</p>
+  <p class="qa">2026년 10월 현재 웹에 새로 올라오는 글의 절반은 AI가 쓰고, 소비자는 그 정보를 원문 대신 AI 요약으로 받아본다. 그러나 믿음은 따라오지 않았다. AI가 전해준 뉴스를 믿는 사람은 5명 중 1명이고, 정작 AI는 브랜드 사이트보다 Reddit·YouTube 같은 사람의 경험담을 가장 많이 인용한다.</p>
+  <p class="qmeta"><span class="pill live">R1</span><time>2026-10-09</time><span>기록 27건</span><span>질문 v1.0</span></p></div></li><li class="qrow planned"><div class="qno"><b>Q4</b><span>Physical AI, Products &amp; Living</span></div>
+  <div class="qbody"><p class="qq">집 안에서 AI가 스스로 판단·실행하는 범위는 어디까지 왔으며, 고객은 어느 수준의 자율을 받아들이는가?</p><p class="qmeta"><span class="pill">준비 중</span></p></div></li><li class="qrow planned"><div class="qno"><b>Q5</b><span>Household &amp; Life Events</span></div>
+  <div class="qbody"><p class="qq">어떤 가구 변화와 생활 사건이 새로운 수요를 만들고 있는가?</p><p class="qmeta"><span class="pill">준비 중</span></p></div></li></ol></section><section class="cat" id="industry-trend"><header class="cathead"><span class="catno">02</span>
+  <div><h2>AI Industry Trend</h2><p>AI 산업과 기술 동향을 추적한다.</p></div><span class="catcount">아티클 0개 · 질문 0개</span></header><p class="empty">고정 질문을 설계하는 중입니다. 질문이 확정되면 첫 회차 아티클이 이곳에 올라옵니다.</p></section><section class="cat" id="sales-marketing"><header class="cathead"><span class="catno">03</span>
+  <div><h2>AI Sales &amp; Marketing</h2><p>기업이 영업·마케팅에서 AI로 어떻게 대응하고 실행하는지 추적한다.</p></div><span class="catcount">아티클 0개 · 질문 0개</span></header><p class="empty">고정 질문을 설계하는 중입니다. 질문이 확정되면 첫 회차 아티클이 이곳에 올라옵니다.</p></section><section class="cat" id="lg-group-ai"><header class="cathead"><span class="catno">04</span>
+  <div><h2>LG Group AI</h2><p>LG 그룹의 AI 전략과 실행을 추적한다.</p></div><span class="catcount">아티클 0개 · 질문 0개</span></header><p class="empty">고정 질문을 설계하는 중입니다. 질문이 확정되면 첫 회차 아티클이 이곳에 올라옵니다.</p></section>
+  <footer><span>AXblog · 원본 기록과 생성 스크립트는 GitHub skykelly/AXblog 저장소에 있습니다.</span></footer>
+</main>

@@ -1,0 +1,44 @@
+{
+  "site": {
+    "title": "AXblog",
+    "tagline": "AI가 고정 질문을 주기적으로 다시 조사하고, 근거 기록에서 글을 쓰는 블로그"
+  },
+  "categories": [
+    {
+      "id": "customer-lab",
+      "no": 1,
+      "name": "AI Future Customer Lab",
+      "desc": "고객과 시장이 AI로 어떻게 바뀌는지를 추적한다.",
+      "questions": [
+        {"id": "q1", "no": "Q1", "area": "Consumer Decision Making"},
+        {"id": "q2", "no": "Q2", "area": "Customer Experience & Commerce"},
+        {"id": "q3", "no": "Q3", "area": "Content, Information & Trust"},
+        {"id": "q4", "no": "Q4", "area": "Physical AI, Products & Living",
+         "question": "집 안에서 AI가 스스로 판단·실행하는 범위는 어디까지 왔으며, 고객은 어느 수준의 자율을 받아들이는가?"},
+        {"id": "q5", "no": "Q5", "area": "Household & Life Events",
+         "question": "어떤 가구 변화와 생활 사건이 새로운 수요를 만들고 있는가?"}
+      ]
+    },
+    {
+      "id": "industry-trend",
+      "no": 2,
+      "name": "AI Industry Trend",
+      "desc": "AI 산업과 기술 동향을 추적한다.",
+      "questions": []
+    },
+    {
+      "id": "sales-marketing",
+      "no": 3,
+      "name": "AI Sales & Marketing",
+      "desc": "기업이 영업·마케팅에서 AI로 어떻게 대응하고 실행하는지 추적한다.",
+      "questions": []
+    },
+    {
+      "id": "lg-group-ai",
+      "no": 4,
+      "name": "LG Group AI",
+      "desc": "LG 그룹의 AI 전략과 실행을 추적한다.",
+      "questions": []
+    }
+  ]
+}

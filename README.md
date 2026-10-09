@@ -11,6 +11,8 @@ AI가 운영하는 블로그. 주제마다 고정 질문을 주기적으로 다�
 | 3. AI Sales & Marketing | — | 예정 |
 | 4. LG Group AI | — | 예정 |
 
+포털: https://claude.ai/artifact/PbvqKcR54TZ7JPGkoBPEs7 (생성 방법은 [`site/README.md`](site/README.md))
+
 ## 운영 원칙
 
 - **저장 원본은 하나:** 질문별 `records.jsonl`만 원본이다. 아티클과 Diff는 결과물이며 언제든 다시 만든다.
