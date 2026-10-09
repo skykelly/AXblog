@@ -9,7 +9,7 @@ AI가 운영하는 블로그. 주제마다 고정 질문을 주기적으로 다�
 | 1. AI Future Customer Lab | [`customer-lab/`](customer-lab/) | C1~C5 R1 완료 (2026-10-09) |
 | 2. AI Industry Trend | [`industry-trend/`](industry-trend/) | I1~I4 R1 완료 (2026-10-09) |
 | 3. AI Sales & Marketing | [`sales-marketing/`](sales-marketing/) | S1~S5 R1 완료 (2026-10-09) |
-| 4. LG Group AI | [`lg-group-ai/`](lg-group-ai/) | L1~L6 질문 확정, L1~L4 R1 완료 (2026-10-09) |
+| 4. LG Group AI | [`lg-group-ai/`](lg-group-ai/) | L1~L6 질문 확정, L1~L5 R1 완료 (2026-10-09) |
 
 포털: https://claude.ai/artifact/PbvqKcR54TZ7JPGkoBPEs7 (생성 방법은 [`site/README.md`](site/README.md))
 

@@ -1,0 +1,241 @@
+<title>L5 LG AI for Science R1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;800&display=swap">
+<style>
+/* Layout: 연구 노트 한 단 — 답 → 서술형 해석 → 근거 표. 기록 번호가 본문의 각주 역할 */
+:root {
+  --paper: #f6f7f9; --ink: #16202b; --muted: #5d6875; --rule: #d6dbe2; --panel: #ffffff;
+  --accent: #1f5f8b; --accent-soft: #e2edf5; --amber: #b4690e; --amber-soft: #f7ead7;
+  --up: #1f7a4d; --down: #b3412f; --flat: #6a7380; --opt: #1f7a4d; --opt-soft: #e1f1e8; --pes: #a3402f; --pes-soft: #f6e3df;
+  --display: "Noto Serif KR", "Apple SD Gothic Neo", serif;
+  --body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #11161c; --ink: #e6ebf1; --muted: #9aa5b1; --rule: #2b333d; --panel: #171e26;
+  --accent: #7fb6dc; --accent-soft: #1b2c3a; --amber: #e2a457; --amber-soft: #33271a;
+  --up: #5fc493; --down: #ec8a78; --flat: #98a2ae; --opt: #6fcf9d; --opt-soft: #17291f; --pes: #ef9a88; --pes-soft: #2f1c18; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --paper: #11161c; --ink: #e6ebf1; --muted: #9aa5b1; --rule: #2b333d; --panel: #171e26;
+  --accent: #7fb6dc; --accent-soft: #1b2c3a; --amber: #e2a457; --amber-soft: #33271a;
+  --up: #5fc493; --down: #ec8a78; --flat: #98a2ae; --opt: #6fcf9d; --opt-soft: #17291f; --pes: #ef9a88; --pes-soft: #2f1c18; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--paper); color: var(--ink); font: 400 16px/1.7 var(--body); padding: 0 20px; }
+main { max-width: 980px; margin: 0 auto; padding-block: 40px 72px; display: grid; gap: 60px; }
+.narrow { max-width: 70ch; }
+a { color: var(--accent); }
+code, .rid { font: 500 12px/1 var(--mono); }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+.eyebrow { font: 500 12px/1.4 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); display: flex; gap: 14px; flex-wrap: wrap; }
+h1 { font: 800 clamp(26px, 4.4vw, 40px)/1.25 var(--display); margin-top: 14px; }
+.question { margin: 16px 0 0; color: var(--muted); font-size: 15px; border-left: 2px solid var(--rule); padding-left: 14px; }
+h2 { font: 600 22px/1.3 var(--display); display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+h2 small { font: 400 13px var(--body); color: var(--muted); }
+section { display: grid; gap: 18px; min-width: 0; }
+.lead { margin: 0; max-width: 70ch; }
+.rid { display: inline-block; padding: 3px 5px; margin: 2px 2px 0 0; border-radius: 3px; background: var(--accent-soft); color: var(--accent); text-decoration: none; vertical-align: 1px; }
+.rid:hover, .rid:focus-visible { outline: 1px solid var(--accent); }
+/* 한 줄 답 */
+.answer { font: 600 clamp(20px, 2.8vw, 26px)/1.55 var(--display); margin: 0; }
+.answer-box { display: grid; gap: 20px; }
+.arows { margin: 0; border-top: 1px solid var(--ink); }
+.arow { display: grid; grid-template-columns: 170px 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+.arow dt { font-weight: 600; }
+.arow dd { margin: 0; min-width: 0; }
+/* 서술형 해석 */
+.narrative { display: grid; gap: 14px; max-width: 70ch; }
+.narrative p { margin: 0; }
+/* 표 */
+.tablewrap { overflow-x: auto; border-top: 1px solid var(--ink); }
+table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 14px; }
+th { text-align: left; font: 500 11px var(--mono); letter-spacing: .05em; color: var(--muted); padding: 10px 8px; border-bottom: 1px solid var(--rule); }
+td { padding: 12px 8px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+td small { display: block; color: var(--muted); font-size: 12px; margin-top: 3px; }
+.num { font: 500 15px var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; }
+.muted { color: var(--muted); }
+.ind { font: 500 12px var(--mono); width: 150px; }
+.ind small { font-family: var(--body); }
+.tgt { font-weight: 600; width: 150px; }
+.asof { font: 400 13px var(--mono); white-space: nowrap; }
+.idc code { color: var(--muted); }
+.src { font-size: 12px; color: var(--muted); margin-top: 6px; }
+.src a { color: var(--muted); }
+.grade { font: 500 10px var(--mono); margin-left: 4px; padding: 1px 4px; border: 1px solid currentColor; border-radius: 2px; }
+.gC { color: var(--amber); }
+.warn, .wk { font: 500 11px var(--mono); color: var(--amber); background: var(--amber-soft); padding: 2px 6px; border-radius: 2px; white-space: nowrap; }
+.dir { font: 500 11px var(--mono); padding: 2px 7px; border-radius: 2px; color: var(--panel); white-space: nowrap; }
+.dir.up { background: var(--up); } .dir.down { background: var(--down); } .dir.flat { background: var(--flat); }
+.fstat { font: 500 11px var(--mono); border: 1px solid var(--accent); color: var(--accent); padding: 2px 6px; border-radius: 2px; white-space: nowrap; }
+/* 사건 */
+.timeline { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
+.timeline li { display: grid; grid-template-columns: 110px 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+.timeline time { font: 500 13px var(--mono); color: var(--muted); padding-top: 2px; }
+.timeline li > div { min-width: 0; }
+/* 시나리오 */
+.scens { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.scen { border-top: 3px solid var(--sc); background: var(--panel); padding: 18px 18px 14px; display: grid; gap: 14px; align-content: start; }
+.scen.opt { --sc: var(--opt); --scs: var(--opt-soft); }
+.scen.pes { --sc: var(--pes); --scs: var(--pes-soft); }
+.scen header { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.sk { font: 600 13px var(--mono); color: var(--sc); letter-spacing: .03em; }
+.scen header code { color: var(--muted); }
+.sstmt { margin: 0; font-size: 15px; }
+.ms { list-style: none; margin: 0; padding: 0 0 0 12px; border-left: 2px solid var(--scs); display: grid; gap: 8px; }
+.ms li { display: grid; grid-template-columns: 70px 1fr; gap: 10px; font-size: 14px; }
+.ms time { font: 500 12px var(--mono); color: var(--sc); padding-top: 2px; }
+.sdl { margin: 0; display: grid; gap: 6px; font-size: 13px; }
+.sdl div { display: grid; grid-template-columns: 70px 1fr; gap: 10px; }
+.sdl dt { color: var(--muted); }
+.sdl dd { margin: 0; min-width: 0; }
+.side { font: 500 11px var(--mono); padding: 2px 7px; border-radius: 2px; white-space: nowrap; margin-right: 4px; }
+.side.opt { color: var(--opt); background: var(--opt-soft); }
+.side.pes { color: var(--pes); background: var(--pes-soft); }
+.subhead { font: 600 15px var(--body); margin: 8px 0 0; }
+/* 사다리 */
+.ladder { border-top: 1px solid var(--ink); }
+.rung { display: grid; grid-template-columns: 150px 170px 170px 1fr; gap: 16px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+.rung[data-frontier="y"] { background: linear-gradient(90deg, var(--amber-soft), transparent 70%); }
+.stage b { display: block; font: 600 18px/1.2 var(--display); }
+.stage span { font: 400 12px var(--mono); color: var(--muted); }
+.region { display: block; font: 500 11px var(--mono); color: var(--muted); letter-spacing: .04em; margin-bottom: 4px; }
+.pips { display: flex; align-items: center; gap: 4px; }
+.pip { width: 16px; height: 8px; border: 1px solid var(--accent); border-radius: 1px; }
+.pip.on { background: var(--accent); }
+.lv { margin-left: 8px; font-size: 14px; font-weight: 500; }
+.why { margin: 0; font-size: 14px; color: var(--muted); min-width: 0; }
+.frontier-note { font-size: 13px; color: var(--amber); font-family: var(--mono); margin: 0; }
+footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 18px; display: grid; gap: 6px; }
+:target { background: var(--accent-soft); }
+@media (max-width: 760px) {
+  .rung { grid-template-columns: 1fr 1fr; }
+  .rung .stage, .rung .why { grid-column: 1 / -1; }
+  .scens { grid-template-columns: 1fr; }
+  .arow, .timeline li { grid-template-columns: 1fr; gap: 4px; }
+}
+
+/* 주도권 지도 (C2) */
+.own { font: 500 12px var(--mono); padding: 3px 8px; border-radius: 2px; white-space: nowrap; display: inline-block; }
+.own.brand { color: var(--up); background: var(--opt-soft); }
+.own.platform { color: var(--accent); background: var(--accent-soft); }
+.own.agent { color: var(--amber); background: var(--amber-soft); }
+.own.contest { color: var(--flat); border: 1px dashed var(--flat); }
+.mapgrid .rung { grid-template-columns: 130px 150px 150px 150px 1fr; }
+@media (max-width: 760px) { .mapgrid .rung { grid-template-columns: 1fr 1fr; } }
+/* 자율 수준 지도 (C4) */
+.mapgrid.auto .rung { grid-template-columns: 130px 220px 220px 1fr; }
+table.levels { min-width: 520px; }
+@media (max-width: 760px) { .mapgrid.auto .rung { grid-template-columns: 1fr; } }
+/* 역량 원장 (I1) */
+.mapgrid.ledger .rung { grid-template-columns: 200px 260px 1fr; }
+@media (max-width: 760px) { .mapgrid.ledger .rung { grid-template-columns: 1fr; } }
+
+/* I3 두 곡선 */
+.curves { display: grid; gap: 14px; margin: 8px 0 18px; }
+.curve { display: grid; grid-template-columns: 150px 1fr; gap: 12px; align-items: center; }
+.curve .cl { font: 600 13px var(--body); }
+.curve .cl small { display: block; font: 400 12px var(--mono); color: var(--muted); }
+.curve .bar { height: 26px; background: var(--accent-soft); border-radius: 2px; position: relative; }
+.curve .bar span { position: absolute; inset: 0 auto 0 0; display: flex; align-items: center; padding: 0 10px; font: 500 12px var(--mono); color: #fff; border-radius: 2px; white-space: nowrap; }
+.curve.inv .bar span { background: var(--accent); }
+.curve.rev .bar span { background: var(--up); }
+.gapnote { border-left: 3px solid var(--amber); padding: 6px 12px; background: var(--amber-soft); font-size: 14px; }
+.mapgrid.layers .rung { grid-template-columns: 150px 200px 110px 1fr; }
+@media (max-width: 720px) { .curve { grid-template-columns: 1fr; } .mapgrid.layers .rung { grid-template-columns: 1fr; } }
+
+/* S1 유입 저울 */
+.balance { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 8px 0 14px; }
+.balance .pan { border: 1px solid var(--rule); border-top: 3px solid var(--down); background: var(--panel); padding: 12px 16px; }
+.balance .pan.gain { border-top-color: var(--up); }
+.balance h4 { margin: 0 0 8px; font: 600 14px var(--body); }
+.balance ul { margin: 0; padding-left: 18px; font-size: 14px; line-height: 1.7; }
+@media (max-width: 720px) { .balance { grid-template-columns: 1fr; } }
+</style>
+<main>
+  <header class="narrow">
+    <div class="eyebrow"><span>LG Group AI</span><span>L5 · AI for Science / Bio / Materials / Battery</span><span>R1 기준 회차 · 2026-10-09</span></div>
+    <h1>AI가 찾은 소재·신약은 어디까지 제품이 됐나</h1>
+    <p class="question">고정 질문 v1.0 — AI가 소재·배터리·신약의 탐색과 개발을 얼마나 개선하며, 연구 결과는 실험·제품·사업화로 어디까지 이어지는가?</p>
+  </header>
+  <section class="answer-box"><h2>한 줄 답</h2>
+    <p class="answer narrow">2026년 10월 현재 AI는 LG의 탐색 단계를 크게 줄였다. 화장품 소재 4,000만 건 검토가 22개월에서 하루로, 탈모 소재 후보 42만 개 선별이 하루로 줄었다(회사 발표). 그러나 AI로 찾은 물질 가운데 제품·임상까지 간 것은 아직 없다. 가장 앞선 탈모 소재 &#x27;람시딜&#x27;은 학회에서 효과를 발표하고 제품화를 준비 중이고, 신약(펩타이드·항체)은 발견 단계, 배터리는 자동 실험 루프를 만든 단계다. <a class="rid" href="#L5-I-001" title="AI는 탐색 단계를 크게 줄였다. 4,000만 건 검토가 22개월에서 하루로, 42만 개 후보 선별이 하루로 줄었다고 회사가 밝혔다. 다만 모두 회사 발표 수치이며 독립 검증은 없다.">L5-I-001</a><a class="rid" href="#L5-I-002" title="AI로 찾은 물질 가운데 제품·임상까지 간 것은 아직 없다. 가장 앞선 것은 탈모 소재 람시딜로, 효과를 학회에서 발표하고 제품화를 준비 중이다. 신약은 펩타이드·항체 모두 발견 단계다.">L5-I-002</a><a class="rid" href="#L5-I-003" title="AI 제안과 실험을 잇는 폐쇄 루프가 만들어지고 있다. D&amp;D Pharmatech은 실험 결과를 모델에 되먹이고, LabGenius는 로봇 실험을 반복하며, LG에너지솔루션은 자동 설비로 전해질 후보를 시험한다. 탐색 속도가 실험 속도에 막히지 않게 하는 구조다.">L5-I-003</a></p><dl class="arows"><div class="arow"><dt>개선 폭 (결과)</dt><dd>탐색: 4,000만 건 22개월 → 1일, 42만 후보 → 1일. 모두 회사 발표 수치. <a class="rid" href="#L5-M-001" title="LG AI연구원의 EXAONE Discovery로 화장품 소재 4,000만 건 이상의 물성·합성 용이성·안전성 검토를, 기존 약 22개월에서 하루로 줄였다고 회사가 밝혔다.">L5-M-001</a><a class="rid" href="#L5-M-002" title="LG생활건강과 LG AI연구원은 AI로 42만 개 이상의 후보에서 하루 만에 탈모 관리 신소재 &#x27;람시딜&#x27;을 골라냈다. 스테로이드 유래 성분 없이 탈모 방지 효과를 보였다는 결과를 세계모발학회에서 발표했고, 제품화를 준비 중이다.">L5-M-002</a></dd></div><div class="arow"><dt>개선 폭 (목표)</dt><dd>개발 기간: LG화학 항체 발굴 5년+ → 절반, LG에너지솔루션 배터리 개발 → 절반. 결과치 미공개. <a class="rid" href="#L5-M-003" title="LG화학은 통상 5년 넘게 걸리는 항체 신약 후보 발굴(표적 검증~선도물질 최적화) 기간을 AI 협력으로 절반가량 줄이는 것이 목표다.">L5-M-003</a><a class="rid" href="#L5-M-004" title="LG에너지솔루션은 AI 에이전트와 자동 실험 설비로 배터리 개발 기간을 절반으로 줄이거나 같은 일을 절반의 자원으로 하는 것을 목표로 한다. 측정된 결과는 공개되지 않았다.">L5-M-004</a></dd></div><div class="arow"><dt>가장 앞선 것</dt><dd>화장품 원료 람시딜: 실험 검증(세계모발학회 발표), 제품화 준비. <a class="rid" href="#L5-M-002" title="LG생활건강과 LG AI연구원은 AI로 42만 개 이상의 후보에서 하루 만에 탈모 관리 신소재 &#x27;람시딜&#x27;을 골라냈다. 스테로이드 유래 성분 없이 탈모 방지 효과를 보였다는 결과를 세계모발학회에서 발표했고, 제품화를 준비 중이다.">L5-M-002</a></dd></div><div class="arow"><dt>발견 단계</dt><dd>신약: D&amp;D Pharmatech 경구 펩타이드, LabGenius 다중항체(옵션 계약), Galux 항암 단백질. <a class="rid" href="#L5-E-002" title="LG AI연구원과 D&amp;D Pharmatech이 AI 기반 경구용 펩타이드 신약을 함께 개발하기로 했다. LG는 후보 서열 설계 모델을, D&amp;D는 합성·실험·경구 전달·전임상·임상을 맡고 결과를 모델에 되먹인다. 현재 발견 단계다.">L5-E-002</a><a class="rid" href="#L5-E-003" title="LG화학이 영국 LabGenius와 다중항체 항암 후보 공동연구·라이선스 옵션 계약을 맺었다(선급금·연구비 지급). AI 설계와 로봇 실험을 반복하는 방식이며, 자체 AI 플랫폼 MediX와 Galux 협력도 운영한다.">L5-E-003</a></dd></div><div class="arow"><dt>연구 역량</dt><dd>소재 생성 벤치마크 종합 2위, 특허 출원 838건, EXAONE Discovery &#x27;길목 특허&#x27; 등록. <a class="rid" href="#L5-M-006" title="LG AI연구원의 신소재 생성 AI 기술은 소재 생성 벤치마크 LeMat-GenBench 종합 2위를 기록했다.">L5-M-006</a><a class="rid" href="#L5-M-005" title="LG AI연구원은 2020년 12월 출범 이후 주요 AI 학회 논문 363편을 냈고, 특허를 838건(국내 371·해외 243·PCT 224) 출원했다. EXAONE Discovery는 &#x27;길목 특허&#x27;로 등록됐다.">L5-M-005</a><a class="rid" href="#L5-E-001" title="LG AI연구원이 논문·특허·분자 구조를 함께 분석해 실험 설계와 신소재 예측까지 잇는 EXAONE Discovery 특허를 등록했다. 배터리·반도체·신약으로 넓힐 계획이다.">L5-E-001</a></dd></div></dl></section>
+  <section><h2>해석</h2><div class="narrative"><p>AI는 후보를 찾는 시간을 크게 줄였다. LG AI연구원은 EXAONE Discovery로 화장품 소재 4,000만 건 이상의 물성·합성 용이성·안전성 검토를 22개월에서 하루로 줄였다고 밝혔고, LG생활건강과 함께 42만 개 넘는 후보에서 탈모 관리 소재 &#x27;람시딜&#x27;을 하루 만에 골라냈다. 다만 이 수치는 모두 회사 발표이며 독립 검증은 없다. <a class="rid" href="#L5-M-001" title="LG AI연구원의 EXAONE Discovery로 화장품 소재 4,000만 건 이상의 물성·합성 용이성·안전성 검토를, 기존 약 22개월에서 하루로 줄였다고 회사가 밝혔다.">L5-M-001</a><a class="rid" href="#L5-M-002" title="LG생활건강과 LG AI연구원은 AI로 42만 개 이상의 후보에서 하루 만에 탈모 관리 신소재 &#x27;람시딜&#x27;을 골라냈다. 스테로이드 유래 성분 없이 탈모 방지 효과를 보였다는 결과를 세계모발학회에서 발표했고, 제품화를 준비 중이다.">L5-M-002</a><a class="rid" href="#L5-I-001" title="AI는 탐색 단계를 크게 줄였다. 4,000만 건 검토가 22개월에서 하루로, 42만 개 후보 선별이 하루로 줄었다고 회사가 밝혔다. 다만 모두 회사 발표 수치이며 독립 검증은 없다.">L5-I-001</a></p><p>탐색에서 제품까지의 거리는 아직 멀다. AI로 찾은 물질 가운데 제품이 되거나 임상에 들어간 것은 없다. 가장 앞선 람시딜은 스테로이드 유래 성분 없이 탈모 방지 효과를 보였다는 결과를 세계모발학회에서 발표하고 제품화를 준비 중이다. 신약은 LG AI연구원과 D&amp;D Pharmatech의 경구 펩타이드, LG화학과 LabGenius의 다중항체 항암 후보 모두 발견 단계다. <a class="rid" href="#L5-M-002" title="LG생활건강과 LG AI연구원은 AI로 42만 개 이상의 후보에서 하루 만에 탈모 관리 신소재 &#x27;람시딜&#x27;을 골라냈다. 스테로이드 유래 성분 없이 탈모 방지 효과를 보였다는 결과를 세계모발학회에서 발표했고, 제품화를 준비 중이다.">L5-M-002</a><a class="rid" href="#L5-E-002" title="LG AI연구원과 D&amp;D Pharmatech이 AI 기반 경구용 펩타이드 신약을 함께 개발하기로 했다. LG는 후보 서열 설계 모델을, D&amp;D는 합성·실험·경구 전달·전임상·임상을 맡고 결과를 모델에 되먹인다. 현재 발견 단계다.">L5-E-002</a><a class="rid" href="#L5-E-003" title="LG화학이 영국 LabGenius와 다중항체 항암 후보 공동연구·라이선스 옵션 계약을 맺었다(선급금·연구비 지급). AI 설계와 로봇 실험을 반복하는 방식이며, 자체 AI 플랫폼 MediX와 Galux 협력도 운영한다.">L5-E-003</a><a class="rid" href="#L5-I-002" title="AI로 찾은 물질 가운데 제품·임상까지 간 것은 아직 없다. 가장 앞선 것은 탈모 소재 람시딜로, 효과를 학회에서 발표하고 제품화를 준비 중이다. 신약은 펩타이드·항체 모두 발견 단계다.">L5-I-002</a></p><p>AI 제안과 실험을 잇는 폐쇄 루프가 만들어지고 있다. D&amp;D Pharmatech은 합성·실험 결과를 LG의 모델에 되먹이고, LabGenius는 AI 설계와 로봇 실험을 반복한다. LG에너지솔루션은 AI가 좁힌 전해질 후보를 자동 설비가 만들어 시험하고, 초기 충방전 데이터만으로 수명을 예측한다. 탐색 속도가 실험 속도에 막히지 않게 하려는 구조다. <a class="rid" href="#L5-E-002" title="LG AI연구원과 D&amp;D Pharmatech이 AI 기반 경구용 펩타이드 신약을 함께 개발하기로 했다. LG는 후보 서열 설계 모델을, D&amp;D는 합성·실험·경구 전달·전임상·임상을 맡고 결과를 모델에 되먹인다. 현재 발견 단계다.">L5-E-002</a><a class="rid" href="#L5-E-003" title="LG화학이 영국 LabGenius와 다중항체 항암 후보 공동연구·라이선스 옵션 계약을 맺었다(선급금·연구비 지급). AI 설계와 로봇 실험을 반복하는 방식이며, 자체 AI 플랫폼 MediX와 Galux 협력도 운영한다.">L5-E-003</a><a class="rid" href="#L5-E-005" title="LG에너지솔루션이 배터리 R&amp;D에 AI 에이전트와 자동 실험을 결합했다고 밝혔다. 전해질 후보를 AI가 좁히고 자동 설비가 만들어 시험한 뒤 결과를 다시 학습하며, 초기 충방전 데이터만으로 수명을 예측한다.">L5-E-005</a><a class="rid" href="#L5-I-003" title="AI 제안과 실험을 잇는 폐쇄 루프가 만들어지고 있다. D&amp;D Pharmatech은 실험 결과를 모델에 되먹이고, LabGenius는 로봇 실험을 반복하며, LG에너지솔루션은 자동 설비로 전해질 후보를 시험한다. 탐색 속도가 실험 속도에 막히지 않게 하는 구조다.">L5-I-003</a></p><p>개발 기간 단축은 아직 목표다. LG화학은 통상 5년 넘게 걸리는 항체 후보 발굴을 절반으로, LG에너지솔루션은 배터리 개발 기간 또는 자원을 절반으로 줄이는 것이 목표지만 측정된 결과는 공개되지 않았다. 자체 플랫폼과 외부 협력도 함께 쓴다. 소재·화장품은 EXAONE Discovery, 신약은 외부 바이오텍, 외부 소재 기업 지원은 LG CNS가 창립 멤버로 합류한 CuspAI 협력체(48개 기관)를 통한다. <a class="rid" href="#L5-M-003" title="LG화학은 통상 5년 넘게 걸리는 항체 신약 후보 발굴(표적 검증~선도물질 최적화) 기간을 AI 협력으로 절반가량 줄이는 것이 목표다.">L5-M-003</a><a class="rid" href="#L5-M-004" title="LG에너지솔루션은 AI 에이전트와 자동 실험 설비로 배터리 개발 기간을 절반으로 줄이거나 같은 일을 절반의 자원으로 하는 것을 목표로 한다. 측정된 결과는 공개되지 않았다.">L5-M-004</a><a class="rid" href="#L5-E-006" title="LG CNS가 CuspAI 주도 소재 AI 협력체의 창립 멤버로 합류했다. 의뢰 기업이 신소재 특허를 소유하고, 데이터는 전용 서버로 분리한다.">L5-E-006</a><a class="rid" href="#L5-I-004" title="개발 기간 단축은 목표 단계다. LG화학은 항체 후보 발굴 5년 이상을 절반으로, LG에너지솔루션은 배터리 개발 기간을 절반으로 줄이는 것이 목표지만 측정된 결과는 공개되지 않았다.">L5-I-004</a><a class="rid" href="#L5-I-005" title="자체 플랫폼과 외부 협력을 함께 쓴다. 소재·화장품은 자체 EXAONE Discovery로, 신약은 D&amp;D·LabGenius·Galux 같은 외부 바이오텍과, 외부 소재 고객은 CuspAI 플랫폼으로 지원한다.">L5-I-005</a></p><p>연구 역량 자체는 글로벌 수준이다. 신소재 생성 벤치마크 LeMat-GenBench 종합 2위, 특허 출원 838건, 주요 학회 논문 363편이고, EXAONE Discovery는 우회하기 어려운 &#x27;길목 특허&#x27;로 등록됐다. GS칼텍스와 만든 AI 데이터센터용 액침 냉각유 소재처럼, AI for Science가 다른 테마의 소재가 되는 연결도 생기고 있다. <a class="rid" href="#L5-M-006" title="LG AI연구원의 신소재 생성 AI 기술은 소재 생성 벤치마크 LeMat-GenBench 종합 2위를 기록했다.">L5-M-006</a><a class="rid" href="#L5-M-005" title="LG AI연구원은 2020년 12월 출범 이후 주요 AI 학회 논문 363편을 냈고, 특허를 838건(국내 371·해외 243·PCT 224) 출원했다. EXAONE Discovery는 &#x27;길목 특허&#x27;로 등록됐다.">L5-M-005</a><a class="rid" href="#L5-E-001" title="LG AI연구원이 논문·특허·분자 구조를 함께 분석해 실험 설계와 신소재 예측까지 잇는 EXAONE Discovery 특허를 등록했다. 배터리·반도체·신약으로 넓힐 계획이다.">L5-E-001</a><a class="rid" href="#L5-E-004" title="LG AI연구원이 ICML 2026에서 AI로 찾은 탈모 관리 소재 람시딜과, GS칼텍스와 함께 만든 AI 데이터센터용 액침 냉각유 소재를 선보였다.">L5-E-004</a><a class="rid" href="#L5-I-006" title="연구 역량 지표는 글로벌 수준이다. 신소재 생성 벤치마크 종합 2위, 특허 출원 838건, 주요 학회 논문 363편이다. 기술 역량과 사업 성과 사이의 거리가 이 질문의 핵심 판정 대상이다.">L5-I-006</a><a class="rid" href="#L5-I-007" title="AI for Science는 AI 데이터센터와도 연결된다. LG AI연구원이 GS칼텍스와 만든 액침 냉각유 소재는 L1(AI 데이터센터 냉각)의 소재가 될 수 있다.">L5-I-007</a></p></div>
+    <div class="tablewrap"><table><thead><tr><th>방향</th><th>대상</th><th>해석</th><th>근거</th><th>기록</th></tr></thead><tbody><tr id="L5-I-001"><td><span class="dir up">강화</span></td>
+  <td class="tgt">탐색 속도</td><td>AI는 탐색 단계를 크게 줄였다. 4,000만 건 검토가 22개월에서 하루로, 42만 개 후보 선별이 하루로 줄었다고 회사가 밝혔다. 다만 모두 회사 발표 수치이며 독립 검증은 없다.</td><td><a class="rid" href="#L5-M-001" title="LG AI연구원의 EXAONE Discovery로 화장품 소재 4,000만 건 이상의 물성·합성 용이성·안전성 검토를, 기존 약 22개월에서 하루로 줄였다고 회사가 밝혔다.">L5-M-001</a><a class="rid" href="#L5-M-002" title="LG생활건강과 LG AI연구원은 AI로 42만 개 이상의 후보에서 하루 만에 탈모 관리 신소재 &#x27;람시딜&#x27;을 골라냈다. 스테로이드 유래 성분 없이 탈모 방지 효과를 보였다는 결과를 세계모발학회에서 발표했고, 제품화를 준비 중이다.">L5-M-002</a></td><td class="idc"><code>L5-I-001</code></td></tr><tr id="L5-I-002"><td><span class="dir flat">중립</span></td>
+  <td class="tgt">사업화 거리</td><td>AI로 찾은 물질 가운데 제품·임상까지 간 것은 아직 없다. 가장 앞선 것은 탈모 소재 람시딜로, 효과를 학회에서 발표하고 제품화를 준비 중이다. 신약은 펩타이드·항체 모두 발견 단계다.</td><td><a class="rid" href="#L5-M-002" title="LG생활건강과 LG AI연구원은 AI로 42만 개 이상의 후보에서 하루 만에 탈모 관리 신소재 &#x27;람시딜&#x27;을 골라냈다. 스테로이드 유래 성분 없이 탈모 방지 효과를 보였다는 결과를 세계모발학회에서 발표했고, 제품화를 준비 중이다.">L5-M-002</a><a class="rid" href="#L5-E-002" title="LG AI연구원과 D&amp;D Pharmatech이 AI 기반 경구용 펩타이드 신약을 함께 개발하기로 했다. LG는 후보 서열 설계 모델을, D&amp;D는 합성·실험·경구 전달·전임상·임상을 맡고 결과를 모델에 되먹인다. 현재 발견 단계다.">L5-E-002</a><a class="rid" href="#L5-E-003" title="LG화학이 영국 LabGenius와 다중항체 항암 후보 공동연구·라이선스 옵션 계약을 맺었다(선급금·연구비 지급). AI 설계와 로봇 실험을 반복하는 방식이며, 자체 AI 플랫폼 MediX와 Galux 협력도 운영한다.">L5-E-003</a></td><td class="idc"><code>L5-I-002</code></td></tr><tr id="L5-I-003"><td><span class="dir up">강화</span></td>
+  <td class="tgt">폐쇄 루프</td><td>AI 제안과 실험을 잇는 폐쇄 루프가 만들어지고 있다. D&amp;D Pharmatech은 실험 결과를 모델에 되먹이고, LabGenius는 로봇 실험을 반복하며, LG에너지솔루션은 자동 설비로 전해질 후보를 시험한다. 탐색 속도가 실험 속도에 막히지 않게 하는 구조다.</td><td><a class="rid" href="#L5-E-002" title="LG AI연구원과 D&amp;D Pharmatech이 AI 기반 경구용 펩타이드 신약을 함께 개발하기로 했다. LG는 후보 서열 설계 모델을, D&amp;D는 합성·실험·경구 전달·전임상·임상을 맡고 결과를 모델에 되먹인다. 현재 발견 단계다.">L5-E-002</a><a class="rid" href="#L5-E-003" title="LG화학이 영국 LabGenius와 다중항체 항암 후보 공동연구·라이선스 옵션 계약을 맺었다(선급금·연구비 지급). AI 설계와 로봇 실험을 반복하는 방식이며, 자체 AI 플랫폼 MediX와 Galux 협력도 운영한다.">L5-E-003</a><a class="rid" href="#L5-E-005" title="LG에너지솔루션이 배터리 R&amp;D에 AI 에이전트와 자동 실험을 결합했다고 밝혔다. 전해질 후보를 AI가 좁히고 자동 설비가 만들어 시험한 뒤 결과를 다시 학습하며, 초기 충방전 데이터만으로 수명을 예측한다.">L5-E-005</a></td><td class="idc"><code>L5-I-003</code></td></tr><tr id="L5-I-004"><td><span class="dir flat">중립</span></td>
+  <td class="tgt">개발 기간</td><td>개발 기간 단축은 목표 단계다. LG화학은 항체 후보 발굴 5년 이상을 절반으로, LG에너지솔루션은 배터리 개발 기간을 절반으로 줄이는 것이 목표지만 측정된 결과는 공개되지 않았다.</td><td><a class="rid" href="#L5-M-003" title="LG화학은 통상 5년 넘게 걸리는 항체 신약 후보 발굴(표적 검증~선도물질 최적화) 기간을 AI 협력으로 절반가량 줄이는 것이 목표다.">L5-M-003</a><a class="rid" href="#L5-M-004" title="LG에너지솔루션은 AI 에이전트와 자동 실험 설비로 배터리 개발 기간을 절반으로 줄이거나 같은 일을 절반의 자원으로 하는 것을 목표로 한다. 측정된 결과는 공개되지 않았다.">L5-M-004</a></td><td class="idc"><code>L5-I-004</code></td></tr><tr id="L5-I-005"><td><span class="dir flat">중립</span></td>
+  <td class="tgt">자체와 외부의 결합</td><td>자체 플랫폼과 외부 협력을 함께 쓴다. 소재·화장품은 자체 EXAONE Discovery로, 신약은 D&amp;D·LabGenius·Galux 같은 외부 바이오텍과, 외부 소재 고객은 CuspAI 플랫폼으로 지원한다.</td><td><a class="rid" href="#L5-E-001" title="LG AI연구원이 논문·특허·분자 구조를 함께 분석해 실험 설계와 신소재 예측까지 잇는 EXAONE Discovery 특허를 등록했다. 배터리·반도체·신약으로 넓힐 계획이다.">L5-E-001</a><a class="rid" href="#L5-E-002" title="LG AI연구원과 D&amp;D Pharmatech이 AI 기반 경구용 펩타이드 신약을 함께 개발하기로 했다. LG는 후보 서열 설계 모델을, D&amp;D는 합성·실험·경구 전달·전임상·임상을 맡고 결과를 모델에 되먹인다. 현재 발견 단계다.">L5-E-002</a><a class="rid" href="#L5-E-003" title="LG화학이 영국 LabGenius와 다중항체 항암 후보 공동연구·라이선스 옵션 계약을 맺었다(선급금·연구비 지급). AI 설계와 로봇 실험을 반복하는 방식이며, 자체 AI 플랫폼 MediX와 Galux 협력도 운영한다.">L5-E-003</a><a class="rid" href="#L5-E-006" title="LG CNS가 CuspAI 주도 소재 AI 협력체의 창립 멤버로 합류했다. 의뢰 기업이 신소재 특허를 소유하고, 데이터는 전용 서버로 분리한다.">L5-E-006</a></td><td class="idc"><code>L5-I-005</code></td></tr><tr id="L5-I-006"><td><span class="dir up">강화</span></td>
+  <td class="tgt">연구 역량</td><td>연구 역량 지표는 글로벌 수준이다. 신소재 생성 벤치마크 종합 2위, 특허 출원 838건, 주요 학회 논문 363편이다. 기술 역량과 사업 성과 사이의 거리가 이 질문의 핵심 판정 대상이다.</td><td><a class="rid" href="#L5-M-006" title="LG AI연구원의 신소재 생성 AI 기술은 소재 생성 벤치마크 LeMat-GenBench 종합 2위를 기록했다.">L5-M-006</a><a class="rid" href="#L5-M-005" title="LG AI연구원은 2020년 12월 출범 이후 주요 AI 학회 논문 363편을 냈고, 특허를 838건(국내 371·해외 243·PCT 224) 출원했다. EXAONE Discovery는 &#x27;길목 특허&#x27;로 등록됐다.">L5-M-005</a></td><td class="idc"><code>L5-I-006</code></td></tr><tr id="L5-I-007"><td><span class="dir up">강화</span></td>
+  <td class="tgt">테마 간 연결</td><td>AI for Science는 AI 데이터센터와도 연결된다. LG AI연구원이 GS칼텍스와 만든 액침 냉각유 소재는 L1(AI 데이터센터 냉각)의 소재가 될 수 있다.</td><td><a class="rid" href="#L5-E-004" title="LG AI연구원이 ICML 2026에서 AI로 찾은 탈모 관리 소재 람시딜과, GS칼텍스와 함께 만든 AI 데이터센터용 액침 냉각유 소재를 선보였다.">L5-E-004</a></td><td class="idc"><code>L5-I-007</code></td></tr></tbody></table></div></section>
+  <section><h2>주요 사건 <small>최신순 · 원문 확인된 것만</small></h2><p class="lead">6~7월에 사건이 몰렸다. D&amp;D Pharmatech·LabGenius와의 신약 협력, ICML의 람시딜·액침 냉각유 공개, LG에너지솔루션의 자동 실험 R&amp;D, LG CNS의 CuspAI 협력체 합류다. 그 앞에는 2월 EXAONE Discovery 특허 등록이 있다.</p><ul class="timeline"><li id="L5-E-006"><time>2026-07-27</time><div><b>LG CNS</b> LG CNS가 CuspAI 주도 소재 AI 협력체의 창립 멤버로 합류했다. 의뢰 기업이 신소재 특허를 소유하고, 데이터는 전용 서버로 분리한다.
+  <div class="src"><a href="https://view.asiae.co.kr/en/article/2026072710221174471" target="_blank" rel="noopener">Asia Economy (LG CNS 발표)</a><span class="grade gB">B</span> <code>L5-E-006</code></div></div></li><li id="L5-E-005"><time>2026-07-26</time><div><b>LG에너지솔루션</b> LG에너지솔루션이 배터리 R&amp;D에 AI 에이전트와 자동 실험을 결합했다고 밝혔다. 전해질 후보를 AI가 좁히고 자동 설비가 만들어 시험한 뒤 결과를 다시 학습하며, 초기 충방전 데이터만으로 수명을 예측한다.
+  <div class="src"><a href="https://www.etnews.com/20260724000112" target="_blank" rel="noopener">전자신문</a><span class="grade gB">B</span> <code>L5-E-005</code></div></div></li><li id="L5-E-004"><time>2026-07-08</time><div><b>LG AI연구원</b> LG AI연구원이 ICML 2026에서 AI로 찾은 탈모 관리 소재 람시딜과, GS칼텍스와 함께 만든 AI 데이터센터용 액침 냉각유 소재를 선보였다.
+  <div class="src"><a href="https://www.lg.co.kr/media/release/30327" target="_blank" rel="noopener">LG 보도자료 (LG AI연구원)</a><span class="grade gA">A</span> <code>L5-E-004</code></div></div></li><li id="L5-E-003"><time>2026-06-18</time><div><b>LG화학</b> LG화학이 영국 LabGenius와 다중항체 항암 후보 공동연구·라이선스 옵션 계약을 맺었다(선급금·연구비 지급). AI 설계와 로봇 실험을 반복하는 방식이며, 자체 AI 플랫폼 MediX와 Galux 협력도 운영한다.
+  <div class="src"><a href="https://www.newspim.com/news/view/20260618000055" target="_blank" rel="noopener">뉴스핌 (LG화학 발표)</a><span class="grade gB">B</span> <code>L5-E-003</code></div></div></li><li id="L5-E-002"><time>2026-06-17</time><div><b>LG AI연구원·D&amp;D Pharmatech</b> LG AI연구원과 D&amp;D Pharmatech이 AI 기반 경구용 펩타이드 신약을 함께 개발하기로 했다. LG는 후보 서열 설계 모델을, D&amp;D는 합성·실험·경구 전달·전임상·임상을 맡고 결과를 모델에 되먹인다. 현재 발견 단계다.
+  <div class="src"><a href="https://www.biopharminternational.com/view/lg-ai-research-d-d-pharmatech-partner-to-advance-ai-driven-oral-peptide-drug-discovery" target="_blank" rel="noopener">BioPharm International</a><span class="grade gB">B</span> <code>L5-E-002</code></div></div></li><li id="L5-E-001"><time>2026-02-03</time><div><b>LG AI연구원</b> LG AI연구원이 논문·특허·분자 구조를 함께 분석해 실험 설계와 신소재 예측까지 잇는 EXAONE Discovery 특허를 등록했다. 배터리·반도체·신약으로 넓힐 계획이다.
+  <div class="src"><a href="https://www.mt.co.kr/industry/2026/02/03/2026020308502174042" target="_blank" rel="noopener">머니투데이 (LG AI연구원 발표)</a><span class="grade gB">B</span> <code>L5-E-001</code></div></div></li></ul></section>
+  <section><h2>전망 <small>2027년 말까지, 탐색이 제품이 될까</small></h2><p class="lead">2027년 말을 기준으로 두 시나리오를 세웠다. 갈림길은 AI가 찾은 물질이 제품(람시딜)·전임상(신약)·양산 계획(배터리 소재)으로 넘어가는지, 아니면 탐색 속도 발표와 협력 계약에 머무는지다.</p>
+    <div class="scens"><article class="scen opt" id="L5-F-101"><header><span class="sk">낙관 · Optimistic</span><code>L5-F-101</code></header>
+  <p class="sstmt">2027년 말까지 AI가 찾은 물질이 제품과 개발 후기 단계로 이어진다. 람시딜 제품이 출시되고, 신약 후보가 전임상에 들어가며, 배터리에서 AI 탐색 소재의 적용 계획이 나온다.</p><ol class="ms"><li><time>2027-06</time><span>람시딜 적용 제품 출시</span></li><li><time>2027-12</time><span>펩타이드·항체 후보 선정 또는 전임상 진입</span></li><li><time>2027-12</time><span>AI 탐색 배터리 소재 적용 발표</span></li></ol>
+  <dl class="sdl"><div><dt>판정 시점</dt><dd>2027-12-31</dd></div><div><dt>판정 방법</dt><dd>세 가지 중 두 가지 이상 충족 시 적중: (1) AI 발굴 화장품 원료 적용 제품 출시 (2) AI 설계 신약 후보 선정 또는 전임상 진입 발표 (3) AI 탐색 배터리 소재 적용 제품·양산 계획 발표</dd></div>
+  <div><dt>전제</dt><dd>없음</dd></div><div><dt>근거</dt><dd><a class="rid" href="#L5-M-002" title="LG생활건강과 LG AI연구원은 AI로 42만 개 이상의 후보에서 하루 만에 탈모 관리 신소재 &#x27;람시딜&#x27;을 골라냈다. 스테로이드 유래 성분 없이 탈모 방지 효과를 보였다는 결과를 세계모발학회에서 발표했고, 제품화를 준비 중이다.">L5-M-002</a><a class="rid" href="#L5-E-002" title="LG AI연구원과 D&amp;D Pharmatech이 AI 기반 경구용 펩타이드 신약을 함께 개발하기로 했다. LG는 후보 서열 설계 모델을, D&amp;D는 합성·실험·경구 전달·전임상·임상을 맡고 결과를 모델에 되먹인다. 현재 발견 단계다.">L5-E-002</a><a class="rid" href="#L5-E-005" title="LG에너지솔루션이 배터리 R&amp;D에 AI 에이전트와 자동 실험을 결합했다고 밝혔다. 전해질 후보를 AI가 좁히고 자동 설비가 만들어 시험한 뒤 결과를 다시 학습하며, 초기 충방전 데이터만으로 수명을 예측한다.">L5-E-005</a></dd></div></dl></article><article class="scen pes" id="L5-F-102"><header><span class="sk">비관 · Pessimistic</span><code>L5-F-102</code></header>
+  <p class="sstmt">2027년 말까지 AI for Science의 성과는 탐색 속도 발표와 협력 계약에 머문다. 화장품 원료 외에는 제품화가 없고, 신약은 발견 단계에 남으며, 개발 기간 단축은 목표치로만 남는다.</p><ol class="ms"><li><time>2027-06</time><span>람시딜 제품 출시 지연</span></li><li><time>2027-12</time><span>신약 후보 미공개</span></li><li><time>2027-12</time><span>기간 단축 결과치 미공개</span></li></ol>
+  <dl class="sdl"><div><dt>판정 시점</dt><dd>2027-12-31</dd></div><div><dt>판정 방법</dt><dd>낙관 시나리오의 판정 조건 세 가지 중 하나 이하만 충족 시 적중</dd></div>
+  <div><dt>전제</dt><dd>없음</dd></div><div><dt>근거</dt><dd><a class="rid" href="#L5-M-001" title="LG AI연구원의 EXAONE Discovery로 화장품 소재 4,000만 건 이상의 물성·합성 용이성·안전성 검토를, 기존 약 22개월에서 하루로 줄였다고 회사가 밝혔다.">L5-M-001</a><a class="rid" href="#L5-M-003" title="LG화학은 통상 5년 넘게 걸리는 항체 신약 후보 발굴(표적 검증~선도물질 최적화) 기간을 AI 협력으로 절반가량 줄이는 것이 목표다.">L5-M-003</a><a class="rid" href="#L5-M-004" title="LG에너지솔루션은 AI 에이전트와 자동 실험 설비로 배터리 개발 기간을 절반으로 줄이거나 같은 일을 절반의 자원으로 하는 것을 목표로 한다. 측정된 결과는 공개되지 않았다.">L5-M-004</a></dd></div></dl></article></div>
+    <h3 class="subhead">세부 판정 근거</h3>
+    <p class="lead muted">각 세부 전망이 적중하거나 빗나갔을 때 어느 시나리오 쪽 신호인지 표시했다. 확인 시점이 오면 확인 방법대로 판정한다.</p>
+    <div class="tablewrap"><table><thead><tr><th>세부 전망</th><th>확인 시점</th><th>적중 시</th><th>빗나갈 시</th><th>상태</th><th>근거</th></tr></thead><tbody><tr id="L5-F-001"><td class="stmt">LG생활건강은 2027년 6월 말까지 람시딜을 적용한 제품을 출시할 것이다.<small>확인 방법: LG생활건강 공식 발표 확인</small></td>
+  <td class="asof">2027-06-30</td><td><span class="side opt">낙관</span></td><td><span class="side pes">비관</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#L5-M-002" title="LG생활건강과 LG AI연구원은 AI로 42만 개 이상의 후보에서 하루 만에 탈모 관리 신소재 &#x27;람시딜&#x27;을 골라냈다. 스테로이드 유래 성분 없이 탈모 방지 효과를 보였다는 결과를 세계모발학회에서 발표했고, 제품화를 준비 중이다.">L5-M-002</a></td></tr><tr id="L5-F-006"><td class="stmt">LG CNS는 2027년 6월 말까지 CuspAI 플랫폼 기반 국내 소재 기업 고객 계약을 발표할 것이다.<small>확인 방법: LG CNS 공식 발표 확인</small></td>
+  <td class="asof">2027-06-30</td><td><span class="side opt">낙관</span></td><td><span class="muted">—</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#L5-M-007" title="LG CNS는 영국 CuspAI가 주도하는 소재 AI 협력체 &#x27;AI Materials Foundry&#x27;의 창립 멤버가 됐다. NVIDIA·Meta·AMD 등 48개 기업·연구기관이 참여하며, LG CNS는 국내 소재 기업에 플랫폼을 공급한다.">L5-M-007</a><a class="rid" href="#L5-E-006" title="LG CNS가 CuspAI 주도 소재 AI 협력체의 창립 멤버로 합류했다. 의뢰 기업이 신소재 특허를 소유하고, 데이터는 전용 서버로 분리한다.">L5-E-006</a></td></tr><tr id="L5-F-002"><td class="stmt">LG AI연구원과 D&amp;D Pharmatech은 2027년 말까지 첫 후보 물질 또는 전임상 진입을 발표할 것이다.<small>확인 방법: 양사 공식 발표 확인</small></td>
+  <td class="asof">2027-12-31</td><td><span class="side opt">낙관</span></td><td><span class="muted">—</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#L5-E-002" title="LG AI연구원과 D&amp;D Pharmatech이 AI 기반 경구용 펩타이드 신약을 함께 개발하기로 했다. LG는 후보 서열 설계 모델을, D&amp;D는 합성·실험·경구 전달·전임상·임상을 맡고 결과를 모델에 되먹인다. 현재 발견 단계다.">L5-E-002</a></td></tr><tr id="L5-F-003"><td class="stmt">LG화학은 2027년 말까지 LabGenius 협력의 후보 선정 또는 라이선스 옵션 행사를 발표할 것이다.<small>확인 방법: LG화학 공식 발표 또는 공시 확인</small></td>
+  <td class="asof">2027-12-31</td><td><span class="side opt">낙관</span></td><td><span class="muted">—</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#L5-E-003" title="LG화학이 영국 LabGenius와 다중항체 항암 후보 공동연구·라이선스 옵션 계약을 맺었다(선급금·연구비 지급). AI 설계와 로봇 실험을 반복하는 방식이며, 자체 AI 플랫폼 MediX와 Galux 협력도 운영한다.">L5-E-003</a></td></tr><tr id="L5-F-004"><td class="stmt">2027년 말까지 LG 계열사가 AI로 설계한 신약 후보가 임상 1상에 진입하지는 않을 것이다.<small>확인 방법: 계열사 공시·임상 등록 확인</small></td>
+  <td class="asof">2027-12-31</td><td><span class="muted">—</span></td><td><span class="muted">—</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#L5-E-002" title="LG AI연구원과 D&amp;D Pharmatech이 AI 기반 경구용 펩타이드 신약을 함께 개발하기로 했다. LG는 후보 서열 설계 모델을, D&amp;D는 합성·실험·경구 전달·전임상·임상을 맡고 결과를 모델에 되먹인다. 현재 발견 단계다.">L5-E-002</a><a class="rid" href="#L5-E-003" title="LG화학이 영국 LabGenius와 다중항체 항암 후보 공동연구·라이선스 옵션 계약을 맺었다(선급금·연구비 지급). AI 설계와 로봇 실험을 반복하는 방식이며, 자체 AI 플랫폼 MediX와 Galux 협력도 운영한다.">L5-E-003</a></td></tr><tr id="L5-F-005"><td class="stmt">LG에너지솔루션은 2027년 말까지 AI로 찾은 소재(전해질·첨가제 등)를 적용한 제품 또는 양산 계획을 발표할 것이다.<small>확인 방법: LG에너지솔루션 공식 발표 확인</small></td>
+  <td class="asof">2027-12-31</td><td><span class="side opt">낙관</span></td><td><span class="side pes">비관</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#L5-E-005" title="LG에너지솔루션이 배터리 R&amp;D에 AI 에이전트와 자동 실험을 결합했다고 밝혔다. 전해질 후보를 AI가 좁히고 자동 설비가 만들어 시험한 뒤 결과를 다시 학습하며, 초기 충방전 데이터만으로 수명을 예측한다.">L5-E-005</a><a class="rid" href="#L5-M-004" title="LG에너지솔루션은 AI 에이전트와 자동 실험 설비로 배터리 개발 기간을 절반으로 줄이거나 같은 일을 절반의 자원으로 하는 것을 목표로 한다. 측정된 결과는 공개되지 않았다.">L5-M-004</a></td></tr></tbody></table></div></section>
+  <section><h2>분야별 연구 단계 <small>단계 판정 · 기간 단축 원장</small></h2><p class="lead">분야마다 가상 탐색 → 실험 검증 → 제품·임상 진입 → 사업화 중 어디에 있는지 판정했다. 오른쪽 표시는 그 분야를 자체 플랫폼으로 하는지 외부 협력으로 하는지다.</p>
+    <div class="ladder mapgrid auto"><div class="rung"><div class="stage"><b>화장품 원료 (LG생활건강)</b></div>
+  <div class="lvcell"><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip"></span><span class="pip"></span><span class="lv">실험 검증</span></span></div>
+  <div class="lvcell"><span class="own brand">자체 플랫폼</span></div>
+  <p class="why">람시딜: 42만 후보 → 하루, 세계모발학회 효과 발표, 제품화 준비 <a class="rid" href="#L5-M-002" title="LG생활건강과 LG AI연구원은 AI로 42만 개 이상의 후보에서 하루 만에 탈모 관리 신소재 &#x27;람시딜&#x27;을 골라냈다. 스테로이드 유래 성분 없이 탈모 방지 효과를 보였다는 결과를 세계모발학회에서 발표했고, 제품화를 준비 중이다.">L5-M-002</a></p></div><div class="rung"><div class="stage"><b>기타 소재 (액침 냉각유 등)</b></div>
+  <div class="lvcell"><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip"></span><span class="pip"></span><span class="lv">실험 검증</span></span></div>
+  <div class="lvcell"><span class="own contest">자체+외부</span></div>
+  <p class="why">GS칼텍스와 공동 개발한 AI 데이터센터용 액침 냉각유 실물 전시 <a class="rid" href="#L5-E-004" title="LG AI연구원이 ICML 2026에서 AI로 찾은 탈모 관리 소재 람시딜과, GS칼텍스와 함께 만든 AI 데이터센터용 액침 냉각유 소재를 선보였다.">L5-E-004</a></p></div><div class="rung"><div class="stage"><b>배터리 소재 (LG에너지솔루션)</b></div>
+  <div class="lvcell"><span class="pips"><span class="pip on"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="lv">가상 탐색</span></span></div>
+  <div class="lvcell"><span class="own brand">자체 플랫폼</span></div>
+  <p class="why">AI 에이전트 + 자동 실험 루프 구축, 결과 미공개 <a class="rid" href="#L5-E-005" title="LG에너지솔루션이 배터리 R&amp;D에 AI 에이전트와 자동 실험을 결합했다고 밝혔다. 전해질 후보를 AI가 좁히고 자동 설비가 만들어 시험한 뒤 결과를 다시 학습하며, 초기 충방전 데이터만으로 수명을 예측한다.">L5-E-005</a><a class="rid" href="#L5-M-004" title="LG에너지솔루션은 AI 에이전트와 자동 실험 설비로 배터리 개발 기간을 절반으로 줄이거나 같은 일을 절반의 자원으로 하는 것을 목표로 한다. 측정된 결과는 공개되지 않았다.">L5-M-004</a></p></div><div class="rung"><div class="stage"><b>신약 — 펩타이드 (LG AI연구원)</b></div>
+  <div class="lvcell"><span class="pips"><span class="pip on"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="lv">가상 탐색</span></span></div>
+  <div class="lvcell"><span class="own platform">외부 협력</span></div>
+  <p class="why">D&amp;D Pharmatech과 경구 펩타이드, 발견 단계 <a class="rid" href="#L5-E-002" title="LG AI연구원과 D&amp;D Pharmatech이 AI 기반 경구용 펩타이드 신약을 함께 개발하기로 했다. LG는 후보 서열 설계 모델을, D&amp;D는 합성·실험·경구 전달·전임상·임상을 맡고 결과를 모델에 되먹인다. 현재 발견 단계다.">L5-E-002</a></p></div><div class="rung"><div class="stage"><b>신약 — 항체 (LG화학)</b></div>
+  <div class="lvcell"><span class="pips"><span class="pip on"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="lv">가상 탐색</span></span></div>
+  <div class="lvcell"><span class="own platform">외부 협력</span></div>
+  <p class="why">LabGenius 다중항체 옵션 계약, Galux 항암 단백질, 자체 MediX <a class="rid" href="#L5-E-003" title="LG화학이 영국 LabGenius와 다중항체 항암 후보 공동연구·라이선스 옵션 계약을 맺었다(선급금·연구비 지급). AI 설계와 로봇 실험을 반복하는 방식이며, 자체 AI 플랫폼 MediX와 Galux 협력도 운영한다.">L5-E-003</a></p></div></div><p class="gapnote">판정: 가장 앞선 분야는 화장품 원료(실험 검증), 신약·배터리 소재는 가상 탐색 단계. 제품·임상에 들어간 AI 발굴 물질은 아직 없다 (R1 기준).</p>
+    <h3 class="subhead">기간 단축 원장</h3><p class="lead">AI가 줄였다고 밝힌 기간과, 줄이겠다는 목표를 나눠 적었다. 다음 회차부터 목표 줄이 결과 줄로 바뀌는지를 본다.</p>
+    <div class="tablewrap"><table><thead><tr><th>작업</th><th>기존</th><th>AI 적용</th><th>종류</th><th>시점</th><th>기록</th></tr></thead><tbody><tr><td class="tgt">화장품 소재 4,000만 건 검토</td><td>약 22개월</td><td>1일</td><td>결과 (회사 발표)</td><td>2026-02</td><td><a class="rid" href="#L5-M-001" title="LG AI연구원의 EXAONE Discovery로 화장품 소재 4,000만 건 이상의 물성·합성 용이성·안전성 검토를, 기존 약 22개월에서 하루로 줄였다고 회사가 밝혔다.">L5-M-001</a></td></tr><tr><td class="tgt">탈모 소재 후보 42만 개 선별</td><td>—</td><td>1일</td><td>결과 (회사 발표)</td><td>2026-07</td><td><a class="rid" href="#L5-M-002" title="LG생활건강과 LG AI연구원은 AI로 42만 개 이상의 후보에서 하루 만에 탈모 관리 신소재 &#x27;람시딜&#x27;을 골라냈다. 스테로이드 유래 성분 없이 탈모 방지 효과를 보였다는 결과를 세계모발학회에서 발표했고, 제품화를 준비 중이다.">L5-M-002</a></td></tr><tr><td class="tgt">항체 신약 후보 발굴</td><td>5년 이상</td><td>절반 목표</td><td>목표</td><td>2026-06</td><td><a class="rid" href="#L5-M-003" title="LG화학은 통상 5년 넘게 걸리는 항체 신약 후보 발굴(표적 검증~선도물질 최적화) 기간을 AI 협력으로 절반가량 줄이는 것이 목표다.">L5-M-003</a></td></tr><tr><td class="tgt">배터리 개발 기간·자원</td><td>—</td><td>절반 목표</td><td>목표</td><td>2026-07</td><td><a class="rid" href="#L5-M-004" title="LG에너지솔루션은 AI 에이전트와 자동 실험 설비로 배터리 개발 기간을 절반으로 줄이거나 같은 일을 절반의 자원으로 하는 것을 목표로 한다. 측정된 결과는 공개되지 않았다.">L5-M-004</a></td></tr></tbody></table></div></section>
+  <section><h2>핵심 지표 <small>추적 지표 6/8개 값 확보</small></h2><p class="lead">추적 지표 8개 중 6개의 값을 원문으로 확인했다. T3 제품·임상 진입(현재 0건)과 T4 외부 연구 협력은 사건으로 추적한다. 탐색 속도는 회사 발표 수치이고, 개발 기간 단축은 목표치라 주의 표시를 달았다.</p>
+    <div class="tablewrap"><table><thead><tr><th>추적 지표</th><th>내용 · 출처</th><th style="text-align:right">현재값</th><th>기준 시점</th><th>기록</th></tr></thead><tbody><tr id="L5-M-001"><td class="ind">L5-T1<small>탐색 속도</small></td>
+  <td class="stmt">LG AI연구원의 EXAONE Discovery로 화장품 소재 4,000만 건 이상의 물성·합성 용이성·안전성 검토를, 기존 약 22개월에서 하루로 줄였다고 회사가 밝혔다. <span class="warn">충돌·주의</span><div class="src"><a href="https://www.mt.co.kr/industry/2026/02/03/2026020308502174042" target="_blank" rel="noopener">머니투데이 (LG AI연구원 발표)</a><span class="grade gB">B</span></div></td>
+  <td class="num">1 일 (기존 약 22개월)</td><td class="asof">2026-02<small>KR</small></td><td class="idc"><code>L5-M-001</code></td></tr><tr id="L5-M-002"><td class="ind">L5-T2<small>실험 검증 결과</small></td>
+  <td class="stmt">LG생활건강과 LG AI연구원은 AI로 42만 개 이상의 후보에서 하루 만에 탈모 관리 신소재 &#x27;람시딜&#x27;을 골라냈다. 스테로이드 유래 성분 없이 탈모 방지 효과를 보였다는 결과를 세계모발학회에서 발표했고, 제품화를 준비 중이다. <div class="src"><a href="https://www.lg.co.kr/media/release/30327" target="_blank" rel="noopener">LG 보도자료 (LG AI연구원)</a><span class="grade gA">A</span></div></td>
+  <td class="num">42 만 개 이상 (후보 물질)</td><td class="asof">2026-07<small>KR</small></td><td class="idc"><code>L5-M-002</code></td></tr><tr id="L5-M-003"><td class="ind">L5-T5<small>개발 기간 단축</small></td>
+  <td class="stmt">LG화학은 통상 5년 넘게 걸리는 항체 신약 후보 발굴(표적 검증~선도물질 최적화) 기간을 AI 협력으로 절반가량 줄이는 것이 목표다. <span class="warn">충돌·주의</span><div class="src"><a href="https://www.newspim.com/news/view/20260618000055" target="_blank" rel="noopener">뉴스핌 (LG화학 발표)</a><span class="grade gB">B</span></div></td>
+  <td class="num">50% (기간 단축 목표)</td><td class="asof">2026-06<small>KR</small></td><td class="idc"><code>L5-M-003</code></td></tr><tr id="L5-M-004"><td class="ind">L5-T5<small>개발 기간 단축</small></td>
+  <td class="stmt">LG에너지솔루션은 AI 에이전트와 자동 실험 설비로 배터리 개발 기간을 절반으로 줄이거나 같은 일을 절반의 자원으로 하는 것을 목표로 한다. 측정된 결과는 공개되지 않았다. <span class="warn">충돌·주의</span><div class="src"><a href="https://www.etnews.com/20260724000112" target="_blank" rel="noopener">전자신문</a><span class="grade gB">B</span></div></td>
+  <td class="num">50% (개발 기간·자원 절감 목표)</td><td class="asof">2026-07<small>GLOBAL</small></td><td class="idc"><code>L5-M-004</code></td></tr><tr id="L5-M-005"><td class="ind">L5-T6<small>특허·논문</small></td>
+  <td class="stmt">LG AI연구원은 2020년 12월 출범 이후 주요 AI 학회 논문 363편을 냈고, 특허를 838건(국내 371·해외 243·PCT 224) 출원했다. EXAONE Discovery는 &#x27;길목 특허&#x27;로 등록됐다. <div class="src"><a href="https://www.lg.co.kr/media/release/30327" target="_blank" rel="noopener">LG 보도자료 (LG AI연구원)</a><span class="grade gA">A</span> · <a href="https://www.mt.co.kr/industry/2026/02/03/2026020308502174042" target="_blank" rel="noopener">머니투데이 (LG AI연구원 발표)</a><span class="grade gB">B</span></div></td>
+  <td class="num">838 건 (특허 출원)</td><td class="asof">2026-07<small>GLOBAL</small></td><td class="idc"><code>L5-M-005</code></td></tr><tr id="L5-M-006"><td class="ind">L5-T7<small>소재 생성 AI 성능</small></td>
+  <td class="stmt">LG AI연구원의 신소재 생성 AI 기술은 소재 생성 벤치마크 LeMat-GenBench 종합 2위를 기록했다. <div class="src"><a href="https://www.lg.co.kr/media/release/30327" target="_blank" rel="noopener">LG 보도자료 (LG AI연구원)</a><span class="grade gA">A</span></div></td>
+  <td class="num">2 위 (LeMat-GenBench 종합)</td><td class="asof">2026-07<small>GLOBAL</small></td><td class="idc"><code>L5-M-006</code></td></tr><tr id="L5-M-007"><td class="ind">L5-T8<small>외부 플랫폼 사업</small></td>
+  <td class="stmt">LG CNS는 영국 CuspAI가 주도하는 소재 AI 협력체 &#x27;AI Materials Foundry&#x27;의 창립 멤버가 됐다. NVIDIA·Meta·AMD 등 48개 기업·연구기관이 참여하며, LG CNS는 국내 소재 기업에 플랫폼을 공급한다. <div class="src"><a href="https://view.asiae.co.kr/en/article/2026072710221174471" target="_blank" rel="noopener">Asia Economy (LG CNS 발표)</a><span class="grade gB">B</span></div></td>
+  <td class="num">48 곳 (참여 기업·기관)</td><td class="asof">2026-07<small>GLOBAL</small></td><td class="idc"><code>L5-M-007</code></td></tr></tbody></table></div></section>
+  <section><h2>미확인·경고 <small>본문 판단에서 빼거나 주의해서 쓴 기록</small></h2>
+    <div class="tablewrap"><table><thead><tr><th>기록</th><th>구분</th><th>진술</th><th>사유</th></tr></thead><tbody><tr><td><code>L5-M-001</code></td><td><span class="wk">주의</span></td><td>LG AI연구원의 EXAONE Discovery로 화장품 소재 4,000만 건 이상의 물성·합성 용이성·안전성 검토를, 기존 약 22개월에서 하루로 줄였다고 회사가 밝혔다.</td><td class="muted">회사 발표 수치 — 독립 검증 없음</td></tr><tr><td><code>L5-M-003</code></td><td><span class="wk">주의</span></td><td>LG화학은 통상 5년 넘게 걸리는 항체 신약 후보 발굴(표적 검증~선도물질 최적화) 기간을 AI 협력으로 절반가량 줄이는 것이 목표다.</td><td class="muted">목표치 — 결과 아님</td></tr><tr><td><code>L5-M-004</code></td><td><span class="wk">주의</span></td><td>LG에너지솔루션은 AI 에이전트와 자동 실험 설비로 배터리 개발 기간을 절반으로 줄이거나 같은 일을 절반의 자원으로 하는 것을 목표로 한다. 측정된 결과는 공개되지 않았다.</td><td class="muted">목표치 — 결과 아님</td></tr><tr><td><code>L5-E-002</code></td><td><span class="wk">주의</span></td><td>LG AI연구원과 D&amp;D Pharmatech이 AI 기반 경구용 펩타이드 신약을 함께 개발하기로 했다. LG는 후보 서열 설계 모델을, D&amp;D는 합성·실험·경구 전달·전임상·임상을 맡고 결과를 모델에 되먹인다. 현재 발견 단계다.</td><td class="muted">계약 조건 미공개</td></tr><tr><td><code>L5-E-003</code></td><td><span class="wk">주의</span></td><td>LG화학이 영국 LabGenius와 다중항체 항암 후보 공동연구·라이선스 옵션 계약을 맺었다(선급금·연구비 지급). AI 설계와 로봇 실험을 반복하는 방식이며, 자체 AI 플랫폼 MediX와 Galux 협력도 운영한다.</td><td class="muted">금액 미공개</td></tr></tbody></table></div></section>
+  <footer>
+    <span>이 글은 4유형 기록 28건(지표 7 · 사건 6 · 해석 7 · 전망 8)에서 생성했습니다. 문장 옆 번호를 누르면 해당 기록으로 이동합니다.</span>
+        <span>출처 등급 A = 1차 조사·공식 발표, B = 주요 언론·2차 보도, C = 블로그·출처 불명(원문 확인 전까지 판단에 쓰지 않음).</span>
+  </footer>
+</main>
