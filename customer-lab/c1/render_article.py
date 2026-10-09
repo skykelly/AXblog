@@ -170,7 +170,7 @@ wrows = "".join(f"""<tr{' id="'+E(r['id'])+'"' if r['type']=='사건' and not r.
 
 counts = {t: sum(1 for r in recs if r["type"] == t) for t in ("지표", "사건", "해석", "전망")}
 
-CSS = (ROOT.parent / "lib" / "article.css").read_text(encoding="utf-8")
+CSS = (ROOT.parent.parent / "lib" / "article.css").read_text(encoding="utf-8")
 
 page = f"""<title>C1 소비자 의사결정 R1</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

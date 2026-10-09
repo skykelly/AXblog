@@ -67,7 +67,7 @@
 | `c1/render_article.py` | 기록 → 아티클 HTML 생성 |
 | `c1/article_r1.html` | R1 기준 아티클 |
 | `c2/…` ~ `c5/…` | C2~C5 같은 구성 |
-| `lib/article.css` | 아티클 공통 스타일 |
+| `../lib/article.css` | 아티클 공통 스타일 (저장소 루트) |
 
 ```bash
 cd customer-lab/c1

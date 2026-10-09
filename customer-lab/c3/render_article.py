@@ -8,7 +8,7 @@ ROOT = Path(__file__).parent
 recs = [json.loads(l) for l in (ROOT / "records.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
 by = {r["id"]: r for r in recs}
 E = html.escape
-CSS = (ROOT.parent / "lib" / "article.css").read_text(encoding="utf-8")
+CSS = (ROOT.parent.parent / "lib" / "article.css").read_text(encoding="utf-8")
 
 def tags(ids):
     return "".join(f'<a class="rid" href="#{E(i)}" title="{E(by[i]["statement"])}">{E(i)}</a>' for i in ids)

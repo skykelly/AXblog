@@ -52,3 +52,15 @@ AI 산업 전체의 기술·제품·경쟁·확산 구조를 추적한다. 고�
 
 ### 한국 렌즈
 질문마다 한국 사건과 지표를 따로 기록한다. 국내 모델·소버린 AI 정책, 국가 GPU 확보, 국내 기업의 도입·투자·실적이 대상이다.
+
+## 진행 상황
+
+### I1 · AI Technology & Research
+- **R1 (2026-10-09, 기준 회차):** 기록 35건 (지표 10 · 사건 10 · 해석 7 · 전망 8 — 낙관·비관 시나리오 2 + 세부 판정 전망 6)
+  - 한 줄 답: AI는 사람이 반나절~하루 걸리는 소프트웨어 작업을 절반 확률로 해내고(METR 12~16시간 이상), 시간 단위 업무 에이전트로 제품화됐다. 한계선은 새 환경 추론(ARC-AGI-3 30%)·월드 모델·AI 과학으로 이동, 아직 시연 단계.
+  - 역량 원장: Agent·Reasoning·Computer use·Compute = 제품 적용 가능 / Memory·World Model·AI for Science = 시연
+  - 추적 지표 값 확보 7/8 (T6 AI for Science 독립 검증 성과 없음)
+  - 아티클: [`i1/article_r1.html`](i1/article_r1.html)
+
+## 파일
+질문 폴더(`i1/` …)의 구성은 Customer Lab과 같다: `request_r1.md`, `records.jsonl`, `build_records.py`, `render_article.py`, `article_r1.html`. 공통 스타일은 저장소 루트의 `lib/article.css`.

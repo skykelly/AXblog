@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>I1 AI 기술 한계선 R1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;800&display=swap">
+<style>
+/* Layout: 연구 노트 한 단 — 답 → 서술형 해석 → 근거 표. 기록 번호가 본문의 각주 역할 */
+:root {
+  --paper: #f6f7f9; --ink: #16202b; --muted: #5d6875; --rule: #d6dbe2; --panel: #ffffff;
+  --accent: #1f5f8b; --accent-soft: #e2edf5; --amber: #b4690e; --amber-soft: #f7ead7;
+  --up: #1f7a4d; --down: #b3412f; --flat: #6a7380; --opt: #1f7a4d; --opt-soft: #e1f1e8; --pes: #a3402f; --pes-soft: #f6e3df;
+  --display: "Noto Serif KR", "Apple SD Gothic Neo", serif;
+  --body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #11161c; --ink: #e6ebf1; --muted: #9aa5b1; --rule: #2b333d; --panel: #171e26;
+  --accent: #7fb6dc; --accent-soft: #1b2c3a; --amber: #e2a457; --amber-soft: #33271a;
+  --up: #5fc493; --down: #ec8a78; --flat: #98a2ae; --opt: #6fcf9d; --opt-soft: #17291f; --pes: #ef9a88; --pes-soft: #2f1c18; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --paper: #11161c; --ink: #e6ebf1; --muted: #9aa5b1; --rule: #2b333d; --panel: #171e26;
+  --accent: #7fb6dc; --accent-soft: #1b2c3a; --amber: #e2a457; --amber-soft: #33271a;
+  --up: #5fc493; --down: #ec8a78; --flat: #98a2ae; --opt: #6fcf9d; --opt-soft: #17291f; --pes: #ef9a88; --pes-soft: #2f1c18; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--paper); color: var(--ink); font: 400 16px/1.7 var(--body); padding: 0 20px; }
+main { max-width: 980px; margin: 0 auto; padding-block: 40px 72px; display: grid; gap: 60px; }
+.narrow { max-width: 70ch; }
+a { color: var(--accent); }
+code, .rid { font: 500 12px/1 var(--mono); }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+.eyebrow { font: 500 12px/1.4 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); display: flex; gap: 14px; flex-wrap: wrap; }
+h1 { font: 800 clamp(26px, 4.4vw, 40px)/1.25 var(--display); margin-top: 14px; }
+.question { margin: 16px 0 0; color: var(--muted); font-size: 15px; border-left: 2px solid var(--rule); padding-left: 14px; }
+h2 { font: 600 22px/1.3 var(--display); display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+h2 small { font: 400 13px var(--body); color: var(--muted); }
+section { display: grid; gap: 18px; min-width: 0; }
+.lead { margin: 0; max-width: 70ch; }
+.rid { display: inline-block; padding: 3px 5px; margin: 2px 2px 0 0; border-radius: 3px; background: var(--accent-soft); color: var(--accent); text-decoration: none; vertical-align: 1px; }
+.rid:hover, .rid:focus-visible { outline: 1px solid var(--accent); }
+/* 한 줄 답 */
+.answer { font: 600 clamp(20px, 2.8vw, 26px)/1.55 var(--display); margin: 0; }
+.answer-box { display: grid; gap: 20px; }
+.arows { margin: 0; border-top: 1px solid var(--ink); }
+.arow { display: grid; grid-template-columns: 170px 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+.arow dt { font-weight: 600; }
+.arow dd { margin: 0; min-width: 0; }
+/* 서술형 해석 */
+.narrative { display: grid; gap: 14px; max-width: 70ch; }
+.narrative p { margin: 0; }
+/* 표 */
+.tablewrap { overflow-x: auto; border-top: 1px solid var(--ink); }
+table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 14px; }
+th { text-align: left; font: 500 11px var(--mono); letter-spacing: .05em; color: var(--muted); padding: 10px 8px; border-bottom: 1px solid var(--rule); }
+td { padding: 12px 8px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+td small { display: block; color: var(--muted); font-size: 12px; margin-top: 3px; }
+.num { font: 500 15px var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; }
+.muted { color: var(--muted); }
+.ind { font: 500 12px var(--mono); width: 150px; }
+.ind small { font-family: var(--body); }
+.tgt { font-weight: 600; width: 150px; }
+.asof { font: 400 13px var(--mono); white-space: nowrap; }
+.idc code { color: var(--muted); }
+.src { font-size: 12px; color: var(--muted); margin-top: 6px; }
+.src a { color: var(--muted); }
+.grade { font: 500 10px var(--mono); margin-left: 4px; padding: 1px 4px; border: 1px solid currentColor; border-radius: 2px; }
+.gC { color: var(--amber); }
+.warn, .wk { font: 500 11px var(--mono); color: var(--amber); background: var(--amber-soft); padding: 2px 6px; border-radius: 2px; white-space: nowrap; }
+.dir { font: 500 11px var(--mono); padding: 2px 7px; border-radius: 2px; color: var(--panel); white-space: nowrap; }
+.dir.up { background: var(--up); } .dir.down { background: var(--down); } .dir.flat { background: var(--flat); }
+.fstat { font: 500 11px var(--mono); border: 1px solid var(--accent); color: var(--accent); padding: 2px 6px; border-radius: 2px; white-space: nowrap; }
+/* 사건 */
+.timeline { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
+.timeline li { display: grid; grid-template-columns: 110px 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+.timeline time { font: 500 13px var(--mono); color: var(--muted); padding-top: 2px; }
+.timeline li > div { min-width: 0; }
+/* 시나리오 */
+.scens { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.scen { border-top: 3px solid var(--sc); background: var(--panel); padding: 18px 18px 14px; display: grid; gap: 14px; align-content: start; }
+.scen.opt { --sc: var(--opt); --scs: var(--opt-soft); }
+.scen.pes { --sc: var(--pes); --scs: var(--pes-soft); }
+.scen header { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.sk { font: 600 13px var(--mono); color: var(--sc); letter-spacing: .03em; }
+.scen header code { color: var(--muted); }
+.sstmt { margin: 0; font-size: 15px; }
+.ms { list-style: none; margin: 0; padding: 0 0 0 12px; border-left: 2px solid var(--scs); display: grid; gap: 8px; }
+.ms li { display: grid; grid-template-columns: 70px 1fr; gap: 10px; font-size: 14px; }
+.ms time { font: 500 12px var(--mono); color: var(--sc); padding-top: 2px; }
+.sdl { margin: 0; display: grid; gap: 6px; font-size: 13px; }
+.sdl div { display: grid; grid-template-columns: 70px 1fr; gap: 10px; }
+.sdl dt { color: var(--muted); }
+.sdl dd { margin: 0; min-width: 0; }
+.side { font: 500 11px var(--mono); padding: 2px 7px; border-radius: 2px; white-space: nowrap; margin-right: 4px; }
+.side.opt { color: var(--opt); background: var(--opt-soft); }
+.side.pes { color: var(--pes); background: var(--pes-soft); }
+.subhead { font: 600 15px var(--body); margin: 8px 0 0; }
+/* 사다리 */
+.ladder { border-top: 1px solid var(--ink); }
+.rung { display: grid; grid-template-columns: 150px 170px 170px 1fr; gap: 16px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+.rung[data-frontier="y"] { background: linear-gradient(90deg, var(--amber-soft), transparent 70%); }
+.stage b { display: block; font: 600 18px/1.2 var(--display); }
+.stage span { font: 400 12px var(--mono); color: var(--muted); }
+.region { display: block; font: 500 11px var(--mono); color: var(--muted); letter-spacing: .04em; margin-bottom: 4px; }
+.pips { display: flex; align-items: center; gap: 4px; }
+.pip { width: 16px; height: 8px; border: 1px solid var(--accent); border-radius: 1px; }
+.pip.on { background: var(--accent); }
+.lv { margin-left: 8px; font-size: 14px; font-weight: 500; }
+.why { margin: 0; font-size: 14px; color: var(--muted); min-width: 0; }
+.frontier-note { font-size: 13px; color: var(--amber); font-family: var(--mono); margin: 0; }
+footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 18px; display: grid; gap: 6px; }
+:target { background: var(--accent-soft); }
+@media (max-width: 760px) {
+  .rung { grid-template-columns: 1fr 1fr; }
+  .rung .stage, .rung .why { grid-column: 1 / -1; }
+  .scens { grid-template-columns: 1fr; }
+  .arow, .timeline li { grid-template-columns: 1fr; gap: 4px; }
+}
+
+/* 주도권 지도 (Q2) */
+.own { font: 500 12px var(--mono); padding: 3px 8px; border-radius: 2px; white-space: nowrap; display: inline-block; }
+.own.brand { color: var(--up); background: var(--opt-soft); }
+.own.platform { color: var(--accent); background: var(--accent-soft); }
+.own.agent { color: var(--amber); background: var(--amber-soft); }
+.own.contest { color: var(--flat); border: 1px dashed var(--flat); }
+.mapgrid .rung { grid-template-columns: 130px 150px 150px 150px 1fr; }
+@media (max-width: 760px) { .mapgrid .rung { grid-template-columns: 1fr 1fr; } }
+/* 자율 수준 지도 (Q4) */
+.mapgrid.auto .rung { grid-template-columns: 130px 220px 220px 1fr; }
+table.levels { min-width: 520px; }
+@media (max-width: 760px) { .mapgrid.auto .rung { grid-template-columns: 1fr; } }
+/* 역량 원장 (I1) */
+.mapgrid.ledger .rung { grid-template-columns: 200px 260px 1fr; }
+@media (max-width: 760px) { .mapgrid.ledger .rung { grid-template-columns: 1fr; } }
+</style>
+<style>
+.sitebar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper); border-bottom: 1px solid var(--rule);
+  margin: 0 -20px; padding: 10px 20px; display: flex; gap: 14px; align-items: center; flex-wrap: wrap; font: 500 13px/1.4 var(--mono); }
+.sitebar a { color: var(--ink); text-decoration: none; }
+.sitebar a:hover, .sitebar a:focus-visible { text-decoration: underline; }
+.sitebar .crumb { color: var(--muted); }
+.sitebar .rounds { margin-left: auto; display: flex; gap: 8px; }
+.sitebar .rounds a[aria-current="page"] { color: var(--accent); }
+</style></head><body><nav class="sitebar" aria-label="사이트"><a href="../../index.html">AXblog</a><span class="crumb">/ AI Industry Trend / I1</span><span class="rounds"><a href="r1.html" aria-current=page>R1</a></span></nav><main>
+  <header class="narrow">
+    <div class="eyebrow"><span>AI Industry Trend</span><span>I1 · AI Technology &amp; Research</span><span>R1 기준 회차 · 2026-10-09</span></div>
+    <h1>AI 기술의 한계선은 어디까지 밀려났나</h1>
+    <p class="question">고정 질문 v1.0 — AI가 새롭게 할 수 있게 된 일은 무엇이고, 기술의 한계선은 어느 축에서 얼마나 밀려났는가?</p>
+  </header>
+  <section class="answer-box"><h2>한 줄 답</h2>
+    <p class="answer narrow">2026년 10월 현재 AI는 사람이 반나절에서 하루 걸리는 소프트웨어 작업을 절반의 확률로 해내고(METR 기준 12~16시간 이상), 이 능력은 몇 시간짜리 업무를 끝까지 수행하는 에이전트로 이미 제품이 됐다. 한계선은 ‘처음 보는 환경에서 스스로 규칙을 배우는 추론’(ARC-AGI-3 최고 30%)과 월드 모델·AI 과학 발견으로 옮겨갔고, 이 영역은 아직 시연 단계다. <a class="rid" href="#I1-I-001" title="AI에게 맡길 수 있는 일의 길이가 반나절을 넘어 하루에 다가섰고, 그 능력이 바로 시간 단위 업무 에이전트로 제품화됐다. 작업 길이는 4개월 남짓마다 두 배가 되고 있다.">I1-I-001</a><a class="rid" href="#I1-I-002" title="정형화된 추론 퍼즐은 포화됐고, 한계선은 &#x27;처음 보는 환경에서 스스로 규칙을 배우는 능력&#x27;으로 옮겨갔다. 이 축의 최고 점수는 아직 30%다.">I1-I-002</a><a class="rid" href="#I1-I-005" title="월드 모델과 AI 과학 발견은 모두 시연 단계다. Genie는 1분짜리 체험으로 제한돼 있고, 에르되시 문제 결과는 독립 검증을 기다린다.">I1-I-005</a></p><dl class="arows"><div class="arow"><dt>새로 할 수 있게 된 일</dt><dd>몇 시간짜리 일을 끝까지 맡기기. METR 작업 길이 최고치는 16시간 이상이고, OpenAI는 7월 시간 단위 프로젝트 에이전트 ChatGPT Work를 내놓았다. <a class="rid" href="#I1-M-001" title="METR 기준 AI가 50% 확률로 해내는 소프트웨어 작업 길이는 Claude Opus 4.6이 약 12시간(11시간 59분), 4월 Claude Mythos Preview는 최소 16시간으로 측정됐다. 16시간 이상은 현재 과제 세트로는 신뢰하기 어렵다.">I1-M-001</a><a class="rid" href="#I1-E-004" title="OpenAI가 GPT-5.6과 함께 앱·파일을 넘나들며 몇 시간짜리 프로젝트를 끝까지 수행하는 ChatGPT Work를 출시했다.">I1-E-004</a></dd></div><div class="arow"><dt>포화된 영역</dt><dd>정형 추론 퍼즐(ARC-AGI-2 90.4%)과 100만 토큰 문맥은 프런티어 모델의 기본이 됐다. <a class="rid" href="#I1-M-004" title="같은 모델이 ARC-AGI-2에서는 90.4%, ARC-AGI-1에서는 97.5%를 기록했다. 정형 추론 퍼즐은 사실상 포화됐다.">I1-M-004</a><a class="rid" href="#I1-M-007" title="100만 토큰 입력은 프런티어 모델의 표준이 됐다. Claude Opus 5·Fable 5, GPT-5.6, Gemini 3.6 Flash, 오픈 웨이트 Kimi K3가 모두 100만 토큰 안팎을 지원한다.">I1-M-007</a></dd></div><div class="arow"><dt>새 한계선</dt><dd>처음 보는 상호작용 환경에서의 추론(ARC-AGI-3 30.2%), 1분으로 제한된 월드 모델, 검증을 기다리는 AI 수학 증명. <a class="rid" href="#I1-M-003" title="처음 보는 상호작용 환경에서 규칙을 스스로 익혀야 하는 ARC-AGI-3의 최고 점수는 Claude Opus 5의 30.2%다(2026년 7월 기준).">I1-M-003</a><a class="rid" href="#I1-E-001" title="Google이 월드 모델 Genie 3 기반의 Project Genie를 미국 AI Ultra 구독자에게 열었다. 글이나 그림으로 세계를 만들고 실시간으로 돌아다닐 수 있지만, 한 번에 60초까지다.">I1-E-001</a><a class="rid" href="#I1-E-007" title="OpenAI가 미공개 내부 모델(Astra)로 에르되시 문제 3개에서 진전을 냈고 증명을 Lean으로 형식화했다고 발표했다. 독립 전문가 검증은 아직이다.">I1-E-007</a></dd></div><div class="arow"><dt>경쟁 구도</dt><dd>오픈 웨이트가 2.8조 파라미터(Kimi K3)로 바짝 추격하고, 9월 신모델은 성능만큼 가격 인하(Opus 5.5 −40%, GPT-6 Sol 반값)를 내세웠다. <a class="rid" href="#I1-M-008" title="중국 Moonshot이 2.8조 파라미터(활성 1,040억), 100만 토큰 문맥의 Kimi K3를 오픈 웨이트로 공개했다. 프런트엔드 코딩 블라인드 평가에서 미국 선두 모델보다 높게 평가됐다는 보도가 나왔다.">I1-M-008</a><a class="rid" href="#I1-E-009" title="Anthropic이 Claude Opus 5.5를, OpenAI가 GPT-6 Sol·Luna를 9월에 내놓았다. Opus 5.5는 Fable급 성능을 Opus 5보다 40% 낮은 비용에, GPT-6 Sol은 GPT-5.6의 절반 가격에 제공한다는 설명이다.">I1-E-009</a></dd></div><div class="arow"><dt>한국</dt><dd>정부 프로젝트 평가에서 국가별 3위권(AAII 40점 이상 구간). LG K-엑사원 2.0(7,500억 파라미터)은 SKT·업스테이지와 함께 3차 단계로 올라갔다. <a class="rid" href="#I1-M-010" title="정부 독자 AI 파운데이션 모델 2차 평가에서 4개 팀 모두 Artificial Analysis 지능 지수 31점 이상이었고, 40점 이상 최상위 구간에 미국·중국과 함께 한국 모델이 들어가 국가별 3위로 평가됐다. LG의 K-엑사원 2.0은 7,500억 파라미터다.">I1-M-010</a><a class="rid" href="#I1-E-008" title="과기정통부가 독자 AI 파운데이션 모델 2차 평가 결과 LG AI연구원·SK텔레콤·업스테이지를 3차로 올렸다. 최종 2개 팀은 내년 초에 정한다.">I1-E-008</a></dd></div></dl></section>
+  <section><h2>해석</h2><div class="narrative"><p>올해 가장 크게 움직인 축은 ‘얼마나 긴 일을 맡길 수 있나’다. METR 측정에서 Claude Opus 4.6은 사람 기준 약 12시간 걸리는 소프트웨어 작업을 절반의 확률로 해냈고, 4월 Mythos Preview는 최소 16시간으로 측정됐다. 이 길이는 2023년 이후 약 131일마다 두 배가 되고 있다. 제품도 같은 방향이다. OpenAI는 7월 GPT-5.6과 함께, 앱과 파일을 넘나들며 몇 시간짜리 프로젝트를 수행하는 ChatGPT Work를 내놓았다. <a class="rid" href="#I1-M-001" title="METR 기준 AI가 50% 확률로 해내는 소프트웨어 작업 길이는 Claude Opus 4.6이 약 12시간(11시간 59분), 4월 Claude Mythos Preview는 최소 16시간으로 측정됐다. 16시간 이상은 현재 과제 세트로는 신뢰하기 어렵다.">I1-M-001</a><a class="rid" href="#I1-M-002" title="METR는 AI가 해내는 작업 길이가 2023년 이후 약 131일(4.3개월)마다 두 배로 늘었다고 추정했다. 2025년 3월 추정치(약 7개월)보다 빨라졌다.">I1-M-002</a><a class="rid" href="#I1-E-004" title="OpenAI가 GPT-5.6과 함께 앱·파일을 넘나들며 몇 시간짜리 프로젝트를 끝까지 수행하는 ChatGPT Work를 출시했다.">I1-E-004</a><a class="rid" href="#I1-I-001" title="AI에게 맡길 수 있는 일의 길이가 반나절을 넘어 하루에 다가섰고, 그 능력이 바로 시간 단위 업무 에이전트로 제품화됐다. 작업 길이는 4개월 남짓마다 두 배가 되고 있다.">I1-I-001</a></p><p>추론의 한계선은 다른 곳으로 옮겨갔다. Claude Opus 5는 정형 추론 퍼즐인 ARC-AGI-2에서 90.4%를 기록해 이 영역을 사실상 포화시켰다. 반면 처음 보는 상호작용 환경에서 규칙을 스스로 익혀야 하는 ARC-AGI-3에서는 최고 점수가 30.2%다. 지금의 한계선은 ‘아는 문제를 푸는 능력’이 아니라 ‘새 환경에 적응하는 능력’에 있다. <a class="rid" href="#I1-M-004" title="같은 모델이 ARC-AGI-2에서는 90.4%, ARC-AGI-1에서는 97.5%를 기록했다. 정형 추론 퍼즐은 사실상 포화됐다.">I1-M-004</a><a class="rid" href="#I1-M-003" title="처음 보는 상호작용 환경에서 규칙을 스스로 익혀야 하는 ARC-AGI-3의 최고 점수는 Claude Opus 5의 30.2%다(2026년 7월 기준).">I1-M-003</a><a class="rid" href="#I1-E-006" title="Anthropic이 Claude Opus 5를 출시했고, ARC Prize가 ARC-AGI-3 최고 기록(30.2%)으로 검증했다.">I1-E-006</a><a class="rid" href="#I1-I-002" title="정형화된 추론 퍼즐은 포화됐고, 한계선은 &#x27;처음 보는 환경에서 스스로 규칙을 배우는 능력&#x27;으로 옮겨갔다. 이 축의 최고 점수는 아직 30%다.">I1-I-002</a></p><p>측정 도구가 모델을 따라가지 못하고 있다. METR는 16시간 이상은 현재 과제로 신뢰하기 어렵다고 밝혔고, 코딩 지수에서는 과적합 논란이 나왔다. 같은 코딩 평가에서도 지표에 따라 1위가 바뀐다(SWE-Bench Pro에서는 Fable 5 80%, GPT-5.6 Sol 64.6%). 단일 벤치마크 순위로 기술 수준을 판정하기 어려워졌다. <a class="rid" href="#I1-M-001" title="METR 기준 AI가 50% 확률로 해내는 소프트웨어 작업 길이는 Claude Opus 4.6이 약 12시간(11시간 59분), 4월 Claude Mythos Preview는 최소 16시간으로 측정됐다. 16시간 이상은 현재 과제 세트로는 신뢰하기 어렵다.">I1-M-001</a><a class="rid" href="#I1-M-006" title="실무형 코딩 평가 SWE-Bench Pro에서 Claude Fable 5는 80%, GPT-5.6 Sol은 64.6%를 기록했다. 다른 코딩 지수에서는 GPT-5.6이 앞섰지만 METR가 벤치마크 과적합 가능성을 지적했다.">I1-M-006</a><a class="rid" href="#I1-I-003" title="모델이 측정 도구보다 빨리 좋아지고 있다. METR는 16시간 이상을 신뢰하기 어렵다고 했고, 코딩 지수는 과적합 논란이 생겼다. 단일 벤치마크 순위로 기술 수준을 판정하기 어려워졌다.">I1-I-003</a></p><p>성능 우위는 짧아지고 있다. 중국 Moonshot은 2.8조 파라미터의 Kimi K3를 가중치까지 공개했고, 100만 토큰 문맥은 모든 프런티어 모델의 기본이 됐다. 9월 Anthropic과 OpenAI의 신모델은 성능과 함께 가격 인하를 앞세웠다. 반면 Google은 Gemini 3 Pro 이후 1년 가까이 Pro급 신모델이 없고, Gemini 4를 준비 중이다. <a class="rid" href="#I1-M-008" title="중국 Moonshot이 2.8조 파라미터(활성 1,040억), 100만 토큰 문맥의 Kimi K3를 오픈 웨이트로 공개했다. 프런트엔드 코딩 블라인드 평가에서 미국 선두 모델보다 높게 평가됐다는 보도가 나왔다.">I1-M-008</a><a class="rid" href="#I1-M-007" title="100만 토큰 입력은 프런티어 모델의 표준이 됐다. Claude Opus 5·Fable 5, GPT-5.6, Gemini 3.6 Flash, 오픈 웨이트 Kimi K3가 모두 100만 토큰 안팎을 지원한다.">I1-M-007</a><a class="rid" href="#I1-E-009" title="Anthropic이 Claude Opus 5.5를, OpenAI가 GPT-6 Sol·Luna를 9월에 내놓았다. Opus 5.5는 Fable급 성능을 Opus 5보다 40% 낮은 비용에, GPT-6 Sol은 GPT-5.6의 절반 가격에 제공한다는 설명이다.">I1-E-009</a><a class="rid" href="#I1-E-010" title="Google DeepMind가 Gemini 4를 사후 학습 초기 단계에 두고 연내보다 훨씬 이른 출시를 예고했다. Gemini 3 Pro 이후 Pro급 신모델은 1년 가까이 나오지 않았다.">I1-E-010</a><a class="rid" href="#I1-I-004" title="오픈 웨이트 모델이 조 단위 규모와 100만 토큰 문맥으로 프런티어에 바짝 붙었다. 성능 우위의 지속 기간이 짧아지고, 경쟁의 축이 가격과 배포 방식으로 옮겨가고 있다.">I1-I-004</a></p><p>월드 모델과 AI 과학은 시연 단계다. Google의 Project Genie는 실시간으로 걸어 다닐 수 있는 세계를 만들지만 한 번에 60초까지이고, OpenAI가 발표한 에르되시 문제 3건의 진전은 독립 검증을 기다린다. 하드웨어에서는 차세대 가속기용 HBM4(대역폭 2.8TB/s 이상)가 양산에 들어갔다. 한국은 정부 프로젝트 평가에서 국가별 3위권으로 평가됐다. <a class="rid" href="#I1-E-001" title="Google이 월드 모델 Genie 3 기반의 Project Genie를 미국 AI Ultra 구독자에게 열었다. 글이나 그림으로 세계를 만들고 실시간으로 돌아다닐 수 있지만, 한 번에 60초까지다.">I1-E-001</a><a class="rid" href="#I1-E-007" title="OpenAI가 미공개 내부 모델(Astra)로 에르되시 문제 3개에서 진전을 냈고 증명을 Lean으로 형식화했다고 발표했다. 독립 전문가 검증은 아직이다.">I1-E-007</a><a class="rid" href="#I1-M-009" title="Micron이 NVIDIA Vera Rubin용 HBM4(36GB 12단)를 대량 생산해 1분기부터 출하했다. 대역폭은 2.8TB/s 이상으로 HBM3E의 2.3배다.">I1-M-009</a><a class="rid" href="#I1-M-010" title="정부 독자 AI 파운데이션 모델 2차 평가에서 4개 팀 모두 Artificial Analysis 지능 지수 31점 이상이었고, 40점 이상 최상위 구간에 미국·중국과 함께 한국 모델이 들어가 국가별 3위로 평가됐다. LG의 K-엑사원 2.0은 7,500억 파라미터다.">I1-M-010</a><a class="rid" href="#I1-I-005" title="월드 모델과 AI 과학 발견은 모두 시연 단계다. Genie는 1분짜리 체험으로 제한돼 있고, 에르되시 문제 결과는 독립 검증을 기다린다.">I1-I-005</a><a class="rid" href="#I1-I-006" title="한국은 국가별 3위권에 들었지만, 대표 모델들은 정부 프로젝트 평가 단계에 있고 글로벌 프런티어와의 격차는 남아 있다.">I1-I-006</a><a class="rid" href="#I1-I-007" title="차세대 가속기용 HBM4가 양산에 들어가 다음 세대 학습·추론 시스템의 공급이 시작됐다.">I1-I-007</a></p></div>
+    <div class="tablewrap"><table><thead><tr><th>방향</th><th>대상</th><th>해석</th><th>근거</th><th>기록</th></tr></thead><tbody><tr id="I1-I-001"><td><span class="dir up">강화</span></td>
+  <td class="tgt">Agent·장시간 작업</td><td>AI에게 맡길 수 있는 일의 길이가 반나절을 넘어 하루에 다가섰고, 그 능력이 바로 시간 단위 업무 에이전트로 제품화됐다. 작업 길이는 4개월 남짓마다 두 배가 되고 있다.</td><td><a class="rid" href="#I1-M-001" title="METR 기준 AI가 50% 확률로 해내는 소프트웨어 작업 길이는 Claude Opus 4.6이 약 12시간(11시간 59분), 4월 Claude Mythos Preview는 최소 16시간으로 측정됐다. 16시간 이상은 현재 과제 세트로는 신뢰하기 어렵다.">I1-M-001</a><a class="rid" href="#I1-M-002" title="METR는 AI가 해내는 작업 길이가 2023년 이후 약 131일(4.3개월)마다 두 배로 늘었다고 추정했다. 2025년 3월 추정치(약 7개월)보다 빨라졌다.">I1-M-002</a><a class="rid" href="#I1-E-004" title="OpenAI가 GPT-5.6과 함께 앱·파일을 넘나들며 몇 시간짜리 프로젝트를 끝까지 수행하는 ChatGPT Work를 출시했다.">I1-E-004</a></td><td class="idc"><code>I1-I-001</code></td></tr><tr id="I1-I-002"><td><span class="dir up">강화</span></td>
+  <td class="tgt">Reasoning</td><td>정형화된 추론 퍼즐은 포화됐고, 한계선은 &#x27;처음 보는 환경에서 스스로 규칙을 배우는 능력&#x27;으로 옮겨갔다. 이 축의 최고 점수는 아직 30%다.</td><td><a class="rid" href="#I1-M-003" title="처음 보는 상호작용 환경에서 규칙을 스스로 익혀야 하는 ARC-AGI-3의 최고 점수는 Claude Opus 5의 30.2%다(2026년 7월 기준).">I1-M-003</a><a class="rid" href="#I1-M-004" title="같은 모델이 ARC-AGI-2에서는 90.4%, ARC-AGI-1에서는 97.5%를 기록했다. 정형 추론 퍼즐은 사실상 포화됐다.">I1-M-004</a><a class="rid" href="#I1-E-006" title="Anthropic이 Claude Opus 5를 출시했고, ARC Prize가 ARC-AGI-3 최고 기록(30.2%)으로 검증했다.">I1-E-006</a></td><td class="idc"><code>I1-I-002</code></td></tr><tr id="I1-I-003"><td><span class="dir down">약화</span></td>
+  <td class="tgt">측정의 신뢰성</td><td>모델이 측정 도구보다 빨리 좋아지고 있다. METR는 16시간 이상을 신뢰하기 어렵다고 했고, 코딩 지수는 과적합 논란이 생겼다. 단일 벤치마크 순위로 기술 수준을 판정하기 어려워졌다.</td><td><a class="rid" href="#I1-M-001" title="METR 기준 AI가 50% 확률로 해내는 소프트웨어 작업 길이는 Claude Opus 4.6이 약 12시간(11시간 59분), 4월 Claude Mythos Preview는 최소 16시간으로 측정됐다. 16시간 이상은 현재 과제 세트로는 신뢰하기 어렵다.">I1-M-001</a><a class="rid" href="#I1-M-006" title="실무형 코딩 평가 SWE-Bench Pro에서 Claude Fable 5는 80%, GPT-5.6 Sol은 64.6%를 기록했다. 다른 코딩 지수에서는 GPT-5.6이 앞섰지만 METR가 벤치마크 과적합 가능성을 지적했다.">I1-M-006</a></td><td class="idc"><code>I1-I-003</code></td></tr><tr id="I1-I-004"><td><span class="dir up">강화</span></td>
+  <td class="tgt">오픈 웨이트 추격</td><td>오픈 웨이트 모델이 조 단위 규모와 100만 토큰 문맥으로 프런티어에 바짝 붙었다. 성능 우위의 지속 기간이 짧아지고, 경쟁의 축이 가격과 배포 방식으로 옮겨가고 있다.</td><td><a class="rid" href="#I1-M-008" title="중국 Moonshot이 2.8조 파라미터(활성 1,040억), 100만 토큰 문맥의 Kimi K3를 오픈 웨이트로 공개했다. 프런트엔드 코딩 블라인드 평가에서 미국 선두 모델보다 높게 평가됐다는 보도가 나왔다.">I1-M-008</a><a class="rid" href="#I1-E-005" title="Moonshot이 Kimi K3를 API로 먼저 내놓고 열흘 뒤 가중치를 공개했다.">I1-E-005</a><a class="rid" href="#I1-M-007" title="100만 토큰 입력은 프런티어 모델의 표준이 됐다. Claude Opus 5·Fable 5, GPT-5.6, Gemini 3.6 Flash, 오픈 웨이트 Kimi K3가 모두 100만 토큰 안팎을 지원한다.">I1-M-007</a><a class="rid" href="#I1-E-009" title="Anthropic이 Claude Opus 5.5를, OpenAI가 GPT-6 Sol·Luna를 9월에 내놓았다. Opus 5.5는 Fable급 성능을 Opus 5보다 40% 낮은 비용에, GPT-6 Sol은 GPT-5.6의 절반 가격에 제공한다는 설명이다.">I1-E-009</a></td><td class="idc"><code>I1-I-004</code></td></tr><tr id="I1-I-005"><td><span class="dir flat">중립</span></td>
+  <td class="tgt">World Model·AI for Science</td><td>월드 모델과 AI 과학 발견은 모두 시연 단계다. Genie는 1분짜리 체험으로 제한돼 있고, 에르되시 문제 결과는 독립 검증을 기다린다.</td><td><a class="rid" href="#I1-E-001" title="Google이 월드 모델 Genie 3 기반의 Project Genie를 미국 AI Ultra 구독자에게 열었다. 글이나 그림으로 세계를 만들고 실시간으로 돌아다닐 수 있지만, 한 번에 60초까지다.">I1-E-001</a><a class="rid" href="#I1-E-007" title="OpenAI가 미공개 내부 모델(Astra)로 에르되시 문제 3개에서 진전을 냈고 증명을 Lean으로 형식화했다고 발표했다. 독립 전문가 검증은 아직이다.">I1-E-007</a></td><td class="idc"><code>I1-I-005</code></td></tr><tr id="I1-I-006"><td><span class="dir flat">중립</span></td>
+  <td class="tgt">한국 모델</td><td>한국은 국가별 3위권에 들었지만, 대표 모델들은 정부 프로젝트 평가 단계에 있고 글로벌 프런티어와의 격차는 남아 있다.</td><td><a class="rid" href="#I1-M-010" title="정부 독자 AI 파운데이션 모델 2차 평가에서 4개 팀 모두 Artificial Analysis 지능 지수 31점 이상이었고, 40점 이상 최상위 구간에 미국·중국과 함께 한국 모델이 들어가 국가별 3위로 평가됐다. LG의 K-엑사원 2.0은 7,500억 파라미터다.">I1-M-010</a><a class="rid" href="#I1-E-008" title="과기정통부가 독자 AI 파운데이션 모델 2차 평가 결과 LG AI연구원·SK텔레콤·업스테이지를 3차로 올렸다. 최종 2개 팀은 내년 초에 정한다.">I1-E-008</a></td><td class="idc"><code>I1-I-006</code></td></tr><tr id="I1-I-007"><td><span class="dir up">강화</span></td>
+  <td class="tgt">Compute</td><td>차세대 가속기용 HBM4가 양산에 들어가 다음 세대 학습·추론 시스템의 공급이 시작됐다.</td><td><a class="rid" href="#I1-M-009" title="Micron이 NVIDIA Vera Rubin용 HBM4(36GB 12단)를 대량 생산해 1분기부터 출하했다. 대역폭은 2.8TB/s 이상으로 HBM3E의 2.3배다.">I1-M-009</a><a class="rid" href="#I1-E-002" title="Micron이 GTC 2026에서 NVIDIA Vera Rubin용 HBM4 대량 생산을 발표했다.">I1-E-002</a></td><td class="idc"><code>I1-I-007</code></td></tr></tbody></table></div></section>
+  <section><h2>주요 사건 <small>최신순 · 원문 확인된 것만</small></h2><p class="lead">6월부터 9월까지 석 달 사이에 Anthropic(Fable 5·Opus 5·Opus 5.5)과 OpenAI(GPT-5.6·GPT-6)가 각각 두세 번씩 프런티어 모델을 바꿨다. 그 사이 오픈 웨이트(Kimi K3)가 추격했고, 프런티어 모델이 수출 통제 대상이 되는 첫 사례가 나왔다.</p><ul class="timeline"><li id="I1-E-010"><time>2026-09-25</time><div><b>Google DeepMind</b> Google DeepMind가 Gemini 4를 사후 학습 초기 단계에 두고 연내보다 훨씬 이른 출시를 예고했다. Gemini 3 Pro 이후 Pro급 신모델은 1년 가까이 나오지 않았다.
+  <div class="src"><a href="https://www.infoworld.com/article/4226642/google-plans-gemini-4-release-before-year-end-2.html" target="_blank" rel="noopener">InfoWorld</a><span class="grade gB">B</span> <code>I1-E-010</code></div></div></li><li id="I1-E-009"><time>2026-09</time><div><b>Anthropic·OpenAI</b> Anthropic이 Claude Opus 5.5를, OpenAI가 GPT-6 Sol·Luna를 9월에 내놓았다. Opus 5.5는 Fable급 성능을 Opus 5보다 40% 낮은 비용에, GPT-6 Sol은 GPT-5.6의 절반 가격에 제공한다는 설명이다.
+  <div class="src"><a href="https://af.net/realtime/september-2026-ai-releases-claude-opus-5-5-gpt-6-sol-and-more/" target="_blank" rel="noopener">ThursdAI (2026년 9월 출시 정리)</a><span class="grade gB">B</span> <code>I1-E-009</code></div></div></li><li id="I1-E-008"><time>2026-08-18</time><div><b>과학기술정보통신부</b> 과기정통부가 독자 AI 파운데이션 모델 2차 평가 결과 LG AI연구원·SK텔레콤·업스테이지를 3차로 올렸다. 최종 2개 팀은 내년 초에 정한다.
+  <div class="src"><a href="https://www.smarttoday.co.kr/ko-kr/articles/110572" target="_blank" rel="noopener">스마트투데이 (과기정통부 발표)</a><span class="grade gB">B</span> <code>I1-E-008</code></div></div></li><li id="I1-E-007"><time>2026-08-01</time><div><b>OpenAI</b> OpenAI가 미공개 내부 모델(Astra)로 에르되시 문제 3개에서 진전을 냈고 증명을 Lean으로 형식화했다고 발표했다. 독립 전문가 검증은 아직이다.
+  <div class="src"><a href="https://letsdatascience.com/news/ai-advances-on-longstanding-erdos-problems-cd73fc86" target="_blank" rel="noopener">Let&#x27;s Data Science (OpenAI 발표 인용)</a><span class="grade gB">B</span> <code>I1-E-007</code></div></div></li><li id="I1-E-006"><time>2026-07-24</time><div><b>Anthropic</b> Anthropic이 Claude Opus 5를 출시했고, ARC Prize가 ARC-AGI-3 최고 기록(30.2%)으로 검증했다.
+  <div class="src"><a href="https://arcprize.org/results/anthropic-claude-opus-5" target="_blank" rel="noopener">ARC Prize (검증 결과)</a><span class="grade gA">A</span> · <a href="https://www.analyticsvidhya.com/?p=256745" target="_blank" rel="noopener">Analytics Vidhya (2026년 7월 모델 출시 일지)</a><span class="grade gB">B</span> <code>I1-E-006</code></div></div></li><li id="I1-E-005"><time>2026-07-16</time><div><b>Moonshot</b> Moonshot이 Kimi K3를 API로 먼저 내놓고 열흘 뒤 가중치를 공개했다.
+  <div class="src"><a href="https://www.analyticsvidhya.com/?p=256745" target="_blank" rel="noopener">Analytics Vidhya (2026년 7월 모델 출시 일지)</a><span class="grade gB">B</span> <code>I1-E-005</code></div></div></li><li id="I1-E-004"><time>2026-07-09</time><div><b>OpenAI</b> OpenAI가 GPT-5.6과 함께 앱·파일을 넘나들며 몇 시간짜리 프로젝트를 끝까지 수행하는 ChatGPT Work를 출시했다.
+  <div class="src"><a href="https://openai.com/index/chatgpt-for-your-most-ambitious-work/" target="_blank" rel="noopener">OpenAI 공식 발표</a><span class="grade gA">A</span> <code>I1-E-004</code></div></div></li><li id="I1-E-003"><time>2026-06-09</time><div><b>Anthropic</b> Anthropic이 Claude Fable 5를 출시했지만, 사흘 뒤 미국 정부의 수출 통제 지시로 Fable 5와 Mythos 5 접근을 전면 중단했다(7월 1일 복구).
+  <div class="src"><a href="https://www.anthropic.com/news/fable-mythos-access" target="_blank" rel="noopener">Anthropic 공식 발표</a><span class="grade gA">A</span> · <a href="https://www.analyticsvidhya.com/?p=256745" target="_blank" rel="noopener">Analytics Vidhya (2026년 7월 모델 출시 일지)</a><span class="grade gB">B</span> <code>I1-E-003</code></div></div></li><li id="I1-E-002"><time>2026-03-17</time><div><b>Micron·NVIDIA</b> Micron이 GTC 2026에서 NVIDIA Vera Rubin용 HBM4 대량 생산을 발표했다.
+  <div class="src"><a href="https://www.storagenewsletter.com/2026/03/17/nvidia-gtc-2026-micron-in-high-volume-production-of-hbm4-designed-for-nvidia-vera-rubin-pcie-gen6-ssd-and-socamm2/" target="_blank" rel="noopener">StorageNewsletter (Micron 보도자료)</a><span class="grade gB">B</span> <code>I1-E-002</code></div></div></li><li id="I1-E-001"><time>2026-01-29</time><div><b>Google DeepMind</b> Google이 월드 모델 Genie 3 기반의 Project Genie를 미국 AI Ultra 구독자에게 열었다. 글이나 그림으로 세계를 만들고 실시간으로 돌아다닐 수 있지만, 한 번에 60초까지다.
+  <div class="src"><a href="https://blog.google/innovation-and-ai/models-and-research/google-deepmind/project-genie/" target="_blank" rel="noopener">Google 공식 블로그</a><span class="grade gA">A</span> <code>I1-E-001</code></div></div></li></ul></section>
+  <section><h2>전망 <small>2027년 말까지, 기술의 한계선은 어디까지 밀려날까</small></h2><p class="lead">2027년 말을 기준으로 두 시나리오를 세웠다. 갈림길은 작업 길이의 배가 추세가 이어지는지, 그리고 새 한계선(새 환경 추론, 월드 모델, AI 과학)이 시연을 넘어 제품과 검증된 성과로 들어서는지다.</p>
+    <div class="scens"><article class="scen opt" id="I1-F-101"><header><span class="sk">낙관 · Optimistic</span><code>I1-F-101</code></header>
+  <p class="sstmt">2027년 말까지 AI가 맡을 수 있는 일의 길이가 하루를 넘어 며칠 단위로 늘고, 처음 보는 환경에서의 추론이 절반을 넘는다. 월드 모델과 AI 과학 발견도 시연을 넘어 제품과 검증된 성과로 들어선다.</p><ol class="ms"><li><time>2026-12</time><span>Gemini 4 출시로 3사 모두 새 세대 모델 보유</span></li><li><time>2027-03</time><span>METR 50% 작업 길이 24시간 이상 측정</span></li><li><time>2027-06</time><span>ARC-AGI-3 50% 돌파, AI 수학 결과 독립 검증</span></li></ol>
+  <dl class="sdl"><div><dt>판정 시점</dt><dd>2027-12-31</dd></div><div><dt>판정 방법</dt><dd>세 가지 중 두 가지 이상 충족 시 적중: (1) METR 50% 작업 길이 24시간 이상 공식 측정 (2) ARC-AGI-3 검증 점수 50% 이상 (3) AI 주도 수학·과학 결과의 독립 검증</dd></div>
+  <div><dt>전제</dt><dd>수출 통제·안전 문제로 프런티어 모델 공개가 막히지 않을 경우</dd></div><div><dt>근거</dt><dd><a class="rid" href="#I1-M-001" title="METR 기준 AI가 50% 확률로 해내는 소프트웨어 작업 길이는 Claude Opus 4.6이 약 12시간(11시간 59분), 4월 Claude Mythos Preview는 최소 16시간으로 측정됐다. 16시간 이상은 현재 과제 세트로는 신뢰하기 어렵다.">I1-M-001</a><a class="rid" href="#I1-M-002" title="METR는 AI가 해내는 작업 길이가 2023년 이후 약 131일(4.3개월)마다 두 배로 늘었다고 추정했다. 2025년 3월 추정치(약 7개월)보다 빨라졌다.">I1-M-002</a><a class="rid" href="#I1-M-003" title="처음 보는 상호작용 환경에서 규칙을 스스로 익혀야 하는 ARC-AGI-3의 최고 점수는 Claude Opus 5의 30.2%다(2026년 7월 기준).">I1-M-003</a><a class="rid" href="#I1-E-007" title="OpenAI가 미공개 내부 모델(Astra)로 에르되시 문제 3개에서 진전을 냈고 증명을 Lean으로 형식화했다고 발표했다. 독립 전문가 검증은 아직이다.">I1-E-007</a></dd></div></dl></article><article class="scen pes" id="I1-F-102"><header><span class="sk">비관 · Pessimistic</span><code>I1-F-102</code></header>
+  <p class="sstmt">2027년 말까지 작업 길이 증가가 측정 한계와 신뢰성 문제에 막히고, 처음 보는 환경에서의 추론은 30%대에 머문다. 월드 모델과 AI 과학은 시연 단계에 남고, 경쟁은 성능보다 가격·속도 개선 중심으로 옮겨간다.</p><ol class="ms"><li><time>2027-03</time><span>24시간 이상 작업 길이 측정 없음</span></li><li><time>2027-06</time><span>ARC-AGI-3 최고 점수 50% 미만</span></li><li><time>2027-12</time><span>신모델 발표의 중심이 가격 인하와 속도</span></li></ol>
+  <dl class="sdl"><div><dt>판정 시점</dt><dd>2027-12-31</dd></div><div><dt>판정 방법</dt><dd>낙관 시나리오의 판정 조건 세 가지 중 하나 이하만 충족 시 적중</dd></div>
+  <div><dt>전제</dt><dd>없음</dd></div><div><dt>근거</dt><dd><a class="rid" href="#I1-M-006" title="실무형 코딩 평가 SWE-Bench Pro에서 Claude Fable 5는 80%, GPT-5.6 Sol은 64.6%를 기록했다. 다른 코딩 지수에서는 GPT-5.6이 앞섰지만 METR가 벤치마크 과적합 가능성을 지적했다.">I1-M-006</a><a class="rid" href="#I1-M-001" title="METR 기준 AI가 50% 확률로 해내는 소프트웨어 작업 길이는 Claude Opus 4.6이 약 12시간(11시간 59분), 4월 Claude Mythos Preview는 최소 16시간으로 측정됐다. 16시간 이상은 현재 과제 세트로는 신뢰하기 어렵다.">I1-M-001</a><a class="rid" href="#I1-E-009" title="Anthropic이 Claude Opus 5.5를, OpenAI가 GPT-6 Sol·Luna를 9월에 내놓았다. Opus 5.5는 Fable급 성능을 Opus 5보다 40% 낮은 비용에, GPT-6 Sol은 GPT-5.6의 절반 가격에 제공한다는 설명이다.">I1-E-009</a><a class="rid" href="#I1-E-001" title="Google이 월드 모델 Genie 3 기반의 Project Genie를 미국 AI Ultra 구독자에게 열었다. 글이나 그림으로 세계를 만들고 실시간으로 돌아다닐 수 있지만, 한 번에 60초까지다.">I1-E-001</a></dd></div></dl></article></div>
+    <h3 class="subhead">세부 판정 근거</h3>
+    <p class="lead muted">각 세부 전망이 적중하거나 빗나갔을 때 어느 시나리오 쪽 신호인지 표시했다. 확인 시점이 오면 확인 방법대로 판정한다.</p>
+    <div class="tablewrap"><table><thead><tr><th>세부 전망</th><th>확인 시점</th><th>적중 시</th><th>빗나갈 시</th><th>상태</th><th>근거</th></tr></thead><tbody><tr id="I1-F-003"><td class="stmt">Google은 2026년 안에 Gemini 4를 출시할 것이다.<small>확인 방법: Google 공식 발표 확인</small></td>
+  <td class="asof">2026-12-31</td><td><span class="side opt">낙관</span></td><td><span class="muted">—</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#I1-E-010" title="Google DeepMind가 Gemini 4를 사후 학습 초기 단계에 두고 연내보다 훨씬 이른 출시를 예고했다. Gemini 3 Pro 이후 Pro급 신모델은 1년 가까이 나오지 않았다.">I1-E-010</a></td></tr><tr id="I1-F-001"><td class="stmt">METR는 2027년 3월 말까지 50% 작업 길이 24시간 이상인 모델 측정 결과를 발표할 것이다.<small>확인 방법: METR time horizons 공식 결과 확인</small></td>
+  <td class="asof">2027-03-31</td><td><span class="side opt">낙관</span></td><td><span class="side pes">비관</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#I1-M-001" title="METR 기준 AI가 50% 확률로 해내는 소프트웨어 작업 길이는 Claude Opus 4.6이 약 12시간(11시간 59분), 4월 Claude Mythos Preview는 최소 16시간으로 측정됐다. 16시간 이상은 현재 과제 세트로는 신뢰하기 어렵다.">I1-M-001</a><a class="rid" href="#I1-M-002" title="METR는 AI가 해내는 작업 길이가 2023년 이후 약 131일(4.3개월)마다 두 배로 늘었다고 추정했다. 2025년 3월 추정치(약 7개월)보다 빨라졌다.">I1-M-002</a></td></tr><tr id="I1-F-006"><td class="stmt">과기정통부는 2027년 3월 말까지 독자 AI 파운데이션 모델 최종 2개 팀을 발표하고, LG AI연구원이 포함될 것이다.<small>확인 방법: 과기정통부 발표 확인</small></td>
+  <td class="asof">2027-03-31</td><td><span class="muted">—</span></td><td><span class="muted">—</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#I1-E-008" title="과기정통부가 독자 AI 파운데이션 모델 2차 평가 결과 LG AI연구원·SK텔레콤·업스테이지를 3차로 올렸다. 최종 2개 팀은 내년 초에 정한다.">I1-E-008</a><a class="rid" href="#I1-M-010" title="정부 독자 AI 파운데이션 모델 2차 평가에서 4개 팀 모두 Artificial Analysis 지능 지수 31점 이상이었고, 40점 이상 최상위 구간에 미국·중국과 함께 한국 모델이 들어가 국가별 3위로 평가됐다. LG의 K-엑사원 2.0은 7,500억 파라미터다.">I1-M-010</a></td></tr><tr id="I1-F-002"><td class="stmt">ARC-AGI-3 최고 점수는 2027년 6월 말까지 50%를 넘을 것이다.<small>확인 방법: ARC Prize 검증 리더보드 확인</small></td>
+  <td class="asof">2027-06-30</td><td><span class="side opt">낙관</span></td><td><span class="side pes">비관</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#I1-M-003" title="처음 보는 상호작용 환경에서 규칙을 스스로 익혀야 하는 ARC-AGI-3의 최고 점수는 Claude Opus 5의 30.2%다(2026년 7월 기준).">I1-M-003</a></td></tr><tr id="I1-F-004"><td class="stmt">OpenAI가 발표한 에르되시 문제 결과 가운데 1개 이상이 2027년 6월 말까지 독립 전문가 검증(학술지 게재 또는 수학자 공개 확인)을 받을 것이다.<small>확인 방법: 학술지 게재 또는 erdosproblems.com 등 공개 검증 기록 확인</small></td>
+  <td class="asof">2027-06-30</td><td><span class="side opt">낙관</span></td><td><span class="side pes">비관</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#I1-E-007" title="OpenAI가 미공개 내부 모델(Astra)로 에르되시 문제 3개에서 진전을 냈고 증명을 Lean으로 형식화했다고 발표했다. 독립 전문가 검증은 아직이다.">I1-E-007</a></td></tr><tr id="I1-F-005"><td class="stmt">Google은 2027년 6월 말까지 Project Genie를 미국 밖으로 넓히거나 1회 생성 시간을 60초보다 늘릴 것이다.<small>확인 방법: Google 공식 발표 확인</small></td>
+  <td class="asof">2027-06-30</td><td><span class="side opt">낙관</span></td><td><span class="muted">—</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#I1-E-001" title="Google이 월드 모델 Genie 3 기반의 Project Genie를 미국 AI Ultra 구독자에게 열었다. 글이나 그림으로 세계를 만들고 실시간으로 돌아다닐 수 있지만, 한 번에 60초까지다.">I1-E-001</a></td></tr></tbody></table></div></section>
+  <section><h2>역량 원장 <small>기술 축별 현재 위치와 다음 한계선</small></h2><p class="lead">일곱 개 기술 축을 연구(논문·내부 결과) → 시연(공개 데모·제한 접근) → 제품 적용 가능(일반 사용자·개발자가 사용) 중 어디에 있는지로 판정했다. 다음 한계선은 그 축에서 아직 시연이나 연구 단계에 있는 능력이다.</p>
+    <div class="ladder mapgrid ledger"><div class="rung"><div class="stage"><b>Agent·장시간 작업</b></div>
+  <div class="lvcell"><span class="region">현재 위치</span><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="lv">제품 적용 가능</span></span></div>
+  <p class="why"><b>다음 한계선</b> · 하루 이상 걸리는 일을 끝까지 맡기기 (METR 16시간 이상은 측정 한계) <a class="rid" href="#I1-M-001" title="METR 기준 AI가 50% 확률로 해내는 소프트웨어 작업 길이는 Claude Opus 4.6이 약 12시간(11시간 59분), 4월 Claude Mythos Preview는 최소 16시간으로 측정됐다. 16시간 이상은 현재 과제 세트로는 신뢰하기 어렵다.">I1-M-001</a><a class="rid" href="#I1-E-004" title="OpenAI가 GPT-5.6과 함께 앱·파일을 넘나들며 몇 시간짜리 프로젝트를 끝까지 수행하는 ChatGPT Work를 출시했다.">I1-E-004</a></p></div><div class="rung"><div class="stage"><b>Reasoning</b></div>
+  <div class="lvcell"><span class="region">현재 위치</span><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="lv">제품 적용 가능</span></span></div>
+  <p class="why"><b>다음 한계선</b> · 처음 보는 환경에서 규칙 학습 — ARC-AGI-3 최고 30.2% <a class="rid" href="#I1-M-004" title="같은 모델이 ARC-AGI-2에서는 90.4%, ARC-AGI-1에서는 97.5%를 기록했다. 정형 추론 퍼즐은 사실상 포화됐다.">I1-M-004</a><a class="rid" href="#I1-M-003" title="처음 보는 상호작용 환경에서 규칙을 스스로 익혀야 하는 ARC-AGI-3의 최고 점수는 Claude Opus 5의 30.2%다(2026년 7월 기준).">I1-M-003</a></p></div><div class="rung"><div class="stage"><b>Multimodal·Computer use</b></div>
+  <div class="lvcell"><span class="region">현재 위치</span><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="lv">제품 적용 가능</span></span></div>
+  <p class="why"><b>다음 한계선</b> · 사람 수준의 컴퓨터 조작 신뢰성 (OSWorld-Verified 83%, 자체 발표) <a class="rid" href="#I1-M-005" title="컴퓨터를 직접 조작하는 OSWorld-Verified에서 Gemini 3.6 Flash가 83.0%(이전 78.4%)를 기록했다고 Google이 밝혔다.">I1-M-005</a></p></div><div class="rung"><div class="stage"><b>Long context·Memory</b></div>
+  <div class="lvcell"><span class="region">현재 위치</span><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip"></span><span class="lv">시연</span></span></div>
+  <p class="why"><b>다음 한계선</b> · 100만 토큰 문맥은 표준, 세션을 넘는 장기 기억은 제한적 <a class="rid" href="#I1-M-007" title="100만 토큰 입력은 프런티어 모델의 표준이 됐다. Claude Opus 5·Fable 5, GPT-5.6, Gemini 3.6 Flash, 오픈 웨이트 Kimi K3가 모두 100만 토큰 안팎을 지원한다.">I1-M-007</a></p></div><div class="rung"><div class="stage"><b>World Model</b></div>
+  <div class="lvcell"><span class="region">현재 위치</span><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip"></span><span class="lv">시연</span></span></div>
+  <p class="why"><b>다음 한계선</b> · 60초 제한을 넘는 실시간 세계 생성·물리 일관성 <a class="rid" href="#I1-E-001" title="Google이 월드 모델 Genie 3 기반의 Project Genie를 미국 AI Ultra 구독자에게 열었다. 글이나 그림으로 세계를 만들고 실시간으로 돌아다닐 수 있지만, 한 번에 60초까지다.">I1-E-001</a></p></div><div class="rung"><div class="stage"><b>AI for Science</b></div>
+  <div class="lvcell"><span class="region">현재 위치</span><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip"></span><span class="lv">시연</span></span></div>
+  <p class="why"><b>다음 한계선</b> · AI가 낸 수학·과학 결과의 독립 검증 <a class="rid" href="#I1-E-007" title="OpenAI가 미공개 내부 모델(Astra)로 에르되시 문제 3개에서 진전을 냈고 증명을 Lean으로 형식화했다고 발표했다. 독립 전문가 검증은 아직이다.">I1-E-007</a></p></div><div class="rung"><div class="stage"><b>Compute</b></div>
+  <div class="lvcell"><span class="region">현재 위치</span><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="lv">제품 적용 가능</span></span></div>
+  <p class="why"><b>다음 한계선</b> · HBM4 양산, 차세대 가속기 대량 출하 <a class="rid" href="#I1-M-009" title="Micron이 NVIDIA Vera Rubin용 HBM4(36GB 12단)를 대량 생산해 1분기부터 출하했다. 대역폭은 2.8TB/s 이상으로 HBM3E의 2.3배다.">I1-M-009</a><a class="rid" href="#I1-E-002" title="Micron이 GTC 2026에서 NVIDIA Vera Rubin용 HBM4 대량 생산을 발표했다.">I1-E-002</a></p></div></div></section>
+  <section><h2>핵심 지표 <small>추적 지표 7/8개 값 확보</small></h2><p class="lead">추적 지표 8개 중 7개의 값을 원문으로 확인했다. I1-T6 AI for Science 검증 성과은 이번 회차에 수치를 찾지 못했다. 벤치마크는 포화와 과적합이 빨라, 분기마다 지표를 점검하고 바꿀 때는 버전을 올린다. 기업 자체 발표 수치에는 주의 표시를 달았다. AI for Science는 독립 검증된 결과가 아직 없어 값을 비워 두었다.</p>
+    <div class="tablewrap"><table><thead><tr><th>추적 지표</th><th>내용 · 출처</th><th style="text-align:right">현재값</th><th>기준 시점</th><th>기록</th></tr></thead><tbody><tr id="I1-M-001"><td class="ind">I1-T1<small>AI 작업 길이</small></td>
+  <td class="stmt">METR 기준 AI가 50% 확률로 해내는 소프트웨어 작업 길이는 Claude Opus 4.6이 약 12시간(11시간 59분), 4월 Claude Mythos Preview는 최소 16시간으로 측정됐다. 16시간 이상은 현재 과제 세트로는 신뢰하기 어렵다. <span class="warn">충돌·주의</span><div class="src"><a href="https://en.wikipedia.org/wiki/METR" target="_blank" rel="noopener">Wikipedia (METR Time Horizon 1.1 결과 정리)</a><span class="grade gB">B</span></div></td>
+  <td class="num">16 시간 이상(최고치)</td><td class="asof">2026-04<small>GLOBAL</small></td><td class="idc"><code>I1-M-001</code></td></tr><tr id="I1-M-002"><td class="ind">I1-T1<small>AI 작업 길이</small></td>
+  <td class="stmt">METR는 AI가 해내는 작업 길이가 2023년 이후 약 131일(4.3개월)마다 두 배로 늘었다고 추정했다. 2025년 3월 추정치(약 7개월)보다 빨라졌다. <div class="src"><a href="https://en.wikipedia.org/wiki/METR" target="_blank" rel="noopener">Wikipedia (METR Time Horizon 1.1 결과 정리)</a><span class="grade gB">B</span></div></td>
+  <td class="num">130.8 일(배가 기간)</td><td class="asof">2026-01<small>GLOBAL</small></td><td class="idc"><code>I1-M-002</code></td></tr><tr id="I1-M-003"><td class="ind">I1-T2<small>새 환경 추론</small></td>
+  <td class="stmt">처음 보는 상호작용 환경에서 규칙을 스스로 익혀야 하는 ARC-AGI-3의 최고 점수는 Claude Opus 5의 30.2%다(2026년 7월 기준). <div class="src"><a href="https://arcprize.org/results/anthropic-claude-opus-5" target="_blank" rel="noopener">ARC Prize (검증 결과)</a><span class="grade gA">A</span></div></td>
+  <td class="num">30.2%</td><td class="asof">2026-07<small>GLOBAL</small></td><td class="idc"><code>I1-M-003</code></td></tr><tr id="I1-M-004"><td class="ind">I1-T2<small>새 환경 추론</small></td>
+  <td class="stmt">같은 모델이 ARC-AGI-2에서는 90.4%, ARC-AGI-1에서는 97.5%를 기록했다. 정형 추론 퍼즐은 사실상 포화됐다. <div class="src"><a href="https://arcprize.org/results/anthropic-claude-opus-5" target="_blank" rel="noopener">ARC Prize (검증 결과)</a><span class="grade gA">A</span></div></td>
+  <td class="num">90.4%</td><td class="asof">2026-07<small>GLOBAL</small></td><td class="idc"><code>I1-M-004</code></td></tr><tr id="I1-M-005"><td class="ind">I1-T3<small>코딩·컴퓨터 사용</small></td>
+  <td class="stmt">컴퓨터를 직접 조작하는 OSWorld-Verified에서 Gemini 3.6 Flash가 83.0%(이전 78.4%)를 기록했다고 Google이 밝혔다. <span class="warn">충돌·주의</span><div class="src"><a href="https://www.analyticsvidhya.com/?p=256745" target="_blank" rel="noopener">Analytics Vidhya (2026년 7월 모델 출시 일지)</a><span class="grade gB">B</span></div></td>
+  <td class="num">83%</td><td class="asof">2026-07<small>GLOBAL</small></td><td class="idc"><code>I1-M-005</code></td></tr><tr id="I1-M-006"><td class="ind">I1-T3<small>코딩·컴퓨터 사용</small></td>
+  <td class="stmt">실무형 코딩 평가 SWE-Bench Pro에서 Claude Fable 5는 80%, GPT-5.6 Sol은 64.6%를 기록했다. 다른 코딩 지수에서는 GPT-5.6이 앞섰지만 METR가 벤치마크 과적합 가능성을 지적했다. <span class="warn">충돌·주의</span><div class="src"><a href="https://www.analyticsvidhya.com/?p=256745" target="_blank" rel="noopener">Analytics Vidhya (2026년 7월 모델 출시 일지)</a><span class="grade gB">B</span></div></td>
+  <td class="num">80%</td><td class="asof">2026-07<small>GLOBAL</small></td><td class="idc"><code>I1-M-006</code></td></tr><tr id="I1-M-007"><td class="ind">I1-T4<small>문맥 길이·기억</small></td>
+  <td class="stmt">100만 토큰 입력은 프런티어 모델의 표준이 됐다. Claude Opus 5·Fable 5, GPT-5.6, Gemini 3.6 Flash, 오픈 웨이트 Kimi K3가 모두 100만 토큰 안팎을 지원한다. <div class="src"><a href="https://www.analyticsvidhya.com/?p=256745" target="_blank" rel="noopener">Analytics Vidhya (2026년 7월 모델 출시 일지)</a><span class="grade gB">B</span></div></td>
+  <td class="num">1e+06 토큰</td><td class="asof">2026-07<small>GLOBAL</small></td><td class="idc"><code>I1-M-007</code></td></tr><tr id="I1-M-008"><td class="ind">I1-T5<small>오픈 웨이트 수준</small></td>
+  <td class="stmt">중국 Moonshot이 2.8조 파라미터(활성 1,040억), 100만 토큰 문맥의 Kimi K3를 오픈 웨이트로 공개했다. 프런트엔드 코딩 블라인드 평가에서 미국 선두 모델보다 높게 평가됐다는 보도가 나왔다. <span class="warn">충돌·주의</span><div class="src"><a href="https://www.analyticsvidhya.com/?p=256745" target="_blank" rel="noopener">Analytics Vidhya (2026년 7월 모델 출시 일지)</a><span class="grade gB">B</span></div></td>
+  <td class="num">2.8 조 파라미터</td><td class="asof">2026-07<small>CN</small></td><td class="idc"><code>I1-M-008</code></td></tr><tr id="I1-M-009"><td class="ind">I1-T7<small>AI 메모리·칩</small></td>
+  <td class="stmt">Micron이 NVIDIA Vera Rubin용 HBM4(36GB 12단)를 대량 생산해 1분기부터 출하했다. 대역폭은 2.8TB/s 이상으로 HBM3E의 2.3배다. <div class="src"><a href="https://www.storagenewsletter.com/2026/03/17/nvidia-gtc-2026-micron-in-high-volume-production-of-hbm4-designed-for-nvidia-vera-rubin-pcie-gen6-ssd-and-socamm2/" target="_blank" rel="noopener">StorageNewsletter (Micron 보도자료)</a><span class="grade gB">B</span></div></td>
+  <td class="num">2.8 TB/s</td><td class="asof">2026-03<small>GLOBAL</small></td><td class="idc"><code>I1-M-009</code></td></tr><tr id="I1-M-010"><td class="ind">I1-T8<small>한국 모델 수준</small></td>
+  <td class="stmt">정부 독자 AI 파운데이션 모델 2차 평가에서 4개 팀 모두 Artificial Analysis 지능 지수 31점 이상이었고, 40점 이상 최상위 구간에 미국·중국과 함께 한국 모델이 들어가 국가별 3위로 평가됐다. LG의 K-엑사원 2.0은 7,500억 파라미터다. <div class="src"><a href="https://www.smarttoday.co.kr/ko-kr/articles/110572" target="_blank" rel="noopener">스마트투데이 (과기정통부 발표)</a><span class="grade gB">B</span></div></td>
+  <td class="num">3 위(국가별)</td><td class="asof">2026-08<small>KR</small></td><td class="idc"><code>I1-M-010</code></td></tr></tbody></table></div></section>
+  <section><h2>미확인·경고 <small>본문 판단에서 빼거나 주의해서 쓴 기록</small></h2>
+    <div class="tablewrap"><table><thead><tr><th>기록</th><th>구분</th><th>진술</th><th>사유</th></tr></thead><tbody><tr><td><code>I1-M-001</code></td><td><span class="wk">주의</span></td><td>METR 기준 AI가 50% 확률로 해내는 소프트웨어 작업 길이는 Claude Opus 4.6이 약 12시간(11시간 59분), 4월 Claude Mythos Preview는 최소 16시간으로 측정됐다. 16시간 이상은 현재 과제 세트로는 신뢰하기 어렵다.</td><td class="muted">16시간 이상은 METR 스스로 하한값으로 표시</td></tr><tr><td><code>I1-M-005</code></td><td><span class="wk">주의</span></td><td>컴퓨터를 직접 조작하는 OSWorld-Verified에서 Gemini 3.6 Flash가 83.0%(이전 78.4%)를 기록했다고 Google이 밝혔다.</td><td class="muted">기업 자체 발표 수치</td></tr><tr><td><code>I1-M-006</code></td><td><span class="wk">주의</span></td><td>실무형 코딩 평가 SWE-Bench Pro에서 Claude Fable 5는 80%, GPT-5.6 Sol은 64.6%를 기록했다. 다른 코딩 지수에서는 GPT-5.6이 앞섰지만 METR가 벤치마크 과적합 가능성을 지적했다.</td><td class="muted">벤치마크 과적합 논란 — 단일 지표로 판정하지 않음</td></tr><tr><td><code>I1-M-008</code></td><td><span class="wk">주의</span></td><td>중국 Moonshot이 2.8조 파라미터(활성 1,040억), 100만 토큰 문맥의 Kimi K3를 오픈 웨이트로 공개했다. 프런트엔드 코딩 블라인드 평가에서 미국 선두 모델보다 높게 평가됐다는 보도가 나왔다.</td><td class="muted">블라인드 평가 순위는 보도 인용</td></tr><tr><td><code>I1-E-007</code></td><td><span class="wk">주의</span></td><td>OpenAI가 미공개 내부 모델(Astra)로 에르되시 문제 3개에서 진전을 냈고 증명을 Lean으로 형식화했다고 발표했다. 독립 전문가 검증은 아직이다.</td><td class="muted">독립 검증 전 — 성과로 확정하지 않음</td></tr><tr><td><code>I1-E-009</code></td><td><span class="wk">주의</span></td><td>Anthropic이 Claude Opus 5.5를, OpenAI가 GPT-6 Sol·Luna를 9월에 내놓았다. Opus 5.5는 Fable급 성능을 Opus 5보다 40% 낮은 비용에, GPT-6 Sol은 GPT-5.6의 절반 가격에 제공한다는 설명이다.</td><td class="muted">정확한 출시일은 원문에 없음 — 월 단위 기록</td></tr></tbody></table></div></section>
+  <footer>
+    <span>이 글은 4유형 기록 35건(지표 10 · 사건 10 · 해석 7 · 전망 8)에서 생성했습니다. 문장 옆 번호를 누르면 해당 기록으로 이동합니다.</span>
+        <span>출처 등급 A = 1차 조사·공식 발표, B = 주요 언론·2차 보도, C = 블로그·출처 불명(원문 확인 전까지 판단에 쓰지 않음).</span>
+  </footer>
+</main>
+</body></html>

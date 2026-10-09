@@ -131,7 +131,7 @@ total_live = sum(1 for _, its in sections for i in its if i["status"] == "live")
 total_rec = sum(int(i["cur"]["records"] or 0) for _, its in sections for i in its if i["status"] == "live")
 last_date = latest[0][0] if latest else "—"
 
-CSS = (ROOT / "customer-lab" / "lib" / "article.css").read_text(encoding="utf-8").split("/* 한 줄 답 */")[0]
+CSS = (ROOT / "lib" / "article.css").read_text(encoding="utf-8").split("/* 한 줄 답 */")[0]
 PORTAL_CSS = """
 /* Layout: 신문 목차 — 카테고리 번호를 큰 숫자로, 질문은 번호 열 + 본문 열의 2단 목록 */
 .portal { max-width: 1080px; }

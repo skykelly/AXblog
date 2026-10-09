@@ -122,3 +122,6 @@ footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--rule)
 .mapgrid.auto .rung { grid-template-columns: 130px 220px 220px 1fr; }
 table.levels { min-width: 520px; }
 @media (max-width: 760px) { .mapgrid.auto .rung { grid-template-columns: 1fr; } }
+/* 역량 원장 (I1) */
+.mapgrid.ledger .rung { grid-template-columns: 200px 260px 1fr; }
+@media (max-width: 760px) { .mapgrid.ledger .rung { grid-template-columns: 1fr; } }
