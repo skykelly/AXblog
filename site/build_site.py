@@ -191,9 +191,7 @@ portal = f"""<!doctype html>
   <header class="masthead">
     <h1>{E(cat['site']['title'])}</h1>
     <p class="tag">{E(cat['site']['tagline'])}</p>
-    <div class="stats"><span>카테고리 <b>{len(sections)}</b></span><span>질문 <b>{total_q}</b></span><span>발행 아티클 <b>{total_live}</b></span><span>근거 기록 <b>{total_rec}</b>건</span><span>최근 업데이트 <b>{E(last_date)}</b></span></div>
-    <p class="method">각 질문은 정해진 문장 그대로 매달 다시 조사합니다. 조사 결과는 지표·사건·해석·전망 기록으로 쪼개 저장하고, 아티클은 그 기록에서만 만들어집니다. 글 속 번호를 누르면 근거 기록과 원문 출처로 이동합니다.</p>
-  </header>
+    <div class="stats"><span>카테고리 <b>{len(sections)}</b></span><span>질문 <b>{total_q}</b></span><span>발행 아티클 <b>{total_live}</b></span><span>근거 기록 <b>{total_rec}</b>건</span><span>최근 업데이트 <b>{E(last_date)}</b></span></div>  </header>
   <nav class="catnav" aria-label="카테고리">{nav_html}</nav>
   {sec_html}
   <footer><span>AXblog · 원본 기록과 생성 스크립트는 GitHub skykelly/AXblog 저장소에 있습니다.</span></footer>
