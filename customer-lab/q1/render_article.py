@@ -1,7 +1,8 @@
 """records.jsonl → 기준 아티클 HTML (Q1 R1).
-아티클은 기록에서만 만든다. 판정(단계 사다리)도 근거 기록 번호를 함께 가진다.
+아티클은 기록에서만 만든다. 서술형 요약과 판정도 근거 기록 번호를 함께 가진다.
+순서: 한 줄 답 → 해석 → 주요 사건 → 전망 → 단계별 판정 → 핵심 지표 → 미확인·경고
 """
-import json, html, sys
+import json, html, re, sys
 from pathlib import Path
 
 ROOT = Path(__file__).parent
@@ -9,198 +10,283 @@ recs = [json.loads(l) for l in (ROOT / "records.jsonl").read_text(encoding="utf-
 by = {r["id"]: r for r in recs}
 E = html.escape
 
-QUESTION = "소비자는 탐색 → 답변 → 추천 → 결정 → 위임 중 어느 단계까지 AI에 맡기고 있으며, 검색엔진·브랜드 사이트의 역할은 얼마나 줄었는가?"
-ONE_LINE = "AI는 ‘찾고 좁혀주는’ 데까지 들어왔고, ‘고르고 결제하는’ 일은 아직 사람이 쥐고 있다. 지금의 경계선은 추천과 결정 사이다."
-ONE_LINE_BASIS = ["Q1-I-001", "Q1-I-002", "Q1-I-003", "Q1-I-005"]
-SITE_ROLE = ("검색엔진은 정보형 검색에서 클릭을 잃고 있지만, 브랜드·리테일러 사이트는 사라지지 않고 ‘최종 확인과 결제’ 장소로 역할이 좁아지고 있다. "
-             "한국에서는 그 자리를 범용 AI가 아니라 네이버 같은 기존 플랫폼 안의 AI가 먼저 차지하고 있다.")
-SITE_ROLE_BASIS = ["Q1-M-003", "Q1-M-006", "Q1-E-002", "Q1-I-004"]
+def tags(ids):
+    return "".join(f'<a class="rid" href="#{E(i)}" title="{E(by[i]["statement"])}">{E(i)}</a>' for i in ids)
 
+def para(text, ids):
+    return f"<p>{E(text)} {tags(ids)}</p>"
+
+def src_links(r):
+    return " · ".join(
+        f'<a href="{E(s["url"])}" target="_blank" rel="noopener">{E(s["publisher"])}</a><span class="grade g{E(s["grade"])}">{E(s["grade"])}</span>'
+        for s in r.get("sources", []))
+
+# =====================================================================
+# 1. 한 줄 답
+# =====================================================================
+QUESTION = "소비자는 탐색 → 답변 → 추천 → 결정 → 위임 중 어느 단계까지 AI에 맡기고 있으며, 검색엔진·브랜드 사이트의 역할은 얼마나 줄었는가?"
+ONE_LINE = "2026년 10월 현재 AI가 대신하는 일은 ‘찾아보고 후보를 추려주는 것’까지다. 무엇을 살지 정하고 결제하는 일은 소비자가 직접 하며, 결제까지 AI에 맡기겠다는 소비자는 9%에 그친다."
+ONE_LINE_BASIS = ["Q1-I-002", "Q1-I-003", "Q1-M-011"]
+ANSWER_ROWS = [
+    ("AI가 대신하는 것", "검색·비교·추천. 미국 구글 검색의 68%가 클릭 없이 끝나고, AI를 거쳐 쇼핑몰에 들어온 방문은 일반 방문보다 60% 더 구매로 이어진다.",
+     ["Q1-M-003", "Q1-M-006"]),
+    ("아직 못 하는 것", "최종 선택과 결제. ChatGPT의 대화 안 결제는 출시 6개월이 안 된 2026년 3월에 철회됐고, 미국·영국 소비자 55%는 AI의 대리 구매가 불편하다고 답했다.",
+     ["Q1-E-002", "Q1-M-012"]),
+    ("한국", "AI를 주 쇼핑 수단으로 쓰는 소비자는 7%로 6개국 평균(14%)의 절반이다. 대신 네이버 AI탭·쇼핑 에이전트처럼 기존 플랫폼 안의 AI가 탐색을 흡수하고 있다.",
+     ["Q1-M-008", "Q1-E-009", "Q1-M-015"]),
+    ("검색엔진·브랜드 사이트", "검색엔진은 정보 탐색에서 클릭을 잃고 있다. 브랜드·리테일러 사이트는 방문 수 대신 ‘최종 확인과 결제’ 장소로서 무게가 커지고 있다.",
+     ["Q1-M-004", "Q1-I-001", "Q1-I-002"]),
+]
+answer_rows = "".join(
+    f'<div class="arow"><dt>{E(k)}</dt><dd>{E(v)} {tags(ids)}</dd></div>' for k, v, ids in ANSWER_ROWS)
+
+# =====================================================================
+# 2. 해석 — 서술형 요약 + 해석 기록
+# =====================================================================
+NARRATIVE = [
+    ("미국에서는 정보를 찾는 단계가 이미 AI로 넘어갔다. 구글 검색 열 번 중 일곱 번(68%)이 클릭 없이 끝나고, AI 요약이 뜨면 일반 결과 클릭이 15%에서 8%로 줄어든다. "
+     "다만 전용 AI 검색인 AI Mode로 넘어간 검색은 0.34%뿐이다. 변화는 별도 AI 서비스보다 기존 검색 화면 안에서 먼저 일어나고 있다.",
+     ["Q1-M-003", "Q1-M-004", "Q1-M-005", "Q1-I-001"]),
+    ("추천 단계도 AI가 실질적으로 맡기 시작했다. AI를 거쳐 쇼핑몰에 들어온 방문은 1년 전에는 일반 방문보다 전환율이 38% 낮았지만, 2026년 7월에는 60% 높아졌다. "
+     "소비자가 AI와 대화하며 후보를 좁힌 뒤 사이트에 들어오기 때문이다. 유입 증가율은 1분기 393%에서 7월 62%로 낮아져, 성장의 무게가 양에서 질로 옮겨가고 있다.",
+     ["Q1-M-007", "Q1-M-006", "Q1-I-002", "Q1-I-006"]),
+    ("결정과 결제는 아직 사람 몫이다. 16개국 소비자 32%는 예산·브랜드 범위 안에서 AI가 고르게 하겠다고 했지만, 결제까지 맡기겠다는 응답은 9%였다. "
+     "공급 쪽도 같은 방향이다. OpenAI는 대화 안 결제를 접고 구매를 리테일러 앱과 사이트로 넘겼다.",
+     ["Q1-M-011", "Q1-M-012", "Q1-E-001", "Q1-E-002", "Q1-I-003"]),
+    ("한국은 경로가 다르다. 생성형 AI 경험률은 44.5%까지 올랐지만 AI를 주 쇼핑 수단으로 쓰는 소비자는 7%이고, 탐색은 여전히 마켓플레이스(59%)에서 시작한다. "
+     "대신 네이버가 검색창에 AI탭을 넣고 쇼핑 에이전트를 붙이면서, AI가 기존 플랫폼 안에서 쓰이는 방식으로 퍼지고 있다. 쇼핑 에이전트 경유 거래액은 3개월 만에 2.7배가 됐다.",
+     ["Q1-M-001", "Q1-M-008", "Q1-M-009", "Q1-E-009", "Q1-M-015", "Q1-I-004"]),
+    ("한국 소비자는 AI 쇼핑에서 허위·편향 정보를 우려하는 비율(64%)이 글로벌 평균(52%)보다 높다. AI는 비교·검증 보조로 쓰고 최종 판단은 직접 하는 모습이다.",
+     ["Q1-M-013", "Q1-I-005"]),
+]
+narrative_html = "".join(para(t, ids) for t, ids in NARRATIVE)
+
+DIR = {"강화": "up", "약화": "down", "중립": "flat"}
+interps = [r for r in recs if r["type"] == "해석"]
+irows = "".join(f"""<tr id="{E(r['id'])}"><td><span class="dir {DIR[r['direction']]}">{E(r['direction'])}</span></td>
+  <td class="tgt">{E(r['target'])}</td><td>{E(r['statement'])}</td><td>{tags(r['basis'])}</td><td class="idc"><code>{E(r['id'])}</code></td></tr>""" for r in interps)
+
+# =====================================================================
+# 3. 주요 사건 — 최신순
+# =====================================================================
+EVENTS_LEAD = ("사건의 흐름은 ‘AI가 결제까지 직접 쥐는 시도’에서 ‘기존 플랫폼과 리테일러 안에 AI를 넣는 방식’으로 옮겨가고 있다. "
+               "글로벌에서는 OpenAI가 대화 안 결제를 접었고, 한국에서는 네이버가 검색(AI탭)과 쇼핑(쇼핑 AI 에이전트) 두 접점에 AI를 정식 적용했다.")
+events = sorted([r for r in recs if r["type"] == "사건" and r.get("verified")], key=lambda r: r["date"], reverse=True)
+erows = "".join(f"""<li id="{E(r['id'])}"><time>{E(r['date'])}</time><div><b>{E(r['actor'])}</b> {E(r['statement'])}
+  <div class="src">{src_links(r)} <code>{E(r['id'])}</code></div></div></li>""" for r in events)
+
+# =====================================================================
+# 4. 전망 — 메인 질문 시나리오 + 세부 판정 신호
+# =====================================================================
+FORECAST_LEAD = ("핵심은 지금의 경계선(추천 → 결정)이 2027년 말까지 한 칸 앞으로 가느냐다. 낙관·비관 두 시나리오를 세우고, "
+                 "확인 시점이 정해진 세부 전망들의 판정 결과를 어느 쪽에 가까운지 보여주는 신호로 쓴다.")
+scen = [r for r in recs if r["type"] == "전망" and r.get("scenario")]
+scen.sort(key=lambda r: 0 if r["scenario"] == "낙관" else 1)
+scen_html = ""
+for r in scen:
+    ms = "".join(f'<li><time>{E(m["by"])}</time><span>{E(m["text"])}</span></li>' for m in r["milestones"])
+    cls = "opt" if r["scenario"] == "낙관" else "pes"
+    en = "Optimistic" if cls == "opt" else "Pessimistic"
+    scen_html += f"""<article class="scen {cls}" id="{E(r['id'])}">
+  <header><span class="sk">{E(r['scenario'])} · {en}</span><code>{E(r['id'])}</code></header>
+  <p class="sstmt">{E(r['statement'])}</p>
+  <ol class="ms">{ms}</ol>
+  <dl class="sdl"><div><dt>판정 시점</dt><dd>{E(r['due'])}</dd></div><div><dt>판정 방법</dt><dd>{E(r['method'])}</dd></div>
+  <div><dt>전제</dt><dd>{E(r['condition'])}</dd></div><div><dt>근거</dt><dd>{tags(r['basis'])}</dd></div></dl>
+</article>"""
+
+sign = {}
+for r in scen:
+    for sp in r["signposts"]:
+        d = sign.setdefault(sp["id"], {"hit": set(), "miss": set()})
+        if "on_hit" in sp: d["hit"].add(sp["on_hit"])
+        if "on_miss" in sp: d["miss"].add(sp["on_miss"])
+def side(s):
+    return "".join(f'<span class="side {"opt" if x=="낙관" else "pes"}">{E(x)}</span>' for x in sorted(s)) or '<span class="muted">—</span>'
+details = sorted([r for r in recs if r["type"] == "전망" and not r.get("scenario")], key=lambda r: r["due"])
+frows = "".join(f"""<tr id="{E(r['id'])}"><td class="stmt">{E(r['statement'])}<small>확인 방법: {E(r['method'])}</small></td>
+  <td class="asof">{E(r['due'])}</td><td>{side(sign.get(r['id'],{}).get('hit',set()))}</td><td>{side(sign.get(r['id'],{}).get('miss',set()))}</td>
+  <td><span class="fstat">{E(r['forecast_status'])}</span></td><td>{tags(r['basis'])}</td></tr>""" for r in details)
+
+# =====================================================================
+# 5. 단계별 판정
+# =====================================================================
 LEVELS = ["실험", "얼리어답터", "확산", "주류"]
+LADDER_LEAD = "탐색·답변은 주류, 추천은 확산, 결정은 얼리어답터, 위임은 실험 단계다. 한국은 답변 단계만 한 칸 뒤에 있다."
 LADDER = [
     ("탐색", "Search", "주류", "주류", "미국 구글 검색 68%가 클릭 없이 끝남. 한국은 생성형 AI 경험률 44.5%.", ["Q1-M-003", "Q1-M-001", "Q1-I-001"]),
     ("답변", "Answer", "주류", "확산", "AI 요약이 뜨면 클릭이 절반으로 줄어듦. 한국은 네이버 AI탭이 6월 전면 적용.", ["Q1-M-004", "Q1-E-009", "Q1-M-014"]),
     ("추천", "Recommendation", "확산", "확산", "AI 유입 방문의 전환율이 일반 유입을 60% 앞섬. 한국 AI 이용자 절반이 AI 추천 제품 구매.", ["Q1-M-006", "Q1-M-010", "Q1-I-002"]),
     ("결정", "Decision", "얼리어답터", "얼리어답터", "범위 안에서 AI가 고르게 하겠다 32%. 한국은 AI를 주 쇼핑 수단으로 쓰는 비율 7%.", ["Q1-M-011", "Q1-M-008", "Q1-I-005"]),
-    ("위임", "Delegation", "실험", "실험", "결제까지 맡기겠다 9%. 대표 사례였던 ChatGPT 인챗 결제는 2026년 3월 철회.", ["Q1-M-011", "Q1-E-002", "Q1-I-003"]),
+    ("위임", "Delegation", "실험", "실험", "결제까지 맡기겠다 9%. 대표 사례였던 ChatGPT 대화 안 결제는 2026년 3월 철회.", ["Q1-M-011", "Q1-E-002", "Q1-I-003"]),
 ]
-
-def tags(ids):
-    return "".join(f'<a class="rid" href="#{E(i)}" title="{E(by[i]["statement"])}">{E(i)}</a>' for i in ids)
-
-def src_links(r):
-    out = []
-    for s in r.get("sources", []):
-        out.append(f'<a href="{E(s["url"])}" target="_blank" rel="noopener">{E(s["publisher"])}</a><span class="grade g{E(s["grade"])}">{E(s["grade"])}</span>')
-    return " · ".join(out)
-
-def fmt_val(r):
-    v = r.get("value"); u = r.get("unit", "")
-    s = f"{v:g}" if isinstance(v, (int, float)) else str(v)
-    return f"{s}{'' if u.startswith('%') else ' '}{u}"
-
-# ---------- 사다리 ----------
 def cell(level):
     i = LEVELS.index(level)
     return "".join(f'<span class="pip{" on" if k <= i else ""}"></span>' for k in range(4)) + f'<span class="lv">{E(level)}</span>'
+ladder_rows = "".join(f"""<div class="rung" data-frontier="{'y' if ko in ('추천','결정') else 'n'}">
+  <div class="stage"><b>{E(ko)}</b><span>{E(en)}</span></div>
+  <div class="lvcell"><span class="region">글로벌·미국</span><span class="pips">{cell(g)}</span></div>
+  <div class="lvcell"><span class="region">한국</span><span class="pips">{cell(k)}</span></div>
+  <p class="why">{E(w)} {tags(ids)}</p></div>""" for ko, en, g, k, w, ids in LADDER)
 
-ladder_rows = []
-for ko, en, glob, kr, why, ids in LADDER:
-    ladder_rows.append(f"""
-    <div class="rung" data-frontier="{'y' if ko in ('추천','결정') else 'n'}">
-      <div class="stage"><b>{E(ko)}</b><span>{E(en)}</span></div>
-      <div class="lvcell"><span class="region">글로벌·미국</span><span class="pips">{cell(glob)}</span></div>
-      <div class="lvcell"><span class="region">한국</span><span class="pips">{cell(kr)}</span></div>
-      <p class="why">{E(why)} {tags(ids)}</p>
-    </div>""")
-
-# ---------- 지표 ----------
-metrics = [r for r in recs if r["type"] == "지표" and r.get("status") == "유효"]
-metrics.sort(key=lambda r: (r["indicator"], -r["importance"]))
+# =====================================================================
+# 6. 핵심 지표
+# =====================================================================
 INDICATOR_NAMES = {
     "Q1-I1": "생성형 AI 이용률 (한국)", "Q1-I2": "생성형 AI 이용률 (미국·글로벌)", "Q1-I3": "Zero-click·AI 요약 클릭률",
     "Q1-I4": "리테일 AI 유입 트래픽", "Q1-I5": "쇼핑에 AI를 쓰는 소비자", "Q1-I6": "구매 위임 의향·우려",
     "Q1-I7": "에이전트 결제 상용 사례 수", "Q1-I8": "한국 AI 검색·쇼핑 에이전트",
 }
+metrics = sorted([r for r in recs if r["type"] == "지표" and r.get("status") == "유효"], key=lambda r: (r["indicator"], -r["importance"]))
 filled = {r["indicator"] for r in metrics}
+empty_ind = [f"{k} {v}" for k, v in INDICATOR_NAMES.items() if k not in filled]
+METRICS_LEAD = (f"추적 지표 8개 중 {len(filled)}개의 값을 확보했다. 미국은 검색·트래픽 관측치(SparkToro, Adobe), 한국은 설문(과기정통부, Criteo)과 "
+                f"네이버 발표 수치가 중심이다. {', '.join(empty_ind)}은 다음 간단 조사에서 우선 채운다.")
+def fmt_val(r):
+    v, u = r.get("value"), r.get("unit", "")
+    s = f"{v:g}" if isinstance(v, (int, float)) else str(v)
+    return f"{s}{'' if u.startswith('%') else ' '}{u}"
 mrows = []
 for r in metrics:
     prev = r.get("prev_value")
-    prev_s = f"{prev:g}%" if prev is not None and r.get("unit", "").startswith("%") else ("—" if prev is None else str(prev))
+    prev_s = "—" if prev is None else (f"{prev:g}%" if r.get("unit", "").startswith("%") else str(prev))
     flag = '<span class="warn">충돌·주의</span>' if r.get("check_flags") else ""
-    mrows.append(f"""<tr id="{E(r['id'])}">
-      <td class="ind">{E(r['indicator'])}<small>{E(INDICATOR_NAMES[r['indicator']])}</small></td>
+    mrows.append(f"""<tr id="{E(r['id'])}"><td class="ind">{E(r['indicator'])}<small>{E(INDICATOR_NAMES[r['indicator']])}</small></td>
       <td class="stmt">{E(r['statement'])} {flag}<div class="src">{src_links(r)}</div></td>
       <td class="num">{E(fmt_val(r))}</td><td class="num muted">{E(prev_s)}</td>
-      <td class="asof">{E(r['as_of'])}<small>{E(r['region'])}</small></td>
-      <td class="idc"><code>{E(r['id'])}</code></td></tr>""")
-empty_ind = [f"{k} {v}" for k, v in INDICATOR_NAMES.items() if k not in filled]
+      <td class="asof">{E(r['as_of'])}<small>{E(r['region'])}</small></td><td class="idc"><code>{E(r['id'])}</code></td></tr>""")
 
-# ---------- 사건 ----------
-events = sorted([r for r in recs if r["type"] == "사건" and r.get("verified")], key=lambda r: r["date"])
-erows = "".join(f"""<li id="{E(r['id'])}"><time>{E(r['date'])}</time><div><b>{E(r['actor'])}</b> {E(r['statement'])}
-  <div class="src">{src_links(r)} <code>{E(r['id'])}</code></div></div></li>""" for r in events)
-
-# ---------- 해석 ----------
-DIR = {"강화": "up", "약화": "down", "중립": "flat"}
-interps = [r for r in recs if r["type"] == "해석"]
-irows = "".join(f"""<article class="interp" id="{E(r['id'])}">
-  <header><span class="dir {DIR[r['direction']]}">{E(r['direction'])}</span><h3>{E(r['target'])}</h3><code>{E(r['id'])}</code></header>
-  <p>{E(r['statement'])}</p><div class="basis">근거 {tags(r['basis'])}</div></article>""" for r in interps)
-
-# ---------- 전망 ----------
-fcs = sorted([r for r in recs if r["type"] == "전망"], key=lambda r: r["due"])
-frows = "".join(f"""<tr id="{E(r['id'])}"><td class="stmt">{E(r['statement'])}<small>조건: {E(r['condition'])}</small></td>
-  <td class="asof">{E(r['due'])}</td><td class="method">{E(r['method'])}</td><td><span class="fstat">{E(r['forecast_status'])}</span></td>
-  <td>{tags(r['basis'])}</td></tr>""" for r in fcs)
-
-# ---------- 미확인·경고 ----------
+# =====================================================================
+# 7. 미확인·경고
+# =====================================================================
 warns = []
 for r in recs:
     if r["type"] in ("지표", "사건") and not r.get("verified"):
-        warns.append((r["id"], "원문 미확인", r["statement"], "; ".join(r.get("check_flags", []))))
+        warns.append((r, "원문 미확인"))
     elif r.get("check_flags"):
-        warns.append((r["id"], "주의", r["statement"], "; ".join(r["check_flags"])))
-wrows = "".join(f"""<tr id="{E(i) if by[i]['type']=='사건' and not by[i].get('verified') else ''}"><td><code>{E(i)}</code></td><td><span class="wk">{E(k)}</span></td><td>{E(s)}</td><td class="muted">{E(n)}</td></tr>""" for i, k, s, n in warns)
+        warns.append((r, "주의"))
+wrows = "".join(f"""<tr{' id="'+E(r['id'])+'"' if r['type']=='사건' and not r.get('verified') else ''}><td><code>{E(r['id'])}</code></td>
+  <td><span class="wk">{E(k)}</span></td><td>{E(r['statement'])}</td><td class="muted">{E('; '.join(r.get('check_flags', [])))}</td></tr>""" for r, k in warns)
 
 counts = {t: sum(1 for r in recs if r["type"] == t) for t in ("지표", "사건", "해석", "전망")}
 
-page = f"""<title>Q1 소비자 의사결정 R1</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;800&display=swap">
-<style>
-/* Layout: 연구 노트 한 단(68ch) — 사다리 판정 → 표 → 근거 연결. 기록 번호가 본문 곳곳의 각주 역할 */
-:root {{
+CSS = """
+/* Layout: 연구 노트 한 단 — 답 → 서술형 해석 → 근거 표. 기록 번호가 본문의 각주 역할 */
+:root {
   --paper: #f6f7f9; --ink: #16202b; --muted: #5d6875; --rule: #d6dbe2; --panel: #ffffff;
   --accent: #1f5f8b; --accent-soft: #e2edf5; --amber: #b4690e; --amber-soft: #f7ead7;
-  --up: #1f7a4d; --down: #b3412f; --flat: #6a7380;
+  --up: #1f7a4d; --down: #b3412f; --flat: #6a7380; --opt: #1f7a4d; --opt-soft: #e1f1e8; --pes: #a3402f; --pes-soft: #f6e3df;
   --display: "Noto Serif KR", "Apple SD Gothic Neo", serif;
   --body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
-}}
-@media (prefers-color-scheme: dark) {{ :root:not([data-theme="light"]) {{
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
   --paper: #11161c; --ink: #e6ebf1; --muted: #9aa5b1; --rule: #2b333d; --panel: #171e26;
   --accent: #7fb6dc; --accent-soft: #1b2c3a; --amber: #e2a457; --amber-soft: #33271a;
-  --up: #5fc493; --down: #ec8a78; --flat: #98a2ae; color-scheme: dark; }} }}
-:root[data-theme="dark"] {{
+  --up: #5fc493; --down: #ec8a78; --flat: #98a2ae; --opt: #6fcf9d; --opt-soft: #17291f; --pes: #ef9a88; --pes-soft: #2f1c18; color-scheme: dark; } }
+:root[data-theme="dark"] {
   --paper: #11161c; --ink: #e6ebf1; --muted: #9aa5b1; --rule: #2b333d; --panel: #171e26;
   --accent: #7fb6dc; --accent-soft: #1b2c3a; --amber: #e2a457; --amber-soft: #33271a;
-  --up: #5fc493; --down: #ec8a78; --flat: #98a2ae; color-scheme: dark; }}
-* {{ box-sizing: border-box; }}
-body {{ background: var(--paper); color: var(--ink); font: 400 16px/1.7 var(--body); padding: 0 20px; }}
-main {{ max-width: 980px; margin: 0 auto; padding-block: 40px 72px; display: grid; gap: 56px; }}
-.narrow {{ max-width: 68ch; }}
-a {{ color: var(--accent); }}
-code, .rid {{ font: 500 12px/1 var(--mono); }}
-h1, h2, h3 {{ text-wrap: balance; margin: 0; }}
-.eyebrow {{ font: 500 12px/1.4 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); display: flex; gap: 14px; flex-wrap: wrap; }}
-h1 {{ font: 800 clamp(26px, 4.4vw, 40px)/1.25 var(--display); margin-top: 14px; }}
-.question {{ margin: 16px 0 0; color: var(--muted); font-size: 15px; border-left: 2px solid var(--rule); padding-left: 14px; }}
-.answer {{ font: 600 clamp(20px, 2.8vw, 25px)/1.55 var(--display); margin: 0; }}
-.answer-wrap {{ display: grid; gap: 14px; }}
-.answer-wrap p.sub {{ margin: 0; }}
-h2 {{ font: 600 22px/1.3 var(--display); display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }}
-h2 small {{ font: 400 13px var(--body); color: var(--muted); }}
-section {{ display: grid; gap: 18px; min-width: 0; }}
-.rid {{ display: inline-block; padding: 3px 5px; margin: 2px 2px 0 0; border-radius: 3px; background: var(--accent-soft); color: var(--accent); text-decoration: none; vertical-align: 1px; }}
-.rid:hover, .rid:focus-visible {{ outline: 1px solid var(--accent); }}
-/* 사다리 */
-.ladder {{ border-top: 1px solid var(--ink); }}
-.rung {{ display: grid; grid-template-columns: 150px 170px 170px 1fr; gap: 16px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--rule); }}
-.rung[data-frontier="y"] {{ background: linear-gradient(90deg, var(--amber-soft), transparent 70%); }}
-.stage b {{ display: block; font: 600 18px/1.2 var(--display); }}
-.stage span {{ font: 400 12px var(--mono); color: var(--muted); }}
-.region {{ display: block; font: 500 11px var(--mono); color: var(--muted); letter-spacing: .04em; margin-bottom: 4px; }}
-.pips {{ display: flex; align-items: center; gap: 4px; }}
-.pip {{ width: 16px; height: 8px; border: 1px solid var(--accent); border-radius: 1px; }}
-.pip.on {{ background: var(--accent); }}
-.lv {{ margin-left: 8px; font-size: 14px; font-weight: 500; }}
-.why {{ margin: 0; font-size: 14px; color: var(--muted); min-width: 0; }}
-.frontier-note {{ font-size: 13px; color: var(--amber); font-family: var(--mono); }}
+  --up: #5fc493; --down: #ec8a78; --flat: #98a2ae; --opt: #6fcf9d; --opt-soft: #17291f; --pes: #ef9a88; --pes-soft: #2f1c18; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--paper); color: var(--ink); font: 400 16px/1.7 var(--body); padding: 0 20px; }
+main { max-width: 980px; margin: 0 auto; padding-block: 40px 72px; display: grid; gap: 60px; }
+.narrow { max-width: 70ch; }
+a { color: var(--accent); }
+code, .rid { font: 500 12px/1 var(--mono); }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+.eyebrow { font: 500 12px/1.4 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); display: flex; gap: 14px; flex-wrap: wrap; }
+h1 { font: 800 clamp(26px, 4.4vw, 40px)/1.25 var(--display); margin-top: 14px; }
+.question { margin: 16px 0 0; color: var(--muted); font-size: 15px; border-left: 2px solid var(--rule); padding-left: 14px; }
+h2 { font: 600 22px/1.3 var(--display); display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+h2 small { font: 400 13px var(--body); color: var(--muted); }
+section { display: grid; gap: 18px; min-width: 0; }
+.lead { margin: 0; max-width: 70ch; }
+.rid { display: inline-block; padding: 3px 5px; margin: 2px 2px 0 0; border-radius: 3px; background: var(--accent-soft); color: var(--accent); text-decoration: none; vertical-align: 1px; }
+.rid:hover, .rid:focus-visible { outline: 1px solid var(--accent); }
+/* 한 줄 답 */
+.answer { font: 600 clamp(20px, 2.8vw, 26px)/1.55 var(--display); margin: 0; }
+.answer-box { display: grid; gap: 20px; }
+.arows { margin: 0; border-top: 1px solid var(--ink); }
+.arow { display: grid; grid-template-columns: 170px 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+.arow dt { font-weight: 600; }
+.arow dd { margin: 0; min-width: 0; }
+/* 서술형 해석 */
+.narrative { display: grid; gap: 14px; max-width: 70ch; }
+.narrative p { margin: 0; }
 /* 표 */
-.tablewrap {{ overflow-x: auto; border-top: 1px solid var(--ink); }}
-table {{ border-collapse: collapse; width: 100%; min-width: 760px; font-size: 14px; }}
-th {{ text-align: left; font: 500 11px var(--mono); letter-spacing: .05em; color: var(--muted); padding: 10px 8px; border-bottom: 1px solid var(--rule); }}
-td {{ padding: 12px 8px; border-bottom: 1px solid var(--rule); vertical-align: top; }}
-td small {{ display: block; color: var(--muted); font-size: 12px; margin-top: 3px; }}
-.num {{ font: 500 15px var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; }}
-.muted {{ color: var(--muted); }}
-.ind {{ font: 500 12px var(--mono); width: 150px; }}
-.ind small {{ font-family: var(--body); }}
-.asof {{ font: 400 13px var(--mono); white-space: nowrap; }}
-.idc code {{ color: var(--muted); }}
-.src {{ font-size: 12px; color: var(--muted); margin-top: 6px; }}
-.src a {{ color: var(--muted); }}
-.grade {{ font: 500 10px var(--mono); margin-left: 4px; padding: 1px 4px; border: 1px solid currentColor; border-radius: 2px; }}
-.gC {{ color: var(--amber); }}
-.warn, .wk {{ font: 500 11px var(--mono); color: var(--amber); background: var(--amber-soft); padding: 2px 6px; border-radius: 2px; white-space: nowrap; }}
-.gap {{ font-size: 13px; color: var(--muted); margin: 0; }}
+.tablewrap { overflow-x: auto; border-top: 1px solid var(--ink); }
+table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 14px; }
+th { text-align: left; font: 500 11px var(--mono); letter-spacing: .05em; color: var(--muted); padding: 10px 8px; border-bottom: 1px solid var(--rule); }
+td { padding: 12px 8px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+td small { display: block; color: var(--muted); font-size: 12px; margin-top: 3px; }
+.num { font: 500 15px var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; }
+.muted { color: var(--muted); }
+.ind { font: 500 12px var(--mono); width: 150px; }
+.ind small { font-family: var(--body); }
+.tgt { font-weight: 600; width: 150px; }
+.asof { font: 400 13px var(--mono); white-space: nowrap; }
+.idc code { color: var(--muted); }
+.src { font-size: 12px; color: var(--muted); margin-top: 6px; }
+.src a { color: var(--muted); }
+.grade { font: 500 10px var(--mono); margin-left: 4px; padding: 1px 4px; border: 1px solid currentColor; border-radius: 2px; }
+.gC { color: var(--amber); }
+.warn, .wk { font: 500 11px var(--mono); color: var(--amber); background: var(--amber-soft); padding: 2px 6px; border-radius: 2px; white-space: nowrap; }
+.dir { font: 500 11px var(--mono); padding: 2px 7px; border-radius: 2px; color: var(--panel); white-space: nowrap; }
+.dir.up { background: var(--up); } .dir.down { background: var(--down); } .dir.flat { background: var(--flat); }
+.fstat { font: 500 11px var(--mono); border: 1px solid var(--accent); color: var(--accent); padding: 2px 6px; border-radius: 2px; white-space: nowrap; }
 /* 사건 */
-.timeline {{ list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }}
-.timeline li {{ display: grid; grid-template-columns: 110px 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--rule); }}
-.timeline time {{ font: 500 13px var(--mono); color: var(--muted); padding-top: 2px; }}
-.timeline li > div {{ min-width: 0; }}
-/* 해석 */
-.interps {{ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 28px; border-top: 1px solid var(--ink); }}
-.interp {{ padding: 16px 0; border-bottom: 1px solid var(--rule); display: grid; gap: 8px; align-content: start; }}
-.interp header {{ display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }}
-.interp h3 {{ font: 600 16px/1.3 var(--body); flex: 1; }}
-.interp header code {{ color: var(--muted); }}
-.interp p {{ margin: 0; font-size: 15px; }}
-.basis {{ font-size: 12px; color: var(--muted); }}
-.dir {{ font: 500 11px var(--mono); padding: 2px 7px; border-radius: 2px; color: var(--panel); }}
-.dir.up {{ background: var(--up); }} .dir.down {{ background: var(--down); }} .dir.flat {{ background: var(--flat); }}
-.method {{ font-size: 13px; color: var(--muted); }}
-.fstat {{ font: 500 11px var(--mono); border: 1px solid var(--accent); color: var(--accent); padding: 2px 6px; border-radius: 2px; white-space: nowrap; }}
-footer {{ font-size: 13px; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 18px; display: grid; gap: 6px; }}
-:target {{ background: var(--accent-soft); }}
-@media (max-width: 760px) {{
-  .rung {{ grid-template-columns: 1fr 1fr; }}
-  .rung .stage, .rung .why {{ grid-column: 1 / -1; }}
-  .interps {{ grid-template-columns: 1fr; }}
-  .timeline li {{ grid-template-columns: 1fr; gap: 4px; }}
-}}
-</style>
+.timeline { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
+.timeline li { display: grid; grid-template-columns: 110px 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+.timeline time { font: 500 13px var(--mono); color: var(--muted); padding-top: 2px; }
+.timeline li > div { min-width: 0; }
+/* 시나리오 */
+.scens { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.scen { border-top: 3px solid var(--sc); background: var(--panel); padding: 18px 18px 14px; display: grid; gap: 14px; align-content: start; }
+.scen.opt { --sc: var(--opt); --scs: var(--opt-soft); }
+.scen.pes { --sc: var(--pes); --scs: var(--pes-soft); }
+.scen header { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.sk { font: 600 13px var(--mono); color: var(--sc); letter-spacing: .03em; }
+.scen header code { color: var(--muted); }
+.sstmt { margin: 0; font-size: 15px; }
+.ms { list-style: none; margin: 0; padding: 0 0 0 12px; border-left: 2px solid var(--scs); display: grid; gap: 8px; }
+.ms li { display: grid; grid-template-columns: 70px 1fr; gap: 10px; font-size: 14px; }
+.ms time { font: 500 12px var(--mono); color: var(--sc); padding-top: 2px; }
+.sdl { margin: 0; display: grid; gap: 6px; font-size: 13px; }
+.sdl div { display: grid; grid-template-columns: 70px 1fr; gap: 10px; }
+.sdl dt { color: var(--muted); }
+.sdl dd { margin: 0; min-width: 0; }
+.side { font: 500 11px var(--mono); padding: 2px 7px; border-radius: 2px; white-space: nowrap; margin-right: 4px; }
+.side.opt { color: var(--opt); background: var(--opt-soft); }
+.side.pes { color: var(--pes); background: var(--pes-soft); }
+.subhead { font: 600 15px var(--body); margin: 8px 0 0; }
+/* 사다리 */
+.ladder { border-top: 1px solid var(--ink); }
+.rung { display: grid; grid-template-columns: 150px 170px 170px 1fr; gap: 16px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+.rung[data-frontier="y"] { background: linear-gradient(90deg, var(--amber-soft), transparent 70%); }
+.stage b { display: block; font: 600 18px/1.2 var(--display); }
+.stage span { font: 400 12px var(--mono); color: var(--muted); }
+.region { display: block; font: 500 11px var(--mono); color: var(--muted); letter-spacing: .04em; margin-bottom: 4px; }
+.pips { display: flex; align-items: center; gap: 4px; }
+.pip { width: 16px; height: 8px; border: 1px solid var(--accent); border-radius: 1px; }
+.pip.on { background: var(--accent); }
+.lv { margin-left: 8px; font-size: 14px; font-weight: 500; }
+.why { margin: 0; font-size: 14px; color: var(--muted); min-width: 0; }
+.frontier-note { font-size: 13px; color: var(--amber); font-family: var(--mono); margin: 0; }
+footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 18px; display: grid; gap: 6px; }
+:target { background: var(--accent-soft); }
+@media (max-width: 760px) {
+  .rung { grid-template-columns: 1fr 1fr; }
+  .rung .stage, .rung .why { grid-column: 1 / -1; }
+  .scens { grid-template-columns: 1fr; }
+  .arow, .timeline li { grid-template-columns: 1fr; gap: 4px; }
+}
+"""
+
+page = f"""<title>Q1 소비자 의사결정 R1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;800&display=swap">
+<style>{CSS}</style>
 <main>
   <header class="narrow">
     <div class="eyebrow"><span>AI Future Customer Lab</span><span>Q1 · Consumer Decision Making</span><span>R1 기준 회차 · 2026-10-09</span></div>
@@ -208,46 +294,54 @@ footer {{ font-size: 13px; color: var(--muted); border-top: 1px solid var(--rule
     <p class="question">고정 질문 v1.0 — {E(QUESTION)}</p>
   </header>
 
-  <section class="answer-wrap narrow">
+  <section class="answer-box">
     <h2>한 줄 답</h2>
-    <p class="answer">{E(ONE_LINE)}</p>
-    <p class="sub">{E(SITE_ROLE)} {tags(SITE_ROLE_BASIS)}</p>
-    <div>{tags(ONE_LINE_BASIS)}</div>
+    <p class="answer narrow">{E(ONE_LINE)} {tags(ONE_LINE_BASIS)}</p>
+    <dl class="arows">{answer_rows}</dl>
+  </section>
+
+  <section>
+    <h2>해석</h2>
+    <div class="narrative">{narrative_html}</div>
+    <div class="tablewrap"><table>
+      <thead><tr><th>방향</th><th>대상</th><th>해석</th><th>근거</th><th>기록</th></tr></thead>
+      <tbody>{irows}</tbody></table></div>
+  </section>
+
+  <section>
+    <h2>주요 사건 <small>최신순 · 원문 확인된 것만</small></h2>
+    <p class="lead">{E(EVENTS_LEAD)}</p>
+    <ul class="timeline">{erows}</ul>
+  </section>
+
+  <section>
+    <h2>전망 <small>2027년 말까지, AI는 쇼핑을 어디까지 대신할까</small></h2>
+    <p class="lead">{E(FORECAST_LEAD)}</p>
+    <div class="scens">{scen_html}</div>
+    <h3 class="subhead">세부 판정 근거</h3>
+    <p class="lead muted">각 세부 전망이 적중하거나 빗나갔을 때 어느 시나리오 쪽 신호인지 표시했다. 확인 시점이 오면 확인 방법대로 판정한다.</p>
+    <div class="tablewrap"><table>
+      <thead><tr><th>세부 전망</th><th>확인 시점</th><th>적중 시</th><th>빗나갈 시</th><th>상태</th><th>근거</th></tr></thead>
+      <tbody>{frows}</tbody></table></div>
   </section>
 
   <section>
     <h2>단계별 판정 <small>실험 · 얼리어답터 · 확산 · 주류 4단계</small></h2>
-    <div class="ladder">{''.join(ladder_rows)}</div>
+    <p class="lead">{E(LADDER_LEAD)}</p>
+    <div class="ladder">{ladder_rows}</div>
     <p class="frontier-note">음영 = 현재 경계선 (추천 → 결정)</p>
   </section>
 
   <section>
     <h2>핵심 지표 <small>추적 지표 {len(filled)}/8개 값 확보</small></h2>
+    <p class="lead">{E(METRICS_LEAD)}</p>
     <div class="tablewrap"><table>
       <thead><tr><th>추적 지표</th><th>내용 · 출처</th><th style="text-align:right">현재값</th><th style="text-align:right">이전값</th><th>기준 시점</th><th>기록</th></tr></thead>
       <tbody>{''.join(mrows)}</tbody></table></div>
-    <p class="gap">이번 회차에 값을 채우지 못한 지표: {E(', '.join(empty_ind))}. 다음 간단 조사에서 우선 확인합니다.</p>
   </section>
 
   <section>
-    <h2>주요 사건 <small>원문 확인된 것만</small></h2>
-    <ul class="timeline">{erows}</ul>
-  </section>
-
-  <section>
-    <h2>해석</h2>
-    <div class="interps">{irows}</div>
-  </section>
-
-  <section>
-    <h2>전망 <small>시점이 오면 확인 방법대로 판정합니다</small></h2>
-    <div class="tablewrap"><table>
-      <thead><tr><th>전망</th><th>확인 시점</th><th>확인 방법</th><th>상태</th><th>근거</th></tr></thead>
-      <tbody>{frows}</tbody></table></div>
-  </section>
-
-  <section>
-    <h2>미확인·경고 <small>Diff와 본문 판단에서 제외하거나 주의해서 쓴 기록</small></h2>
+    <h2>미확인·경고 <small>본문 판단에서 빼거나 주의해서 쓴 기록</small></h2>
     <div class="tablewrap"><table>
       <thead><tr><th>기록</th><th>구분</th><th>진술</th><th>사유</th></tr></thead>
       <tbody>{wrows}</tbody></table></div>
@@ -261,8 +355,8 @@ footer {{ font-size: 13px; color: var(--muted); border-top: 1px solid var(--rule
 </main>
 """
 (ROOT / "article_r1.html").write_text(page, encoding="utf-8")
-# 근거 번호 무결성
-import re
-bad = [i for i in re.findall(r'href="#(Q1-[A-Z]-\d{3})"', page) if i not in by]
-print("article_r1.html 생성,", len(page), "bytes; 깨진 근거 링크:", bad or "없음")
-sys.exit(1 if bad else 0)
+anchors = set(re.findall(r'id="(Q1-[A-Z]-\d{3})"', page))
+bad = sorted({i for i in re.findall(r'href="#(Q1-[A-Z]-\d{3})"', page) if i not in by or i not in anchors})
+order = [page.index(f"<h2>{h}") for h in ("한 줄 답", "해석", "주요 사건", "전망", "단계별 판정", "핵심 지표")]
+print("article_r1.html 생성,", len(page), "bytes; 깨진 근거 링크:", bad or "없음", "; 섹션 순서 정상:", order == sorted(order))
+sys.exit(1 if bad or order != sorted(order) else 0)
