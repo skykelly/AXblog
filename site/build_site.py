@@ -72,7 +72,7 @@ for c in cat["categories"]:
     qs = list(c.get("questions", []))
     known = {q["id"] for q in qs}
     if cdir.exists():  # catalog에 없는 질문 폴더 자동 포함
-        for d in sorted(p for p in cdir.iterdir() if p.is_dir() and re.fullmatch(r"q\d+", p.name)):
+        for d in sorted(p for p in cdir.iterdir() if p.is_dir() and re.fullmatch(r"[a-z]\d+", p.name)):
             if d.name not in known and rounds_of(d):
                 qs.append({"id": d.name, "no": d.name.upper(), "area": ""})
     items = []

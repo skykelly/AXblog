@@ -11,33 +11,34 @@
       "desc": "고객과 시장이 AI로 어떻게 바뀌는지를 추적한다.",
       "questions": [
         {
-          "id": "q1",
-          "no": "Q1",
+          "id": "c1",
+          "no": "C1",
           "area": "Consumer Decision Making"
         },
         {
-          "id": "q2",
-          "no": "Q2",
+          "id": "c2",
+          "no": "C2",
           "area": "Customer Experience & Commerce"
         },
         {
-          "id": "q3",
-          "no": "Q3",
+          "id": "c3",
+          "no": "C3",
           "area": "Content, Information & Trust"
         },
         {
-          "id": "q4",
-          "no": "Q4",
+          "id": "c4",
+          "no": "C4",
           "area": "Physical AI, Products & Living",
           "question": "집 안에서 AI가 스스로 판단·실행하는 범위는 어디까지 왔으며, 고객은 어느 수준의 자율을 받아들이는가?"
         },
         {
-          "id": "q5",
-          "no": "Q5",
+          "id": "c5",
+          "no": "C5",
           "area": "Household & Life Events",
           "question": "어떤 가구 변화와 생활 사건이 새로운 수요를 만들고 있는가?"
         }
-      ]
+      ],
+      "prefix": "C"
     },
     {
       "id": "industry-trend",
@@ -46,44 +47,47 @@
       "desc": "AI 산업 전체의 기술·제품·경쟁·확산 구조를 추적한다.",
       "questions": [
         {
-          "id": "q1",
-          "no": "Q1",
+          "id": "i1",
+          "no": "I1",
           "area": "AI Technology & Research",
-          "question": "최근 AI 기술과 지능의 발전에 영향을 미치는 어떤 중요한 사건이 발생했는가?"
+          "question": "AI가 새롭게 할 수 있게 된 일은 무엇이고, 기술의 한계선은 어느 축에서 얼마나 밀려났는가?"
         },
         {
-          "id": "q2",
-          "no": "Q2",
+          "id": "i2",
+          "no": "I2",
           "area": "AI Products & Applications",
-          "question": "최근 AI 제품과 서비스의 출시 및 실제 산업 적용과 관련하여 어떤 중요한 사건이 발생했는가?"
+          "question": "AI 제품은 어느 영역에서 시범을 넘어 실제 운영 단계에 들어섰는가?"
         },
         {
-          "id": "q3",
-          "no": "Q3",
+          "id": "i3",
+          "no": "I3",
           "area": "AI Industry & Economics",
-          "question": "최근 글로벌 AI 산업의 경쟁 구도, 투자 및 경제성에 영향을 미치는 어떤 중요한 사건이 발생했는가?"
+          "question": "AI 산업의 돈은 어디로 흐르고, 그 돈은 수익으로 돌아오고 있는가?"
         },
         {
-          "id": "q4",
-          "no": "Q4",
+          "id": "i4",
+          "no": "I4",
           "area": "AI Adoption, Governance & Geopolitics",
           "question": "AI는 어느 산업·업무까지 실제 운영에 들어갔고, 확산을 가장 크게 밀거나 막는 요인은 무엇인가?"
         }
-      ]
+      ],
+      "prefix": "I"
     },
     {
       "id": "sales-marketing",
       "no": 3,
       "name": "AI Sales & Marketing",
       "desc": "기업이 영업·마케팅에서 AI로 어떻게 대응하고 실행하는지 추적한다.",
-      "questions": []
+      "questions": [],
+      "prefix": "S"
     },
     {
       "id": "lg-group-ai",
       "no": 4,
       "name": "LG Group AI",
       "desc": "LG 그룹의 AI 전략과 실행을 추적한다.",
-      "questions": []
+      "questions": [],
+      "prefix": "L"
     }
   ]
 }
