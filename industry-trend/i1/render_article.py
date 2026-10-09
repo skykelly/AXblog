@@ -16,8 +16,8 @@ def para(text, ids): return f"<p>{E(text)} {tags(ids)}</p>"
 def src_links(r):
     return " · ".join(f'<a href="{E(s["url"])}" target="_blank" rel="noopener">{E(s["publisher"])}</a><span class="grade g{E(s["grade"])}">{E(s["grade"])}</span>' for s in r.get("sources", []))
 
-TITLE = "AI 기술의 한계선은 어디까지 밀려났나"
-QUESTION = "AI가 새롭게 할 수 있게 된 일은 무엇이고, 기술의 한계선은 어느 축에서 얼마나 밀려났는가?"
+TITLE = "AI 기술의 경계는 어디까지 넓어졌나"
+QUESTION = "AI가 새롭게 할 수 있게 된 일은 무엇이고, 기술의 경계는 어느 축에서 얼마나 넓어졌는가?"
 
 # 1. 한 줄 답 ----------------------------------------------------------
 ONE_LINE = ("2026년 10월 현재 AI는 사람이 반나절에서 하루 걸리는 소프트웨어 작업을 절반의 확률로 해내고(METR 기준 12~16시간 이상), 이 능력은 몇 시간짜리 업무를 끝까지 수행하는 에이전트로 이미 제품이 됐다. "
@@ -130,7 +130,7 @@ warns = [(r, "원문 미확인" if r["type"] in ("지표", "사건") and not r.g
 wrows = "".join(f"""<tr><td><code>{E(r['id'])}</code></td><td><span class="wk">{E(k)}</span></td><td>{E(r['statement'])}</td><td class="muted">{E('; '.join(r.get('check_flags', [])))}</td></tr>""" for r, k in warns)
 counts = {t: sum(1 for r in recs if r["type"] == t) for t in ("지표", "사건", "해석", "전망")}
 
-page = f"""<title>I1 AI 기술 한계선 R1</title>
+page = f"""<title>I1 AI 기술의 경계 R1</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;800&display=swap">
 <style>{CSS}</style>
@@ -145,7 +145,7 @@ page = f"""<title>I1 AI 기술 한계선 R1</title>
   <section><h2>해석</h2><div class="narrative">{narrative_html}</div>
     <div class="tablewrap"><table><thead><tr><th>방향</th><th>대상</th><th>해석</th><th>근거</th><th>기록</th></tr></thead><tbody>{irows}</tbody></table></div></section>
   <section><h2>주요 사건 <small>최신순 · 원문 확인된 것만</small></h2><p class="lead">{E(EVENTS_LEAD)}</p><ul class="timeline">{erows}</ul></section>
-  <section><h2>전망 <small>2027년 말까지, 기술의 한계선은 어디까지 밀려날까</small></h2><p class="lead">{E(FORECAST_LEAD)}</p>
+  <section><h2>전망 <small>2027년 말까지, 기술의 경계는 어디까지 넓어질까</small></h2><p class="lead">{E(FORECAST_LEAD)}</p>
     <div class="scens">{scen_html}</div>
     <h3 class="subhead">세부 판정 근거</h3>
     <p class="lead muted">각 세부 전망이 적중하거나 빗나갔을 때 어느 시나리오 쪽 신호인지 표시했다. 확인 시점이 오면 확인 방법대로 판정한다.</p>
