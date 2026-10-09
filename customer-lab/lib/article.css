@@ -118,3 +118,7 @@ footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--rule)
 .own.contest { color: var(--flat); border: 1px dashed var(--flat); }
 .mapgrid .rung { grid-template-columns: 130px 150px 150px 150px 1fr; }
 @media (max-width: 760px) { .mapgrid .rung { grid-template-columns: 1fr 1fr; } }
+/* 자율 수준 지도 (Q4) */
+.mapgrid.auto .rung { grid-template-columns: 130px 220px 220px 1fr; }
+table.levels { min-width: 520px; }
+@media (max-width: 760px) { .mapgrid.auto .rung { grid-template-columns: 1fr; } }
