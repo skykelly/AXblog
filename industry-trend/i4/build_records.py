@@ -1,0 +1,181 @@
+"""I4 R1 4유형 기록 생성 + 규칙 검증.
+출력: i4/records.jsonl
+"""
+import json, sys
+from pathlib import Path
+from collections import Counter
+
+R = "R1"
+SRC = {
+ "census": {"url": "https://www.census.gov/library/stories/2026/05/ai-use-businesses.html", "publisher": "미국 인구조사국 (BTOS)", "date": "2026-05-26", "grade": "A"},
+ "mck": {"url": "https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai", "publisher": "McKinsey State of AI 2026", "date": "2026-08-25", "grade": "A"},
+ "dc_delay": {"url": "https://tech-insider.org/us-ai-data-center-delays-cancellations-7gw-capacity-crisis-2026/", "publisher": "Tech Insider (Bloomberg·Sightline Climate 인용)", "date": "2026-04-17", "grade": "B"},
+ "ms_diff": {"url": "https://news.microsoft.com/source/asia/2026/01/12/global-ai-adoption-in-2025/?lang=ko", "publisher": "Microsoft AI 확산 보고서", "date": "2026-01-12", "grade": "A"},
+ "kcci": {"url": "https://eiec.kdi.re.kr/policy/domesticView.do?ac=0000187625", "publisher": "대한상의·산업연구원 (KDI 경제정보센터)", "date": "2024-08-30", "grade": "A"},
+ "settle": {"url": "https://writerbeware.blog/2026/07/23/anthropic-settlement-update-final-settlement-approved/", "publisher": "Writer Beware", "date": "2026-07-23", "grade": "B"},
+ "kr_plan": {"url": "https://www.fnnews.com/news/202605140910476269", "publisher": "파이낸셜뉴스", "date": "2026-05-14", "grade": "B"},
+ "csa_ipi": {"url": "https://labs.cloudsecurityalliance.org/research/csa-research-note-indirect-prompt-injection-in-the-wild-2026/", "publisher": "Cloud Security Alliance (OWASP·Google·Unit 42 인용)", "date": "2026-04-26", "grade": "B"},
+ "export_tl": {"url": "https://whatledto.com/events/nvidia-china-export-controls", "publisher": "WhatLedTo 타임라인 (BIS·Reuters·NVIDIA 공시 인용)", "date": "2026-09-03", "grade": "B"},
+ "nvda_q2": {"url": "https://www.sec.gov/Archives/edgar/data/0001045810/000104581026000073/q2fy27pr.htm", "publisher": "NVIDIA 실적 발표 (SEC 8-K)", "date": "2026-08-26", "grade": "A"},
+ "eo": {"url": "https://www.clarkhill.com/news-events/news/what-does-trumps-ai-executive-order-mean-for-colorados-ai-act/", "publisher": "Clark Hill (로펌 분석)", "date": "2025-12-12", "grade": "B"},
+ "colorado": {"url": "https://www.lawfuel.com/colorado-ai-act-2026-sb-26-189/", "publisher": "LawFuel", "date": "2026-06-09", "grade": "B"},
+ "kr_law": {"url": "https://www.newsis.com/view/NISX20260121_0003484769", "publisher": "뉴시스", "date": "2026-01-21", "grade": "B"},
+ "eu_omni": {"url": "https://www.orrick.com/en/Insights/2026/07/EU-AI-Act-Update-Digital-Omnibus-Finalizes-8-Compliance-Changes", "publisher": "Orrick (로펌 분석)", "date": "2026-07-29", "grade": "B"},
+ "doj": {"url": "https://axios.com/2026/09/19/justice-department-openai-new-york-times", "publisher": "Axios", "date": "2026-09-19", "grade": "B"},
+}
+def src(*keys): return [dict(SRC[k], key=k) for k in keys]
+
+base = dict(question="I4", question_version="v1.0", first_seen=R, last_seen=R, status="유효", replaces=None, check_flags=[])
+records = []
+def add(**kw):
+    r = dict(base); r.update(kw); records.append(r)
+
+# ---------- 지표 (M) ----------
+add(id="I4-M-001", type="지표", indicator="I4-T1", importance=3, statement="미국 기업 가운데 AI로 재화·서비스를 만들고 있다는 곳은 2026년 5월 초 19.8%다. 2025년 12월부터 5월까지 17~20% 사이에 머물렀고, 6개월 뒤 사용 예상은 20~23%다.",
+    value=19.8, unit="%", as_of="2026-05", region="US", definition="BTOS '최근 2주 AI 사용' 응답 기업 비율", extra={"expected_6m": "20~23%"}, sources=src("census"), verified=True)
+add(id="I4-M-002", type="지표", indicator="I4-T2", importance=3, statement="업종별로는 정보 산업이 39.7%로 가장 높고 금융·보험이 33.9%로 뒤를 잇는다. 소매업은 약 14%로 가장 낮다.",
+    value=39.7, unit="% (정보 산업)", as_of="2026-05", region="US", definition="BTOS 업종별 현재 AI 사용률", extra={"finance": "33.9%", "retail": "약 14%"}, sources=src("census"), verified=True)
+add(id="I4-M-003", type="지표", indicator="I4-T3", importance=2, statement="직원 250명 이상 기업의 AI 사용률은 37%, 100~249명 기업은 32%다. 20명 이상 기업에서는 사용률이 올랐지만 20명 미만 기업은 변화가 없었다.",
+    value=37, unit="% (250명 이상)", as_of="2026-05", region="US", definition="BTOS 규모별 AI 사용률", sources=src("census"), verified=True)
+add(id="I4-M-004", type="지표", indicator="I4-T4", importance=3, statement="AI를 전사로 확장하고 있다는 기업은 44%로 1년 전 38%에서 늘었다. AI Agent를 확장 중인 곳은 매출 10억 달러 이상 기업 40%, 그보다 작은 기업 22%다. 반면 AI로 EBIT 효과를 봤다는 곳은 37%로 1년 전과 비슷하다.",
+    value=44, unit="% (전사 확장)", as_of="2026-06", region="GLOBAL", definition="McKinsey 글로벌 설문(1,719명, 2026년 5~6월)", extra={"agents_large": "40%", "agents_small": "22%", "ebit": "37%", "token_cost_constraint": "약 20%"},
+    sources=src("mck"), verified=True)
+add(id="I4-M-005", type="지표", indicator="I4-T5", importance=3, statement="2026년 완공 예정이던 미국 데이터센터의 30~50%가 지연되거나 취소됐다는 집계가 나왔다. 발표된 12~16GW 가운데 실제 공사 중인 것은 약 5GW다. 병목은 GPU보다 전력망 연결이다.",
+    value=50, unit="% (지연·취소, 상단)", as_of="2026-05", region="US", definition="2026년 완공 예정 데이터센터 용량 중 지연·취소 비율", extra={"under_construction": "약 5GW", "announced": "12~16GW"},
+    sources=src("dc_delay"), verified=True, check_flags=["2차 정리 기사 — 원자료(Sightline Climate·Bloomberg) 확인 필요, 수치 범위가 기사 안에서도 다름"])
+add(id="I4-M-006", type="지표", indicator="I4-T6", importance=2, statement="Anthropic과 저자들의 15억 달러 저작권 합의가 최종 승인됐다. 청구된 저작물 44만 490건에 건당 약 3,127달러가 지급된다.",
+    value=3127, unit="달러 (저작물당)", as_of="2026-07", region="US", definition="AI 학습 저작권 합의의 저작물당 배상액", extra={"total": "15억 달러", "works": "440,490건"}, sources=src("settle"), verified=True)
+add(id="I4-M-007", type="지표", indicator="I4-T7", importance=2, statement="2026년 1~4월 OWASP가 꼽은 주요 AI 보안 사고 8건 가운데 CVE가 붙은 것은 1건뿐이다. 웹 페이지에 숨긴 지시로 에이전트를 조종하는 간접 프롬프트 주입은 시연을 넘어 실제 공격 단계에 들어섰다.",
+    value=8, unit="건 (2026-01~04 주요 사고)", as_of="2026-04", region="GLOBAL", definition="OWASP GenAI 분기 정리의 주요 AI 보안 사고", extra={"google_ipi_growth": "+32% (2025-11 → 2026-02)"},
+    sources=src("csa_ipi"), verified=True)
+add(id="I4-M-008", type="지표", indicator="I4-T8", importance=3, statement="한국의 생산가능인구 AI 사용률은 2025년 하반기 30%를 넘어 세계 18위로 7계단 올랐다. 2024년 10월 이후 증가율은 80% 이상으로 세계 평균(35%)의 두 배를 넘는다.",
+    value=30, unit="% 이상 (국민 사용률)", as_of="2025-H2", region="KR", definition="생산가능인구 중 생성형 AI 사용 비율", extra={"rank": "18위", "growth": "80% 이상"}, sources=src("ms_diff"), verified=True)
+add(id="I4-M-009", type="지표", indicator="I4-T8", importance=2, statement="국내 기업의 AI 활용률은 30.6%다. 대기업 48.8%, 중소기업 28.7%이고, 업종별로는 서비스업 53.0%(금융 57.1%), 제조업 23.8%다.",
+    value=30.6, unit="% (기업 활용률)", as_of="2024", region="KR", definition="국내 기업 500개사 AI 기술 활용 비율", extra={"large": "48.8%", "sme": "28.7%", "service": "53.0%", "manufacturing": "23.8%"},
+    sources=src("kcci"), verified=True, check_flags=["2024년 조사 — 2025년 이후 공식 기업 도입 통계로 갱신 필요"])
+add(id="I4-M-010", type="지표", indicator="I4-T8", importance=2, statement="정부는 GPU 1만 3천 장을 확보해 산·학·연(4천 장), 국가 프로젝트(3천 장), 독자 파운데이션 모델(3천 장)에 배분했다. AI 행동계획 326개 과제 중 288개(88%)가 정상 추진 중이다.",
+    value=13000, unit="장 (정부 확보 GPU)", as_of="2026-05", region="KR", definition="정부 확보 GPU 수량", extra={"tasks_on_track": "288/326"}, sources=src("kr_plan"), verified=True)
+
+# ---------- 사건 (E) ----------
+add(id="I4-E-001", type="사건", importance=3, statement="미국이 H200의 중국 판매를 승인하고 매출의 25%를 정부가 가져가는 조건을 붙였다.",
+    date="2025-12-08", actor="미국 정부", sources=src("export_tl"), verified=True, check_flags=["타임라인 정리 — 원 보도 The Register·BIS"])
+add(id="I4-E-002", type="사건", importance=3, statement="트럼프 대통령이 주(州) AI 법을 연방 정책으로 묶는 행정명령에 서명했다. 법무부에 주 법에 소송을 거는 전담 조직을 만들게 하고, 부담이 큰 주에는 연방 보조금을 제한할 수 있게 했다.",
+    date="2025-12-11", actor="미국 백악관", sources=src("eo"), verified=True)
+add(id="I4-E-003", type="사건", importance=2, statement="미국 상무부가 H200 수출을 개별 심사로 바꿨고, 같은 주 중국 세관은 H200 반입을 막았다. 이후 일부 승인이 나왔지만 8월까지 실제 출하는 소량에 그쳤다.",
+    date="2026-01-13", actor="미국 상무부·중국 정부", sources=src("export_tl"), verified=True, check_flags=["타임라인 정리 — 원 보도 BIS·Reuters"])
+add(id="I4-E-004", type="사건", importance=3, statement="한국 AI 기본법이 시행됐다. 고영향 AI와 생성형 AI 표시 의무가 생겼고, 과태료는 최소 1년 유예됐다.",
+    date="2026-01-22", actor="한국 정부", sources=src("kr_law"), verified=True)
+add(id="I4-E-005", type="사건", importance=2, statement="미국 콜로라도주가 2024년 AI법을 대폭 줄인 대체 법에 서명했다. 위험관리·영향평가 의무를 없애고 통지·설명·사람 검토 권리만 남겼으며, 시행은 2027년 1월로 미뤘다.",
+    date="2026-05-14", actor="콜로라도주", sources=src("colorado"), verified=True)
+add(id="I4-E-006", type="사건", importance=2, statement="국가인공지능전략위원회가 AI 행동계획 이행을 점검하고 GPU 1만 3천 장 확보·배분 현황을 밝혔다.",
+    date="2026-05-14", actor="국가인공지능전략위원회", sources=src("kr_plan"), verified=True)
+add(id="I4-E-007", type="사건", importance=3, statement="EU가 AI법 개정(디지털 옴니버스)을 확정해 고위험 AI 의무 적용을 2026년 8월에서 2027년 12월로, 제품 결합형 고위험 AI는 2028년 8월로 미뤘다.",
+    date="2026-07", actor="EU", sources=src("eu_omni"), verified=True, check_flags=["관보 게재 정확한 날짜는 원문에 없음"])
+add(id="I4-E-008", type="사건", importance=2, statement="법원이 Anthropic과 저자들의 15억 달러 저작권 합의를 최종 승인했다.",
+    date="2026-07-21", actor="미국 연방법원", sources=src("settle"), verified=True)
+add(id="I4-E-009", type="사건", importance=2, statement="NVIDIA가 다음 분기 전망에서 중국 데이터센터 매출을 0으로 잡았다. 중국 수출 허용 물량의 일부만 출하했고 H200 재고 4억 달러를 손실 처리했다.",
+    date="2026-08-26", actor="NVIDIA", sources=src("nvda_q2", "export_tl"), verified=True)
+add(id="I4-E-010", type="사건", importance=3, statement="미국 법무부가 뉴욕타임스 대 OpenAI 소송에서 'AI 학습은 새롭고 변형적이어서 공정 이용'이라는 의견서를 냈다. 출력물까지 같은 논리가 적용되지는 않는다고 선을 그었다.",
+    date="2026-09-19", actor="미국 법무부", sources=src("doj"), verified=True)
+
+# ---------- 해석 (I) ----------
+add(id="I4-I-001", type="해석", importance=3, target="확산의 넓이와 깊이", direction="중립",
+    statement="AI 확산은 넓이가 아니라 깊이로 진행되고 있다. 미국 기업 전체 사용률은 반년째 20% 안팎에서 멈췄지만, 대기업은 전사 확장과 Agent 확장을 빠르게 늘리고 있다.",
+    basis=["I4-M-001", "I4-M-003", "I4-M-004"])
+add(id="I4-I-002", type="해석", importance=3, target="산업·업무", direction="강화",
+    statement="실제 운영 단계에 들어선 곳은 정보·금융 산업과 IT·소프트웨어 개발 업무다. 소매와 제조는 아직 초기 확산 단계이며, 제조는 공급망·재고 업무에서 Agent를 시험하는 수준이다.",
+    basis=["I4-M-002", "I4-M-004", "I4-M-009"])
+add(id="I4-I-003", type="해석", importance=3, target="규제", direction="강화",
+    statement="규제의 브레이크는 풀리는 쪽이다. EU는 고위험 의무를 1년 4개월 미뤘고, 미국은 연방이 주 법을 압박해 콜로라도가 법을 크게 줄였으며, 법무부는 학습 단계의 공정 이용을 지지했다.",
+    basis=["I4-E-007", "I4-E-002", "I4-E-005", "I4-E-010"])
+add(id="I4-I-004", type="해석", importance=2, target="저작권", direction="중립",
+    statement="저작권은 '막는 요인'에서 '비용'으로 바뀌고 있다. 해적판 학습에는 저작물당 약 3,100달러라는 가격이 매겨졌고, 정상 취득한 데이터의 학습은 공정 이용 쪽으로 기울고 있다.",
+    basis=["I4-M-006", "I4-E-008", "I4-E-010"])
+add(id="I4-I-005", type="해석", importance=3, target="전력·인프라", direction="약화",
+    statement="지금 확산을 가장 크게 막는 것은 규제가 아니라 전력이다. 올해 완공 예정 데이터센터의 30~50%가 늦어지고 있어, 돈이 있어도 연산 능력이 제때 들어서지 못한다.",
+    basis=["I4-M-005"])
+add(id="I4-I-006", type="해석", importance=2, target="Agent 보안", direction="약화",
+    statement="Agent 보안은 운영 확대의 새 제약이다. 간접 프롬프트 주입이 실제 공격으로 쓰이고 있지만 대부분 CVE 없이 처리돼, 기업이 위험을 추적하기 어렵다.",
+    basis=["I4-M-007"])
+add(id="I4-I-007", type="해석", importance=2, target="수출 통제", direction="중립",
+    statement="미국과 중국의 AI 시장은 분리가 굳어지고 있다. 미국이 수수료를 받고 H200 판매를 허용했지만 중국이 수입을 억제해, NVIDIA는 중국 매출을 전망에서 뺐다.",
+    basis=["I4-E-001", "I4-E-003", "I4-E-009"])
+add(id="I4-I-008", type="해석", importance=2, target="한국", direction="강화",
+    statement="한국은 개인 사용은 빠르게 늘고(국민 30% 이상, 증가율 세계 평균의 두 배), 법과 GPU 같은 제도·인프라도 갖춰지고 있다. 다만 기업 도입 통계는 2024년(30.6%) 이후 공식 갱신이 없어, 기업 운영 단계는 판정하기 어렵다.",
+    basis=["I4-M-008", "I4-M-009", "I4-M-010", "I4-E-004"])
+
+# ---------- 세부 전망 (F) ----------
+add(id="I4-F-001", type="전망", importance=2, status="유효", forecast_status="진행 중",
+    statement="NVIDIA는 다음 분기(2026년 11월~2027년 1월) 전망에서도 중국 데이터센터 매출을 0으로 잡을 것이다.", due="2026-11-30", condition="없음",
+    method="NVIDIA 3분기(FY2027) 실적 발표의 전망 문구 확인", basis=["I4-E-009"], result=None)
+add(id="I4-F-002", type="전망", importance=3, status="유효", forecast_status="진행 중",
+    statement="미국 기업 AI 사용률(BTOS)은 2026년 12월 말 기준 21% 이상일 것이다.", due="2027-01-31", condition="BTOS 조사가 계속 발표될 경우",
+    method="미국 인구조사국 BTOS 최신 격주 자료 확인", basis=["I4-M-001", "I4-M-003"], result=None)
+add(id="I4-F-003", type="전망", importance=2, status="유효", forecast_status="진행 중",
+    statement="2027년 6월 말까지 뉴욕타임스 대 OpenAI 소송에서 학습 단계의 공정 이용 여부에 대한 법원 판단(약식판결 포함)이 나올 것이다.", due="2027-06-30", condition="합의로 종결되지 않을 경우",
+    method="법원 기록 또는 주요 언론 보도 확인", basis=["I4-E-010"], result=None)
+add(id="I4-F-004", type="전망", importance=3, status="유효", forecast_status="진행 중",
+    statement="2027년 상반기에도 미국 데이터센터 계획 용량의 30% 이상이 지연·취소됐다는 집계가 나올 것이다.", due="2027-06-30", condition="없음",
+    method="Sightline Climate·Bloomberg 등 집계 확인", basis=["I4-M-005"], result=None)
+add(id="I4-F-005", type="전망", importance=2, status="유효", forecast_status="진행 중",
+    statement="EU는 2027년 6월 말까지 고위험 AI 의무(2027년 12월 적용)를 다시 미루자는 공식 제안을 내지 않을 것이다.", due="2027-06-30", condition="없음",
+    method="EU 집행위원회 발표 확인", basis=["I4-E-007"], result=None)
+add(id="I4-F-006", type="전망", importance=3, status="유효", forecast_status="진행 중",
+    statement="McKinsey 2027년 조사에서 AI를 전사로 확장 중이라는 기업 비율은 50% 이상일 것이다.", due="2027-09-30", condition="같은 문항이 유지될 경우",
+    method="McKinsey State of AI 2027 확인", basis=["I4-M-004"], result=None)
+
+# ---------- 메인 질문 시나리오 ----------
+add(id="I4-F-101", type="전망", importance=3, status="유효", forecast_status="진행 중", scenario="낙관",
+    statement="2027년 말까지 AI가 정보·금융을 넘어 소매·제조의 핵심 업무로 들어간다. 미국 기업 사용률이 25%를 넘고, 대기업 과반이 AI를 전사로 확장한다. 규제는 연기·완화 기조가 유지되고, 전력 병목은 신규 발전·연결로 풀리기 시작한다.",
+    milestones=[
+        {"by": "2027-01", "text": "미국 기업 AI 사용률 21% 이상"},
+        {"by": "2027-06", "text": "데이터센터 지연 비율 30% 미만으로 하락"},
+        {"by": "2027-09", "text": "McKinsey 전사 확장 50% 이상"}],
+    due="2027-12-31", condition="대형 AI 사고나 경기 침체로 기업 투자가 멈추지 않을 경우",
+    method="세 가지 중 두 가지 이상 충족 시 적중: (1) 미국 BTOS 현재 AI 사용률 25% 이상 (2) McKinsey 전사 확장 비율 50% 이상 (3) 미국 데이터센터 지연·취소 비율 집계 30% 미만",
+    basis=["I4-M-001", "I4-M-004", "I4-M-005"],
+    signposts=[{"id": "I4-F-002", "on_hit": "낙관", "on_miss": "비관"}, {"id": "I4-F-004", "on_hit": "비관", "on_miss": "낙관"},
+               {"id": "I4-F-006", "on_hit": "낙관", "on_miss": "비관"}, {"id": "I4-F-005", "on_miss": "낙관"}], result=None)
+add(id="I4-F-102", type="전망", importance=3, status="유효", forecast_status="진행 중", scenario="비관",
+    statement="2027년 말까지 확산은 대기업·정보 산업 안에 머문다. 미국 기업 사용률은 20% 근처에서 정체하고, 전력 부족과 Agent 보안 사고가 운영 확대를 늦춘다. 규제 완화로 생긴 공백을 소송과 사고가 메운다.",
+    milestones=[
+        {"by": "2027-01", "text": "미국 기업 AI 사용률 21% 미만"},
+        {"by": "2027-06", "text": "데이터센터 지연 30% 이상 지속"},
+        {"by": "2027-09", "text": "McKinsey 전사 확장 50% 미만, EBIT 효과 정체"}],
+    due="2027-12-31", condition="없음",
+    method="낙관 시나리오의 판정 조건 세 가지 중 하나 이하만 충족 시 적중",
+    basis=["I4-M-001", "I4-M-005", "I4-M-007"], signposts=[], result=None)
+
+# ---------- 검증 ----------
+ids = {r["id"] for r in records}
+_t = {r["id"]: r["type"] for r in records}
+_v = {r["id"]: r.get("verified") for r in records}
+facts = {i for i, t in _t.items() if t in ("지표", "사건")}
+errs = []
+for r in records:
+    if r["type"] in ("지표", "사건") and (not r.get("sources") or not all(s.get("url") for s in r["sources"])):
+        errs.append(f"{r['id']}: 원문 링크 없음")
+    if r["type"] == "해석":
+        if not set(r.get("basis", [])) & facts: errs.append(f"{r['id']}: 사실 기록 연결 없음")
+        if r.get("direction") not in ("강화", "약화", "중립"): errs.append(f"{r['id']}: 방향 값 오류")
+    if r["type"] == "전망":
+        for f in ("due", "method", "basis"):
+            if not r.get(f): errs.append(f"{r['id']}: {f} 없음")
+        if not set(r["basis"]) & facts: errs.append(f"{r['id']}: 해석에만 기대는 전망")
+    for sp in r.get("signposts", []):
+        if _t.get(sp["id"]) != "전망": errs.append(f"{r['id']}: 판정 신호 {sp['id']}가 세부 전망이 아님")
+    if r.get("scenario") and r["scenario"] not in ("낙관", "비관"): errs.append(f"{r['id']}: 시나리오 값 오류")
+    for b in r.get("basis", []):
+        if b not in ids: errs.append(f"{r['id']}: 존재하지 않는 근거 {b}")
+        elif r["type"] in ("해석", "전망") and b in facts and not _v[b]: errs.append(f"{r['id']}: 원문 미확인 기록 {b}을 근거로 씀")
+if len(ids) != len(records): errs.append("중복 ID")
+
+with open(Path(__file__).parent / "records.jsonl", "w", encoding="utf-8") as f:
+    for r in records: f.write(json.dumps(r, ensure_ascii=False) + "\n")
+
+print("기록 수:", len(records), dict(Counter(r["type"] for r in records)))
+print("원문 미확인 사실:", [r["id"] for r in records if r["type"] in ("지표", "사건") and not r.get("verified")])
+inds = {r.get("indicator") for r in records if r["type"] == "지표" and r.get("verified")}
+print("값 채워진 추적 지표:", sorted(inds), f"{len(inds)}/8")
+print("검증 오류:", errs or "없음")
+sys.exit(1 if errs else 0)
