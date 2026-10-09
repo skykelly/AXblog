@@ -117,7 +117,44 @@
       "no": 4,
       "name": "LG Group AI",
       "desc": "LG 그룹의 AI 전략과 실행을 추적한다.",
-      "questions": [],
+      "questions": [
+        {
+          "id": "l1",
+          "no": "L1",
+          "area": "AI Data Center / Infra",
+          "question": "LG는 AI 데이터센터의 냉각·전력·구축·운영 수요를 어떤 제품과 계약으로 확보하고 있으며, 그 수요는 계약·매출로 어디까지 확인되는가?"
+        },
+        {
+          "id": "l2",
+          "no": "L2",
+          "area": "Physical AI / Smart Manufacturing",
+          "question": "LG는 AI를 공장·물류·로봇·가전의 물리적 작동에 어떻게 적용하며, 실제 성능과 사업 성과는 어디까지 확인되는가?"
+        },
+        {
+          "id": "l3",
+          "no": "L3",
+          "area": "AI Mobility / SDV·AIDV",
+          "question": "LG의 차량용 AI·소프트웨어·부품은 어떤 고객과 차종에 적용되며, 공급 범위와 수익 기회는 어떻게 확대되는가?"
+        },
+        {
+          "id": "l4",
+          "no": "L4",
+          "area": "Enterprise AX / Agentic Operating Model",
+          "question": "LG는 내부 업무와 외부 고객 사업에서 AI를 어떻게 실행 체계로 전환하며, 사용·품질·생산성·매출 성과는 무엇인가?"
+        },
+        {
+          "id": "l5",
+          "no": "L5",
+          "area": "AI for Science / Bio / Materials / Battery",
+          "question": "AI가 소재·배터리·신약의 탐색과 개발을 얼마나 개선하며, 연구 결과는 실험·제품·사업화로 어디까지 이어지는가?"
+        },
+        {
+          "id": "l6",
+          "no": "L6",
+          "area": "Global AI Alliance / Open Innovation",
+          "question": "LG는 자체 AI 역량과 외부 파트너를 어떻게 결합하며, 협력이 기술·고객·공급망·시장 접근에 어떤 변화를 만드는가?"
+        }
+      ],
       "prefix": "L"
     }
   ]
