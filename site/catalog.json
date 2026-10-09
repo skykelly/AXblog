@@ -10,21 +10,66 @@
       "name": "AI Future Customer Lab",
       "desc": "고객과 시장이 AI로 어떻게 바뀌는지를 추적한다.",
       "questions": [
-        {"id": "q1", "no": "Q1", "area": "Consumer Decision Making"},
-        {"id": "q2", "no": "Q2", "area": "Customer Experience & Commerce"},
-        {"id": "q3", "no": "Q3", "area": "Content, Information & Trust"},
-        {"id": "q4", "no": "Q4", "area": "Physical AI, Products & Living",
-         "question": "집 안에서 AI가 스스로 판단·실행하는 범위는 어디까지 왔으며, 고객은 어느 수준의 자율을 받아들이는가?"},
-        {"id": "q5", "no": "Q5", "area": "Household & Life Events",
-         "question": "어떤 가구 변화와 생활 사건이 새로운 수요를 만들고 있는가?"}
+        {
+          "id": "q1",
+          "no": "Q1",
+          "area": "Consumer Decision Making"
+        },
+        {
+          "id": "q2",
+          "no": "Q2",
+          "area": "Customer Experience & Commerce"
+        },
+        {
+          "id": "q3",
+          "no": "Q3",
+          "area": "Content, Information & Trust"
+        },
+        {
+          "id": "q4",
+          "no": "Q4",
+          "area": "Physical AI, Products & Living",
+          "question": "집 안에서 AI가 스스로 판단·실행하는 범위는 어디까지 왔으며, 고객은 어느 수준의 자율을 받아들이는가?"
+        },
+        {
+          "id": "q5",
+          "no": "Q5",
+          "area": "Household & Life Events",
+          "question": "어떤 가구 변화와 생활 사건이 새로운 수요를 만들고 있는가?"
+        }
       ]
     },
     {
       "id": "industry-trend",
       "no": 2,
       "name": "AI Industry Trend",
-      "desc": "AI 산업과 기술 동향을 추적한다.",
-      "questions": []
+      "desc": "AI 산업 전체의 기술·제품·경쟁·확산 구조를 추적한다.",
+      "questions": [
+        {
+          "id": "q1",
+          "no": "Q1",
+          "area": "AI Technology & Research",
+          "question": "최근 AI 기술과 지능의 발전에 영향을 미치는 어떤 중요한 사건이 발생했는가?"
+        },
+        {
+          "id": "q2",
+          "no": "Q2",
+          "area": "AI Products & Applications",
+          "question": "최근 AI 제품과 서비스의 출시 및 실제 산업 적용과 관련하여 어떤 중요한 사건이 발생했는가?"
+        },
+        {
+          "id": "q3",
+          "no": "Q3",
+          "area": "AI Industry & Economics",
+          "question": "최근 글로벌 AI 산업의 경쟁 구도, 투자 및 경제성에 영향을 미치는 어떤 중요한 사건이 발생했는가?"
+        },
+        {
+          "id": "q4",
+          "no": "Q4",
+          "area": "AI Adoption, Governance & Geopolitics",
+          "question": "AI는 어느 산업·업무까지 실제 운영에 들어갔고, 확산을 가장 크게 밀거나 막는 요인은 무엇인가?"
+        }
+      ]
     },
     {
       "id": "sales-marketing",
