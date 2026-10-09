@@ -1,0 +1,244 @@
+<title>S4 AI 영업·고객 응대 R1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;800&display=swap">
+<style>
+/* Layout: 연구 노트 한 단 — 답 → 서술형 해석 → 근거 표. 기록 번호가 본문의 각주 역할 */
+:root {
+  --paper: #f6f7f9; --ink: #16202b; --muted: #5d6875; --rule: #d6dbe2; --panel: #ffffff;
+  --accent: #1f5f8b; --accent-soft: #e2edf5; --amber: #b4690e; --amber-soft: #f7ead7;
+  --up: #1f7a4d; --down: #b3412f; --flat: #6a7380; --opt: #1f7a4d; --opt-soft: #e1f1e8; --pes: #a3402f; --pes-soft: #f6e3df;
+  --display: "Noto Serif KR", "Apple SD Gothic Neo", serif;
+  --body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #11161c; --ink: #e6ebf1; --muted: #9aa5b1; --rule: #2b333d; --panel: #171e26;
+  --accent: #7fb6dc; --accent-soft: #1b2c3a; --amber: #e2a457; --amber-soft: #33271a;
+  --up: #5fc493; --down: #ec8a78; --flat: #98a2ae; --opt: #6fcf9d; --opt-soft: #17291f; --pes: #ef9a88; --pes-soft: #2f1c18; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --paper: #11161c; --ink: #e6ebf1; --muted: #9aa5b1; --rule: #2b333d; --panel: #171e26;
+  --accent: #7fb6dc; --accent-soft: #1b2c3a; --amber: #e2a457; --amber-soft: #33271a;
+  --up: #5fc493; --down: #ec8a78; --flat: #98a2ae; --opt: #6fcf9d; --opt-soft: #17291f; --pes: #ef9a88; --pes-soft: #2f1c18; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--paper); color: var(--ink); font: 400 16px/1.7 var(--body); padding: 0 20px; }
+main { max-width: 980px; margin: 0 auto; padding-block: 40px 72px; display: grid; gap: 60px; }
+.narrow { max-width: 70ch; }
+a { color: var(--accent); }
+code, .rid { font: 500 12px/1 var(--mono); }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+.eyebrow { font: 500 12px/1.4 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); display: flex; gap: 14px; flex-wrap: wrap; }
+h1 { font: 800 clamp(26px, 4.4vw, 40px)/1.25 var(--display); margin-top: 14px; }
+.question { margin: 16px 0 0; color: var(--muted); font-size: 15px; border-left: 2px solid var(--rule); padding-left: 14px; }
+h2 { font: 600 22px/1.3 var(--display); display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+h2 small { font: 400 13px var(--body); color: var(--muted); }
+section { display: grid; gap: 18px; min-width: 0; }
+.lead { margin: 0; max-width: 70ch; }
+.rid { display: inline-block; padding: 3px 5px; margin: 2px 2px 0 0; border-radius: 3px; background: var(--accent-soft); color: var(--accent); text-decoration: none; vertical-align: 1px; }
+.rid:hover, .rid:focus-visible { outline: 1px solid var(--accent); }
+/* 한 줄 답 */
+.answer { font: 600 clamp(20px, 2.8vw, 26px)/1.55 var(--display); margin: 0; }
+.answer-box { display: grid; gap: 20px; }
+.arows { margin: 0; border-top: 1px solid var(--ink); }
+.arow { display: grid; grid-template-columns: 170px 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+.arow dt { font-weight: 600; }
+.arow dd { margin: 0; min-width: 0; }
+/* 서술형 해석 */
+.narrative { display: grid; gap: 14px; max-width: 70ch; }
+.narrative p { margin: 0; }
+/* 표 */
+.tablewrap { overflow-x: auto; border-top: 1px solid var(--ink); }
+table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 14px; }
+th { text-align: left; font: 500 11px var(--mono); letter-spacing: .05em; color: var(--muted); padding: 10px 8px; border-bottom: 1px solid var(--rule); }
+td { padding: 12px 8px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+td small { display: block; color: var(--muted); font-size: 12px; margin-top: 3px; }
+.num { font: 500 15px var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; }
+.muted { color: var(--muted); }
+.ind { font: 500 12px var(--mono); width: 150px; }
+.ind small { font-family: var(--body); }
+.tgt { font-weight: 600; width: 150px; }
+.asof { font: 400 13px var(--mono); white-space: nowrap; }
+.idc code { color: var(--muted); }
+.src { font-size: 12px; color: var(--muted); margin-top: 6px; }
+.src a { color: var(--muted); }
+.grade { font: 500 10px var(--mono); margin-left: 4px; padding: 1px 4px; border: 1px solid currentColor; border-radius: 2px; }
+.gC { color: var(--amber); }
+.warn, .wk { font: 500 11px var(--mono); color: var(--amber); background: var(--amber-soft); padding: 2px 6px; border-radius: 2px; white-space: nowrap; }
+.dir { font: 500 11px var(--mono); padding: 2px 7px; border-radius: 2px; color: var(--panel); white-space: nowrap; }
+.dir.up { background: var(--up); } .dir.down { background: var(--down); } .dir.flat { background: var(--flat); }
+.fstat { font: 500 11px var(--mono); border: 1px solid var(--accent); color: var(--accent); padding: 2px 6px; border-radius: 2px; white-space: nowrap; }
+/* 사건 */
+.timeline { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
+.timeline li { display: grid; grid-template-columns: 110px 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+.timeline time { font: 500 13px var(--mono); color: var(--muted); padding-top: 2px; }
+.timeline li > div { min-width: 0; }
+/* 시나리오 */
+.scens { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.scen { border-top: 3px solid var(--sc); background: var(--panel); padding: 18px 18px 14px; display: grid; gap: 14px; align-content: start; }
+.scen.opt { --sc: var(--opt); --scs: var(--opt-soft); }
+.scen.pes { --sc: var(--pes); --scs: var(--pes-soft); }
+.scen header { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.sk { font: 600 13px var(--mono); color: var(--sc); letter-spacing: .03em; }
+.scen header code { color: var(--muted); }
+.sstmt { margin: 0; font-size: 15px; }
+.ms { list-style: none; margin: 0; padding: 0 0 0 12px; border-left: 2px solid var(--scs); display: grid; gap: 8px; }
+.ms li { display: grid; grid-template-columns: 70px 1fr; gap: 10px; font-size: 14px; }
+.ms time { font: 500 12px var(--mono); color: var(--sc); padding-top: 2px; }
+.sdl { margin: 0; display: grid; gap: 6px; font-size: 13px; }
+.sdl div { display: grid; grid-template-columns: 70px 1fr; gap: 10px; }
+.sdl dt { color: var(--muted); }
+.sdl dd { margin: 0; min-width: 0; }
+.side { font: 500 11px var(--mono); padding: 2px 7px; border-radius: 2px; white-space: nowrap; margin-right: 4px; }
+.side.opt { color: var(--opt); background: var(--opt-soft); }
+.side.pes { color: var(--pes); background: var(--pes-soft); }
+.subhead { font: 600 15px var(--body); margin: 8px 0 0; }
+/* 사다리 */
+.ladder { border-top: 1px solid var(--ink); }
+.rung { display: grid; grid-template-columns: 150px 170px 170px 1fr; gap: 16px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+.rung[data-frontier="y"] { background: linear-gradient(90deg, var(--amber-soft), transparent 70%); }
+.stage b { display: block; font: 600 18px/1.2 var(--display); }
+.stage span { font: 400 12px var(--mono); color: var(--muted); }
+.region { display: block; font: 500 11px var(--mono); color: var(--muted); letter-spacing: .04em; margin-bottom: 4px; }
+.pips { display: flex; align-items: center; gap: 4px; }
+.pip { width: 16px; height: 8px; border: 1px solid var(--accent); border-radius: 1px; }
+.pip.on { background: var(--accent); }
+.lv { margin-left: 8px; font-size: 14px; font-weight: 500; }
+.why { margin: 0; font-size: 14px; color: var(--muted); min-width: 0; }
+.frontier-note { font-size: 13px; color: var(--amber); font-family: var(--mono); margin: 0; }
+footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 18px; display: grid; gap: 6px; }
+:target { background: var(--accent-soft); }
+@media (max-width: 760px) {
+  .rung { grid-template-columns: 1fr 1fr; }
+  .rung .stage, .rung .why { grid-column: 1 / -1; }
+  .scens { grid-template-columns: 1fr; }
+  .arow, .timeline li { grid-template-columns: 1fr; gap: 4px; }
+}
+
+/* 주도권 지도 (C2) */
+.own { font: 500 12px var(--mono); padding: 3px 8px; border-radius: 2px; white-space: nowrap; display: inline-block; }
+.own.brand { color: var(--up); background: var(--opt-soft); }
+.own.platform { color: var(--accent); background: var(--accent-soft); }
+.own.agent { color: var(--amber); background: var(--amber-soft); }
+.own.contest { color: var(--flat); border: 1px dashed var(--flat); }
+.mapgrid .rung { grid-template-columns: 130px 150px 150px 150px 1fr; }
+@media (max-width: 760px) { .mapgrid .rung { grid-template-columns: 1fr 1fr; } }
+/* 자율 수준 지도 (C4) */
+.mapgrid.auto .rung { grid-template-columns: 130px 220px 220px 1fr; }
+table.levels { min-width: 520px; }
+@media (max-width: 760px) { .mapgrid.auto .rung { grid-template-columns: 1fr; } }
+/* 역량 원장 (I1) */
+.mapgrid.ledger .rung { grid-template-columns: 200px 260px 1fr; }
+@media (max-width: 760px) { .mapgrid.ledger .rung { grid-template-columns: 1fr; } }
+
+/* I3 두 곡선 */
+.curves { display: grid; gap: 14px; margin: 8px 0 18px; }
+.curve { display: grid; grid-template-columns: 150px 1fr; gap: 12px; align-items: center; }
+.curve .cl { font: 600 13px var(--body); }
+.curve .cl small { display: block; font: 400 12px var(--mono); color: var(--muted); }
+.curve .bar { height: 26px; background: var(--accent-soft); border-radius: 2px; position: relative; }
+.curve .bar span { position: absolute; inset: 0 auto 0 0; display: flex; align-items: center; padding: 0 10px; font: 500 12px var(--mono); color: #fff; border-radius: 2px; white-space: nowrap; }
+.curve.inv .bar span { background: var(--accent); }
+.curve.rev .bar span { background: var(--up); }
+.gapnote { border-left: 3px solid var(--amber); padding: 6px 12px; background: var(--amber-soft); font-size: 14px; }
+.mapgrid.layers .rung { grid-template-columns: 150px 200px 110px 1fr; }
+@media (max-width: 720px) { .curve { grid-template-columns: 1fr; } .mapgrid.layers .rung { grid-template-columns: 1fr; } }
+
+/* S1 유입 저울 */
+.balance { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 8px 0 14px; }
+.balance .pan { border: 1px solid var(--rule); border-top: 3px solid var(--down); background: var(--panel); padding: 12px 16px; }
+.balance .pan.gain { border-top-color: var(--up); }
+.balance h4 { margin: 0 0 8px; font: 600 14px var(--body); }
+.balance ul { margin: 0; padding-left: 18px; font-size: 14px; line-height: 1.7; }
+@media (max-width: 720px) { .balance { grid-template-columns: 1fr; } }
+</style>
+<main>
+  <header class="narrow">
+    <div class="eyebrow"><span>AI Sales &amp; Marketing</span><span>S4 · AI Sales &amp; Customer Service</span><span>R1 기준 회차 · 2026-10-09</span></div>
+    <h1>AI는 영업과 고객 응대에서 무엇을 맡고, 사람은 무엇을 하나</h1>
+    <p class="question">고정 질문 v1.0 — AI는 리드 발굴·상담·제안·협상·고객 서비스 중 무엇을 수행하며, 사람과의 역할 분담은 어떻게 달라지는가?</p>
+  </header>
+  <section class="answer-box"><h2>한 줄 답</h2>
+    <p class="answer narrow">2026년 10월 현재 AI는 영업 과정의 양 끝을 맡는다. 앞단의 리드 발굴(셀러 54%가 AI 에이전트 사용)과 뒷단의 고객 서비스(Salesforce 문의 70%를 AI 단독 해결)는 AI가 주도하고, 가운데의 구매 상담·제안·협상은 사람이 주도한다. 사람의 역할은 &#x27;정보 전달&#x27;에서 &#x27;검증과 예외 처리&#x27;로 바뀌고 있다. B2B 구매자의 69%가 AI 정보를 영업 담당자에게 확인받고 싶어 하고, 고객의 87%는 AI 응대에도 사람 연결을 요구한다. <a class="rid" href="#S4-I-001" title="AI는 영업 과정의 양 끝을 맡고 있다. 앞단의 리드 발굴과 뒷단의 고객 서비스는 AI가 주도하고, 가운데의 구매 상담·제안·협상은 사람이 주도하며 AI가 돕는다.">S4-I-001</a><a class="rid" href="#S4-I-002" title="고객 서비스는 단순 문의의 다수를 AI가 끝내는 단계에 왔다(Salesforce 70%, 토스뱅크 약 70%). 그러나 만족도는 사람 상담의 절반 수준이고 고객의 87%가 사람 연결을 요구한다. 사람의 역할은 예외·복잡·감정 응대로 좁혀진다.">S4-I-002</a><a class="rid" href="#S4-I-003" title="B2B 영업 담당자의 역할은 &#x27;정보 전달&#x27;에서 &#x27;검증과 확신&#x27;으로 바뀐다. 구매자의 67%가 영업 없는 구매를 선호하면서도 69%는 AI 정보를 사람에게 확인받고 싶어 한다. AI와 영업 담당자 모두 오정보를 줄 수 있다고 보는 비율이 비슷하다(51% vs 49%).">S4-I-003</a></p><dl class="arows"><div class="arow"><dt>AI 주도</dt><dd>리드 발굴(셀러 54% 에이전트 사용, B2B 팀 44% AI SDR)과 고객 서비스(Salesforce 70%, 토스뱅크 약 70% AI 처리). <a class="rid" href="#S4-M-001" title="영업 인력 4,050명 조사에서 54%가 AI 에이전트를 써 봤고, 열에 아홉이 2027년까지 쓸 계획이다. 에이전트를 쓰는 셀러의 92%는 잠재 고객 발굴에 도움이 된다고 답했다. 완전히 도입하면 고객 조사 시간 34%, 이메일 작성 시간 36%가 줄 것으로 봤다.">S4-M-001</a><a class="rid" href="#S4-M-003" title="B2B 영업팀의 44%가 AI SDR(잠재 고객 발굴·첫 연락을 맡는 AI)을 도입했다는 조사가 나왔다. 같은 시기 콜드 메일 회신율은 5.1%에서 3.43%로 떨어졌다.">S4-M-003</a><a class="rid" href="#S4-M-005" title="Salesforce 고객 지원 사이트의 AI 에이전트는 문의 430만 건 중 70%를 사람 없이 해결했다.">S4-M-005</a><a class="rid" href="#S4-M-008" title="국민은행 콜센터의 AI 처리율은 2025년 41.3%였고, 상담 인력은 1,133명에서 869명으로 줄었다. 토스뱅크는 AI 챗봇이 상담 10건 중 7건을 처리하지만, 챗봇 만족도는 36%로 기존 콜센터(72%)의 절반이다.">S4-M-008</a></dd></div><div class="arow"><dt>사람 주도·AI 보조</dt><dd>B2B 구매 상담과 제안. 구매자 67%가 영업 없는 구매를 선호하지만 69%는 AI 정보를 사람에게 확인받고 싶어 한다. <a class="rid" href="#S4-M-004" title="B2B 구매자의 67%가 영업 담당자 없는 구매를 선호하고, 45%는 최근 구매에 생성형 AI를 썼다. 그러나 69%는 AI가 준 정보를 영업 담당자에게 확인받기를 원한다.">S4-M-004</a></dd></div><div class="arow"><dt>사람 단독</dt><dd>판매 측 협상. AI 협상은 구매(조달) 측에서 먼저 자리 잡았다(Walmart 공급사 68% 타결, 2023년). <a class="rid" href="#S4-M-007" title="Walmart의 공급사 협상 AI는 대상 공급사의 68%와 협상을 타결했고, 평균 3%를 절감했다. 공급사의 약 75%가 사람보다 AI와의 협상을 선호했다.">S4-M-007</a></dd></div><div class="arow"><dt>성과와 긴장</dt><dd>AI 해결률은 높지만 만족도는 사람의 절반(토스뱅크 36% vs 72%), 콜드 메일 회신율은 5.1%→3.4%로 하락. <a class="rid" href="#S4-M-008" title="국민은행 콜센터의 AI 처리율은 2025년 41.3%였고, 상담 인력은 1,133명에서 869명으로 줄었다. 토스뱅크는 AI 챗봇이 상담 10건 중 7건을 처리하지만, 챗봇 만족도는 36%로 기존 콜센터(72%)의 절반이다.">S4-M-008</a><a class="rid" href="#S4-M-003" title="B2B 영업팀의 44%가 AI SDR(잠재 고객 발굴·첫 연락을 맡는 AI)을 도입했다는 조사가 나왔다. 같은 시기 콜드 메일 회신율은 5.1%에서 3.43%로 떨어졌다.">S4-M-003</a></dd></div><div class="arow"><dt>한국</dt><dd>은행 콜센터 AI 처리율 20%대~70%로 편차, 국민은행 상담 인력 1,133명→869명. <a class="rid" href="#S4-M-008" title="국민은행 콜센터의 AI 처리율은 2025년 41.3%였고, 상담 인력은 1,133명에서 869명으로 줄었다. 토스뱅크는 AI 챗봇이 상담 10건 중 7건을 처리하지만, 챗봇 만족도는 36%로 기존 콜센터(72%)의 절반이다.">S4-M-008</a><a class="rid" href="#S4-M-009" title="농협은행의 AI 콜봇 처리율은 2023년 25.6%에서 2024년 20.7%, 2025년 21.7%로 정체했다. 신한은행은 AI 컨택센터를 도입한 뒤에도 상담 인력이 693명에서 697명으로 거의 같았다.">S4-M-009</a></dd></div></dl></section>
+  <section><h2>해석</h2><div class="narrative"><p>AI는 영업 과정의 양 끝부터 맡고 있다. 영업 인력 4,050명 조사에서 54%가 AI 에이전트를 써 봤고, 그중 92%가 잠재 고객 발굴에 도움이 된다고 답했다. B2B 영업팀의 44%는 첫 연락을 맡는 AI SDR을 들였다. 뒷단의 고객 서비스에서는 Salesforce 고객 지원 AI가 문의 430만 건의 70%를 사람 없이 해결했다. <a class="rid" href="#S4-M-001" title="영업 인력 4,050명 조사에서 54%가 AI 에이전트를 써 봤고, 열에 아홉이 2027년까지 쓸 계획이다. 에이전트를 쓰는 셀러의 92%는 잠재 고객 발굴에 도움이 된다고 답했다. 완전히 도입하면 고객 조사 시간 34%, 이메일 작성 시간 36%가 줄 것으로 봤다.">S4-M-001</a><a class="rid" href="#S4-M-003" title="B2B 영업팀의 44%가 AI SDR(잠재 고객 발굴·첫 연락을 맡는 AI)을 도입했다는 조사가 나왔다. 같은 시기 콜드 메일 회신율은 5.1%에서 3.43%로 떨어졌다.">S4-M-003</a><a class="rid" href="#S4-M-005" title="Salesforce 고객 지원 사이트의 AI 에이전트는 문의 430만 건 중 70%를 사람 없이 해결했다.">S4-M-005</a><a class="rid" href="#S4-I-001" title="AI는 영업 과정의 양 끝을 맡고 있다. 앞단의 리드 발굴과 뒷단의 고객 서비스는 AI가 주도하고, 가운데의 구매 상담·제안·협상은 사람이 주도하며 AI가 돕는다.">S4-I-001</a></p><p>가운데는 여전히 사람의 몫이다. B2B 구매자의 67%가 영업 담당자 없는 구매를 선호하고 45%가 구매에 생성형 AI를 썼지만, 69%는 AI가 준 정보를 영업 담당자에게 확인받고 싶어 한다. AI와 영업 담당자 모두 오정보를 줄 수 있다고 보는 비율도 비슷하다(51% vs 49%). 영업 담당자의 역할은 정보를 전하는 사람에서 구매 결정을 검증하고 확신을 주는 사람으로 옮겨간다. <a class="rid" href="#S4-M-004" title="B2B 구매자의 67%가 영업 담당자 없는 구매를 선호하고, 45%는 최근 구매에 생성형 AI를 썼다. 그러나 69%는 AI가 준 정보를 영업 담당자에게 확인받기를 원한다.">S4-M-004</a><a class="rid" href="#S4-E-004" title="Gartner가 B2B 구매자의 69%가 AI가 준 정보를 영업 담당자에게 확인받기를 원한다는 조사를 냈다.">S4-E-004</a><a class="rid" href="#S4-I-003" title="B2B 영업 담당자의 역할은 &#x27;정보 전달&#x27;에서 &#x27;검증과 확신&#x27;으로 바뀐다. 구매자의 67%가 영업 없는 구매를 선호하면서도 69%는 AI 정보를 사람에게 확인받고 싶어 한다. AI와 영업 담당자 모두 오정보를 줄 수 있다고 보는 비율이 비슷하다(51% vs 49%).">S4-I-003</a></p><p>AI가 맡은 양 끝에서는 성과와 품질 사이의 긴장이 보인다. 고객의 87%는 AI 응대에도 사람 연결이 필수라고 답했고, AI 덕에 응대가 쉬워졌다는 응답은 50%였다. 리드 발굴에서는 AI가 발송량을 늘렸지만 콜드 메일 회신율은 5.1%에서 3.4%로 떨어졌다. AI의 첫 효과는 셀러의 행정 시간(근무 시간의 60%)을 덜어 판매 시간을 돌려주는 쪽이다. <a class="rid" href="#S4-M-006" title="고객의 87%는 기업이 생성형 AI로 응대하더라도 사람 상담원에게 닿을 길이 꼭 있어야 한다고 답했다. AI 덕에 응대가 쉬워졌다는 응답은 50%였다.">S4-M-006</a><a class="rid" href="#S4-M-003" title="B2B 영업팀의 44%가 AI SDR(잠재 고객 발굴·첫 연락을 맡는 AI)을 도입했다는 조사가 나왔다. 같은 시기 콜드 메일 회신율은 5.1%에서 3.43%로 떨어졌다.">S4-M-003</a><a class="rid" href="#S4-M-002" title="영업 인력은 근무 시간의 40%만 실제 판매에 쓴다. 나머지는 데이터 입력 같은 행정 업무다.">S4-M-002</a><a class="rid" href="#S4-I-002" title="고객 서비스는 단순 문의의 다수를 AI가 끝내는 단계에 왔다(Salesforce 70%, 토스뱅크 약 70%). 그러나 만족도는 사람 상담의 절반 수준이고 고객의 87%가 사람 연결을 요구한다. 사람의 역할은 예외·복잡·감정 응대로 좁혀진다.">S4-I-002</a><a class="rid" href="#S4-I-004" title="리드 발굴은 AI가 양을 늘렸지만 반응은 줄고 있다. 셀러 절반 이상이 에이전트를 쓰고 B2B 팀 44%가 AI SDR을 들였지만, 같은 시기 콜드 메일 회신율은 5.1%에서 3.4%로 떨어졌다. 대량 자동 발송이 받는 쪽의 피로를 키웠을 가능성이 있다.">S4-I-004</a><a class="rid" href="#S4-I-008" title="영업 AI의 첫 효과는 판매 시간의 회복이다. 셀러는 시간의 40%만 판매에 쓰고, AI가 고객 조사·이메일 작성 시간을 3분의 1가량 줄일 것으로 기대한다. AI는 셀러를 대체하기보다 행정 업무를 덜어 주는 쪽으로 먼저 쓰인다.">S4-I-008</a></p><p>과금 방식도 역할 분담을 따라 바뀐다. Salesforce는 AI가 혼자 해결한 문의에만 돈을 받고 고객이 사람을 찾으면 과금하지 않는 &#x27;해결당 과금&#x27;을 7월 정식 출시했다. 해결률이 곧 공급자의 매출이 되는 구조다. 협상은 판매 측에서는 아직 사람의 일이지만, 구매 측에서는 Walmart가 공급사 68%와 AI로 협상을 타결한 선례가 있다. <a class="rid" href="#S4-E-005" title="Salesforce가 AI가 혼자 해결한 문의에만 돈을 받는 &#x27;해결당 과금&#x27; 고객 지원 에이전트를 발표했다(7월 정식 출시). 고객이 사람을 요청하거나 불만을 남기면 과금하지 않는다.">S4-E-005</a><a class="rid" href="#S4-M-007" title="Walmart의 공급사 협상 AI는 대상 공급사의 68%와 협상을 타결했고, 평균 3%를 절감했다. 공급사의 약 75%가 사람보다 AI와의 협상을 선호했다.">S4-M-007</a><a class="rid" href="#S4-I-005" title="AI 응대의 과금이 &#x27;쓴 만큼&#x27;에서 &#x27;해결한 만큼&#x27;으로 옮겨간다. Salesforce는 AI가 혼자 해결한 문의에만 돈을 받고, 사람을 요청하면 과금하지 않는다. 해결률이 곧 공급자의 매출이 된다.">S4-I-005</a><a class="rid" href="#S4-I-007" title="협상은 판매 측에서는 아직 사람의 일이다. AI 협상이 먼저 자리 잡은 곳은 구매(조달) 측으로, Walmart는 공급사 68%와 AI로 협상을 타결했다. 판매 측은 &#x27;AI와 협상하는&#x27; 상황을 먼저 맞게 된다.">S4-I-007</a></p><p>한국 은행 콜센터는 AI 도입 수준의 편차가 크다. 농협은행 AI 처리율은 20%대에서 정체했지만, 국민은행은 41.3%로 올라서며 상담 인력이 1,133명에서 869명으로 줄었다. 토스뱅크는 AI가 상담 10건 중 7건을 처리하지만 만족도는 36%로 기존 콜센터(72%)의 절반이다. 비용 절감과 서비스 품질 사이의 긴장이 가장 분명하게 드러나는 곳이다. <a class="rid" href="#S4-M-008" title="국민은행 콜센터의 AI 처리율은 2025년 41.3%였고, 상담 인력은 1,133명에서 869명으로 줄었다. 토스뱅크는 AI 챗봇이 상담 10건 중 7건을 처리하지만, 챗봇 만족도는 36%로 기존 콜센터(72%)의 절반이다.">S4-M-008</a><a class="rid" href="#S4-M-009" title="농협은행의 AI 콜봇 처리율은 2023년 25.6%에서 2024년 20.7%, 2025년 21.7%로 정체했다. 신한은행은 AI 컨택센터를 도입한 뒤에도 상담 인력이 693명에서 697명으로 거의 같았다.">S4-M-009</a><a class="rid" href="#S4-E-003" title="국내 은행 콜센터의 AI 도입과 상담 인력 감축·임금 하락 실태가 국회 제출 자료로 드러났다.">S4-E-003</a><a class="rid" href="#S4-I-006" title="한국 은행 콜센터의 AI 처리율은 20%대(농협)부터 70%(토스뱅크)까지 편차가 크다. AI 처리율이 높은 곳에서는 상담 인력이 줄었지만(국민은행 1,133→869명), 만족도는 사람 상담의 절반에 그쳐 비용 절감과 품질 사이의 긴장이 드러났다.">S4-I-006</a></p></div>
+    <div class="tablewrap"><table><thead><tr><th>방향</th><th>대상</th><th>해석</th><th>근거</th><th>기록</th></tr></thead><tbody><tr id="S4-I-001"><td><span class="dir up">강화</span></td>
+  <td class="tgt">역할 분담 지도</td><td>AI는 영업 과정의 양 끝을 맡고 있다. 앞단의 리드 발굴과 뒷단의 고객 서비스는 AI가 주도하고, 가운데의 구매 상담·제안·협상은 사람이 주도하며 AI가 돕는다.</td><td><a class="rid" href="#S4-M-001" title="영업 인력 4,050명 조사에서 54%가 AI 에이전트를 써 봤고, 열에 아홉이 2027년까지 쓸 계획이다. 에이전트를 쓰는 셀러의 92%는 잠재 고객 발굴에 도움이 된다고 답했다. 완전히 도입하면 고객 조사 시간 34%, 이메일 작성 시간 36%가 줄 것으로 봤다.">S4-M-001</a><a class="rid" href="#S4-M-003" title="B2B 영업팀의 44%가 AI SDR(잠재 고객 발굴·첫 연락을 맡는 AI)을 도입했다는 조사가 나왔다. 같은 시기 콜드 메일 회신율은 5.1%에서 3.43%로 떨어졌다.">S4-M-003</a><a class="rid" href="#S4-M-005" title="Salesforce 고객 지원 사이트의 AI 에이전트는 문의 430만 건 중 70%를 사람 없이 해결했다.">S4-M-005</a><a class="rid" href="#S4-M-004" title="B2B 구매자의 67%가 영업 담당자 없는 구매를 선호하고, 45%는 최근 구매에 생성형 AI를 썼다. 그러나 69%는 AI가 준 정보를 영업 담당자에게 확인받기를 원한다.">S4-M-004</a></td><td class="idc"><code>S4-I-001</code></td></tr><tr id="S4-I-002"><td><span class="dir flat">중립</span></td>
+  <td class="tgt">고객 서비스</td><td>고객 서비스는 단순 문의의 다수를 AI가 끝내는 단계에 왔다(Salesforce 70%, 토스뱅크 약 70%). 그러나 만족도는 사람 상담의 절반 수준이고 고객의 87%가 사람 연결을 요구한다. 사람의 역할은 예외·복잡·감정 응대로 좁혀진다.</td><td><a class="rid" href="#S4-M-005" title="Salesforce 고객 지원 사이트의 AI 에이전트는 문의 430만 건 중 70%를 사람 없이 해결했다.">S4-M-005</a><a class="rid" href="#S4-M-008" title="국민은행 콜센터의 AI 처리율은 2025년 41.3%였고, 상담 인력은 1,133명에서 869명으로 줄었다. 토스뱅크는 AI 챗봇이 상담 10건 중 7건을 처리하지만, 챗봇 만족도는 36%로 기존 콜센터(72%)의 절반이다.">S4-M-008</a><a class="rid" href="#S4-M-006" title="고객의 87%는 기업이 생성형 AI로 응대하더라도 사람 상담원에게 닿을 길이 꼭 있어야 한다고 답했다. AI 덕에 응대가 쉬워졌다는 응답은 50%였다.">S4-M-006</a></td><td class="idc"><code>S4-I-002</code></td></tr><tr id="S4-I-003"><td><span class="dir up">강화</span></td>
+  <td class="tgt">B2B 영업 담당자의 역할</td><td>B2B 영업 담당자의 역할은 &#x27;정보 전달&#x27;에서 &#x27;검증과 확신&#x27;으로 바뀐다. 구매자의 67%가 영업 없는 구매를 선호하면서도 69%는 AI 정보를 사람에게 확인받고 싶어 한다. AI와 영업 담당자 모두 오정보를 줄 수 있다고 보는 비율이 비슷하다(51% vs 49%).</td><td><a class="rid" href="#S4-M-004" title="B2B 구매자의 67%가 영업 담당자 없는 구매를 선호하고, 45%는 최근 구매에 생성형 AI를 썼다. 그러나 69%는 AI가 준 정보를 영업 담당자에게 확인받기를 원한다.">S4-M-004</a><a class="rid" href="#S4-E-004" title="Gartner가 B2B 구매자의 69%가 AI가 준 정보를 영업 담당자에게 확인받기를 원한다는 조사를 냈다.">S4-E-004</a></td><td class="idc"><code>S4-I-003</code></td></tr><tr id="S4-I-004"><td><span class="dir down">약화</span></td>
+  <td class="tgt">리드 발굴</td><td>리드 발굴은 AI가 양을 늘렸지만 반응은 줄고 있다. 셀러 절반 이상이 에이전트를 쓰고 B2B 팀 44%가 AI SDR을 들였지만, 같은 시기 콜드 메일 회신율은 5.1%에서 3.4%로 떨어졌다. 대량 자동 발송이 받는 쪽의 피로를 키웠을 가능성이 있다.</td><td><a class="rid" href="#S4-M-001" title="영업 인력 4,050명 조사에서 54%가 AI 에이전트를 써 봤고, 열에 아홉이 2027년까지 쓸 계획이다. 에이전트를 쓰는 셀러의 92%는 잠재 고객 발굴에 도움이 된다고 답했다. 완전히 도입하면 고객 조사 시간 34%, 이메일 작성 시간 36%가 줄 것으로 봤다.">S4-M-001</a><a class="rid" href="#S4-M-003" title="B2B 영업팀의 44%가 AI SDR(잠재 고객 발굴·첫 연락을 맡는 AI)을 도입했다는 조사가 나왔다. 같은 시기 콜드 메일 회신율은 5.1%에서 3.43%로 떨어졌다.">S4-M-003</a></td><td class="idc"><code>S4-I-004</code></td></tr><tr id="S4-I-005"><td><span class="dir up">강화</span></td>
+  <td class="tgt">과금과 책임</td><td>AI 응대의 과금이 &#x27;쓴 만큼&#x27;에서 &#x27;해결한 만큼&#x27;으로 옮겨간다. Salesforce는 AI가 혼자 해결한 문의에만 돈을 받고, 사람을 요청하면 과금하지 않는다. 해결률이 곧 공급자의 매출이 된다.</td><td><a class="rid" href="#S4-E-005" title="Salesforce가 AI가 혼자 해결한 문의에만 돈을 받는 &#x27;해결당 과금&#x27; 고객 지원 에이전트를 발표했다(7월 정식 출시). 고객이 사람을 요청하거나 불만을 남기면 과금하지 않는다.">S4-E-005</a><a class="rid" href="#S4-M-005" title="Salesforce 고객 지원 사이트의 AI 에이전트는 문의 430만 건 중 70%를 사람 없이 해결했다.">S4-M-005</a></td><td class="idc"><code>S4-I-005</code></td></tr><tr id="S4-I-006"><td><span class="dir flat">중립</span></td>
+  <td class="tgt">한국 컨택센터</td><td>한국 은행 콜센터의 AI 처리율은 20%대(농협)부터 70%(토스뱅크)까지 편차가 크다. AI 처리율이 높은 곳에서는 상담 인력이 줄었지만(국민은행 1,133→869명), 만족도는 사람 상담의 절반에 그쳐 비용 절감과 품질 사이의 긴장이 드러났다.</td><td><a class="rid" href="#S4-M-008" title="국민은행 콜센터의 AI 처리율은 2025년 41.3%였고, 상담 인력은 1,133명에서 869명으로 줄었다. 토스뱅크는 AI 챗봇이 상담 10건 중 7건을 처리하지만, 챗봇 만족도는 36%로 기존 콜센터(72%)의 절반이다.">S4-M-008</a><a class="rid" href="#S4-M-009" title="농협은행의 AI 콜봇 처리율은 2023년 25.6%에서 2024년 20.7%, 2025년 21.7%로 정체했다. 신한은행은 AI 컨택센터를 도입한 뒤에도 상담 인력이 693명에서 697명으로 거의 같았다.">S4-M-009</a><a class="rid" href="#S4-E-003" title="국내 은행 콜센터의 AI 도입과 상담 인력 감축·임금 하락 실태가 국회 제출 자료로 드러났다.">S4-E-003</a></td><td class="idc"><code>S4-I-006</code></td></tr><tr id="S4-I-007"><td><span class="dir flat">중립</span></td>
+  <td class="tgt">협상</td><td>협상은 판매 측에서는 아직 사람의 일이다. AI 협상이 먼저 자리 잡은 곳은 구매(조달) 측으로, Walmart는 공급사 68%와 AI로 협상을 타결했다. 판매 측은 &#x27;AI와 협상하는&#x27; 상황을 먼저 맞게 된다.</td><td><a class="rid" href="#S4-M-007" title="Walmart의 공급사 협상 AI는 대상 공급사의 68%와 협상을 타결했고, 평균 3%를 절감했다. 공급사의 약 75%가 사람보다 AI와의 협상을 선호했다.">S4-M-007</a></td><td class="idc"><code>S4-I-007</code></td></tr><tr id="S4-I-008"><td><span class="dir up">강화</span></td>
+  <td class="tgt">영업 시간</td><td>영업 AI의 첫 효과는 판매 시간의 회복이다. 셀러는 시간의 40%만 판매에 쓰고, AI가 고객 조사·이메일 작성 시간을 3분의 1가량 줄일 것으로 기대한다. AI는 셀러를 대체하기보다 행정 업무를 덜어 주는 쪽으로 먼저 쓰인다.</td><td><a class="rid" href="#S4-M-002" title="영업 인력은 근무 시간의 40%만 실제 판매에 쓴다. 나머지는 데이터 입력 같은 행정 업무다.">S4-M-002</a><a class="rid" href="#S4-M-001" title="영업 인력 4,050명 조사에서 54%가 AI 에이전트를 써 봤고, 열에 아홉이 2027년까지 쓸 계획이다. 에이전트를 쓰는 셀러의 92%는 잠재 고객 발굴에 도움이 된다고 답했다. 완전히 도입하면 고객 조사 시간 34%, 이메일 작성 시간 36%가 줄 것으로 봤다.">S4-M-001</a></td><td class="idc"><code>S4-I-008</code></td></tr></tbody></table></div></section>
+  <section><h2>주요 사건 <small>최신순 · 원문 확인된 것만</small></h2><p class="lead">올해 사건은 역할 분담의 양쪽을 보여 준다. Salesforce는 셀러 절반이 AI 에이전트를 쓴다고 밝히고 해결당 과금 응대 에이전트를 냈다. 반대편에서 Gartner 조사들은 구매자와 고객이 여전히 사람을 원한다는 것을 보여 줬고, 한국에서는 은행 콜센터의 인력 감축과 만족도 하락이 국회 자료로 드러났다.</p><ul class="timeline"><li id="S4-E-006"><time>2026-08-04</time><div><b>Gartner</b> Gartner가 고객의 87%는 AI 응대에도 사람 상담원 연결이 필수라고 답했다는 조사를 냈다.
+  <div class="src"><a href="https://gcom.pdo.aws.gartner.com/en/newsroom/press-releases/2026-08-04-gartner-survey-finds-87-percent-of-customers-say-companies-using-genai-for-customer-service-must-provide-access-to-a-human-agent0" target="_blank" rel="noopener">Gartner 보도자료</a><span class="grade gA">A</span> <code>S4-E-006</code></div></div></li><li id="S4-E-005"><time>2026-06-25</time><div><b>Salesforce</b> Salesforce가 AI가 혼자 해결한 문의에만 돈을 받는 &#x27;해결당 과금&#x27; 고객 지원 에이전트를 발표했다(7월 정식 출시). 고객이 사람을 요청하거나 불만을 남기면 과금하지 않는다.
+  <div class="src"><a href="https://www.salesforce.com/news/stories/agentforce-help-agent-announcement/" target="_blank" rel="noopener">Salesforce 보도자료</a><span class="grade gA">A</span> <code>S4-E-005</code></div></div></li><li id="S4-E-004"><time>2026-05-20</time><div><b>Gartner</b> Gartner가 B2B 구매자의 69%가 AI가 준 정보를 영업 담당자에게 확인받기를 원한다는 조사를 냈다.
+  <div class="src"><a href="https://www.gartner.com/en/newsroom/press-releases/2026-05-20-gartner-survey-finds-sixty-nine-percent-of-b-two-b-buyers-turn-to-sales-reps-to-validate-ai-generated-insights" target="_blank" rel="noopener">Gartner 보도자료</a><span class="grade gA">A</span> <code>S4-E-004</code></div></div></li><li id="S4-E-003"><time>2026-04-15</time><div><b>국회·경향신문</b> 국내 은행 콜센터의 AI 도입과 상담 인력 감축·임금 하락 실태가 국회 제출 자료로 드러났다.
+  <div class="src"><a href="https://www.khan.co.kr/article/202604150600111" target="_blank" rel="noopener">경향신문 (국회 제출 은행 자료 인용)</a><span class="grade gB">B</span> <code>S4-E-003</code></div></div></li><li id="S4-E-002"><time>2026-03-09</time><div><b>Gartner</b> Gartner가 B2B 구매자의 67%가 영업 담당자 없는 구매를 선호한다는 조사를 냈다.
+  <div class="src"><a href="https://www.gartner.com/en/newsroom/press-releases/2026-03-09-gartner-sales-survey-finds-67-percent-of-b2b-buyers-prefer-a-rep-free-experience" target="_blank" rel="noopener">Gartner 보도자료</a><span class="grade gA">A</span> <code>S4-E-002</code></div></div></li><li id="S4-E-001"><time>2026-02-03</time><div><b>Salesforce</b> Salesforce가 영업 인력 4,050명 조사에서 셀러 54%가 AI 에이전트를 써 봤다고 발표했다. 자사 에이전트가 넉 달간 방치된 리드 13만 건에 연락해 영업 기회 3,200건을 만들었다고 밝혔다.
+  <div class="src"><a href="https://www.salesforce.com/news/stories/state-of-sales-report-announcement-2026/" target="_blank" rel="noopener">Salesforce State of Sales 2026</a><span class="grade gA">A</span> <code>S4-E-001</code></div></div></li></ul></section>
+  <section><h2>전망 <small>2027년 말까지, AI는 가운데까지 맡을까</small></h2><p class="lead">2027년 말을 기준으로 두 시나리오를 세웠다. 갈림길은 AI가 양 끝을 넘어 구매 상담·제안까지 주도하면서 품질도 사람에 가까워지는지, 아니면 단순 응대와 대량 발송의 비용 절감에 머물며 품질 불만이 쌓이는지다.</p>
+    <div class="scens"><article class="scen opt" id="S4-F-101"><header><span class="sk">낙관 · Optimistic</span><code>S4-F-101</code></header>
+  <p class="sstmt">2027년 말까지 AI가 양 끝(리드 발굴·고객 서비스)을 넘어 구매 상담과 제안까지 주도하고, 품질도 사람에 가까워진다. AI 해결률이 80%를 넘고 AI 응대가 쉬워졌다는 고객이 60%를 넘으며, 셀러 대다수가 에이전트와 함께 일한다. 사람은 검증·협상·관계에 집중한다.</p><ol class="ms"><li><time>2027-03</time><span>AI 에이전트 사용 셀러 70% 이상</span></li><li><time>2027-06</time><span>주요 업체 AI 해결률 75% 이상 공개</span></li><li><time>2027-09</time><span>AI 응대가 쉬워졌다는 고객 비율 상승</span></li></ol>
+  <dl class="sdl"><div><dt>판정 시점</dt><dd>2027-12-31</dd></div><div><dt>판정 방법</dt><dd>세 가지 중 두 가지 이상 충족 시 적중: (1) 주요 업체 공개 AI 해결률 80% 이상 (2) Gartner 등 대규모 고객 조사에서 AI로 응대가 쉬워졌다는 응답 60% 이상 (3) Salesforce 조사 AI 에이전트 사용 셀러 80% 이상</dd></div>
+  <div><dt>전제</dt><dd>대형 AI 응대 사고나 규제로 도입이 멈추지 않을 경우</dd></div><div><dt>근거</dt><dd><a class="rid" href="#S4-M-005" title="Salesforce 고객 지원 사이트의 AI 에이전트는 문의 430만 건 중 70%를 사람 없이 해결했다.">S4-M-005</a><a class="rid" href="#S4-M-006" title="고객의 87%는 기업이 생성형 AI로 응대하더라도 사람 상담원에게 닿을 길이 꼭 있어야 한다고 답했다. AI 덕에 응대가 쉬워졌다는 응답은 50%였다.">S4-M-006</a><a class="rid" href="#S4-M-001" title="영업 인력 4,050명 조사에서 54%가 AI 에이전트를 써 봤고, 열에 아홉이 2027년까지 쓸 계획이다. 에이전트를 쓰는 셀러의 92%는 잠재 고객 발굴에 도움이 된다고 답했다. 완전히 도입하면 고객 조사 시간 34%, 이메일 작성 시간 36%가 줄 것으로 봤다.">S4-M-001</a></dd></div></dl></article><article class="scen pes" id="S4-F-102"><header><span class="sk">비관 · Pessimistic</span><code>S4-F-102</code></header>
+  <p class="sstmt">2027년 말까지 AI는 단순 응대와 대량 발송의 비용 절감에 머문다. 만족도는 사람 상담에 못 미치고 회신율은 계속 떨어지며, 일부 기업은 사람 상담을 다시 늘린다. 상담 인력은 줄지만 품질 불만이 쌓인다.</p><ol class="ms"><li><time>2027-06</time><span>국내 상담 인력 감축 보도 지속</span></li><li><time>2027-07</time><span>콜드 메일 회신율 3% 미만</span></li><li><time>2027-09</time><span>사람 연결 필수 응답 80% 이상 유지</span></li></ol>
+  <dl class="sdl"><div><dt>판정 시점</dt><dd>2027-12-31</dd></div><div><dt>판정 방법</dt><dd>낙관 시나리오의 판정 조건 세 가지 중 하나 이하만 충족 시 적중</dd></div>
+  <div><dt>전제</dt><dd>없음</dd></div><div><dt>근거</dt><dd><a class="rid" href="#S4-M-006" title="고객의 87%는 기업이 생성형 AI로 응대하더라도 사람 상담원에게 닿을 길이 꼭 있어야 한다고 답했다. AI 덕에 응대가 쉬워졌다는 응답은 50%였다.">S4-M-006</a><a class="rid" href="#S4-M-008" title="국민은행 콜센터의 AI 처리율은 2025년 41.3%였고, 상담 인력은 1,133명에서 869명으로 줄었다. 토스뱅크는 AI 챗봇이 상담 10건 중 7건을 처리하지만, 챗봇 만족도는 36%로 기존 콜센터(72%)의 절반이다.">S4-M-008</a><a class="rid" href="#S4-M-003" title="B2B 영업팀의 44%가 AI SDR(잠재 고객 발굴·첫 연락을 맡는 AI)을 도입했다는 조사가 나왔다. 같은 시기 콜드 메일 회신율은 5.1%에서 3.43%로 떨어졌다.">S4-M-003</a></dd></div></dl></article></div>
+    <h3 class="subhead">세부 판정 근거</h3>
+    <p class="lead muted">각 세부 전망이 적중하거나 빗나갔을 때 어느 시나리오 쪽 신호인지 표시했다. 확인 시점이 오면 확인 방법대로 판정한다.</p>
+    <div class="tablewrap"><table><thead><tr><th>세부 전망</th><th>확인 시점</th><th>적중 시</th><th>빗나갈 시</th><th>상태</th><th>근거</th></tr></thead><tbody><tr id="S4-F-001"><td class="stmt">Salesforce 다음 영업 조사(2027년판)에서 AI 에이전트를 써 본 셀러 비율은 70% 이상일 것이다.<small>확인 방법: Salesforce State of Sales 다음 판 확인</small></td>
+  <td class="asof">2027-03-31</td><td><span class="side opt">낙관</span></td><td><span class="side pes">비관</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#S4-M-001" title="영업 인력 4,050명 조사에서 54%가 AI 에이전트를 써 봤고, 열에 아홉이 2027년까지 쓸 계획이다. 에이전트를 쓰는 셀러의 92%는 잠재 고객 발굴에 도움이 된다고 답했다. 완전히 도입하면 고객 조사 시간 34%, 이메일 작성 시간 36%가 줄 것으로 봤다.">S4-M-001</a></td></tr><tr id="S4-F-003"><td class="stmt">2026년 국정감사 또는 공개 자료에서 국내 시중은행 한 곳 이상이 콜센터 AI 처리율 50% 이상으로 확인될 것이다.<small>확인 방법: 국회 제출 자료 또는 은행 공시·보도 확인</small></td>
+  <td class="asof">2027-03-31</td><td><span class="side opt">낙관</span></td><td><span class="muted">—</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#S4-M-008" title="국민은행 콜센터의 AI 처리율은 2025년 41.3%였고, 상담 인력은 1,133명에서 869명으로 줄었다. 토스뱅크는 AI 챗봇이 상담 10건 중 7건을 처리하지만, 챗봇 만족도는 36%로 기존 콜센터(72%)의 절반이다.">S4-M-008</a><a class="rid" href="#S4-M-009" title="농협은행의 AI 콜봇 처리율은 2023년 25.6%에서 2024년 20.7%, 2025년 21.7%로 정체했다. 신한은행은 AI 컨택센터를 도입한 뒤에도 상담 인력이 693명에서 697명으로 거의 같았다.">S4-M-009</a></td></tr><tr id="S4-F-002"><td class="stmt">Salesforce는 2027년 6월 말까지 고객 지원 사이트 AI 해결률을 75% 이상이라고 공개할 것이다.<small>확인 방법: Salesforce 공식 발표·실적 발표 확인</small></td>
+  <td class="asof">2027-06-30</td><td><span class="side opt">낙관</span></td><td><span class="side pes">비관</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#S4-M-005" title="Salesforce 고객 지원 사이트의 AI 에이전트는 문의 430만 건 중 70%를 사람 없이 해결했다.">S4-M-005</a></td></tr><tr id="S4-F-006"><td class="stmt">2027년 6월 말까지 국내 대형 은행·통신사·카드사 중 한 곳 이상이 AI 도입을 이유로 상담 인력 감축 또는 도급 계약 축소를 한 것으로 보도될 것이다.<small>확인 방법: 주요 언론 보도 확인</small></td>
+  <td class="asof">2027-06-30</td><td><span class="side pes">비관</span></td><td><span class="muted">—</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#S4-M-008" title="국민은행 콜센터의 AI 처리율은 2025년 41.3%였고, 상담 인력은 1,133명에서 869명으로 줄었다. 토스뱅크는 AI 챗봇이 상담 10건 중 7건을 처리하지만, 챗봇 만족도는 36%로 기존 콜센터(72%)의 절반이다.">S4-M-008</a><a class="rid" href="#S4-E-003" title="국내 은행 콜센터의 AI 도입과 상담 인력 감축·임금 하락 실태가 국회 제출 자료로 드러났다.">S4-E-003</a></td></tr><tr id="S4-F-005"><td class="stmt">2027년 상반기 B2B 콜드 메일 회신율 집계는 3% 미만일 것이다.<small>확인 방법: 아웃바운드 영업 데이터 업체 집계 확인</small></td>
+  <td class="asof">2027-07-31</td><td><span class="side pes">비관</span></td><td><span class="side opt">낙관</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#S4-M-003" title="B2B 영업팀의 44%가 AI SDR(잠재 고객 발굴·첫 연락을 맡는 AI)을 도입했다는 조사가 나왔다. 같은 시기 콜드 메일 회신율은 5.1%에서 3.43%로 떨어졌다.">S4-M-003</a></td></tr><tr id="S4-F-004"><td class="stmt">Gartner 다음 고객 서비스 조사에서도 사람 상담원 연결이 필수라는 응답은 80% 이상일 것이다.<small>확인 방법: Gartner 고객 서비스 조사 확인</small></td>
+  <td class="asof">2027-09-30</td><td><span class="side pes">비관</span></td><td><span class="side opt">낙관</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#S4-M-006" title="고객의 87%는 기업이 생성형 AI로 응대하더라도 사람 상담원에게 닿을 길이 꼭 있어야 한다고 답했다. AI 덕에 응대가 쉬워졌다는 응답은 50%였다.">S4-M-006</a></td></tr></tbody></table></div></section>
+  <section><h2>업무 단계별 역할 분담 <small>B2B와 B2C · 사람의 새 역할</small></h2><p class="lead">업무 단계 다섯 개마다 B2B와 B2C를 나눠 사람 단독 → 사람 주도·AI 보조 → AI 주도·사람 승인 → AI 단독 중 어디에 있는지 판정했다. 고객 서비스에서 &#x27;사람 승인&#x27;은 사람에게 넘기는 길이 열려 있는 상태로 본다. 오른쪽에는 그 단계에서 사람이 새로 맡는 역할을 적었다.</p>
+    <div class="ladder mapgrid auto"><div class="rung"><div class="stage"><b>리드 발굴</b></div>
+  <div class="lvcell"><span class="region">B2B</span><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip"></span><span class="lv">AI 주도·사람 승인</span></span></div>
+  <div class="lvcell"><span class="region">B2C</span><span class="pips"><span class="lv muted">자료 없음</span></span></div>
+  <p class="why">AI 에이전트 54%, AI SDR 44%. 사람 → 대상 선정·메시지 승인, 반응 하락 관리 <a class="rid" href="#S4-M-001" title="영업 인력 4,050명 조사에서 54%가 AI 에이전트를 써 봤고, 열에 아홉이 2027년까지 쓸 계획이다. 에이전트를 쓰는 셀러의 92%는 잠재 고객 발굴에 도움이 된다고 답했다. 완전히 도입하면 고객 조사 시간 34%, 이메일 작성 시간 36%가 줄 것으로 봤다.">S4-M-001</a><a class="rid" href="#S4-M-003" title="B2B 영업팀의 44%가 AI SDR(잠재 고객 발굴·첫 연락을 맡는 AI)을 도입했다는 조사가 나왔다. 같은 시기 콜드 메일 회신율은 5.1%에서 3.43%로 떨어졌다.">S4-M-003</a><a class="rid" href="#S4-E-001" title="Salesforce가 영업 인력 4,050명 조사에서 셀러 54%가 AI 에이전트를 써 봤다고 발표했다. 자사 에이전트가 넉 달간 방치된 리드 13만 건에 연락해 영업 기회 3,200건을 만들었다고 밝혔다.">S4-E-001</a></p></div><div class="rung"><div class="stage"><b>구매 상담</b></div>
+  <div class="lvcell"><span class="region">B2B</span><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip"></span><span class="pip"></span><span class="lv">사람 주도·AI 보조</span></span></div>
+  <div class="lvcell"><span class="region">B2C</span><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip"></span><span class="lv">AI 주도·사람 승인</span></span></div>
+  <p class="why">B2B 구매자 69%가 AI 정보를 사람에게 검증 / B2C는 쇼핑 에이전트·외부 AI가 상담 대체. 사람 → 검증·확신 제공 <a class="rid" href="#S4-M-004" title="B2B 구매자의 67%가 영업 담당자 없는 구매를 선호하고, 45%는 최근 구매에 생성형 AI를 썼다. 그러나 69%는 AI가 준 정보를 영업 담당자에게 확인받기를 원한다.">S4-M-004</a><a class="rid" href="#S4-M-006" title="고객의 87%는 기업이 생성형 AI로 응대하더라도 사람 상담원에게 닿을 길이 꼭 있어야 한다고 답했다. AI 덕에 응대가 쉬워졌다는 응답은 50%였다.">S4-M-006</a></p></div><div class="rung"><div class="stage"><b>제안·견적</b></div>
+  <div class="lvcell"><span class="region">B2B</span><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip"></span><span class="pip"></span><span class="lv">사람 주도·AI 보조</span></span></div>
+  <div class="lvcell"><span class="region">B2C</span><span class="pips"><span class="lv muted">자료 없음</span></span></div>
+  <p class="why">에이전트가 견적·이메일 작성을 도움(작성 시간 -36% 기대). 사람 → 맞춤 설계·내부 조율 <a class="rid" href="#S4-M-001" title="영업 인력 4,050명 조사에서 54%가 AI 에이전트를 써 봤고, 열에 아홉이 2027년까지 쓸 계획이다. 에이전트를 쓰는 셀러의 92%는 잠재 고객 발굴에 도움이 된다고 답했다. 완전히 도입하면 고객 조사 시간 34%, 이메일 작성 시간 36%가 줄 것으로 봤다.">S4-M-001</a></p></div><div class="rung"><div class="stage"><b>협상</b></div>
+  <div class="lvcell"><span class="region">B2B</span><span class="pips"><span class="pip on"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="lv">사람 단독</span></span></div>
+  <div class="lvcell"><span class="region">B2C</span><span class="pips"><span class="lv muted">자료 없음</span></span></div>
+  <p class="why">판매 측 AI 협상 자료 없음. 구매 측은 AI 협상 선례(Walmart 68% 타결). 사람 → AI 구매 에이전트와의 협상 대비 <a class="rid" href="#S4-M-007" title="Walmart의 공급사 협상 AI는 대상 공급사의 68%와 협상을 타결했고, 평균 3%를 절감했다. 공급사의 약 75%가 사람보다 AI와의 협상을 선호했다.">S4-M-007</a></p></div><div class="rung"><div class="stage"><b>고객 서비스</b></div>
+  <div class="lvcell"><span class="region">B2B</span><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip"></span><span class="lv">AI 주도·사람 승인</span></span></div>
+  <div class="lvcell"><span class="region">B2C</span><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip"></span><span class="lv">AI 주도·사람 승인</span></span></div>
+  <p class="why">Salesforce 70%(B2B 고객) / 토스뱅크 약 70%·국민은행 41%. 사람 → 예외·복잡·감정 응대 <a class="rid" href="#S4-M-005" title="Salesforce 고객 지원 사이트의 AI 에이전트는 문의 430만 건 중 70%를 사람 없이 해결했다.">S4-M-005</a><a class="rid" href="#S4-M-008" title="국민은행 콜센터의 AI 처리율은 2025년 41.3%였고, 상담 인력은 1,133명에서 869명으로 줄었다. 토스뱅크는 AI 챗봇이 상담 10건 중 7건을 처리하지만, 챗봇 만족도는 36%로 기존 콜센터(72%)의 절반이다.">S4-M-008</a><a class="rid" href="#S4-M-006" title="고객의 87%는 기업이 생성형 AI로 응대하더라도 사람 상담원에게 닿을 길이 꼭 있어야 한다고 답했다. AI 덕에 응대가 쉬워졌다는 응답은 50%였다.">S4-M-006</a></p></div></div><p class="gapnote">판정: AI는 양 끝(리드 발굴·고객 서비스)을 주도하고, 가운데(상담·제안·협상)는 사람이 주도한다. 사람의 역할은 검증·예외·관계로 좁혀지며 깊어진다 (R1 기준).</p></section>
+  <section><h2>핵심 지표 <small>추적 지표 8/8개 값 확보</small></h2><p class="lead">추적 지표 8개 중 8개의 값을 원문으로 확인했다. 업체 자체 해결률과 CRM 업체 조사는 주의 표시를, AI SDR 수치는 2차 인용 표시를, 협상 AI는 조사 기간 이전 기준선 표시를 달았다.</p>
+    <div class="tablewrap"><table><thead><tr><th>추적 지표</th><th>내용 · 출처</th><th style="text-align:right">현재값</th><th>기준 시점</th><th>기록</th></tr></thead><tbody><tr id="S4-M-001"><td class="ind">S4-T1<small>영업 AI 에이전트 사용</small></td>
+  <td class="stmt">영업 인력 4,050명 조사에서 54%가 AI 에이전트를 써 봤고, 열에 아홉이 2027년까지 쓸 계획이다. 에이전트를 쓰는 셀러의 92%는 잠재 고객 발굴에 도움이 된다고 답했다. 완전히 도입하면 고객 조사 시간 34%, 이메일 작성 시간 36%가 줄 것으로 봤다. <span class="warn">충돌·주의</span><div class="src"><a href="https://www.salesforce.com/news/stories/state-of-sales-report-announcement-2026/" target="_blank" rel="noopener">Salesforce State of Sales 2026</a><span class="grade gA">A</span></div></td>
+  <td class="num">54% (AI 에이전트 사용 셀러)</td><td class="asof">2025-09<small>GLOBAL</small></td><td class="idc"><code>S4-M-001</code></td></tr><tr id="S4-M-003"><td class="ind">S4-T2<small>AI SDR 도입·아웃바운드 반응</small></td>
+  <td class="stmt">B2B 영업팀의 44%가 AI SDR(잠재 고객 발굴·첫 연락을 맡는 AI)을 도입했다는 조사가 나왔다. 같은 시기 콜드 메일 회신율은 5.1%에서 3.43%로 떨어졌다. <span class="warn">충돌·주의</span><div class="src"><a href="https://www.linkedotter.com/articles/ai-sdr-44-percent-b2b-sales-adoption-june-2026" target="_blank" rel="noopener">LinkedOtter (G2·Warmly 인용)</a><span class="grade gB">B</span></div></td>
+  <td class="num">44% (AI SDR 도입 팀)</td><td class="asof">2026-06<small>GLOBAL</small></td><td class="idc"><code>S4-M-003</code></td></tr><tr id="S4-M-002"><td class="ind">S4-T3<small>영업 시간 구조</small></td>
+  <td class="stmt">영업 인력은 근무 시간의 40%만 실제 판매에 쓴다. 나머지는 데이터 입력 같은 행정 업무다. <div class="src"><a href="https://www.salesforce.com/news/stories/state-of-sales-report-announcement-2026/" target="_blank" rel="noopener">Salesforce State of Sales 2026</a><span class="grade gA">A</span></div></td>
+  <td class="num">40% (판매에 쓰는 시간)</td><td class="asof">2025-09<small>GLOBAL</small></td><td class="idc"><code>S4-M-002</code></td></tr><tr id="S4-M-004"><td class="ind">S4-T4<small>B2B 구매자의 선택</small></td>
+  <td class="stmt">B2B 구매자의 67%가 영업 담당자 없는 구매를 선호하고, 45%는 최근 구매에 생성형 AI를 썼다. 그러나 69%는 AI가 준 정보를 영업 담당자에게 확인받기를 원한다. <div class="src"><a href="https://www.gartner.com/en/newsroom/press-releases/2026-03-09-gartner-sales-survey-finds-67-percent-of-b2b-buyers-prefer-a-rep-free-experience" target="_blank" rel="noopener">Gartner 보도자료</a><span class="grade gA">A</span> · <a href="https://www.gartner.com/en/newsroom/press-releases/2026-05-20-gartner-survey-finds-sixty-nine-percent-of-b-two-b-buyers-turn-to-sales-reps-to-validate-ai-generated-insights" target="_blank" rel="noopener">Gartner 보도자료</a><span class="grade gA">A</span></div></td>
+  <td class="num">67% (영업 없는 구매 선호)</td><td class="asof">2025-09<small>GLOBAL</small></td><td class="idc"><code>S4-M-004</code></td></tr><tr id="S4-M-005"><td class="ind">S4-T5<small>AI 응대 해결률</small></td>
+  <td class="stmt">Salesforce 고객 지원 사이트의 AI 에이전트는 문의 430만 건 중 70%를 사람 없이 해결했다. <span class="warn">충돌·주의</span><div class="src"><a href="https://www.salesforce.com/news/stories/agentforce-help-agent-announcement/" target="_blank" rel="noopener">Salesforce 보도자료</a><span class="grade gA">A</span></div></td>
+  <td class="num">70% (AI 단독 해결)</td><td class="asof">2026-06<small>GLOBAL</small></td><td class="idc"><code>S4-M-005</code></td></tr><tr id="S4-M-006"><td class="ind">S4-T6<small>서비스 품질·사람 접근</small></td>
+  <td class="stmt">고객의 87%는 기업이 생성형 AI로 응대하더라도 사람 상담원에게 닿을 길이 꼭 있어야 한다고 답했다. AI 덕에 응대가 쉬워졌다는 응답은 50%였다. <div class="src"><a href="https://gcom.pdo.aws.gartner.com/en/newsroom/press-releases/2026-08-04-gartner-survey-finds-87-percent-of-customers-say-companies-using-genai-for-customer-service-must-provide-access-to-a-human-agent0" target="_blank" rel="noopener">Gartner 보도자료</a><span class="grade gA">A</span></div></td>
+  <td class="num">87% (사람 연결 필수)</td><td class="asof">2026-03<small>GLOBAL</small></td><td class="idc"><code>S4-M-006</code></td></tr><tr id="S4-M-007"><td class="ind">S4-T7<small>협상 AI</small></td>
+  <td class="stmt">Walmart의 공급사 협상 AI는 대상 공급사의 68%와 협상을 타결했고, 평균 3%를 절감했다. 공급사의 약 75%가 사람보다 AI와의 협상을 선호했다. <span class="warn">충돌·주의</span><div class="src"><a href="https://www.pymnts.com/news/artificial-intelligence/2023/walmart-finds-75-percent-vendors-prefer-negotiating-with-chatbot/partial/" target="_blank" rel="noopener">PYMNTS (Bloomberg·Pactum 인용)</a><span class="grade gB">B</span></div></td>
+  <td class="num">68% (협상 타결)</td><td class="asof">2023-04<small>US</small></td><td class="idc"><code>S4-M-007</code></td></tr><tr id="S4-M-008"><td class="ind">S4-T8<small>한국 AI 컨택센터</small></td>
+  <td class="stmt">국민은행 콜센터의 AI 처리율은 2025년 41.3%였고, 상담 인력은 1,133명에서 869명으로 줄었다. 토스뱅크는 AI 챗봇이 상담 10건 중 7건을 처리하지만, 챗봇 만족도는 36%로 기존 콜센터(72%)의 절반이다. <div class="src"><a href="https://www.khan.co.kr/article/202604150600111" target="_blank" rel="noopener">경향신문 (국회 제출 은행 자료 인용)</a><span class="grade gB">B</span></div></td>
+  <td class="num">41.3% (국민은행 AI 처리율)</td><td class="asof">2025<small>KR</small></td><td class="idc"><code>S4-M-008</code></td></tr><tr id="S4-M-009"><td class="ind">S4-T8<small>한국 AI 컨택센터</small></td>
+  <td class="stmt">농협은행의 AI 콜봇 처리율은 2023년 25.6%에서 2024년 20.7%, 2025년 21.7%로 정체했다. 신한은행은 AI 컨택센터를 도입한 뒤에도 상담 인력이 693명에서 697명으로 거의 같았다. <div class="src"><a href="https://www.khan.co.kr/article/202604150600111" target="_blank" rel="noopener">경향신문 (국회 제출 은행 자료 인용)</a><span class="grade gB">B</span></div></td>
+  <td class="num">21.7% (농협은행 AI 처리율)</td><td class="asof">2025<small>KR</small></td><td class="idc"><code>S4-M-009</code></td></tr></tbody></table></div></section>
+  <section><h2>미확인·경고 <small>본문 판단에서 빼거나 주의해서 쓴 기록</small></h2>
+    <div class="tablewrap"><table><thead><tr><th>기록</th><th>구분</th><th>진술</th><th>사유</th></tr></thead><tbody><tr><td><code>S4-M-001</code></td><td><span class="wk">주의</span></td><td>영업 인력 4,050명 조사에서 54%가 AI 에이전트를 써 봤고, 열에 아홉이 2027년까지 쓸 계획이다. 에이전트를 쓰는 셀러의 92%는 잠재 고객 발굴에 도움이 된다고 답했다. 완전히 도입하면 고객 조사 시간 34%, 이메일 작성 시간 36%가 줄 것으로 봤다.</td><td class="muted">CRM 업체 조사</td></tr><tr><td><code>S4-M-003</code></td><td><span class="wk">주의</span></td><td>B2B 영업팀의 44%가 AI SDR(잠재 고객 발굴·첫 연락을 맡는 AI)을 도입했다는 조사가 나왔다. 같은 시기 콜드 메일 회신율은 5.1%에서 3.43%로 떨어졌다.</td><td class="muted">2차 인용 — 원 조사 방법론 미공개; 회신율 하락의 원인은 확인되지 않음</td></tr><tr><td><code>S4-M-005</code></td><td><span class="wk">주의</span></td><td>Salesforce 고객 지원 사이트의 AI 에이전트는 문의 430만 건 중 70%를 사람 없이 해결했다.</td><td class="muted">업체 자체 발표</td></tr><tr><td><code>S4-M-007</code></td><td><span class="wk">주의</span></td><td>Walmart의 공급사 협상 AI는 대상 공급사의 68%와 협상을 타결했고, 평균 3%를 절감했다. 공급사의 약 75%가 사람보다 AI와의 협상을 선호했다.</td><td class="muted">조사 기간 이전 자료 — 기준선; 구매(조달) 측 사례</td></tr></tbody></table></div></section>
+  <footer>
+    <span>이 글은 4유형 기록 31건(지표 9 · 사건 6 · 해석 8 · 전망 8)에서 생성했습니다. 문장 옆 번호를 누르면 해당 기록으로 이동합니다.</span>
+        <span>출처 등급 A = 1차 조사·공식 발표, B = 주요 언론·2차 보도, C = 블로그·출처 불명(원문 확인 전까지 판단에 쓰지 않음).</span>
+  </footer>
+</main>
