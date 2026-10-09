@@ -47,31 +47,31 @@
       "desc": "AI 산업 전체의 기술·제품·경쟁·확산 구조를 추적한다.",
       "questions": [
         {
-          "id": "t1",
-          "no": "T1",
+          "id": "i1",
+          "no": "I1",
           "area": "AI Technology & Research",
           "question": "AI가 새롭게 할 수 있게 된 일은 무엇이고, 기술의 한계선은 어느 축에서 얼마나 밀려났는가?"
         },
         {
-          "id": "t2",
-          "no": "T2",
+          "id": "i2",
+          "no": "I2",
           "area": "AI Products & Applications",
           "question": "AI 제품은 어느 영역에서 시범을 넘어 실제 운영 단계에 들어섰는가?"
         },
         {
-          "id": "t3",
-          "no": "T3",
+          "id": "i3",
+          "no": "I3",
           "area": "AI Industry & Economics",
           "question": "AI 산업의 돈은 어디로 흐르고, 그 돈은 수익으로 돌아오고 있는가?"
         },
         {
-          "id": "t4",
-          "no": "T4",
+          "id": "i4",
+          "no": "I4",
           "area": "AI Adoption, Governance & Geopolitics",
           "question": "AI는 어느 산업·업무까지 실제 운영에 들어갔고, 확산을 가장 크게 밀거나 막는 요인은 무엇인가?"
         }
       ],
-      "prefix": "T"
+      "prefix": "I"
     },
     {
       "id": "sales-marketing",

@@ -39,42 +39,42 @@ def add(**kw):
     r = dict(base); r.update(kw); records.append(r)
 
 # ---------- 지표 (M) ----------
-add(id="C1-M-001", type="지표", indicator="C1-K1", importance=3, statement="한국 국민의 생성형 AI 서비스 경험률은 2025년 44.5%로 전년(33.3%)보다 11.2%p 올랐다.",
+add(id="C1-M-001", type="지표", indicator="C1-T1", importance=3, statement="한국 국민의 생성형 AI 서비스 경험률은 2025년 44.5%로 전년(33.3%)보다 11.2%p 올랐다.",
     value=44.5, unit="%", as_of="2025", region="KR", definition="과기정통부 인터넷 이용 실태조사, 생성형 AI 서비스 경험률", prev_value=33.3,
     sources=src("msit"), verified=True, verified_note="보도 원문 확인, 정부 원보고서는 미대조", representative=True)
-add(id="C1-M-002", type="지표", indicator="C1-K1", importance=1, statement="민간 온라인 조사에서는 생성형 AI 이용 경험 88%, 최근 1년 유료 구독 경험 43%로 나타났다.",
+add(id="C1-M-002", type="지표", indicator="C1-T1", importance=1, statement="민간 온라인 조사에서는 생성형 AI 이용 경험 88%, 최근 1년 유료 구독 경험 43%로 나타났다.",
     value=88, unit="%", as_of="2026-05", region="KR", definition="CJ메조미디어 온라인 조사, 이용 경험", sources=src("cjmezzo"), verified=True,
     representative=False, check_flags=["수치 충돌: C1-M-001과 정의·표본 차이(온라인 패널). 대표값은 C1-M-001"])
-add(id="C1-M-003", type="지표", indicator="C1-K3", importance=3, statement="2026년 1~4월 미국 구글 검색의 68.01%가 클릭 없이 끝났다(2024년 60.45%).",
+add(id="C1-M-003", type="지표", indicator="C1-T3", importance=3, statement="2026년 1~4월 미국 구글 검색의 68.01%가 클릭 없이 끝났다(2024년 60.45%).",
     value=68.01, unit="%", as_of="2026-01~04", region="US", definition="SparkToro, Similarweb 웹 패널 기준 zero-click 비율(앱 제외)", prev_value=60.45,
     sources=src("sparktoro", "sel"), verified=True)
-add(id="C1-M-004", type="지표", indicator="C1-K3", importance=2, statement="구글 AI 요약이 뜬 검색에서 일반 결과 클릭은 8%로, 요약이 없을 때(15%)의 절반 수준이었다.",
+add(id="C1-M-004", type="지표", indicator="C1-T3", importance=2, statement="구글 AI 요약이 뜬 검색에서 일반 결과 클릭은 8%로, 요약이 없을 때(15%)의 절반 수준이었다.",
     value=8, unit="%", as_of="2025-03", region="US", definition="Pew, 900명 브라우징 데이터, AI 요약 노출 시 일반 결과 클릭률", prev_value=15,
     sources=src("pew"), verified=True, check_flags=["기준 시점이 조사 기간(최근 12개월) 밖 — 기준선 용도"])
-add(id="C1-M-005", type="지표", indicator="C1-K3", importance=2, statement="2026년 1~4월 구글 검색 중 AI Mode로 넘어간 비율은 0.34%에 그쳤다.",
+add(id="C1-M-005", type="지표", indicator="C1-T3", importance=2, statement="2026년 1~4월 구글 검색 중 AI Mode로 넘어간 비율은 0.34%에 그쳤다.",
     value=0.34, unit="%", as_of="2026-01~04", region="US", definition="SparkToro, AI Mode 전환 검색 비율", sources=src("sparktoro"), verified=True)
-add(id="C1-M-006", type="지표", indicator="C1-K4", importance=3, statement="2026년 7월 미국 리테일 사이트의 AI 유입 트래픽은 전년 대비 62% 늘었고, 전환율은 비AI 유입보다 60% 높았다.",
+add(id="C1-M-006", type="지표", indicator="C1-T4", importance=3, statement="2026년 7월 미국 리테일 사이트의 AI 유입 트래픽은 전년 대비 62% 늘었고, 전환율은 비AI 유입보다 60% 높았다.",
     value=62, unit="% YoY", as_of="2026-07", region="US", definition="Adobe Analytics, 생성형 AI 경유 리테일 방문 증가율", extra={"conversion_vs_nonAI": "+60%", "revenue_per_visit_vs_nonAI": "+53%", "engagement_vs_nonAI": "+14%"},
     sources=src("adobe_jul", "adobe_pdf"), verified=True)
-add(id="C1-M-007", type="지표", indicator="C1-K4", importance=2, statement="2026년 1분기 미국 리테일 AI 유입 트래픽은 전년 대비 393% 늘었고, 3월 기준 전환율은 비AI 대비 42% 높았다(1년 전에는 38% 낮았음).",
+add(id="C1-M-007", type="지표", indicator="C1-T4", importance=2, statement="2026년 1분기 미국 리테일 AI 유입 트래픽은 전년 대비 393% 늘었고, 3월 기준 전환율은 비AI 대비 42% 높았다(1년 전에는 38% 낮았음).",
     value=393, unit="% YoY", as_of="2026-C1", region="US", definition="Adobe Analytics, 분기 증가율", sources=src("adobe_q1"), verified=True)
-add(id="C1-M-008", type="지표", indicator="C1-K5", importance=3, statement="AI 쇼핑 어시스턴트를 주요 쇼핑 수단으로 쓴다는 한국 소비자는 7%로, 6개국 평균(14%)의 절반이었다.",
+add(id="C1-M-008", type="지표", indicator="C1-T5", importance=3, statement="AI 쇼핑 어시스턴트를 주요 쇼핑 수단으로 쓴다는 한국 소비자는 7%로, 6개국 평균(14%)의 절반이었다.",
     value=7, unit="%", as_of="2026-01~02", region="KR", definition="Criteo 6개국 6,379명(한국 1,107명) 설문", global_value=14, sources=src("criteo_kr"), verified=True)
-add(id="C1-M-009", type="지표", indicator="C1-K5", importance=2, statement="한국 소비자의 제품 탐색 시작점은 마켓플레이스 59%, 검색엔진 20% 순이었다.",
+add(id="C1-M-009", type="지표", indicator="C1-T5", importance=2, statement="한국 소비자의 제품 탐색 시작점은 마켓플레이스 59%, 검색엔진 20% 순이었다.",
     value=59, unit="%", as_of="2026-01~02", region="KR", definition="Criteo 설문, 탐색 시작 채널", sources=src("criteo_kr"), verified=True)
-add(id="C1-M-010", type="지표", indicator="C1-K5", importance=2, statement="수도권 생성형 AI 이용자의 49.9%가 최근 3개월 내 AI가 추천한 제품·서비스를 샀고, 구매 시 첫 채널은 포털 검색 54.2%, 생성형 AI 14.0%였다.",
+add(id="C1-M-010", type="지표", indicator="C1-T5", importance=2, statement="수도권 생성형 AI 이용자의 49.9%가 최근 3개월 내 AI가 추천한 제품·서비스를 샀고, 구매 시 첫 채널은 포털 검색 54.2%, 생성형 AI 14.0%였다.",
     value=49.9, unit="%", as_of="2026", region="KR", definition="프레인글로벌·한국PR학회, 수도권 AI 이용 경험자 1,000명", sources=src("prain"), verified=True,
     check_flags=["표본이 AI 이용 경험자로 한정 — 전체 소비자 비율 아님"])
-add(id="C1-M-011", type="지표", indicator="C1-K6", importance=3, statement="16개국 소비자 중 32%는 예산·브랜드 범위 안에서 AI 에이전트가 고르게 하겠다고 했지만, 결제까지 맡기겠다는 응답은 9%였다.",
+add(id="C1-M-011", type="지표", indicator="C1-T6", importance=3, statement="16개국 소비자 중 32%는 예산·브랜드 범위 안에서 AI 에이전트가 고르게 하겠다고 했지만, 결제까지 맡기겠다는 응답은 9%였다.",
     value=9, unit="%", as_of="2026-01", region="GLOBAL", definition="Accenture Consumer Pulse 2026, 16개국 25,590명, 완전 자율 구매 허용", extra={"conditional_choice": "32%", "trust_more_than_friend": "74%"},
     sources=src("accenture"), verified=True)
-add(id="C1-M-012", type="지표", indicator="C1-K6", importance=2, statement="미국·영국 소비자의 61.5%가 상품 탐색에 AI를 썼지만 55.0%는 AI 에이전트의 대리 구매가 불편하다고 답했다.",
+add(id="C1-M-012", type="지표", indicator="C1-T6", importance=2, statement="미국·영국 소비자의 61.5%가 상품 탐색에 AI를 썼지만 55.0%는 AI 에이전트의 대리 구매가 불편하다고 답했다.",
     value=55.0, unit="%", as_of="2026-C1", region="US/UK", definition="Riskified Agentic Commerce Pulse, 2,000명", sources=src("riskified"), verified=True)
-add(id="C1-M-013", type="지표", indicator="C1-K6", importance=2, statement="AI 쇼핑에서 허위·편향 정보를 우려하는 한국 소비자는 64%(평균 52%), 결제정보 제공이 부담스럽다는 응답은 53%(평균 46%)였다.",
+add(id="C1-M-013", type="지표", indicator="C1-T6", importance=2, statement="AI 쇼핑에서 허위·편향 정보를 우려하는 한국 소비자는 64%(평균 52%), 결제정보 제공이 부담스럽다는 응답은 53%(평균 46%)였다.",
     value=64, unit="%", as_of="2026-01~02", region="KR", definition="Criteo 설문, 우려 요인", sources=src("criteo_kr"), verified=True)
-add(id="C1-M-014", type="지표", indicator="C1-K8", importance=2, statement="네이버 AI탭은 베타 2개월 동안 누적 사용자 400만 명, 상품·장소 카드 클릭률 각각 20% 이상을 기록했다.",
+add(id="C1-M-014", type="지표", indicator="C1-T8", importance=2, statement="네이버 AI탭은 베타 2개월 동안 누적 사용자 400만 명, 상품·장소 카드 클릭률 각각 20% 이상을 기록했다.",
     value=400, unit="만 명(누적)", as_of="2026-06", region="KR", definition="네이버 발표 수치", sources=src("naver_ai_tab"), verified=True)
-add(id="C1-M-015", type="지표", indicator="C1-K8", importance=2, statement="네이버 쇼핑 AI 에이전트의 6월 일간 이용자는 3월보다 50% 이상 늘었고, 에이전트 경유 거래액은 2.7배 이상 증가했다.",
+add(id="C1-M-015", type="지표", indicator="C1-T8", importance=2, statement="네이버 쇼핑 AI 에이전트의 6월 일간 이용자는 3월보다 50% 이상 늘었고, 에이전트 경유 거래액은 2.7배 이상 증가했다.",
     value=2.7, unit="배(거래액)", as_of="2026-06", region="KR", definition="네이버 발표, 3월 대비", extra={"long_tail_queries": "이용자 70% 이상이 15자 이상 질의"},
     sources=src("naver_shop_ga"), verified=True)
 

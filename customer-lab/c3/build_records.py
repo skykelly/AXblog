@@ -26,29 +26,29 @@ def add(**kw):
     r = dict(base); r.update(kw); records.append(r)
 
 # ---------- 지표 (M) ----------
-add(id="C3-M-001", type="지표", indicator="C3-K1", importance=3, statement="2025년 말 새로 발행된 영문 웹 글의 50.9%가 주로 AI가 쓴 글로 판정됐다. 이 비중은 2025년 초부터 50% 안팎에서 멈춰 있다.",
+add(id="C3-M-001", type="지표", indicator="C3-T1", importance=3, statement="2025년 말 새로 발행된 영문 웹 글의 50.9%가 주로 AI가 쓴 글로 판정됐다. 이 비중은 2025년 초부터 50% 안팎에서 멈춰 있다.",
     value=50.9, unit="%", as_of="2025-H2", region="GLOBAL(영문)", definition="Graphite, Common Crawl 55,400개 URL을 AI 탐지기 3종으로 판정", extra={"ai_share_1y_after_chatgpt": "35.9%", "ai_share_2y_after": "48%"},
     sources=src("axios_graphite"), verified=True, check_flags=["AI 탐지기 판정치 — 오탐 가능성"])
-add(id="C3-M-002", type="지표", indicator="C3-K2", importance=2, statement="AI 생성 의심 Amazon 리뷰의 비중은 2022년 대비 약 400% 늘었고, 별점 1점·5점 리뷰가 2~4점 리뷰보다 AI로 판정될 가능성이 약 1.3배 높았다.",
+add(id="C3-M-002", type="지표", indicator="C3-T2", importance=2, statement="AI 생성 의심 Amazon 리뷰의 비중은 2022년 대비 약 400% 늘었고, 별점 1점·5점 리뷰가 2~4점 리뷰보다 AI로 판정될 가능성이 약 1.3배 높았다.",
     value=400, unit="% 증가(2022 대비)", as_of="2025-11", region="US", definition="Originality.ai, Amazon 리뷰 표본 약 2,000건 AI 탐지", sources=src("orig_amazon"), verified=True,
     check_flags=["탐지 업체 자체 연구 — 절대 비중은 미공개"])
-add(id="C3-M-003", type="지표", indicator="C3-K3", importance=3, statement="AI 챗봇으로 매주 뉴스를 보는 사람은 7%에서 10%로 늘었고, 18~24세는 17%였다.",
+add(id="C3-M-003", type="지표", indicator="C3-T3", importance=3, statement="AI 챗봇으로 매주 뉴스를 보는 사람은 7%에서 10%로 늘었고, 18~24세는 17%였다.",
     value=10, unit="%", as_of="2026", region="GLOBAL(45개 시장)", definition="Reuters Institute DNR 2026, 주간 AI 챗봇 뉴스 이용", prev_value=7, sources=src("decoder_dnr"), verified=True)
-add(id="C3-M-004", type="지표", indicator="C3-K3", importance=3, statement="AI 챗봇이 전한 뉴스를 믿는다는 응답은 전체 20%였다. 챗봇 이용자는 44%, 비이용자는 17%였다.",
+add(id="C3-M-004", type="지표", indicator="C3-T3", importance=3, statement="AI 챗봇이 전한 뉴스를 믿는다는 응답은 전체 20%였다. 챗봇 이용자는 44%, 비이용자는 17%였다.",
     value=20, unit="%", as_of="2026", region="GLOBAL", definition="Reuters Institute DNR 2026, AI 생성 뉴스 신뢰", extra={"users": "44%", "non_users": "17%"}, sources=src("decoder_dnr"), verified=True)
-add(id="C3-M-005", type="지표", indicator="C3-K4", importance=3, statement="AI 챗봇에서 원문 출처를 자주 누른다는 응답은 4%로, 검색엔진(19%)·소셜미디어(17%)보다 크게 낮았다.",
+add(id="C3-M-005", type="지표", indicator="C3-T4", importance=3, statement="AI 챗봇에서 원문 출처를 자주 누른다는 응답은 4%로, 검색엔진(19%)·소셜미디어(17%)보다 크게 낮았다.",
     value=4, unit="%", as_of="2026", region="GLOBAL(27개 시장)", definition="Reuters Institute DNR 2026, 원문을 항상·자주 클릭", sources=src("decoder_dnr"), verified=True)
-add(id="C3-M-006", type="지표", indicator="C3-K4", importance=3, statement="뉴스 퍼블리셔로 가는 Google 검색 유입은 2025년 7월~2026년 7월 사이 40.2% 줄었다(전년 감소폭 21.9%). AI 챗봇 유입은 전체 트래픽의 0.01%였다.",
+add(id="C3-M-006", type="지표", indicator="C3-T4", importance=3, statement="뉴스 퍼블리셔로 가는 Google 검색 유입은 2025년 7월~2026년 7월 사이 40.2% 줄었다(전년 감소폭 21.9%). AI 챗봇 유입은 전체 트래픽의 0.01%였다.",
     value=-40.2, unit="% YoY", as_of="2026-07", region="GLOBAL", definition="Chartbeat 퍼블리셔 네트워크, Google 검색 유입 변화", prev_value=-21.9, sources=src("chartbeat"), verified=True,
     check_flags=["Chartbeat 원보고서 미대조(2차 보도)"])
-add(id="C3-M-007", type="지표", indicator="C3-K5", importance=3, statement="미국 AI 검색(ChatGPT·AI Mode·Gemini·Perplexity·AI Overviews)이 가장 많이 인용한 도메인은 Reddit, YouTube, LinkedIn, Wikipedia 순이었다.",
+add(id="C3-M-007", type="지표", indicator="C3-T5", importance=3, statement="미국 AI 검색(ChatGPT·AI Mode·Gemini·Perplexity·AI Overviews)이 가장 많이 인용한 도메인은 Reddit, YouTube, LinkedIn, Wikipedia 순이었다.",
     value=1, unit="위(Reddit)", as_of="2026-03", region="US", definition="Peec, 인용 출처 3천만 건 분석", sources=src("peec"), verified=True)
-add(id="C3-M-008", type="지표", indicator="C3-K6", importance=3, statement="AI로 만든 광고에 호감을 느끼는 미국 Gen Z·밀레니얼은 45%였지만, 광고주는 82%가 소비자가 호감을 느낄 것이라 봤다. 격차는 2024년 32%p에서 37%p로 벌어졌다.",
+add(id="C3-M-008", type="지표", indicator="C3-T6", importance=3, statement="AI로 만든 광고에 호감을 느끼는 미국 Gen Z·밀레니얼은 45%였지만, 광고주는 82%가 소비자가 호감을 느낄 것이라 봤다. 격차는 2024년 32%p에서 37%p로 벌어졌다.",
     value=45, unit="%", as_of="2025-10~2026-01", region="US", definition="IAB·Sonata Insights, 소비자 505명·광고 임원 104명", extra={"advertiser_belief": "82%", "gap_pp": 37, "gap_2024_pp": 32},
     sources=src("iab"), verified=True)
-add(id="C3-M-009", type="지표", indicator="C3-K6", importance=2, statement="광고 임원의 83%가 제작에 AI를 쓴다고 답했고(2024년 60%), 소비자의 71%는 AI로 만든 광고를 본 적 있다고 생각했다(2024년 54%).",
+add(id="C3-M-009", type="지표", indicator="C3-T6", importance=2, statement="광고 임원의 83%가 제작에 AI를 쓴다고 답했고(2024년 60%), 소비자의 71%는 AI로 만든 광고를 본 적 있다고 생각했다(2024년 54%).",
     value=83, unit="%", as_of="2025-10~2026-01", region="US", definition="IAB, 광고 제작 AI 사용 기업 비율", prev_value=60, sources=src("iab"), verified=True)
-add(id="C3-M-010", type="지표", indicator="C3-K8", importance=3, statement="AI 쇼핑에서 허위·편향 정보에 노출될까 우려하는 한국 소비자는 64%로 6개국 평균(52%)보다 높았다.",
+add(id="C3-M-010", type="지표", indicator="C3-T8", importance=3, statement="AI 쇼핑에서 허위·편향 정보에 노출될까 우려하는 한국 소비자는 64%로 6개국 평균(52%)보다 높았다.",
     value=64, unit="%", as_of="2026-01~02", region="KR", definition="Criteo 6개국 설문(한국 1,107명)", sources=src("criteo_kr"), verified=True)
 
 # ---------- 사건 (E) ----------

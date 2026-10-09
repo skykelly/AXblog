@@ -26,32 +26,32 @@ def add(**kw):
     r = dict(base); r.update(kw); records.append(r)
 
 # ---------- 지표 (M) ----------
-add(id="C5-M-001", type="지표", indicator="C5-K1", importance=3, statement="2025년 11월 기준 1인 가구는 전체 2,324만 6천 가구의 36.6%로 1년 새 0.6%p 늘었다.",
+add(id="C5-M-001", type="지표", indicator="C5-T1", importance=3, statement="2025년 11월 기준 1인 가구는 전체 2,324만 6천 가구의 36.6%로 1년 새 0.6%p 늘었다.",
     value=36.6, unit="%", as_of="2025-11", region="KR", definition="2025 인구주택총조사(등록센서스)", prev_value=36.0, sources=src("census2025"), verified=True)
-add(id="C5-M-002", type="지표", indicator="C5-K1", importance=2, statement="4인 이상 가구는 340만 8천 가구로 1년 새 16만 3천 가구(4.6%) 줄었다.",
+add(id="C5-M-002", type="지표", indicator="C5-T1", importance=2, statement="4인 이상 가구는 340만 8천 가구로 1년 새 16만 3천 가구(4.6%) 줄었다.",
     value=-4.6, unit="% YoY", as_of="2025-11", region="KR", definition="2025 인구주택총조사, 4인 이상 가구", sources=src("census2025"), verified=True)
-add(id="C5-M-003", type="지표", indicator="C5-K2", importance=3, statement="65세 이상 고령자 가구는 650만 7천 가구로 전체의 28.8%이고, 2038년에는 1천만 가구를 넘을 전망이다. 65세 이상 인구는 21.6%다.",
+add(id="C5-M-003", type="지표", indicator="C5-T2", importance=3, statement="65세 이상 고령자 가구는 650만 7천 가구로 전체의 28.8%이고, 2038년에는 1천만 가구를 넘을 전망이다. 65세 이상 인구는 21.6%다.",
     value=28.8, unit="%", as_of="2026", region="KR", definition="2026 고령자 통계, 가구주 65세 이상 가구", extra={"elderly_pop_share": "21.6%", "households": "650.7만"},
     sources=src("elderly2026"), verified=True)
-add(id="C5-M-004", type="지표", indicator="C5-K3", importance=3, statement="2026년 1~7월 출생아는 17만 79명으로 1년 전보다 14.7% 늘어 2019년 이후 가장 많았고, 증가율은 통계 작성 이래 최대였다. 7월 합계출산율은 0.89명이다.",
+add(id="C5-M-004", type="지표", indicator="C5-T3", importance=3, statement="2026년 1~7월 출생아는 17만 79명으로 1년 전보다 14.7% 늘어 2019년 이후 가장 많았고, 증가율은 통계 작성 이래 최대였다. 7월 합계출산율은 0.89명이다.",
     value=14.7, unit="% YoY(1~7월 누적)", as_of="2026-07", region="KR", definition="국가데이터처 인구동향, 누적 출생아", extra={"births_jan_jul": 170079, "tfr_july": 0.89},
     sources=src("pop_july"), verified=True)
-add(id="C5-M-005", type="지표", indicator="C5-K3", importance=2, statement="출생아는 2024년 7월부터 23개월 연속(2026년 5월 기준) 전년 같은 달보다 늘었다.",
+add(id="C5-M-005", type="지표", indicator="C5-T3", importance=2, statement="출생아는 2024년 7월부터 23개월 연속(2026년 5월 기준) 전년 같은 달보다 늘었다.",
     value=23, unit="개월 연속 증가", as_of="2026-05", region="KR", definition="국가데이터처 인구동향", sources=src("pop_may"), verified=True)
-add(id="C5-M-006", type="지표", indicator="C5-K4", importance=3, statement="2025년 혼인은 24만 건으로 1년 전보다 8.1% 늘어 2018년 이후 가장 많았다. 평균 초혼 연령은 남자 33.9세, 여자 31.6세다.",
+add(id="C5-M-006", type="지표", indicator="C5-T4", importance=3, statement="2025년 혼인은 24만 건으로 1년 전보다 8.1% 늘어 2018년 이후 가장 많았다. 평균 초혼 연령은 남자 33.9세, 여자 31.6세다.",
     value=24, unit="만 건", as_of="2025", region="KR", definition="국가데이터처 2025 혼인·이혼 통계", sources=src("marriage2025"), verified=True)
-add(id="C5-M-007", type="지표", indicator="C5-K4", importance=2, statement="2026년 1~7월 혼인은 14만 6,656건으로 같은 기간 기준 2018년 이후 가장 많았다. 다만 월별로는 5월 6.4% 감소, 7월 9.3% 증가로 오르내렸다.",
+add(id="C5-M-007", type="지표", indicator="C5-T4", importance=2, statement="2026년 1~7월 혼인은 14만 6,656건으로 같은 기간 기준 2018년 이후 가장 많았다. 다만 월별로는 5월 6.4% 감소, 7월 9.3% 증가로 오르내렸다.",
     value=146656, unit="건(1~7월 누적)", as_of="2026-07", region="KR", definition="국가데이터처 인구동향", sources=src("pop_july", "pop_may"), verified=True,
     check_flags=["월별 증감이 크게 엇갈림 — 연간 확정치로 재확인 필요"])
-add(id="C5-M-008", type="지표", indicator="C5-K5", importance=3, statement="2025년 국내 이동자는 611만 8천 명으로 2.6% 줄어 1974년 이후 가장 적었다. 주택 때문에 옮긴 사람이 10만 5천 명 줄어 감소 폭이 가장 컸다.",
+add(id="C5-M-008", type="지표", indicator="C5-T5", importance=3, statement="2025년 국내 이동자는 611만 8천 명으로 2.6% 줄어 1974년 이후 가장 적었다. 주택 때문에 옮긴 사람이 10만 5천 명 줄어 감소 폭이 가장 컸다.",
     value=611.8, unit="만 명", as_of="2025", region="KR", definition="국가데이터처 국내인구이동통계", extra={"housing_moves": "206.5만 명(-10.5만)"}, sources=src("move2025"), verified=True)
-add(id="C5-M-009", type="지표", indicator="C5-K6", importance=3, statement="2026년 전국 아파트 입주 물량은 18만 3,124가구로 2025년보다 22.5% 줄어 2013년 이후 가장 적다. 서울은 1만 8,475가구로 전년의 절반 수준이다.",
+add(id="C5-M-009", type="지표", indicator="C5-T6", importance=3, statement="2026년 전국 아파트 입주 물량은 18만 3,124가구로 2025년보다 22.5% 줄어 2013년 이후 가장 적다. 서울은 1만 8,475가구로 전년의 절반 수준이다.",
     value=183124, unit="가구", as_of="2026", region="KR", definition="부동산R114 입주 예정 물량", prev_value=236263, extra={"seoul": 18475, "y2027": 191827},
     sources=src("move_in2026"), verified=True, check_flags=["예정 물량 — 실적과 다를 수 있음"])
-add(id="C5-M-010", type="지표", indicator="C5-K7", importance=2, statement="2026년 1분기 가구당 소비지출은 월 310만 5천 원으로 5.3%(실질 3.1%) 늘었다. 자동차 구입이 29.6% 늘어 증가를 이끌었고, 가구·가전 지출의 증감은 발표 기사에서 확인되지 않았다.",
+add(id="C5-M-010", type="지표", indicator="C5-T7", importance=2, statement="2026년 1분기 가구당 소비지출은 월 310만 5천 원으로 5.3%(실질 3.1%) 늘었다. 자동차 구입이 29.6% 늘어 증가를 이끌었고, 가구·가전 지출의 증감은 발표 기사에서 확인되지 않았다.",
     value=5.3, unit="% YoY", as_of="2026-C1", region="KR", definition="국가데이터처 가계동향, 가구당 월평균 소비지출", sources=src("hh_q1"), verified=True,
     check_flags=["가정용품·가전 항목 원자료 미대조"])
-add(id="C5-M-011", type="지표", indicator="C5-K8", importance=2, statement="2026년 1~5월 신세계백화점 신생아 상품 매출은 28.6%, 현대백화점 유아 상품은 25.2% 늘었고, 롯데마트 기저귀 매출은 79.5% 늘었다.",
+add(id="C5-M-011", type="지표", indicator="C5-T8", importance=2, statement="2026년 1~5월 신세계백화점 신생아 상품 매출은 28.6%, 현대백화점 유아 상품은 25.2% 늘었고, 롯데마트 기저귀 매출은 79.5% 늘었다.",
     value=28.6, unit="% YoY(신생아 상품)", as_of="2026-05", region="KR", definition="유통사 발표, 생활 사건 연계 매출", sources=src("baby_retail"), verified=True)
 
 # ---------- 사건 (E) ----------

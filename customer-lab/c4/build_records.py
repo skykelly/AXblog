@@ -28,27 +28,27 @@ def add(**kw):
     r = dict(base); r.update(kw); records.append(r)
 
 # ---------- 지표 (M) ----------
-add(id="C4-M-001", type="지표", indicator="C4-K5", importance=3, statement="한국에서 AI 가전에 '신중한 수용자'(45.7%)가 '긍정 수용자'(36.3%)를 처음으로 넘었다. 1년 전에는 긍정 41.1%, 신중 39.7%였다.",
+add(id="C4-M-001", type="지표", indicator="C4-T5", importance=3, statement="한국에서 AI 가전에 '신중한 수용자'(45.7%)가 '긍정 수용자'(36.3%)를 처음으로 넘었다. 1년 전에는 긍정 41.1%, 신중 39.7%였다.",
     value=45.7, unit="% (신중 수용자)", as_of="2026-03", region="KR", definition="오픈서베이 AI 가전 트렌드 리포트, 약 1,500명", prev_value=39.7, extra={"positive": "36.3% (전년 41.1%)"},
     sources=src("hk_opensurvey", "opensurvey"), verified=True, check_flags=["조사 연령이 20~59세에서 20~64세로 넓어져 전년 비교에 주의"])
-add(id="C4-M-002", type="지표", indicator="C4-K6", importance=3, statement="AI 가전의 걱정거리로 개인정보 유출을 꼽은 한국 소비자는 58.2%로 1년 새 6.9%p 늘어 가격(58.3%)과 같은 수준이 됐다. 음성·영상 수집 우려도 30.4%(+4.2%p)였다.",
+add(id="C4-M-002", type="지표", indicator="C4-T6", importance=3, statement="AI 가전의 걱정거리로 개인정보 유출을 꼽은 한국 소비자는 58.2%로 1년 새 6.9%p 늘어 가격(58.3%)과 같은 수준이 됐다. 음성·영상 수집 우려도 30.4%(+4.2%p)였다.",
     value=58.2, unit="%", as_of="2026-03", region="KR", definition="오픈서베이, AI 가전 우려 요인(중복응답)", prev_value=51.3, sources=src("hk_opensurvey"), verified=True)
-add(id="C4-M-003", type="지표", indicator="C4-K5", importance=3, statement="'AI가 스스로 판단하는 것이 불편하다'는 응답은 15.8%로 1년 새 5.1%p 늘었다.",
+add(id="C4-M-003", type="지표", indicator="C4-T5", importance=3, statement="'AI가 스스로 판단하는 것이 불편하다'는 응답은 15.8%로 1년 새 5.1%p 늘었다.",
     value=15.8, unit="%", as_of="2026-03", region="KR", definition="오픈서베이, AI 가전 우려 요인(중복응답)", prev_value=10.7, sources=src("hk_opensurvey"), verified=True)
-add(id="C4-M-004", type="지표", indicator="C4-K4", importance=2, statement="AI 기능을 써 본 한국 소비자는 생활가전 51%, 주방가전 39.1%로 1년 새 각각 5.9%p, 6.6%p 늘었다.",
+add(id="C4-M-004", type="지표", indicator="C4-T4", importance=2, statement="AI 기능을 써 본 한국 소비자는 생활가전 51%, 주방가전 39.1%로 1년 새 각각 5.9%p, 6.6%p 늘었다.",
     value=51, unit="% (생활가전)", as_of="2026-03", region="KR", definition="오픈서베이, AI 기능 경험률", extra={"kitchen": "39.1%"}, sources=src("hk_opensurvey"), verified=True)
-add(id="C4-M-005", type="지표", indicator="C4-K5", importance=2, statement="AI 가전을 직접 써 본 사람은 기대(88%)와 우려(55.4%)가 함께 높아졌다. 1년 전에는 기대 82.7%, 우려 47.5%였다.",
+add(id="C4-M-005", type="지표", indicator="C4-T5", importance=2, statement="AI 가전을 직접 써 본 사람은 기대(88%)와 우려(55.4%)가 함께 높아졌다. 1년 전에는 기대 82.7%, 우려 47.5%였다.",
     value=55.4, unit="% (경험자 우려)", as_of="2026-03", region="KR", definition="오픈서베이, AI 가전 경험자", prev_value=47.5, extra={"expectation": "88% (전년 82.7%)"}, sources=src("hk_opensurvey"), verified=True)
-add(id="C4-M-006", type="지표", indicator="C4-K3", importance=3, statement="1X의 가정용 휴머노이드 NEO는 첫해 생산분 1만 대 이상이 예약 5일 만에 팔렸다. 가격은 2만 달러 또는 월 499달러 구독이다.",
+add(id="C4-M-006", type="지표", indicator="C4-T3", importance=3, statement="1X의 가정용 휴머노이드 NEO는 첫해 생산분 1만 대 이상이 예약 5일 만에 팔렸다. 가격은 2만 달러 또는 월 499달러 구독이다.",
     value=10000, unit="대(첫해 생산분)", as_of="2026-04", region="US", definition="1X 발표, 선판매 물량", sources=src("x1_factory"), verified=True)
-add(id="C4-M-007", type="지표", indicator="C4-K3", importance=2, statement="1X는 연 1만 대 규모 공장을 가동했고, 2027년 말 연 10만 대 이상을 목표로 한다.",
+add(id="C4-M-007", type="지표", indicator="C4-T3", importance=2, statement="1X는 연 1만 대 규모 공장을 가동했고, 2027년 말 연 10만 대 이상을 목표로 한다.",
     value=10000, unit="대/년(생산능력)", as_of="2026-04", region="US", definition="1X 발표, 공장 생산능력", extra={"target_2027": "10만 대 이상"}, sources=src("x1_factory"), verified=True)
-add(id="C4-M-008", type="지표", indicator="C4-K2", importance=2, statement="Amazon은 지금까지 판매한 Alexa 기기 6억 대 이상 가운데 97%가 생성형 AI 비서 Alexa+를 돌릴 수 있다고 밝혔다.",
+add(id="C4-M-008", type="지표", indicator="C4-T2", importance=2, statement="Amazon은 지금까지 판매한 Alexa 기기 6억 대 이상 가운데 97%가 생성형 AI 비서 Alexa+를 돌릴 수 있다고 밝혔다.",
     value=97, unit="%", as_of="2026-01", region="GLOBAL", definition="Amazon 발표, Alexa+ 호환 기기 비율", sources=src("alexa_compat"), verified=True)
-add(id="C4-M-009", type="지표", indicator="C4-K5", importance=1, statement="미국 인터넷 가구의 15%가 유료 AI 앱을 쓰고, 그중 75%는 스마트홈 AI 서비스에도 돈을 낼 의향이 있다.",
+add(id="C4-M-009", type="지표", indicator="C4-T5", importance=1, statement="미국 인터넷 가구의 15%가 유료 AI 앱을 쓰고, 그중 75%는 스마트홈 AI 서비스에도 돈을 낼 의향이 있다.",
     value=75, unit="%", as_of="2025-08", region="US", definition="Parks Associates, 8,000가구", sources=src("parks"), verified=True,
     check_flags=["기준 시점이 조사 기간(최근 12개월) 밖 — 기준선 용도"])
-add(id="C4-M-010", type="지표", indicator="C4-K8", importance=1, statement="삼성전자 무풍에어컨 판매의 85% 이상이 AI 탑재 모델이었고, 냉장고·세탁기도 절반 이상이 AI 모델이었다.",
+add(id="C4-M-010", type="지표", indicator="C4-T8", importance=1, statement="삼성전자 무풍에어컨 판매의 85% 이상이 AI 탑재 모델이었고, 냉장고·세탁기도 절반 이상이 AI 모델이었다.",
     value=85, unit="% 이상(에어컨)", as_of="2025-H1", region="KR", definition="삼성전자 발표, AI 탑재 모델 판매 비중", sources=src("samsung_ai_sales"), verified=True,
     check_flags=["기준 시점이 조사 기간 밖 — 기준선 용도"])
 

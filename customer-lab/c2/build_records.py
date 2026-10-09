@@ -29,34 +29,34 @@ def add(**kw):
     r = dict(base); r.update(kw); records.append(r)
 
 # ---------- 지표 (M) ----------
-add(id="C2-M-001", type="지표", indicator="C2-K1", importance=3, statement="Amazon 쇼핑 Agent Rufus는 2025년 고객 3억 명이 썼고, 연환산 약 120억 달러의 증분 매출을 만들었다.",
+add(id="C2-M-001", type="지표", indicator="C2-T1", importance=3, statement="Amazon 쇼핑 Agent Rufus는 2025년 고객 3억 명이 썼고, 연환산 약 120억 달러의 증분 매출을 만들었다.",
     value=120, unit="억 달러(연환산 증분 매출)", as_of="2025", region="US/GLOBAL", definition="Amazon 2025년 4분기 실적 발표(2026년 2월)", extra={"users_2025": "3억 명"},
     sources=src("mr_rufus"), verified=True)
-add(id="C2-M-002", type="지표", indicator="C2-K1", importance=2, statement="2026년 1분기 Rufus 월간 이용자는 전년 대비 115%, 이용 활동(engagement)은 400% 늘었다.",
+add(id="C2-M-002", type="지표", indicator="C2-T1", importance=2, statement="2026년 1분기 Rufus 월간 이용자는 전년 대비 115%, 이용 활동(engagement)은 400% 늘었다.",
     value=115, unit="% YoY(MAU)", as_of="2026-C1", region="US/GLOBAL", definition="Amazon 1분기 실적 발표", sources=src("mr_rufus"), verified=True)
-add(id="C2-M-003", type="지표", indicator="C2-K1", importance=2, statement="Amazon에 따르면 Rufus를 쓰는 고객은 구매를 끝낼 가능성이 60% 높다.",
+add(id="C2-M-003", type="지표", indicator="C2-T1", importance=2, statement="Amazon에 따르면 Rufus를 쓰는 고객은 구매를 끝낼 가능성이 60% 높다.",
     value=60, unit="% (구매 완료 가능성 차이)", as_of="2026-02", region="US/GLOBAL", definition="Amazon 발표", sources=src("mr_rufus"), verified=True)
-add(id="C2-M-004", type="지표", indicator="C2-K8", importance=2, statement="Amazon 광고 매출은 2026년 1분기 172억 달러로 전년 대비 24% 늘었다.",
+add(id="C2-M-004", type="지표", indicator="C2-T8", importance=2, statement="Amazon 광고 매출은 2026년 1분기 172억 달러로 전년 대비 24% 늘었다.",
     value=24, unit="% YoY", as_of="2026-C1", region="GLOBAL", definition="Amazon 1분기 광고 매출", extra={"ad_revenue": "172억 달러"}, sources=src("mr_rufus"), verified=True)
-add(id="C2-M-005", type="지표", indicator="C2-K2", importance=2, statement="Rufus 안의 브랜드 스폰서 질문을 누른 쇼핑객의 약 20%가 그 브랜드에 대해 대화를 이어갔다.",
+add(id="C2-M-005", type="지표", indicator="C2-T2", importance=2, statement="Rufus 안의 브랜드 스폰서 질문을 누른 쇼핑객의 약 20%가 그 브랜드에 대해 대화를 이어갔다.",
     value=20, unit="%", as_of="2026-C1", region="US", definition="Amazon 발표, 스폰서 프롬프트 참여 후 대화 지속 비율", sources=src("mr_rufus"), verified=True)
-add(id="C2-M-006", type="지표", indicator="C2-K2", importance=1, statement="외부 모니터링 기준 2026년 7월 초 미국 ChatGPT 응답의 약 51%에 광고가 붙었다.",
+add(id="C2-M-006", type="지표", indicator="C2-T2", importance=1, statement="외부 모니터링 기준 2026년 7월 초 미국 ChatGPT 응답의 약 51%에 광고가 붙었다.",
     value=51, unit="%", as_of="2026-07", region="US", definition="cloro 자체 모니터링, 최근 7일 응답 중 광고 노출 비율", sources=src("cloro_ads"), verified=False,
     check_flags=["출처 등급 C(단일 모니터링 업체) — 판단 근거에서 제외"])
-add(id="C2-M-007", type="지표", indicator="C2-K4", importance=3, statement="최근 고객 서비스 상황에서 고객은 기업이 제공한 챗봇보다 ChatGPT·Gemini 같은 서드파티 AI를 약 3배 더 많이 썼다.",
+add(id="C2-M-007", type="지표", indicator="C2-T4", importance=3, statement="최근 고객 서비스 상황에서 고객은 기업이 제공한 챗봇보다 ChatGPT·Gemini 같은 서드파티 AI를 약 3배 더 많이 썼다.",
     value=3, unit="배", as_of="2026-02~03", region="GLOBAL", definition="Gartner 고객 조사(B2B·B2C 3,566명)", sources=src("gartner_cs"), verified=True)
-add(id="C2-M-008", type="지표", indicator="C2-K4", importance=3, statement="고객의 87%는 AI로 상담하는 기업이라도 사람 상담원 연결은 반드시 있어야 한다고 답했다.",
+add(id="C2-M-008", type="지표", indicator="C2-T4", importance=3, statement="고객의 87%는 AI로 상담하는 기업이라도 사람 상담원 연결은 반드시 있어야 한다고 답했다.",
     value=87, unit="%", as_of="2026-02~03", region="GLOBAL", definition="Gartner 고객 조사", sources=src("gartner_cs"), verified=True)
-add(id="C2-M-009", type="지표", indicator="C2-K4", importance=2, statement="생성형 AI를 쓰는 고객의 58%가 AI에게 자기 대신 일을 처리시킨 경험이 있다(B2B는 74%).",
+add(id="C2-M-009", type="지표", indicator="C2-T4", importance=2, statement="생성형 AI를 쓰는 고객의 58%가 AI에게 자기 대신 일을 처리시킨 경험이 있다(B2B는 74%).",
     value=58, unit="%", as_of="2026-02~03", region="GLOBAL", definition="Gartner 고객 조사", sources=src("gartner_cs"), verified=True)
-add(id="C2-M-010", type="지표", indicator="C2-K3", importance=2, statement="Google의 Universal Commerce Protocol에는 발표 시점에 20곳 이상이 참여했고, Shopify·Walmart·Target·Etsy·Wayfair가 공동 개발했다.",
+add(id="C2-M-010", type="지표", indicator="C2-T3", importance=2, statement="Google의 Universal Commerce Protocol에는 발표 시점에 20곳 이상이 참여했고, Shopify·Walmart·Target·Etsy·Wayfair가 공동 개발했다.",
     value=20, unit="곳 이상", as_of="2026-01", region="US", definition="UCP 참여 파트너 수", sources=src("aa_ucp"), verified=True)
-add(id="C2-M-011", type="지표", indicator="C2-K3", importance=2, statement="Visa의 Agent 결제 준비 프로그램에 아태 50곳 이상이 참여했고, 한국에서는 하나·현대·KB국민·삼성·신한카드와 카카오뱅크가 이름을 올렸다.",
+add(id="C2-M-011", type="지표", indicator="C2-T3", importance=2, statement="Visa의 Agent 결제 준비 프로그램에 아태 50곳 이상이 참여했고, 한국에서는 하나·현대·KB국민·삼성·신한카드와 카카오뱅크가 이름을 올렸다.",
     value=6, unit="곳(한국)", as_of="2026-04", region="KR/APAC", definition="Visa Agentic Ready 참여 발급사", extra={"apac_partners": "50곳 이상", "markets": "한국 포함 10개 시장"},
     sources=src("visa_ap"), verified=True, check_flags=["국가 구분은 회사명으로 추정"])
-add(id="C2-M-012", type="지표", indicator="C2-K7", importance=2, statement="카카오는 카카오톡 AI 에이전트를 쓸 수 있는 이용자가 2026년 말 3,100만 명(1분기 카톡 MAU 4,958만 명의 약 62%)이 될 것으로 봤다.",
+add(id="C2-M-012", type="지표", indicator="C2-T7", importance=2, statement="카카오는 카카오톡 AI 에이전트를 쓸 수 있는 이용자가 2026년 말 3,100만 명(1분기 카톡 MAU 4,958만 명의 약 62%)이 될 것으로 봤다.",
     value=3100, unit="만 명(예상)", as_of="2026-05", region="KR", definition="카카오 1분기 실적 발표", sources=src("kakao"), verified=True)
-add(id="C2-M-013", type="지표", indicator="C2-K7", importance=2, statement="네이버 쇼핑 AI 에이전트 경유 거래액은 3월 대비 6월에 2.7배 이상 늘었다.",
+add(id="C2-M-013", type="지표", indicator="C2-T7", importance=2, statement="네이버 쇼핑 AI 에이전트 경유 거래액은 3월 대비 6월에 2.7배 이상 늘었다.",
     value=2.7, unit="배", as_of="2026-06", region="KR", definition="네이버 발표", sources=src("naver_shop_ga"), verified=True)
 
 # ---------- 사건 (E) ----------

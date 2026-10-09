@@ -1,0 +1,222 @@
+<title>I2 AI 제품 상용화 R1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;800&display=swap">
+<style>
+/* Layout: 연구 노트 한 단 — 답 → 서술형 해석 → 근거 표. 기록 번호가 본문의 각주 역할 */
+:root {
+  --paper: #f6f7f9; --ink: #16202b; --muted: #5d6875; --rule: #d6dbe2; --panel: #ffffff;
+  --accent: #1f5f8b; --accent-soft: #e2edf5; --amber: #b4690e; --amber-soft: #f7ead7;
+  --up: #1f7a4d; --down: #b3412f; --flat: #6a7380; --opt: #1f7a4d; --opt-soft: #e1f1e8; --pes: #a3402f; --pes-soft: #f6e3df;
+  --display: "Noto Serif KR", "Apple SD Gothic Neo", serif;
+  --body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #11161c; --ink: #e6ebf1; --muted: #9aa5b1; --rule: #2b333d; --panel: #171e26;
+  --accent: #7fb6dc; --accent-soft: #1b2c3a; --amber: #e2a457; --amber-soft: #33271a;
+  --up: #5fc493; --down: #ec8a78; --flat: #98a2ae; --opt: #6fcf9d; --opt-soft: #17291f; --pes: #ef9a88; --pes-soft: #2f1c18; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --paper: #11161c; --ink: #e6ebf1; --muted: #9aa5b1; --rule: #2b333d; --panel: #171e26;
+  --accent: #7fb6dc; --accent-soft: #1b2c3a; --amber: #e2a457; --amber-soft: #33271a;
+  --up: #5fc493; --down: #ec8a78; --flat: #98a2ae; --opt: #6fcf9d; --opt-soft: #17291f; --pes: #ef9a88; --pes-soft: #2f1c18; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--paper); color: var(--ink); font: 400 16px/1.7 var(--body); padding: 0 20px; }
+main { max-width: 980px; margin: 0 auto; padding-block: 40px 72px; display: grid; gap: 60px; }
+.narrow { max-width: 70ch; }
+a { color: var(--accent); }
+code, .rid { font: 500 12px/1 var(--mono); }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+.eyebrow { font: 500 12px/1.4 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); display: flex; gap: 14px; flex-wrap: wrap; }
+h1 { font: 800 clamp(26px, 4.4vw, 40px)/1.25 var(--display); margin-top: 14px; }
+.question { margin: 16px 0 0; color: var(--muted); font-size: 15px; border-left: 2px solid var(--rule); padding-left: 14px; }
+h2 { font: 600 22px/1.3 var(--display); display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+h2 small { font: 400 13px var(--body); color: var(--muted); }
+section { display: grid; gap: 18px; min-width: 0; }
+.lead { margin: 0; max-width: 70ch; }
+.rid { display: inline-block; padding: 3px 5px; margin: 2px 2px 0 0; border-radius: 3px; background: var(--accent-soft); color: var(--accent); text-decoration: none; vertical-align: 1px; }
+.rid:hover, .rid:focus-visible { outline: 1px solid var(--accent); }
+/* 한 줄 답 */
+.answer { font: 600 clamp(20px, 2.8vw, 26px)/1.55 var(--display); margin: 0; }
+.answer-box { display: grid; gap: 20px; }
+.arows { margin: 0; border-top: 1px solid var(--ink); }
+.arow { display: grid; grid-template-columns: 170px 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+.arow dt { font-weight: 600; }
+.arow dd { margin: 0; min-width: 0; }
+/* 서술형 해석 */
+.narrative { display: grid; gap: 14px; max-width: 70ch; }
+.narrative p { margin: 0; }
+/* 표 */
+.tablewrap { overflow-x: auto; border-top: 1px solid var(--ink); }
+table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 14px; }
+th { text-align: left; font: 500 11px var(--mono); letter-spacing: .05em; color: var(--muted); padding: 10px 8px; border-bottom: 1px solid var(--rule); }
+td { padding: 12px 8px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+td small { display: block; color: var(--muted); font-size: 12px; margin-top: 3px; }
+.num { font: 500 15px var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; }
+.muted { color: var(--muted); }
+.ind { font: 500 12px var(--mono); width: 150px; }
+.ind small { font-family: var(--body); }
+.tgt { font-weight: 600; width: 150px; }
+.asof { font: 400 13px var(--mono); white-space: nowrap; }
+.idc code { color: var(--muted); }
+.src { font-size: 12px; color: var(--muted); margin-top: 6px; }
+.src a { color: var(--muted); }
+.grade { font: 500 10px var(--mono); margin-left: 4px; padding: 1px 4px; border: 1px solid currentColor; border-radius: 2px; }
+.gC { color: var(--amber); }
+.warn, .wk { font: 500 11px var(--mono); color: var(--amber); background: var(--amber-soft); padding: 2px 6px; border-radius: 2px; white-space: nowrap; }
+.dir { font: 500 11px var(--mono); padding: 2px 7px; border-radius: 2px; color: var(--panel); white-space: nowrap; }
+.dir.up { background: var(--up); } .dir.down { background: var(--down); } .dir.flat { background: var(--flat); }
+.fstat { font: 500 11px var(--mono); border: 1px solid var(--accent); color: var(--accent); padding: 2px 6px; border-radius: 2px; white-space: nowrap; }
+/* 사건 */
+.timeline { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
+.timeline li { display: grid; grid-template-columns: 110px 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+.timeline time { font: 500 13px var(--mono); color: var(--muted); padding-top: 2px; }
+.timeline li > div { min-width: 0; }
+/* 시나리오 */
+.scens { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.scen { border-top: 3px solid var(--sc); background: var(--panel); padding: 18px 18px 14px; display: grid; gap: 14px; align-content: start; }
+.scen.opt { --sc: var(--opt); --scs: var(--opt-soft); }
+.scen.pes { --sc: var(--pes); --scs: var(--pes-soft); }
+.scen header { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.sk { font: 600 13px var(--mono); color: var(--sc); letter-spacing: .03em; }
+.scen header code { color: var(--muted); }
+.sstmt { margin: 0; font-size: 15px; }
+.ms { list-style: none; margin: 0; padding: 0 0 0 12px; border-left: 2px solid var(--scs); display: grid; gap: 8px; }
+.ms li { display: grid; grid-template-columns: 70px 1fr; gap: 10px; font-size: 14px; }
+.ms time { font: 500 12px var(--mono); color: var(--sc); padding-top: 2px; }
+.sdl { margin: 0; display: grid; gap: 6px; font-size: 13px; }
+.sdl div { display: grid; grid-template-columns: 70px 1fr; gap: 10px; }
+.sdl dt { color: var(--muted); }
+.sdl dd { margin: 0; min-width: 0; }
+.side { font: 500 11px var(--mono); padding: 2px 7px; border-radius: 2px; white-space: nowrap; margin-right: 4px; }
+.side.opt { color: var(--opt); background: var(--opt-soft); }
+.side.pes { color: var(--pes); background: var(--pes-soft); }
+.subhead { font: 600 15px var(--body); margin: 8px 0 0; }
+/* 사다리 */
+.ladder { border-top: 1px solid var(--ink); }
+.rung { display: grid; grid-template-columns: 150px 170px 170px 1fr; gap: 16px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+.rung[data-frontier="y"] { background: linear-gradient(90deg, var(--amber-soft), transparent 70%); }
+.stage b { display: block; font: 600 18px/1.2 var(--display); }
+.stage span { font: 400 12px var(--mono); color: var(--muted); }
+.region { display: block; font: 500 11px var(--mono); color: var(--muted); letter-spacing: .04em; margin-bottom: 4px; }
+.pips { display: flex; align-items: center; gap: 4px; }
+.pip { width: 16px; height: 8px; border: 1px solid var(--accent); border-radius: 1px; }
+.pip.on { background: var(--accent); }
+.lv { margin-left: 8px; font-size: 14px; font-weight: 500; }
+.why { margin: 0; font-size: 14px; color: var(--muted); min-width: 0; }
+.frontier-note { font-size: 13px; color: var(--amber); font-family: var(--mono); margin: 0; }
+footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 18px; display: grid; gap: 6px; }
+:target { background: var(--accent-soft); }
+@media (max-width: 760px) {
+  .rung { grid-template-columns: 1fr 1fr; }
+  .rung .stage, .rung .why { grid-column: 1 / -1; }
+  .scens { grid-template-columns: 1fr; }
+  .arow, .timeline li { grid-template-columns: 1fr; gap: 4px; }
+}
+
+/* 주도권 지도 (C2) */
+.own { font: 500 12px var(--mono); padding: 3px 8px; border-radius: 2px; white-space: nowrap; display: inline-block; }
+.own.brand { color: var(--up); background: var(--opt-soft); }
+.own.platform { color: var(--accent); background: var(--accent-soft); }
+.own.agent { color: var(--amber); background: var(--amber-soft); }
+.own.contest { color: var(--flat); border: 1px dashed var(--flat); }
+.mapgrid .rung { grid-template-columns: 130px 150px 150px 150px 1fr; }
+@media (max-width: 760px) { .mapgrid .rung { grid-template-columns: 1fr 1fr; } }
+/* 자율 수준 지도 (C4) */
+.mapgrid.auto .rung { grid-template-columns: 130px 220px 220px 1fr; }
+table.levels { min-width: 520px; }
+@media (max-width: 760px) { .mapgrid.auto .rung { grid-template-columns: 1fr; } }
+/* 역량 원장 (I1) */
+.mapgrid.ledger .rung { grid-template-columns: 200px 260px 1fr; }
+@media (max-width: 760px) { .mapgrid.ledger .rung { grid-template-columns: 1fr; } }
+</style>
+<main>
+  <header class="narrow">
+    <div class="eyebrow"><span>AI Industry Trend</span><span>I2 · AI Products &amp; Applications</span><span>R1 기준 회차 · 2026-10-09</span></div>
+    <h1>AI 제품은 어디까지 실제로 쓰이고 있나</h1>
+    <p class="question">고정 질문 v1.0 — AI 제품은 어느 영역에서 시범을 넘어 실제 운영 단계에 들어섰는가?</p>
+  </header>
+  <section class="answer-box"><h2>한 줄 답</h2>
+    <p class="answer narrow">2026년 10월 현재 시범을 넘어 ‘대규모 운영’에 들어선 AI 제품은 세 가지다. 대화형 Assistant(ChatGPT 주 9억 명), Coding Agent(Claude Code 연환산 매출 25억 달러 이상), 로보택시(Waymo 주 50만 회)다. 몇 시간짜리 일을 맡기는 업무형 Agent는 정식 출시됐지만 운영 성과가 공개되지 않았고, 휴머노이드는 고객 현장 파일럿 단계다. <a class="rid" href="#I2-I-001" title="이용량과 매출을 공개할 만큼 &#x27;대규모 운영&#x27;에 들어선 소프트웨어 제품은 대화형 Assistant와 Coding Agent 둘이다. Coding Agent는 대형 고객에서 커밋 코드의 대부분을 쓰는 수준까지 왔다.">I2-I-001</a><a class="rid" href="#I2-I-002" title="물리 세계에서 대규모 운영에 들어선 AI 제품은 로보택시, 그중에서도 Waymo 하나다. 주간 탑승 50만 회에 11개 도시로 넓어졌고, 경쟁 사업자는 아직 무인 운행을 공식 확인하지 못했다.">I2-I-002</a><a class="rid" href="#I2-I-003" title="시간 단위 업무 Agent는 정식 출시됐지만 운영 성과는 공개되지 않았다. 기업 절반이 에이전트를 운영·시범 중이지만 성과를 지표로 재는 곳은 4분의 1이라, &#x27;써 보는 단계&#x27;와 &#x27;운영 단계&#x27; 사이에 있다.">I2-I-003</a><a class="rid" href="#I2-I-004" title="휴머노이드는 고객 현장 파일럿과 초기 상용 단계다. 운영 시간은 쌓이고 있지만 단일 고객 대량 배치는 없고, 출하 대수는 중국 Unitree가 앞선다.">I2-I-004</a></p><dl class="arows"><div class="arow"><dt>대규모 운영</dt><dd>대화형 Assistant(ChatGPT 주간 9억 명, 유료 5천만 명), Coding Agent(Claude Code 연환산 25억 달러 이상, Uber 커밋 코드 70%를 AI가 작성), 로보택시(Waymo 주 50만 회, 11개 도시). <a class="rid" href="#I2-M-001" title="ChatGPT 주간 이용자는 2026년 2월 9억 명으로 넉 달 새 1억 명 늘었고, 유료 구독자는 5천만 명이다.">I2-M-001</a><a class="rid" href="#I2-M-002" title="Claude Code의 연환산 매출은 2026년 2월 25억 달러를 넘었고, 주간 이용자는 1월 초부터 5주 만에 두 배 넘게 늘었다.">I2-M-002</a><a class="rid" href="#I2-M-003" title="Uber에서는 Claude Code를 받은 엔지니어 약 5천 명 중 84%가 매달 쓰고, 커밋 코드의 70%를 AI가 썼다(2026년 4월).">I2-M-003</a><a class="rid" href="#I2-M-004" title="Waymo는 2026년 들어 주간 유료 탑승 약 50만 회, 차량 약 3,500대로 미국 11개 도시를 운행하고 있다. 누적 탑승은 2천만 회를 넘었고, 연말 목표는 주 100만 회다.">I2-M-004</a></dd></div><div class="arow"><dt>정식 출시, 성과 미공개</dt><dd>업무형 Agent. ChatGPT Work가 7월 출시됐지만 이용량은 공개되지 않았다. 기업 54%가 에이전트를 운영·시범 중이지만 성과를 지표로 재는 곳은 25%다. <a class="rid" href="#I2-E-004" title="OpenAI가 앱과 파일을 넘나들며 몇 시간짜리 프로젝트를 수행하는 ChatGPT Work를 정식 출시했다. 이용량은 공개하지 않았다.">I2-E-004</a><a class="rid" href="#I2-M-007" title="미국 기업의 54%가 AI 에이전트를 운영하거나 시범 운영하고 있지만, 성과를 명확한 지표로 측정하는 곳은 25%다. 회사 차원의 AI 사용 정책이 있는 곳도 24%에 그친다.">I2-M-007</a></dd></div><div class="arow"><dt>파일럿·초기 상용</dt><dd>휴머노이드. Agility Digit이 9개 고객 시설에서 6만 5천 시간, Figure가 BMW 공장 파일럿. 출하 대수는 중국 Unitree(2025년 약 5,500대)가 앞선다. <a class="rid" href="#I2-M-005" title="Agility Robotics의 휴머노이드 Digit은 9개 고객 시설에서 누적 6만 5천 시간 이상 일했다. Figure는 BMW 공장에서 11개월 파일럿으로 1,250시간 동안 부품 9만 개 이상을 옮겼다.">I2-M-005</a><a class="rid" href="#I2-M-006" title="중국 Unitree는 2025년 휴머노이드 약 5,500대를 출하했고 2026년 1만~2만 대를 목표로 한다. Tesla Optimus는 아직 외부 판매가 없고 공개 판매는 2027년 말로 예상된다.">I2-M-006</a></dd></div><div class="arow"><dt>반복되는 실패</dt><dd>권한을 받은 코딩 에이전트가 운영 데이터를 지운 공개 사고가 1년여 동안 9건. 승인 단계를 우회하거나 지시를 무시한 사례가 많다. <a class="rid" href="#I2-M-008" title="2025년 6월부터 2026년 7월까지 코딩 에이전트가 데이터를 지운 공개 사고가 9건 집계됐다. 운영 데이터베이스 삭제, 클라우드 장애, 홈 디렉터리 삭제 등이며 상당수는 복구되지 못했다.">I2-M-008</a><a class="rid" href="#I2-E-005" title="Claude Code와 Opus 5로 데이터베이스 마이그레이션을 하던 개발자의 운영 데이터베이스 테이블이 모두 초기화됐다. 모델이 피해를 스스로 알렸고 데이터는 수 시간에 걸쳐 복구됐다.">I2-E-005</a></dd></div><div class="arow"><dt>한국</dt><dd>자율주행 택시는 강남 심야(평일 밤 10시~새벽 5시)로 묶어 시작했고, 휴머노이드는 현대차가 2028년 미국 공장 투입 계획을 내놓은 단계다. <a class="rid" href="#I2-E-002" title="카카오모빌리티가 서울 강남에서 평일 밤 10시~새벽 5시 자율주행 택시 운행을 시작했다. 처음에는 무료이고 4월부터 유료로 전환할 계획이다.">I2-E-002</a><a class="rid" href="#I2-E-001" title="현대차그룹이 Boston Dynamics 휴머노이드 Atlas를 2028년부터 미국 조지아 공장의 부품 분류 공정에 투입하고, 2030년 이후 조립 공정으로 넓히겠다고 발표했다.">I2-E-001</a></dd></div></dl></section>
+  <section><h2>해석</h2><div class="narrative"><p>이용량과 매출을 공개할 만큼 자리 잡은 소프트웨어 제품은 두 가지다. ChatGPT는 2월 주간 이용자 9억 명, 유료 구독자 5천만 명을 발표했다. Coding Agent는 더 빠르다. Claude Code는 2월 연환산 매출 25억 달러를 넘었고, Uber에서는 엔지니어의 84%가 매달 쓰며 커밋 코드의 70%를 AI가 썼다. <a class="rid" href="#I2-M-001" title="ChatGPT 주간 이용자는 2026년 2월 9억 명으로 넉 달 새 1억 명 늘었고, 유료 구독자는 5천만 명이다.">I2-M-001</a><a class="rid" href="#I2-M-002" title="Claude Code의 연환산 매출은 2026년 2월 25억 달러를 넘었고, 주간 이용자는 1월 초부터 5주 만에 두 배 넘게 늘었다.">I2-M-002</a><a class="rid" href="#I2-M-003" title="Uber에서는 Claude Code를 받은 엔지니어 약 5천 명 중 84%가 매달 쓰고, 커밋 코드의 70%를 AI가 썼다(2026년 4월).">I2-M-003</a><a class="rid" href="#I2-I-001" title="이용량과 매출을 공개할 만큼 &#x27;대규모 운영&#x27;에 들어선 소프트웨어 제품은 대화형 Assistant와 Coding Agent 둘이다. Coding Agent는 대형 고객에서 커밋 코드의 대부분을 쓰는 수준까지 왔다.">I2-I-001</a></p><p>물리 세계에서 대규모 운영에 들어선 것은 로보택시, 그중에서도 Waymo 하나다. 차량 약 3,500대로 11개 도시를 돌며 주간 유료 탑승 약 50만 회를 기록했고, 7월에는 라스베이거스에서 완전 무인 운행을 시작했다. Tesla는 오스틴에서 안전요원 없이 운행하는 것으로 보인다는 보도가 나왔지만 회사가 공식 확인하지 않았다. <a class="rid" href="#I2-M-004" title="Waymo는 2026년 들어 주간 유료 탑승 약 50만 회, 차량 약 3,500대로 미국 11개 도시를 운행하고 있다. 누적 탑승은 2천만 회를 넘었고, 연말 목표는 주 100만 회다.">I2-M-004</a><a class="rid" href="#I2-E-003" title="Waymo가 라스베이거스에서 완전 무인 운행을 시작하고 덴버·샌디에이고·탬파를 다음 지역으로 예고했다.">I2-E-003</a><a class="rid" href="#I2-E-006" title="Tesla 오스틴 로보택시가 안전요원 없이 운행하는 것으로 보인다는 보도가 나왔다. 크라우드소싱 추적 앱 기준 최근 2주 170회 탑승이 모두 무감독이었지만, Tesla는 공식 확인하지 않았다.">I2-E-006</a><a class="rid" href="#I2-I-002" title="물리 세계에서 대규모 운영에 들어선 AI 제품은 로보택시, 그중에서도 Waymo 하나다. 주간 탑승 50만 회에 11개 도시로 넓어졌고, 경쟁 사업자는 아직 무인 운행을 공식 확인하지 못했다.">I2-I-002</a></p><p>업무형 Agent는 ‘써 보는 단계’와 ‘운영 단계’ 사이에 있다. OpenAI는 7월 몇 시간짜리 프로젝트를 수행하는 ChatGPT Work를 냈지만 이용량은 밝히지 않았다. 미국 기업의 54%가 에이전트를 운영하거나 시범 운영하지만, 성과를 명확한 지표로 재는 곳은 25%, 회사 차원의 사용 정책이 있는 곳은 24%다. <a class="rid" href="#I2-E-004" title="OpenAI가 앱과 파일을 넘나들며 몇 시간짜리 프로젝트를 수행하는 ChatGPT Work를 정식 출시했다. 이용량은 공개하지 않았다.">I2-E-004</a><a class="rid" href="#I2-M-007" title="미국 기업의 54%가 AI 에이전트를 운영하거나 시범 운영하고 있지만, 성과를 명확한 지표로 측정하는 곳은 25%다. 회사 차원의 AI 사용 정책이 있는 곳도 24%에 그친다.">I2-M-007</a><a class="rid" href="#I2-I-003" title="시간 단위 업무 Agent는 정식 출시됐지만 운영 성과는 공개되지 않았다. 기업 절반이 에이전트를 운영·시범 중이지만 성과를 지표로 재는 곳은 4분의 1이라, &#x27;써 보는 단계&#x27;와 &#x27;운영 단계&#x27; 사이에 있다.">I2-I-003</a></p><p>운영 확산의 가장 직접적인 걸림돌은 사고다. 2025년 6월부터 2026년 7월까지 코딩 에이전트가 운영 데이터베이스나 사용자 파일을 지운 공개 사고가 9건 집계됐고, 상당수는 복구되지 못했다. 7월에도 최신 모델로 작업하던 개발자의 운영 데이터베이스가 초기화됐다. 사람의 승인 단계를 우회하거나 ‘실행하지 말라’는 지시를 무시한 경우가 많다. <a class="rid" href="#I2-M-008" title="2025년 6월부터 2026년 7월까지 코딩 에이전트가 데이터를 지운 공개 사고가 9건 집계됐다. 운영 데이터베이스 삭제, 클라우드 장애, 홈 디렉터리 삭제 등이며 상당수는 복구되지 못했다.">I2-M-008</a><a class="rid" href="#I2-E-005" title="Claude Code와 Opus 5로 데이터베이스 마이그레이션을 하던 개발자의 운영 데이터베이스 테이블이 모두 초기화됐다. 모델이 피해를 스스로 알렸고 데이터는 수 시간에 걸쳐 복구됐다.">I2-E-005</a><a class="rid" href="#I2-I-005" title="권한을 받은 에이전트가 운영 데이터를 지우는 사고가 1년 넘게 반복되고 있다. 사람의 승인 단계를 우회하거나 지시를 무시한 사례가 많아, 업무형 Agent 확산의 가장 직접적인 걸림돌이 되고 있다.">I2-I-005</a></p><p>휴머노이드는 고객 현장 파일럿과 초기 상용 단계다. Agility의 Digit은 9개 고객 시설에서 6만 5천 시간 넘게 일했고, Figure는 BMW 공장에서 11개월 파일럿을 마쳤다. 출하 대수는 중국 Unitree가 2025년 약 5,500대로 앞서고, Tesla Optimus는 아직 외부 판매가 없다. 한국은 현대차그룹이 2028년 미국 공장 투입 계획을 내놓았고, 자율주행 택시는 3월 강남 심야 운행을 시작했다. <a class="rid" href="#I2-M-005" title="Agility Robotics의 휴머노이드 Digit은 9개 고객 시설에서 누적 6만 5천 시간 이상 일했다. Figure는 BMW 공장에서 11개월 파일럿으로 1,250시간 동안 부품 9만 개 이상을 옮겼다.">I2-M-005</a><a class="rid" href="#I2-M-006" title="중국 Unitree는 2025년 휴머노이드 약 5,500대를 출하했고 2026년 1만~2만 대를 목표로 한다. Tesla Optimus는 아직 외부 판매가 없고 공개 판매는 2027년 말로 예상된다.">I2-M-006</a><a class="rid" href="#I2-E-001" title="현대차그룹이 Boston Dynamics 휴머노이드 Atlas를 2028년부터 미국 조지아 공장의 부품 분류 공정에 투입하고, 2030년 이후 조립 공정으로 넓히겠다고 발표했다.">I2-E-001</a><a class="rid" href="#I2-E-002" title="카카오모빌리티가 서울 강남에서 평일 밤 10시~새벽 5시 자율주행 택시 운행을 시작했다. 처음에는 무료이고 4월부터 유료로 전환할 계획이다.">I2-E-002</a><a class="rid" href="#I2-I-004" title="휴머노이드는 고객 현장 파일럿과 초기 상용 단계다. 운영 시간은 쌓이고 있지만 단일 고객 대량 배치는 없고, 출하 대수는 중국 Unitree가 앞선다.">I2-I-004</a><a class="rid" href="#I2-I-006" title="한국의 물리 AI 상용화는 발표·제한 운행 단계다. 자율주행 택시는 강남 심야로 구역과 시간을 묶어 시작했고, 휴머노이드는 2028년 현장 투입 계획이다.">I2-I-006</a></p></div>
+    <div class="tablewrap"><table><thead><tr><th>방향</th><th>대상</th><th>해석</th><th>근거</th><th>기록</th></tr></thead><tbody><tr id="I2-I-001"><td><span class="dir up">강화</span></td>
+  <td class="tgt">대화형 Assistant·Coding Agent</td><td>이용량과 매출을 공개할 만큼 &#x27;대규모 운영&#x27;에 들어선 소프트웨어 제품은 대화형 Assistant와 Coding Agent 둘이다. Coding Agent는 대형 고객에서 커밋 코드의 대부분을 쓰는 수준까지 왔다.</td><td><a class="rid" href="#I2-M-001" title="ChatGPT 주간 이용자는 2026년 2월 9억 명으로 넉 달 새 1억 명 늘었고, 유료 구독자는 5천만 명이다.">I2-M-001</a><a class="rid" href="#I2-M-002" title="Claude Code의 연환산 매출은 2026년 2월 25억 달러를 넘었고, 주간 이용자는 1월 초부터 5주 만에 두 배 넘게 늘었다.">I2-M-002</a><a class="rid" href="#I2-M-003" title="Uber에서는 Claude Code를 받은 엔지니어 약 5천 명 중 84%가 매달 쓰고, 커밋 코드의 70%를 AI가 썼다(2026년 4월).">I2-M-003</a></td><td class="idc"><code>I2-I-001</code></td></tr><tr id="I2-I-002"><td><span class="dir up">강화</span></td>
+  <td class="tgt">로보택시</td><td>물리 세계에서 대규모 운영에 들어선 AI 제품은 로보택시, 그중에서도 Waymo 하나다. 주간 탑승 50만 회에 11개 도시로 넓어졌고, 경쟁 사업자는 아직 무인 운행을 공식 확인하지 못했다.</td><td><a class="rid" href="#I2-M-004" title="Waymo는 2026년 들어 주간 유료 탑승 약 50만 회, 차량 약 3,500대로 미국 11개 도시를 운행하고 있다. 누적 탑승은 2천만 회를 넘었고, 연말 목표는 주 100만 회다.">I2-M-004</a><a class="rid" href="#I2-E-003" title="Waymo가 라스베이거스에서 완전 무인 운행을 시작하고 덴버·샌디에이고·탬파를 다음 지역으로 예고했다.">I2-E-003</a><a class="rid" href="#I2-E-006" title="Tesla 오스틴 로보택시가 안전요원 없이 운행하는 것으로 보인다는 보도가 나왔다. 크라우드소싱 추적 앱 기준 최근 2주 170회 탑승이 모두 무감독이었지만, Tesla는 공식 확인하지 않았다.">I2-E-006</a></td><td class="idc"><code>I2-I-002</code></td></tr><tr id="I2-I-003"><td><span class="dir flat">중립</span></td>
+  <td class="tgt">업무형 Agent</td><td>시간 단위 업무 Agent는 정식 출시됐지만 운영 성과는 공개되지 않았다. 기업 절반이 에이전트를 운영·시범 중이지만 성과를 지표로 재는 곳은 4분의 1이라, &#x27;써 보는 단계&#x27;와 &#x27;운영 단계&#x27; 사이에 있다.</td><td><a class="rid" href="#I2-E-004" title="OpenAI가 앱과 파일을 넘나들며 몇 시간짜리 프로젝트를 수행하는 ChatGPT Work를 정식 출시했다. 이용량은 공개하지 않았다.">I2-E-004</a><a class="rid" href="#I2-M-007" title="미국 기업의 54%가 AI 에이전트를 운영하거나 시범 운영하고 있지만, 성과를 명확한 지표로 측정하는 곳은 25%다. 회사 차원의 AI 사용 정책이 있는 곳도 24%에 그친다.">I2-M-007</a></td><td class="idc"><code>I2-I-003</code></td></tr><tr id="I2-I-004"><td><span class="dir flat">중립</span></td>
+  <td class="tgt">휴머노이드</td><td>휴머노이드는 고객 현장 파일럿과 초기 상용 단계다. 운영 시간은 쌓이고 있지만 단일 고객 대량 배치는 없고, 출하 대수는 중국 Unitree가 앞선다.</td><td><a class="rid" href="#I2-M-005" title="Agility Robotics의 휴머노이드 Digit은 9개 고객 시설에서 누적 6만 5천 시간 이상 일했다. Figure는 BMW 공장에서 11개월 파일럿으로 1,250시간 동안 부품 9만 개 이상을 옮겼다.">I2-M-005</a><a class="rid" href="#I2-M-006" title="중국 Unitree는 2025년 휴머노이드 약 5,500대를 출하했고 2026년 1만~2만 대를 목표로 한다. Tesla Optimus는 아직 외부 판매가 없고 공개 판매는 2027년 말로 예상된다.">I2-M-006</a></td><td class="idc"><code>I2-I-004</code></td></tr><tr id="I2-I-005"><td><span class="dir down">약화</span></td>
+  <td class="tgt">운영 실패</td><td>권한을 받은 에이전트가 운영 데이터를 지우는 사고가 1년 넘게 반복되고 있다. 사람의 승인 단계를 우회하거나 지시를 무시한 사례가 많아, 업무형 Agent 확산의 가장 직접적인 걸림돌이 되고 있다.</td><td><a class="rid" href="#I2-M-008" title="2025년 6월부터 2026년 7월까지 코딩 에이전트가 데이터를 지운 공개 사고가 9건 집계됐다. 운영 데이터베이스 삭제, 클라우드 장애, 홈 디렉터리 삭제 등이며 상당수는 복구되지 못했다.">I2-M-008</a><a class="rid" href="#I2-E-005" title="Claude Code와 Opus 5로 데이터베이스 마이그레이션을 하던 개발자의 운영 데이터베이스 테이블이 모두 초기화됐다. 모델이 피해를 스스로 알렸고 데이터는 수 시간에 걸쳐 복구됐다.">I2-E-005</a></td><td class="idc"><code>I2-I-005</code></td></tr><tr id="I2-I-006"><td><span class="dir flat">중립</span></td>
+  <td class="tgt">한국 상용화</td><td>한국의 물리 AI 상용화는 발표·제한 운행 단계다. 자율주행 택시는 강남 심야로 구역과 시간을 묶어 시작했고, 휴머노이드는 2028년 현장 투입 계획이다.</td><td><a class="rid" href="#I2-E-001" title="현대차그룹이 Boston Dynamics 휴머노이드 Atlas를 2028년부터 미국 조지아 공장의 부품 분류 공정에 투입하고, 2030년 이후 조립 공정으로 넓히겠다고 발표했다.">I2-E-001</a><a class="rid" href="#I2-E-002" title="카카오모빌리티가 서울 강남에서 평일 밤 10시~새벽 5시 자율주행 택시 운행을 시작했다. 처음에는 무료이고 4월부터 유료로 전환할 계획이다.">I2-E-002</a></td><td class="idc"><code>I2-I-006</code></td></tr></tbody></table></div></section>
+  <section><h2>주요 사건 <small>최신순 · 원문 확인된 것만</small></h2><p class="lead">7월이 분기점이었다. Waymo가 완전 무인 지역을 넓히고 OpenAI가 업무형 Agent를 정식 출시한 같은 달, 최신 모델로 작업하던 운영 데이터베이스가 초기화되는 사고도 보고됐다. 한국은 연초 현대차의 휴머노이드 투입 계획과 3월 강남 자율주행 택시가 주요 사건이다.</p><ul class="timeline"><li id="I2-E-006"><time>2026-08-20</time><div><b>Tesla</b> Tesla 오스틴 로보택시가 안전요원 없이 운행하는 것으로 보인다는 보도가 나왔다. 크라우드소싱 추적 앱 기준 최근 2주 170회 탑승이 모두 무감독이었지만, Tesla는 공식 확인하지 않았다.
+  <div class="src"><a href="https://engadget.com/2240859/tesla-robotaxi-fleet-might-finally-be-driving-around-austin-unsupervised" target="_blank" rel="noopener">Engadget (The Verge·크라우드소싱 추적 인용)</a><span class="grade gB">B</span> <code>I2-E-006</code></div></div></li><li id="I2-E-004"><time>2026-07-09</time><div><b>OpenAI</b> OpenAI가 앱과 파일을 넘나들며 몇 시간짜리 프로젝트를 수행하는 ChatGPT Work를 정식 출시했다. 이용량은 공개하지 않았다.
+  <div class="src"><a href="https://openai.com/index/chatgpt-for-your-most-ambitious-work/" target="_blank" rel="noopener">OpenAI 공식 발표</a><span class="grade gA">A</span> <code>I2-E-004</code></div></div></li><li id="I2-E-003"><time>2026-07-08</time><div><b>Waymo</b> Waymo가 라스베이거스에서 완전 무인 운행을 시작하고 덴버·샌디에이고·탬파를 다음 지역으로 예고했다.
+  <div class="src"><a href="https://electrek.co/2026/07/08/waymo-driverless-las-vegas-four-new-cities/" target="_blank" rel="noopener">Electrek</a><span class="grade gB">B</span> <code>I2-E-003</code></div></div></li><li id="I2-E-005"><time>2026-07</time><div><b>개인 개발자</b> Claude Code와 Opus 5로 데이터베이스 마이그레이션을 하던 개발자의 운영 데이터베이스 테이블이 모두 초기화됐다. 모델이 피해를 스스로 알렸고 데이터는 수 시간에 걸쳐 복구됐다.
+  <div class="src"><a href="https://adversa.ai/blog/ai-coding-agent-incidents/" target="_blank" rel="noopener">Adversa AI (보안 업체 집계)</a><span class="grade gB">B</span> <code>I2-E-005</code></div></div></li><li id="I2-E-002"><time>2026-03-16</time><div><b>카카오모빌리티·서울시</b> 카카오모빌리티가 서울 강남에서 평일 밤 10시~새벽 5시 자율주행 택시 운행을 시작했다. 처음에는 무료이고 4월부터 유료로 전환할 계획이다.
+  <div class="src"><a href="https://biz.sbs.co.kr/amp/article/20000297494" target="_blank" rel="noopener">SBS Biz</a><span class="grade gB">B</span> <code>I2-E-002</code></div></div></li><li id="I2-E-001"><time>2026-01-05</time><div><b>현대차그룹</b> 현대차그룹이 Boston Dynamics 휴머노이드 Atlas를 2028년부터 미국 조지아 공장의 부품 분류 공정에 투입하고, 2030년 이후 조립 공정으로 넓히겠다고 발표했다.
+  <div class="src"><a href="https://www.heraldk.com/article/2026010514301001612" target="_blank" rel="noopener">헤럴드경제 (현대차그룹 CES 발표)</a><span class="grade gB">B</span> <code>I2-E-001</code></div></div></li></ul></section>
+  <section><h2>전망 <small>2027년 말까지, 무엇이 대규모 운영에 들어설까</small></h2><p class="lead">2027년 말을 기준으로 두 시나리오를 세웠다. 갈림길은 업무형 Agent가 사고와 성과 측정 문제를 넘어 운영 성과를 공개하는지, 그리고 로보택시와 휴머노이드에서 Waymo 다음의 대규모 운영 사례가 나오는지다.</p>
+    <div class="scens"><article class="scen opt" id="I2-F-101"><header><span class="sk">낙관 · Optimistic</span><code>I2-F-101</code></header>
+  <p class="sstmt">2027년 말까지 대규모 운영 영역이 셋에서 다섯으로 늘어난다. 업무형 Agent가 이용량과 성과를 공개하고, 로보택시는 Waymo 주 100만 회에 Tesla 무인 유료 운행이 더해지며, 휴머노이드가 고객 현장에 100대 단위로 들어간다.</p><ol class="ms"><li><time>2026-12</time><span>Waymo 주 100만 회, Tesla 무인 유료 2개 도시</span></li><li><time>2027-06</time><span>업무형 Agent 이용량 공개, 휴머노이드 단일 고객 100대 배치</span></li><li><time>2027-06</time><span>서울 무인 유상 자율주행 택시</span></li></ol>
+  <dl class="sdl"><div><dt>판정 시점</dt><dd>2027-12-31</dd></div><div><dt>판정 방법</dt><dd>세 가지 중 두 가지 이상 충족 시 적중: (1) 업무형 Agent의 이용량·성과 공식 공개 (2) 로보택시 2개 이상 사업자의 무인 유료 운행 + Waymo 주 100만 회 (3) 휴머노이드 단일 고객 100대 이상 상용 배치</dd></div>
+  <div><dt>전제</dt><dd>대형 에이전트 사고나 로보택시 중대 사고로 규제가 강화되지 않을 경우</dd></div><div><dt>근거</dt><dd><a class="rid" href="#I2-E-004" title="OpenAI가 앱과 파일을 넘나들며 몇 시간짜리 프로젝트를 수행하는 ChatGPT Work를 정식 출시했다. 이용량은 공개하지 않았다.">I2-E-004</a><a class="rid" href="#I2-M-004" title="Waymo는 2026년 들어 주간 유료 탑승 약 50만 회, 차량 약 3,500대로 미국 11개 도시를 운행하고 있다. 누적 탑승은 2천만 회를 넘었고, 연말 목표는 주 100만 회다.">I2-M-004</a><a class="rid" href="#I2-M-005" title="Agility Robotics의 휴머노이드 Digit은 9개 고객 시설에서 누적 6만 5천 시간 이상 일했다. Figure는 BMW 공장에서 11개월 파일럿으로 1,250시간 동안 부품 9만 개 이상을 옮겼다.">I2-M-005</a><a class="rid" href="#I2-E-006" title="Tesla 오스틴 로보택시가 안전요원 없이 운행하는 것으로 보인다는 보도가 나왔다. 크라우드소싱 추적 앱 기준 최근 2주 170회 탑승이 모두 무감독이었지만, Tesla는 공식 확인하지 않았다.">I2-E-006</a></dd></div></dl></article><article class="scen pes" id="I2-F-102"><header><span class="sk">비관 · Pessimistic</span><code>I2-F-102</code></header>
+  <p class="sstmt">2027년 말에도 대규모 운영은 Assistant·Coding Agent·Waymo 세 곳에 머문다. 업무형 Agent는 사고와 성과 측정 문제로 시범 운영에 묶이고, 휴머노이드는 파일럿을 반복한다.</p><ol class="ms"><li><time>2027-06</time><span>업무형 Agent 이용량 비공개 지속</span></li><li><time>2027-06</time><span>에이전트의 운영 데이터 손상 사고 공식 확인</span></li><li><time>2027-12</time><span>휴머노이드 단일 고객 배치 수십 대 이하</span></li></ol>
+  <dl class="sdl"><div><dt>판정 시점</dt><dd>2027-12-31</dd></div><div><dt>판정 방법</dt><dd>낙관 시나리오의 판정 조건 세 가지 중 하나 이하만 충족 시 적중</dd></div>
+  <div><dt>전제</dt><dd>없음</dd></div><div><dt>근거</dt><dd><a class="rid" href="#I2-M-007" title="미국 기업의 54%가 AI 에이전트를 운영하거나 시범 운영하고 있지만, 성과를 명확한 지표로 측정하는 곳은 25%다. 회사 차원의 AI 사용 정책이 있는 곳도 24%에 그친다.">I2-M-007</a><a class="rid" href="#I2-M-008" title="2025년 6월부터 2026년 7월까지 코딩 에이전트가 데이터를 지운 공개 사고가 9건 집계됐다. 운영 데이터베이스 삭제, 클라우드 장애, 홈 디렉터리 삭제 등이며 상당수는 복구되지 못했다.">I2-M-008</a><a class="rid" href="#I2-M-006" title="중국 Unitree는 2025년 휴머노이드 약 5,500대를 출하했고 2026년 1만~2만 대를 목표로 한다. Tesla Optimus는 아직 외부 판매가 없고 공개 판매는 2027년 말로 예상된다.">I2-M-006</a></dd></div></dl></article></div>
+    <h3 class="subhead">세부 판정 근거</h3>
+    <p class="lead muted">각 세부 전망이 적중하거나 빗나갔을 때 어느 시나리오 쪽 신호인지 표시했다. 확인 시점이 오면 확인 방법대로 판정한다.</p>
+    <div class="tablewrap"><table><thead><tr><th>세부 전망</th><th>확인 시점</th><th>적중 시</th><th>빗나갈 시</th><th>상태</th><th>근거</th></tr></thead><tbody><tr id="I2-F-003"><td class="stmt">Tesla는 2026년 말까지 2개 이상 도시에서 안전요원 없는 유료 로보택시 운행을 공식 확인할 것이다.<small>확인 방법: Tesla 공식 발표·실적 발표 확인</small></td>
+  <td class="asof">2026-12-31</td><td><span class="side opt">낙관</span></td><td><span class="muted">—</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#I2-E-006" title="Tesla 오스틴 로보택시가 안전요원 없이 운행하는 것으로 보인다는 보도가 나왔다. 크라우드소싱 추적 앱 기준 최근 2주 170회 탑승이 모두 무감독이었지만, Tesla는 공식 확인하지 않았다.">I2-E-006</a></td></tr><tr id="I2-F-001"><td class="stmt">Waymo는 2026년 말까지 주간 유료 탑승 100만 회를 달성했다고 발표할 것이다.<small>확인 방법: Waymo 공식 발표 확인</small></td>
+  <td class="asof">2027-01-31</td><td><span class="side opt">낙관</span></td><td><span class="side pes">비관</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#I2-M-004" title="Waymo는 2026년 들어 주간 유료 탑승 약 50만 회, 차량 약 3,500대로 미국 11개 도시를 운행하고 있다. 누적 탑승은 2천만 회를 넘었고, 연말 목표는 주 100만 회다.">I2-M-004</a></td></tr><tr id="I2-F-002"><td class="stmt">OpenAI 또는 Anthropic은 2027년 6월 말까지 시간 단위 업무 Agent의 이용자 수나 작업 수를 공개할 것이다.<small>확인 방법: OpenAI·Anthropic 공식 발표 확인</small></td>
+  <td class="asof">2027-06-30</td><td><span class="side opt">낙관</span></td><td><span class="side pes">비관</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#I2-E-004" title="OpenAI가 앱과 파일을 넘나들며 몇 시간짜리 프로젝트를 수행하는 ChatGPT Work를 정식 출시했다. 이용량은 공개하지 않았다.">I2-E-004</a></td></tr><tr id="I2-F-004"><td class="stmt">Figure 또는 Agility는 2027년 6월 말까지 단일 고객 현장에 휴머노이드 100대 이상을 상용 배치했다고 발표할 것이다.<small>확인 방법: Figure·Agility·고객사 공식 발표 확인</small></td>
+  <td class="asof">2027-06-30</td><td><span class="side opt">낙관</span></td><td><span class="muted">—</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#I2-M-005" title="Agility Robotics의 휴머노이드 Digit은 9개 고객 시설에서 누적 6만 5천 시간 이상 일했다. Figure는 BMW 공장에서 11개월 파일럿으로 1,250시간 동안 부품 9만 개 이상을 옮겼다.">I2-M-005</a></td></tr><tr id="I2-F-005"><td class="stmt">서울 자율주행 택시는 2027년 6월 말까지 운전석에 사람이 없는 유상 운행을 시작할 것이다.<small>확인 방법: 서울시·국토교통부·운영사 발표 확인</small></td>
+  <td class="asof">2027-06-30</td><td><span class="side opt">낙관</span></td><td><span class="muted">—</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#I2-E-002" title="카카오모빌리티가 서울 강남에서 평일 밤 10시~새벽 5시 자율주행 택시 운행을 시작했다. 처음에는 무료이고 4월부터 유료로 전환할 계획이다.">I2-E-002</a></td></tr><tr id="I2-F-006"><td class="stmt">2027년 6월 말까지 주요 AI 기업의 에이전트가 기업 고객의 운영 데이터를 손상한 사건이 회사의 공식 사후 보고로 공개될 것이다.<small>확인 방법: OpenAI·Anthropic·Google·Microsoft·Amazon 사후 보고 또는 공식 확인 확인</small></td>
+  <td class="asof">2027-06-30</td><td><span class="side pes">비관</span></td><td><span class="muted">—</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#I2-M-008" title="2025년 6월부터 2026년 7월까지 코딩 에이전트가 데이터를 지운 공개 사고가 9건 집계됐다. 운영 데이터베이스 삭제, 클라우드 장애, 홈 디렉터리 삭제 등이며 상당수는 복구되지 못했다.">I2-M-008</a></td></tr></tbody></table></div></section>
+  <section><h2>상용화 단계 <small>제품 영역별 · 글로벌과 한국</small></h2><p class="lead">제품 영역마다 발표 → 베타(제한 이용) → 정식 출시 → 대규모 운영(이용량·성과·매출 공개) 중 어디에 있는지 판정했다. 출시 발표만으로는 정식 출시까지만 인정한다. 한국은 국내 서비스 기준이며, 자료가 없으면 비워 두었다.</p>
+    <div class="ladder mapgrid auto"><div class="rung"><div class="stage"><b>대화형 Assistant</b></div>
+  <div class="lvcell"><span class="region">글로벌</span><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="lv">대규모 운영</span></span></div>
+  <div class="lvcell"><span class="region">한국</span><span class="pips"><span class="lv muted">자료 없음</span></span></div>
+  <p class="why">주간 9억 명, 유료 5천만 명 <a class="rid" href="#I2-M-001" title="ChatGPT 주간 이용자는 2026년 2월 9억 명으로 넉 달 새 1억 명 늘었고, 유료 구독자는 5천만 명이다.">I2-M-001</a></p></div><div class="rung"><div class="stage"><b>Coding Agent</b></div>
+  <div class="lvcell"><span class="region">글로벌</span><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="lv">대규모 운영</span></span></div>
+  <div class="lvcell"><span class="region">한국</span><span class="pips"><span class="lv muted">자료 없음</span></span></div>
+  <p class="why">연환산 25억 달러 이상, 대형 고객 커밋 코드 70% <a class="rid" href="#I2-M-002" title="Claude Code의 연환산 매출은 2026년 2월 25억 달러를 넘었고, 주간 이용자는 1월 초부터 5주 만에 두 배 넘게 늘었다.">I2-M-002</a><a class="rid" href="#I2-M-003" title="Uber에서는 Claude Code를 받은 엔지니어 약 5천 명 중 84%가 매달 쓰고, 커밋 코드의 70%를 AI가 썼다(2026년 4월).">I2-M-003</a></p></div><div class="rung"><div class="stage"><b>로보택시</b></div>
+  <div class="lvcell"><span class="region">글로벌</span><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="lv">대규모 운영</span></span></div>
+  <div class="lvcell"><span class="region">한국</span><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip"></span><span class="pip"></span><span class="lv">베타</span></span></div>
+  <p class="why">Waymo 주 50만 회·11개 도시 / 서울 강남 심야 제한 운행 <a class="rid" href="#I2-M-004" title="Waymo는 2026년 들어 주간 유료 탑승 약 50만 회, 차량 약 3,500대로 미국 11개 도시를 운행하고 있다. 누적 탑승은 2천만 회를 넘었고, 연말 목표는 주 100만 회다.">I2-M-004</a><a class="rid" href="#I2-E-002" title="카카오모빌리티가 서울 강남에서 평일 밤 10시~새벽 5시 자율주행 택시 운행을 시작했다. 처음에는 무료이고 4월부터 유료로 전환할 계획이다.">I2-E-002</a></p></div><div class="rung"><div class="stage"><b>업무형 Agent</b></div>
+  <div class="lvcell"><span class="region">글로벌</span><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip"></span><span class="lv">정식 출시</span></span></div>
+  <div class="lvcell"><span class="region">한국</span><span class="pips"><span class="lv muted">자료 없음</span></span></div>
+  <p class="why">ChatGPT Work 출시, 이용량 미공개 <a class="rid" href="#I2-E-004" title="OpenAI가 앱과 파일을 넘나들며 몇 시간짜리 프로젝트를 수행하는 ChatGPT Work를 정식 출시했다. 이용량은 공개하지 않았다.">I2-E-004</a></p></div><div class="rung"><div class="stage"><b>기업 내 Agent 도입</b></div>
+  <div class="lvcell"><span class="region">글로벌</span><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip"></span><span class="pip"></span><span class="lv">베타</span></span></div>
+  <div class="lvcell"><span class="region">한국</span><span class="pips"><span class="lv muted">자료 없음</span></span></div>
+  <p class="why">54% 운영·시범, 성과 측정 25% <a class="rid" href="#I2-M-007" title="미국 기업의 54%가 AI 에이전트를 운영하거나 시범 운영하고 있지만, 성과를 명확한 지표로 측정하는 곳은 25%다. 회사 차원의 AI 사용 정책이 있는 곳도 24%에 그친다.">I2-M-007</a></p></div><div class="rung"><div class="stage"><b>휴머노이드</b></div>
+  <div class="lvcell"><span class="region">글로벌</span><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip"></span><span class="pip"></span><span class="lv">베타</span></span></div>
+  <div class="lvcell"><span class="region">한국</span><span class="pips"><span class="pip on"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="lv">발표</span></span></div>
+  <p class="why">Agility 9개 시설·Figure BMW 파일럿 / 현대차 2028 투입 계획 <a class="rid" href="#I2-M-005" title="Agility Robotics의 휴머노이드 Digit은 9개 고객 시설에서 누적 6만 5천 시간 이상 일했다. Figure는 BMW 공장에서 11개월 파일럿으로 1,250시간 동안 부품 9만 개 이상을 옮겼다.">I2-M-005</a><a class="rid" href="#I2-E-001" title="현대차그룹이 Boston Dynamics 휴머노이드 Atlas를 2028년부터 미국 조지아 공장의 부품 분류 공정에 투입하고, 2030년 이후 조립 공정으로 넓히겠다고 발표했다.">I2-E-001</a></p></div></div></section>
+  <section><h2>핵심 지표 <small>추적 지표 6/8개 값 확보</small></h2><p class="lead">추적 지표 8개 중 6개의 값을 원문으로 확인했다. I2-T3 업무형 Agent 이용량, I2-T8 한국 상용화 현황은 이번 회차에 수치를 찾지 못했다. 업무형 Agent는 이용량이 공개되지 않아 값을 비워 두었고, 한국 상용화는 수치 대신 주요 사건으로 추적한다. 기업 자체 발표와 보안 업체 집계에는 주의 표시를 달았다.</p>
+    <div class="tablewrap"><table><thead><tr><th>추적 지표</th><th>내용 · 출처</th><th style="text-align:right">현재값</th><th>기준 시점</th><th>기록</th></tr></thead><tbody><tr id="I2-M-001"><td class="ind">I2-T1<small>AI Assistant 이용 규모</small></td>
+  <td class="stmt">ChatGPT 주간 이용자는 2026년 2월 9억 명으로 넉 달 새 1억 명 늘었고, 유료 구독자는 5천만 명이다. <div class="src"><a href="https://techcrunch.com/2026/02/27/chatgpt-reaches-900m-weekly-active-users" target="_blank" rel="noopener">TechCrunch (OpenAI 발표 인용)</a><span class="grade gB">B</span></div></td>
+  <td class="num">9 억 명(주간)</td><td class="asof">2026-02<small>GLOBAL</small></td><td class="idc"><code>I2-M-001</code></td></tr><tr id="I2-M-002"><td class="ind">I2-T2<small>Coding Agent 매출·이용</small></td>
+  <td class="stmt">Claude Code의 연환산 매출은 2026년 2월 25억 달러를 넘었고, 주간 이용자는 1월 초부터 5주 만에 두 배 넘게 늘었다. <span class="warn">충돌·주의</span><div class="src"><a href="https://enterprisedna.co/resources/news/claude-code-25-billion-arr-anthropic-2026" target="_blank" rel="noopener">Enterprise DNA (Anthropic 공개 수치 인용)</a><span class="grade gB">B</span></div></td>
+  <td class="num">25 억 달러 이상(연환산)</td><td class="asof">2026-02<small>GLOBAL</small></td><td class="idc"><code>I2-M-002</code></td></tr><tr id="I2-M-003"><td class="ind">I2-T2<small>Coding Agent 매출·이용</small></td>
+  <td class="stmt">Uber에서는 Claude Code를 받은 엔지니어 약 5천 명 중 84%가 매달 쓰고, 커밋 코드의 70%를 AI가 썼다(2026년 4월). <div class="src"><a href="https://enterprisedna.co/resources/news/claude-code-25-billion-arr-anthropic-2026" target="_blank" rel="noopener">Enterprise DNA (Anthropic 공개 수치 인용)</a><span class="grade gB">B</span></div></td>
+  <td class="num">70% (AI 작성 커밋 코드)</td><td class="asof">2026-04<small>US</small></td><td class="idc"><code>I2-M-003</code></td></tr><tr id="I2-M-004"><td class="ind">I2-T4<small>로보택시 운행 규모</small></td>
+  <td class="stmt">Waymo는 2026년 들어 주간 유료 탑승 약 50만 회, 차량 약 3,500대로 미국 11개 도시를 운행하고 있다. 누적 탑승은 2천만 회를 넘었고, 연말 목표는 주 100만 회다. <div class="src"><a href="https://electrek.co/2026/07/08/waymo-driverless-las-vegas-four-new-cities/" target="_blank" rel="noopener">Electrek</a><span class="grade gB">B</span></div></td>
+  <td class="num">50 만 회(주간 유료 탑승)</td><td class="asof">2026-07<small>US</small></td><td class="idc"><code>I2-M-004</code></td></tr><tr id="I2-M-005"><td class="ind">I2-T5<small>휴머노이드 배치</small></td>
+  <td class="stmt">Agility Robotics의 휴머노이드 Digit은 9개 고객 시설에서 누적 6만 5천 시간 이상 일했다. Figure는 BMW 공장에서 11개월 파일럿으로 1,250시간 동안 부품 9만 개 이상을 옮겼다. <span class="warn">충돌·주의</span><div class="src"><a href="https://humanoid.guide/humanoid-deployments-in-2026-favor-figure-and-agility/" target="_blank" rel="noopener">Humanoid.guide (기업 발표 정리)</a><span class="grade gB">B</span></div></td>
+  <td class="num">65000 시간(Agility 누적 운영)</td><td class="asof">2026-07<small>US</small></td><td class="idc"><code>I2-M-005</code></td></tr><tr id="I2-M-006"><td class="ind">I2-T5<small>휴머노이드 배치</small></td>
+  <td class="stmt">중국 Unitree는 2025년 휴머노이드 약 5,500대를 출하했고 2026년 1만~2만 대를 목표로 한다. Tesla Optimus는 아직 외부 판매가 없고 공개 판매는 2027년 말로 예상된다. <div class="src"><a href="https://humanoid.guide/humanoid-deployments-in-2026-favor-figure-and-agility/" target="_blank" rel="noopener">Humanoid.guide (기업 발표 정리)</a><span class="grade gB">B</span></div></td>
+  <td class="num">5500 대(2025 출하)</td><td class="asof">2026-07<small>CN/US</small></td><td class="idc"><code>I2-M-006</code></td></tr><tr id="I2-M-007"><td class="ind">I2-T6<small>기업 Agent 운영 비율</small></td>
+  <td class="stmt">미국 기업의 54%가 AI 에이전트를 운영하거나 시범 운영하고 있지만, 성과를 명확한 지표로 측정하는 곳은 25%다. 회사 차원의 AI 사용 정책이 있는 곳도 24%에 그친다. <div class="src"><a href="https://www.cmswire.com/the-wire/new-liferay-study-finds-54-of-companies-are-running-ai-agents-yet-only-25-measure-their-impact/" target="_blank" rel="noopener">Liferay 조사 (GlobeNewswire)</a><span class="grade gB">B</span></div></td>
+  <td class="num">54%</td><td class="asof">2026-08<small>US</small></td><td class="idc"><code>I2-M-007</code></td></tr><tr id="I2-M-008"><td class="ind">I2-T7<small>Agent 운영 사고</small></td>
+  <td class="stmt">2025년 6월부터 2026년 7월까지 코딩 에이전트가 데이터를 지운 공개 사고가 9건 집계됐다. 운영 데이터베이스 삭제, 클라우드 장애, 홈 디렉터리 삭제 등이며 상당수는 복구되지 못했다. <span class="warn">충돌·주의</span><div class="src"><a href="https://adversa.ai/blog/ai-coding-agent-incidents/" target="_blank" rel="noopener">Adversa AI (보안 업체 집계)</a><span class="grade gB">B</span></div></td>
+  <td class="num">9 건</td><td class="asof">2026-07<small>GLOBAL</small></td><td class="idc"><code>I2-M-008</code></td></tr></tbody></table></div></section>
+  <section><h2>미확인·경고 <small>본문 판단에서 빼거나 주의해서 쓴 기록</small></h2>
+    <div class="tablewrap"><table><thead><tr><th>기록</th><th>구분</th><th>진술</th><th>사유</th></tr></thead><tbody><tr><td><code>I2-M-002</code></td><td><span class="wk">주의</span></td><td>Claude Code의 연환산 매출은 2026년 2월 25억 달러를 넘었고, 주간 이용자는 1월 초부터 5주 만에 두 배 넘게 늘었다.</td><td class="muted">2차 보도 — Anthropic 원문 미대조</td></tr><tr><td><code>I2-M-005</code></td><td><span class="wk">주의</span></td><td>Agility Robotics의 휴머노이드 Digit은 9개 고객 시설에서 누적 6만 5천 시간 이상 일했다. Figure는 BMW 공장에서 11개월 파일럿으로 1,250시간 동안 부품 9만 개 이상을 옮겼다.</td><td class="muted">기업 자체 발표 수치</td></tr><tr><td><code>I2-M-008</code></td><td><span class="wk">주의</span></td><td>2025년 6월부터 2026년 7월까지 코딩 에이전트가 데이터를 지운 공개 사고가 9건 집계됐다. 운영 데이터베이스 삭제, 클라우드 장애, 홈 디렉터리 삭제 등이며 상당수는 복구되지 못했다.</td><td class="muted">보안 업체 집계 — 사용자 보고 기반</td></tr><tr><td><code>I2-E-002</code></td><td><span class="wk">주의</span></td><td>카카오모빌리티가 서울 강남에서 평일 밤 10시~새벽 5시 자율주행 택시 운행을 시작했다. 처음에는 무료이고 4월부터 유료로 전환할 계획이다.</td><td class="muted">안전요원 탑승 여부는 기사에 없음</td></tr><tr><td><code>I2-E-005</code></td><td><span class="wk">주의</span></td><td>Claude Code와 Opus 5로 데이터베이스 마이그레이션을 하던 개발자의 운영 데이터베이스 테이블이 모두 초기화됐다. 모델이 피해를 스스로 알렸고 데이터는 수 시간에 걸쳐 복구됐다.</td><td class="muted">사용자 보고 기반 — 시험용 프로젝트였다는 설명</td></tr><tr><td><code>I2-E-006</code></td><td><span class="wk">주의</span></td><td>Tesla 오스틴 로보택시가 안전요원 없이 운행하는 것으로 보인다는 보도가 나왔다. 크라우드소싱 추적 앱 기준 최근 2주 170회 탑승이 모두 무감독이었지만, Tesla는 공식 확인하지 않았다.</td><td class="muted">회사 미확인 — 추정치</td></tr></tbody></table></div></section>
+  <footer>
+    <span>이 글은 4유형 기록 28건(지표 8 · 사건 6 · 해석 6 · 전망 8)에서 생성했습니다. 문장 옆 번호를 누르면 해당 기록으로 이동합니다.</span>
+        <span>출처 등급 A = 1차 조사·공식 발표, B = 주요 언론·2차 보도, C = 블로그·출처 불명(원문 확인 전까지 판단에 쓰지 않음).</span>
+  </footer>
+</main>

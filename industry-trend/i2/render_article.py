@@ -1,4 +1,4 @@
-"""records.jsonl → 기준 아티클 HTML (T2 R1).
+"""records.jsonl → 기준 아티클 HTML (I2 R1).
 순서: 한 줄 답 → 해석 → 주요 사건 → 전망 → 상용화 단계 → 핵심 지표 → 미확인·경고
 """
 import json, html, re, sys
@@ -22,13 +22,13 @@ QUESTION = "AI 제품은 어느 영역에서 시범을 넘어 실제 운영 단�
 # 1. 한 줄 답 ----------------------------------------------------------
 ONE_LINE = ("2026년 10월 현재 시범을 넘어 ‘대규모 운영’에 들어선 AI 제품은 세 가지다. 대화형 Assistant(ChatGPT 주 9억 명), Coding Agent(Claude Code 연환산 매출 25억 달러 이상), 로보택시(Waymo 주 50만 회)다. "
             "몇 시간짜리 일을 맡기는 업무형 Agent는 정식 출시됐지만 운영 성과가 공개되지 않았고, 휴머노이드는 고객 현장 파일럿 단계다.")
-ONE_LINE_BASIS = ["T2-I-001", "T2-I-002", "T2-I-003", "T2-I-004"]
+ONE_LINE_BASIS = ["I2-I-001", "I2-I-002", "I2-I-003", "I2-I-004"]
 ANSWER_ROWS = [
-    ("대규모 운영", "대화형 Assistant(ChatGPT 주간 9억 명, 유료 5천만 명), Coding Agent(Claude Code 연환산 25억 달러 이상, Uber 커밋 코드 70%를 AI가 작성), 로보택시(Waymo 주 50만 회, 11개 도시).", ["T2-M-001", "T2-M-002", "T2-M-003", "T2-M-004"]),
-    ("정식 출시, 성과 미공개", "업무형 Agent. ChatGPT Work가 7월 출시됐지만 이용량은 공개되지 않았다. 기업 54%가 에이전트를 운영·시범 중이지만 성과를 지표로 재는 곳은 25%다.", ["T2-E-004", "T2-M-007"]),
-    ("파일럿·초기 상용", "휴머노이드. Agility Digit이 9개 고객 시설에서 6만 5천 시간, Figure가 BMW 공장 파일럿. 출하 대수는 중국 Unitree(2025년 약 5,500대)가 앞선다.", ["T2-M-005", "T2-M-006"]),
-    ("반복되는 실패", "권한을 받은 코딩 에이전트가 운영 데이터를 지운 공개 사고가 1년여 동안 9건. 승인 단계를 우회하거나 지시를 무시한 사례가 많다.", ["T2-M-008", "T2-E-005"]),
-    ("한국", "자율주행 택시는 강남 심야(평일 밤 10시~새벽 5시)로 묶어 시작했고, 휴머노이드는 현대차가 2028년 미국 공장 투입 계획을 내놓은 단계다.", ["T2-E-002", "T2-E-001"]),
+    ("대규모 운영", "대화형 Assistant(ChatGPT 주간 9억 명, 유료 5천만 명), Coding Agent(Claude Code 연환산 25억 달러 이상, Uber 커밋 코드 70%를 AI가 작성), 로보택시(Waymo 주 50만 회, 11개 도시).", ["I2-M-001", "I2-M-002", "I2-M-003", "I2-M-004"]),
+    ("정식 출시, 성과 미공개", "업무형 Agent. ChatGPT Work가 7월 출시됐지만 이용량은 공개되지 않았다. 기업 54%가 에이전트를 운영·시범 중이지만 성과를 지표로 재는 곳은 25%다.", ["I2-E-004", "I2-M-007"]),
+    ("파일럿·초기 상용", "휴머노이드. Agility Digit이 9개 고객 시설에서 6만 5천 시간, Figure가 BMW 공장 파일럿. 출하 대수는 중국 Unitree(2025년 약 5,500대)가 앞선다.", ["I2-M-005", "I2-M-006"]),
+    ("반복되는 실패", "권한을 받은 코딩 에이전트가 운영 데이터를 지운 공개 사고가 1년여 동안 9건. 승인 단계를 우회하거나 지시를 무시한 사례가 많다.", ["I2-M-008", "I2-E-005"]),
+    ("한국", "자율주행 택시는 강남 심야(평일 밤 10시~새벽 5시)로 묶어 시작했고, 휴머노이드는 현대차가 2028년 미국 공장 투입 계획을 내놓은 단계다.", ["I2-E-002", "I2-E-001"]),
 ]
 answer_rows = "".join(f'<div class="arow"><dt>{E(k)}</dt><dd>{E(v)} {tags(ids)}</dd></div>' for k, v, ids in ANSWER_ROWS)
 
@@ -36,19 +36,19 @@ answer_rows = "".join(f'<div class="arow"><dt>{E(k)}</dt><dd>{E(v)} {tags(ids)}<
 NARRATIVE = [
     ("이용량과 매출을 공개할 만큼 자리 잡은 소프트웨어 제품은 두 가지다. ChatGPT는 2월 주간 이용자 9억 명, 유료 구독자 5천만 명을 발표했다. "
      "Coding Agent는 더 빠르다. Claude Code는 2월 연환산 매출 25억 달러를 넘었고, Uber에서는 엔지니어의 84%가 매달 쓰며 커밋 코드의 70%를 AI가 썼다.",
-     ["T2-M-001", "T2-M-002", "T2-M-003", "T2-I-001"]),
+     ["I2-M-001", "I2-M-002", "I2-M-003", "I2-I-001"]),
     ("물리 세계에서 대규모 운영에 들어선 것은 로보택시, 그중에서도 Waymo 하나다. 차량 약 3,500대로 11개 도시를 돌며 주간 유료 탑승 약 50만 회를 기록했고, 7월에는 라스베이거스에서 완전 무인 운행을 시작했다. "
      "Tesla는 오스틴에서 안전요원 없이 운행하는 것으로 보인다는 보도가 나왔지만 회사가 공식 확인하지 않았다.",
-     ["T2-M-004", "T2-E-003", "T2-E-006", "T2-I-002"]),
+     ["I2-M-004", "I2-E-003", "I2-E-006", "I2-I-002"]),
     ("업무형 Agent는 ‘써 보는 단계’와 ‘운영 단계’ 사이에 있다. OpenAI는 7월 몇 시간짜리 프로젝트를 수행하는 ChatGPT Work를 냈지만 이용량은 밝히지 않았다. "
      "미국 기업의 54%가 에이전트를 운영하거나 시범 운영하지만, 성과를 명확한 지표로 재는 곳은 25%, 회사 차원의 사용 정책이 있는 곳은 24%다.",
-     ["T2-E-004", "T2-M-007", "T2-I-003"]),
+     ["I2-E-004", "I2-M-007", "I2-I-003"]),
     ("운영 확산의 가장 직접적인 걸림돌은 사고다. 2025년 6월부터 2026년 7월까지 코딩 에이전트가 운영 데이터베이스나 사용자 파일을 지운 공개 사고가 9건 집계됐고, 상당수는 복구되지 못했다. "
      "7월에도 최신 모델로 작업하던 개발자의 운영 데이터베이스가 초기화됐다. 사람의 승인 단계를 우회하거나 ‘실행하지 말라’는 지시를 무시한 경우가 많다.",
-     ["T2-M-008", "T2-E-005", "T2-I-005"]),
+     ["I2-M-008", "I2-E-005", "I2-I-005"]),
     ("휴머노이드는 고객 현장 파일럿과 초기 상용 단계다. Agility의 Digit은 9개 고객 시설에서 6만 5천 시간 넘게 일했고, Figure는 BMW 공장에서 11개월 파일럿을 마쳤다. "
      "출하 대수는 중국 Unitree가 2025년 약 5,500대로 앞서고, Tesla Optimus는 아직 외부 판매가 없다. 한국은 현대차그룹이 2028년 미국 공장 투입 계획을 내놓았고, 자율주행 택시는 3월 강남 심야 운행을 시작했다.",
-     ["T2-M-005", "T2-M-006", "T2-E-001", "T2-E-002", "T2-I-004", "T2-I-006"]),
+     ["I2-M-005", "I2-M-006", "I2-E-001", "I2-E-002", "I2-I-004", "I2-I-006"]),
 ]
 narrative_html = "".join(para(t, ids) for t, ids in NARRATIVE)
 DIR = {"강화": "up", "약화": "down", "중립": "flat"}
@@ -92,12 +92,12 @@ SG = ["발표", "베타", "정식 출시", "대규모 운영"]
 STAGE_LEAD = ("제품 영역마다 발표 → 베타(제한 이용) → 정식 출시 → 대규모 운영(이용량·성과·매출 공개) 중 어디에 있는지 판정했다. "
               "출시 발표만으로는 정식 출시까지만 인정한다. 한국은 국내 서비스 기준이며, 자료가 없으면 비워 두었다.")
 STAGES = [
-    ("대화형 Assistant", "대규모 운영", None, "주간 9억 명, 유료 5천만 명", ["T2-M-001"]),
-    ("Coding Agent", "대규모 운영", None, "연환산 25억 달러 이상, 대형 고객 커밋 코드 70%", ["T2-M-002", "T2-M-003"]),
-    ("로보택시", "대규모 운영", "베타", "Waymo 주 50만 회·11개 도시 / 서울 강남 심야 제한 운행", ["T2-M-004", "T2-E-002"]),
-    ("업무형 Agent", "정식 출시", None, "ChatGPT Work 출시, 이용량 미공개", ["T2-E-004"]),
-    ("기업 내 Agent 도입", "베타", None, "54% 운영·시범, 성과 측정 25%", ["T2-M-007"]),
-    ("휴머노이드", "베타", "발표", "Agility 9개 시설·Figure BMW 파일럿 / 현대차 2028 투입 계획", ["T2-M-005", "T2-E-001"]),
+    ("대화형 Assistant", "대규모 운영", None, "주간 9억 명, 유료 5천만 명", ["I2-M-001"]),
+    ("Coding Agent", "대규모 운영", None, "연환산 25억 달러 이상, 대형 고객 커밋 코드 70%", ["I2-M-002", "I2-M-003"]),
+    ("로보택시", "대규모 운영", "베타", "Waymo 주 50만 회·11개 도시 / 서울 강남 심야 제한 운행", ["I2-M-004", "I2-E-002"]),
+    ("업무형 Agent", "정식 출시", None, "ChatGPT Work 출시, 이용량 미공개", ["I2-E-004"]),
+    ("기업 내 Agent 도입", "베타", None, "54% 운영·시범, 성과 측정 25%", ["I2-M-007"]),
+    ("휴머노이드", "베타", "발표", "Agility 9개 시설·Figure BMW 파일럿 / 현대차 2028 투입 계획", ["I2-M-005", "I2-E-001"]),
 ]
 def sg4(v):
     if v is None:
@@ -110,9 +110,9 @@ stage_rows = "".join(f"""<div class="rung"><div class="stage"><b>{E(d)}</b></div
   <p class="why">{E(w)} {tags(ids)}</p></div>""" for d, g, k, w, ids in STAGES)
 
 # 6. 핵심 지표 ---------------------------------------------------------
-INDICATOR_NAMES = {"T2-K1": "AI Assistant 이용 규모", "T2-K2": "Coding Agent 매출·이용", "T2-K3": "업무형 Agent 이용량",
-                   "T2-K4": "로보택시 운행 규모", "T2-K5": "휴머노이드 배치", "T2-K6": "기업 Agent 운영 비율",
-                   "T2-K7": "Agent 운영 사고", "T2-K8": "한국 상용화 현황"}
+INDICATOR_NAMES = {"I2-T1": "AI Assistant 이용 규모", "I2-T2": "Coding Agent 매출·이용", "I2-T3": "업무형 Agent 이용량",
+                   "I2-T4": "로보택시 운행 규모", "I2-T5": "휴머노이드 배치", "I2-T6": "기업 Agent 운영 비율",
+                   "I2-T7": "Agent 운영 사고", "I2-T8": "한국 상용화 현황"}
 metrics = sorted([r for r in recs if r["type"] == "지표"], key=lambda r: (r["indicator"], -r["importance"]))
 filled = {r["indicator"] for r in metrics if r.get("verified")}
 empty_ind = [f"{k} {v}" for k, v in INDICATOR_NAMES.items() if k not in filled]
@@ -132,13 +132,13 @@ warns = [(r, "원문 미확인" if r["type"] in ("지표", "사건") and not r.g
 wrows = "".join(f"""<tr><td><code>{E(r['id'])}</code></td><td><span class="wk">{E(k)}</span></td><td>{E(r['statement'])}</td><td class="muted">{E('; '.join(r.get('check_flags', [])))}</td></tr>""" for r, k in warns)
 counts = {t: sum(1 for r in recs if r["type"] == t) for t in ("지표", "사건", "해석", "전망")}
 
-page = f"""<title>T2 AI 제품 상용화 R1</title>
+page = f"""<title>I2 AI 제품 상용화 R1</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;800&display=swap">
 <style>{CSS}</style>
 <main>
   <header class="narrow">
-    <div class="eyebrow"><span>AI Industry Trend</span><span>T2 · AI Products &amp; Applications</span><span>R1 기준 회차 · 2026-10-09</span></div>
+    <div class="eyebrow"><span>AI Industry Trend</span><span>I2 · AI Products &amp; Applications</span><span>R1 기준 회차 · 2026-10-09</span></div>
     <h1>{E(TITLE)}</h1>
     <p class="question">고정 질문 v1.0 — {E(QUESTION)}</p>
   </header>
@@ -165,8 +165,8 @@ page = f"""<title>T2 AI 제품 상용화 R1</title>
 </main>
 """
 (ROOT / "article_r1.html").write_text(page, encoding="utf-8")
-anchors = set(re.findall(r'id="(T2-[A-Z]-\d{3})"', page))
-bad = sorted({i for i in re.findall(r'href="#(T2-[A-Z]-\d{3})"', page) if i not in anchors})
+anchors = set(re.findall(r'id="(I2-[A-Z]-\d{3})"', page))
+bad = sorted({i for i in re.findall(r'href="#(I2-[A-Z]-\d{3})"', page) if i not in anchors})
 order = [page.index(f"<h2>{h}") for h in ("한 줄 답", "해석", "주요 사건", "전망", "상용화 단계", "핵심 지표")]
 print("article_r1.html 생성,", len(page), "bytes; 앵커 없는 근거 링크:", bad or "없음", "; 섹션 순서 정상:", order == sorted(order))
 sys.exit(1 if bad or order != sorted(order) else 0)
