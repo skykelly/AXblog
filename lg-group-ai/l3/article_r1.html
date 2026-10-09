@@ -1,0 +1,245 @@
+<title>L3 LG AI 모빌리티 R1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;800&display=swap">
+<style>
+/* Layout: 연구 노트 한 단 — 답 → 서술형 해석 → 근거 표. 기록 번호가 본문의 각주 역할 */
+:root {
+  --paper: #f6f7f9; --ink: #16202b; --muted: #5d6875; --rule: #d6dbe2; --panel: #ffffff;
+  --accent: #1f5f8b; --accent-soft: #e2edf5; --amber: #b4690e; --amber-soft: #f7ead7;
+  --up: #1f7a4d; --down: #b3412f; --flat: #6a7380; --opt: #1f7a4d; --opt-soft: #e1f1e8; --pes: #a3402f; --pes-soft: #f6e3df;
+  --display: "Noto Serif KR", "Apple SD Gothic Neo", serif;
+  --body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #11161c; --ink: #e6ebf1; --muted: #9aa5b1; --rule: #2b333d; --panel: #171e26;
+  --accent: #7fb6dc; --accent-soft: #1b2c3a; --amber: #e2a457; --amber-soft: #33271a;
+  --up: #5fc493; --down: #ec8a78; --flat: #98a2ae; --opt: #6fcf9d; --opt-soft: #17291f; --pes: #ef9a88; --pes-soft: #2f1c18; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --paper: #11161c; --ink: #e6ebf1; --muted: #9aa5b1; --rule: #2b333d; --panel: #171e26;
+  --accent: #7fb6dc; --accent-soft: #1b2c3a; --amber: #e2a457; --amber-soft: #33271a;
+  --up: #5fc493; --down: #ec8a78; --flat: #98a2ae; --opt: #6fcf9d; --opt-soft: #17291f; --pes: #ef9a88; --pes-soft: #2f1c18; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--paper); color: var(--ink); font: 400 16px/1.7 var(--body); padding: 0 20px; }
+main { max-width: 980px; margin: 0 auto; padding-block: 40px 72px; display: grid; gap: 60px; }
+.narrow { max-width: 70ch; }
+a { color: var(--accent); }
+code, .rid { font: 500 12px/1 var(--mono); }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+.eyebrow { font: 500 12px/1.4 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); display: flex; gap: 14px; flex-wrap: wrap; }
+h1 { font: 800 clamp(26px, 4.4vw, 40px)/1.25 var(--display); margin-top: 14px; }
+.question { margin: 16px 0 0; color: var(--muted); font-size: 15px; border-left: 2px solid var(--rule); padding-left: 14px; }
+h2 { font: 600 22px/1.3 var(--display); display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+h2 small { font: 400 13px var(--body); color: var(--muted); }
+section { display: grid; gap: 18px; min-width: 0; }
+.lead { margin: 0; max-width: 70ch; }
+.rid { display: inline-block; padding: 3px 5px; margin: 2px 2px 0 0; border-radius: 3px; background: var(--accent-soft); color: var(--accent); text-decoration: none; vertical-align: 1px; }
+.rid:hover, .rid:focus-visible { outline: 1px solid var(--accent); }
+/* 한 줄 답 */
+.answer { font: 600 clamp(20px, 2.8vw, 26px)/1.55 var(--display); margin: 0; }
+.answer-box { display: grid; gap: 20px; }
+.arows { margin: 0; border-top: 1px solid var(--ink); }
+.arow { display: grid; grid-template-columns: 170px 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+.arow dt { font-weight: 600; }
+.arow dd { margin: 0; min-width: 0; }
+/* 서술형 해석 */
+.narrative { display: grid; gap: 14px; max-width: 70ch; }
+.narrative p { margin: 0; }
+/* 표 */
+.tablewrap { overflow-x: auto; border-top: 1px solid var(--ink); }
+table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 14px; }
+th { text-align: left; font: 500 11px var(--mono); letter-spacing: .05em; color: var(--muted); padding: 10px 8px; border-bottom: 1px solid var(--rule); }
+td { padding: 12px 8px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+td small { display: block; color: var(--muted); font-size: 12px; margin-top: 3px; }
+.num { font: 500 15px var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; }
+.muted { color: var(--muted); }
+.ind { font: 500 12px var(--mono); width: 150px; }
+.ind small { font-family: var(--body); }
+.tgt { font-weight: 600; width: 150px; }
+.asof { font: 400 13px var(--mono); white-space: nowrap; }
+.idc code { color: var(--muted); }
+.src { font-size: 12px; color: var(--muted); margin-top: 6px; }
+.src a { color: var(--muted); }
+.grade { font: 500 10px var(--mono); margin-left: 4px; padding: 1px 4px; border: 1px solid currentColor; border-radius: 2px; }
+.gC { color: var(--amber); }
+.warn, .wk { font: 500 11px var(--mono); color: var(--amber); background: var(--amber-soft); padding: 2px 6px; border-radius: 2px; white-space: nowrap; }
+.dir { font: 500 11px var(--mono); padding: 2px 7px; border-radius: 2px; color: var(--panel); white-space: nowrap; }
+.dir.up { background: var(--up); } .dir.down { background: var(--down); } .dir.flat { background: var(--flat); }
+.fstat { font: 500 11px var(--mono); border: 1px solid var(--accent); color: var(--accent); padding: 2px 6px; border-radius: 2px; white-space: nowrap; }
+/* 사건 */
+.timeline { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
+.timeline li { display: grid; grid-template-columns: 110px 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+.timeline time { font: 500 13px var(--mono); color: var(--muted); padding-top: 2px; }
+.timeline li > div { min-width: 0; }
+/* 시나리오 */
+.scens { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.scen { border-top: 3px solid var(--sc); background: var(--panel); padding: 18px 18px 14px; display: grid; gap: 14px; align-content: start; }
+.scen.opt { --sc: var(--opt); --scs: var(--opt-soft); }
+.scen.pes { --sc: var(--pes); --scs: var(--pes-soft); }
+.scen header { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.sk { font: 600 13px var(--mono); color: var(--sc); letter-spacing: .03em; }
+.scen header code { color: var(--muted); }
+.sstmt { margin: 0; font-size: 15px; }
+.ms { list-style: none; margin: 0; padding: 0 0 0 12px; border-left: 2px solid var(--scs); display: grid; gap: 8px; }
+.ms li { display: grid; grid-template-columns: 70px 1fr; gap: 10px; font-size: 14px; }
+.ms time { font: 500 12px var(--mono); color: var(--sc); padding-top: 2px; }
+.sdl { margin: 0; display: grid; gap: 6px; font-size: 13px; }
+.sdl div { display: grid; grid-template-columns: 70px 1fr; gap: 10px; }
+.sdl dt { color: var(--muted); }
+.sdl dd { margin: 0; min-width: 0; }
+.side { font: 500 11px var(--mono); padding: 2px 7px; border-radius: 2px; white-space: nowrap; margin-right: 4px; }
+.side.opt { color: var(--opt); background: var(--opt-soft); }
+.side.pes { color: var(--pes); background: var(--pes-soft); }
+.subhead { font: 600 15px var(--body); margin: 8px 0 0; }
+/* 사다리 */
+.ladder { border-top: 1px solid var(--ink); }
+.rung { display: grid; grid-template-columns: 150px 170px 170px 1fr; gap: 16px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+.rung[data-frontier="y"] { background: linear-gradient(90deg, var(--amber-soft), transparent 70%); }
+.stage b { display: block; font: 600 18px/1.2 var(--display); }
+.stage span { font: 400 12px var(--mono); color: var(--muted); }
+.region { display: block; font: 500 11px var(--mono); color: var(--muted); letter-spacing: .04em; margin-bottom: 4px; }
+.pips { display: flex; align-items: center; gap: 4px; }
+.pip { width: 16px; height: 8px; border: 1px solid var(--accent); border-radius: 1px; }
+.pip.on { background: var(--accent); }
+.lv { margin-left: 8px; font-size: 14px; font-weight: 500; }
+.why { margin: 0; font-size: 14px; color: var(--muted); min-width: 0; }
+.frontier-note { font-size: 13px; color: var(--amber); font-family: var(--mono); margin: 0; }
+footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 18px; display: grid; gap: 6px; }
+:target { background: var(--accent-soft); }
+@media (max-width: 760px) {
+  .rung { grid-template-columns: 1fr 1fr; }
+  .rung .stage, .rung .why { grid-column: 1 / -1; }
+  .scens { grid-template-columns: 1fr; }
+  .arow, .timeline li { grid-template-columns: 1fr; gap: 4px; }
+}
+
+/* 주도권 지도 (C2) */
+.own { font: 500 12px var(--mono); padding: 3px 8px; border-radius: 2px; white-space: nowrap; display: inline-block; }
+.own.brand { color: var(--up); background: var(--opt-soft); }
+.own.platform { color: var(--accent); background: var(--accent-soft); }
+.own.agent { color: var(--amber); background: var(--amber-soft); }
+.own.contest { color: var(--flat); border: 1px dashed var(--flat); }
+.mapgrid .rung { grid-template-columns: 130px 150px 150px 150px 1fr; }
+@media (max-width: 760px) { .mapgrid .rung { grid-template-columns: 1fr 1fr; } }
+/* 자율 수준 지도 (C4) */
+.mapgrid.auto .rung { grid-template-columns: 130px 220px 220px 1fr; }
+table.levels { min-width: 520px; }
+@media (max-width: 760px) { .mapgrid.auto .rung { grid-template-columns: 1fr; } }
+/* 역량 원장 (I1) */
+.mapgrid.ledger .rung { grid-template-columns: 200px 260px 1fr; }
+@media (max-width: 760px) { .mapgrid.ledger .rung { grid-template-columns: 1fr; } }
+
+/* I3 두 곡선 */
+.curves { display: grid; gap: 14px; margin: 8px 0 18px; }
+.curve { display: grid; grid-template-columns: 150px 1fr; gap: 12px; align-items: center; }
+.curve .cl { font: 600 13px var(--body); }
+.curve .cl small { display: block; font: 400 12px var(--mono); color: var(--muted); }
+.curve .bar { height: 26px; background: var(--accent-soft); border-radius: 2px; position: relative; }
+.curve .bar span { position: absolute; inset: 0 auto 0 0; display: flex; align-items: center; padding: 0 10px; font: 500 12px var(--mono); color: #fff; border-radius: 2px; white-space: nowrap; }
+.curve.inv .bar span { background: var(--accent); }
+.curve.rev .bar span { background: var(--up); }
+.gapnote { border-left: 3px solid var(--amber); padding: 6px 12px; background: var(--amber-soft); font-size: 14px; }
+.mapgrid.layers .rung { grid-template-columns: 150px 200px 110px 1fr; }
+@media (max-width: 720px) { .curve { grid-template-columns: 1fr; } .mapgrid.layers .rung { grid-template-columns: 1fr; } }
+
+/* S1 유입 저울 */
+.balance { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 8px 0 14px; }
+.balance .pan { border: 1px solid var(--rule); border-top: 3px solid var(--down); background: var(--panel); padding: 12px 16px; }
+.balance .pan.gain { border-top-color: var(--up); }
+.balance h4 { margin: 0 0 8px; font: 600 14px var(--body); }
+.balance ul { margin: 0; padding-left: 18px; font-size: 14px; line-height: 1.7; }
+@media (max-width: 720px) { .balance { grid-template-columns: 1fr; } }
+</style>
+<main>
+  <header class="narrow">
+    <div class="eyebrow"><span>LG Group AI</span><span>L3 · AI Mobility / SDV·AIDV</span><span>R1 기준 회차 · 2026-10-09</span></div>
+    <h1>LG의 차량용 AI는 어느 고객·차종까지 들어갔나</h1>
+    <p class="question">고정 질문 v1.0 — LG의 차량용 AI·소프트웨어·부품은 어떤 고객과 차종에 적용되며, 공급 범위와 수익 기회는 어떻게 확대되는가?</p>
+  </header>
+  <section class="answer-box"><h2>한 줄 답</h2>
+    <p class="answer narrow">2026년 10월 현재 고객과 차종을 밝힌 LG의 AI·SDV 수주는 르노 &#x27;New Trafic E-Tech Electric&#x27;(유럽 첫 상용 SDV)의 통합 콕핏 한 건이다. 부품 공급사에서 통합 솔루션 공급사로 넓어지는 첫 공개 사례다. 양산 적용 단계에 있는 것은 텔레매틱스(점유율 23%, 1위)와 차량용 OLED(15.9%, 2위) 같은 기존 강점이고, AI 캐빈·ADAS·라이다는 콘셉트이거나 고객명 없는 수주 단계다. 수익 기회는 이익률에서 먼저 보인다. VS 영업이익률 6~7%는 보쉬 모빌리티의 3배가 넘는다. <a class="rid" href="#L3-I-001" title="고객과 차종을 밝힌 AI·SDV 수주는 르노 한 건이다. 계기판과 인포테인먼트를 통합 제어하는 콕핏을 &#x27;유럽 첫 상용 SDV&#x27;에 공급하는 것으로, LG전자가 부품 공급사에서 통합 솔루션 공급사로 넓어지는 첫 공개 사례다.">L3-I-001</a><a class="rid" href="#L3-I-002" title="수익 기회는 매출보다 이익률에서 먼저 드러난다. VS 매출 성장은 6%대지만 영업이익률은 6~7%로 보쉬 모빌리티의 3배를 넘는다. 통합 콕핏처럼 공급 범위가 넓어지면 이익률을 더 끌어올릴 여지가 있다.">L3-I-002</a><a class="rid" href="#L3-I-003" title="양산 적용 단계에 있는 것은 AI 이전부터의 강점이다. 텔레매틱스는 점유율 23%로 1위, 차량용 OLED는 15.9%로 2위이며 완성차 10여 곳에 공급한다. 이 기반 위에 AI 기능을 얹는 구조다.">L3-I-003</a><a class="rid" href="#L3-I-004" title="AI 고유 영역(AI 캐빈, ADAS, 라이다 센싱)은 아직 콘셉트이거나 고객명 없는 수주 단계다. AI 캐빈 기능은 &#x27;몇 년 안에 상용화&#x27;, 라이다는 2028년 탑재가 목표다. AI에서 나오는 수익은 2028년 전후부터 확인될 것이다.">L3-I-004</a></p><dl class="arows"><div class="arow"><dt>고객·차종 공개</dt><dd>르노 New Trafic E-Tech Electric: 계기판·인포테인먼트 통합 콕핏 (규모 비공개). <a class="rid" href="#L3-E-006" title="LG전자가 르노그룹의 &#x27;유럽 첫 상용 SDV&#x27; New Trafic E-Tech Electric에 계기판과 인포테인먼트를 하나로 통합 제어하는 콕핏 솔루션을 공급한다고 발표했다. 규모·물량은 비공개다.">L3-E-006</a></dd></div><div class="arow"><dt>양산 적용</dt><dd>텔레매틱스 점유율 23%(1위), 차량용 OLED 15.9%(2위)·완성차 10여 곳. 고객명은 대부분 비공개. <a class="rid" href="#L3-M-003" title="LG전자는 2025년 4분기 글로벌 텔레매틱스 시장 점유율 23%로 1위였다.">L3-M-003</a><a class="rid" href="#L3-M-005" title="LG디스플레이는 2025년 글로벌 차량용 OLED 매출 점유율 15.9%로 2위였다(1위 삼성디스플레이 70.2%). 글로벌 완성차 10여 곳에 OLED 패널을 공급한다.">L3-M-005</a></dd></div><div class="arow"><dt>콘셉트·개발</dt><dd>AI 캐빈 플랫폼(몇 년 안 상용화), DRIVE Hyperion 기반 ADAS 개발, 이노텍 라이다 2028년 탑재 목표, 엔솔 배터리 SW 5종 마켓 등록. <a class="rid" href="#L3-E-001" title="LG전자가 CES 2026용 AI 차량 솔루션(투명 OLED 앞유리, 시선 분석 비전 AI, 뒷좌석 AI 큐레이션)과 완성차용 온디바이스 &#x27;AI 캐빈 플랫폼&#x27;을 발표했다. 인캐빈 센싱 등은 글로벌 완성차와 양산을 논의 중이며 몇 년 안에 상용화하겠다고 했다.">L3-E-001</a><a class="rid" href="#L3-E-004" title="LG와 NVIDIA가 M.A.P. 협력을 발표했다. 모빌리티에서는 LG전자가 인포테인먼트 역량에 NVIDIA DRIVE Hyperion을 결합해 차세대 ADAS를 개발하고, LG이노텍이 DRIVE Hyperion용 통신·센싱·조명 부품 개발을 넓힌다.">L3-E-004</a><a class="rid" href="#L3-M-004" title="LG이노텍은 2030년 자율주행 센싱 매출 약 2조 원, 모빌리티솔루션 전체 약 5조 원을 목표로 한다. Aeva와 함께 개발하는 초슬림·초장거리 라이다 모듈은 2028년 글로벌 완성차 탑재가 목표이며, 고객명은 공개되지 않았다.">L3-M-004</a><a class="rid" href="#L3-M-006" title="LG에너지솔루션은 GM 주도의 차량 소프트웨어 마켓 SDVerse에 배터리 기업 최초로 합류해 배터리 SW 5종(플랫폼 SW, 안전 진단 보정, 셀 상태 진단, 수명 시뮬레이터, 열화 저감)을 올렸다.">L3-M-006</a></dd></div><div class="arow"><dt>수익</dt><dd>VS 2분기 매출 3조 259억 원(+6.2%), 영업이익률 6.3%. 1분기 6.9%로 보쉬(1.8%)의 3배 이상. <a class="rid" href="#L3-M-001" title="LG전자 VS(전장)사업본부의 2026년 2분기 매출은 3조 259억 원(+6.2%), 영업이익은 1,912억 원으로 2분기 기준 최대였다. 영업이익률은 6.3%다. 회사는 전기차 수요 정체로 완성차 수요 회복이 제한적이지만 수주잔고를 바탕으로 매출 성장을 이어가겠다고 밝혔다.">L3-M-001</a><a class="rid" href="#L3-M-002" title="LG전자 VS사업본부의 2026년 1분기 영업이익률은 6.9%로 출범 후 처음 6%대에 올랐다. 보쉬 모빌리티 부문(1.8%)의 3배를 넘고 콘티넨탈(3.9%)보다 높다.">L3-M-002</a></dd></div><div class="arow"><dt>역풍</dt><dd>전기차 수요 정체로 완성차 수요 회복 제한, VS 매출 전 분기 대비 -1.3%. <a class="rid" href="#L3-M-001" title="LG전자 VS(전장)사업본부의 2026년 2분기 매출은 3조 259억 원(+6.2%), 영업이익은 1,912억 원으로 2분기 기준 최대였다. 영업이익률은 6.3%다. 회사는 전기차 수요 정체로 완성차 수요 회복이 제한적이지만 수주잔고를 바탕으로 매출 성장을 이어가겠다고 밝혔다.">L3-M-001</a><a class="rid" href="#L3-I-007" title="전기차 수요 정체는 매출 확대의 제약이다. LG전자는 완성차 수요 회복이 당분간 제한적일 것으로 봤고, VS 2분기 매출은 전 분기보다 1.3% 줄었다.">L3-I-007</a></dd></div></dl></section>
+  <section><h2>해석</h2><div class="narrative"><p>고객과 차종을 밝힌 LG의 AI·SDV 수주는 아직 한 건이다. LG전자는 10월 르노그룹이 &#x27;유럽 첫 상용 SDV&#x27;로 소개한 New Trafic E-Tech Electric에 계기판과 인포테인먼트를 하나로 통합 제어하는 콕핏을 공급한다고 발표했다. 물량과 금액은 공개되지 않았지만, 개별 부품을 넘어 통합 솔루션을 맡는 첫 공개 사례라는 점에서 공급 범위가 넓어지는 신호다. <a class="rid" href="#L3-E-006" title="LG전자가 르노그룹의 &#x27;유럽 첫 상용 SDV&#x27; New Trafic E-Tech Electric에 계기판과 인포테인먼트를 하나로 통합 제어하는 콕핏 솔루션을 공급한다고 발표했다. 규모·물량은 비공개다.">L3-E-006</a><a class="rid" href="#L3-I-001" title="고객과 차종을 밝힌 AI·SDV 수주는 르노 한 건이다. 계기판과 인포테인먼트를 통합 제어하는 콕핏을 &#x27;유럽 첫 상용 SDV&#x27;에 공급하는 것으로, LG전자가 부품 공급사에서 통합 솔루션 공급사로 넓어지는 첫 공개 사례다.">L3-I-001</a></p><p>양산 단계에 있는 것은 AI 이전부터의 강점이다. LG전자는 글로벌 텔레매틱스 점유율 23%로 1위이고, LG디스플레이는 차량용 OLED 점유율 15.9%로 2위이며 완성차 10여 곳에 패널을 공급한다. AI 기능은 이 기반 위에 얹히는 구조이고, 고객명은 대부분 공개되지 않는다. <a class="rid" href="#L3-M-003" title="LG전자는 2025년 4분기 글로벌 텔레매틱스 시장 점유율 23%로 1위였다.">L3-M-003</a><a class="rid" href="#L3-M-005" title="LG디스플레이는 2025년 글로벌 차량용 OLED 매출 점유율 15.9%로 2위였다(1위 삼성디스플레이 70.2%). 글로벌 완성차 10여 곳에 OLED 패널을 공급한다.">L3-M-005</a><a class="rid" href="#L3-I-003" title="양산 적용 단계에 있는 것은 AI 이전부터의 강점이다. 텔레매틱스는 점유율 23%로 1위, 차량용 OLED는 15.9%로 2위이며 완성차 10여 곳에 공급한다. 이 기반 위에 AI 기능을 얹는 구조다.">L3-I-003</a></p><p>AI 고유 영역은 아직 콘셉트와 개발 단계다. LG전자는 CES 2026에서 투명 OLED 앞유리·시선 분석 비전 AI·온디바이스 AI 캐빈 플랫폼을 내놓고 &#x27;몇 년 안 상용화&#x27;를 말했다. LG이노텍은 자율주행 부품 16종을 공개했고, Aeva와 만드는 라이다는 2028년 탑재가 목표다. 6월 NVIDIA 협력에서는 LG전자가 인포테인먼트에 DRIVE Hyperion을 결합한 ADAS를 개발하기로 해, 인포테인먼트에서 ADAS로 공급 범위를 넓힐 통로를 만들었다. <a class="rid" href="#L3-E-001" title="LG전자가 CES 2026용 AI 차량 솔루션(투명 OLED 앞유리, 시선 분석 비전 AI, 뒷좌석 AI 큐레이션)과 완성차용 온디바이스 &#x27;AI 캐빈 플랫폼&#x27;을 발표했다. 인캐빈 센싱 등은 글로벌 완성차와 양산을 논의 중이며 몇 년 안에 상용화하겠다고 했다.">L3-E-001</a><a class="rid" href="#L3-E-002" title="LG이노텍이 CES 2026에서 자율주행 부품 16종과 전기차 솔루션 15종(Aeva 공동 라이다, 5G NTN 모듈, 800V 무선 BMS 등)을 공개했다. 고객·수주는 밝히지 않았다.">L3-E-002</a><a class="rid" href="#L3-M-004" title="LG이노텍은 2030년 자율주행 센싱 매출 약 2조 원, 모빌리티솔루션 전체 약 5조 원을 목표로 한다. Aeva와 함께 개발하는 초슬림·초장거리 라이다 모듈은 2028년 글로벌 완성차 탑재가 목표이며, 고객명은 공개되지 않았다.">L3-M-004</a><a class="rid" href="#L3-E-004" title="LG와 NVIDIA가 M.A.P. 협력을 발표했다. 모빌리티에서는 LG전자가 인포테인먼트 역량에 NVIDIA DRIVE Hyperion을 결합해 차세대 ADAS를 개발하고, LG이노텍이 DRIVE Hyperion용 통신·센싱·조명 부품 개발을 넓힌다.">L3-E-004</a><a class="rid" href="#L3-I-004" title="AI 고유 영역(AI 캐빈, ADAS, 라이다 센싱)은 아직 콘셉트이거나 고객명 없는 수주 단계다. AI 캐빈 기능은 &#x27;몇 년 안에 상용화&#x27;, 라이다는 2028년 탑재가 목표다. AI에서 나오는 수익은 2028년 전후부터 확인될 것이다.">L3-I-004</a><a class="rid" href="#L3-I-006" title="NVIDIA 협력은 LG전자가 인포테인먼트에서 ADAS로 공급 범위를 넓히는 통로다. 인포테인먼트 역량과 DRIVE Hyperion을 결합한 ADAS를 개발하고, LG이노텍이 같은 플랫폼용 센싱·통신 부품을 맞춘다.">L3-I-006</a></p><p>수익 기회는 매출보다 이익률에서 먼저 보인다. VS사업본부의 2분기 매출은 3조 259억 원으로 6.2% 늘었지만, 영업이익은 2분기 기준 최대인 1,912억 원이었다. 1분기 영업이익률 6.9%는 보쉬 모빌리티(1.8%)의 3배, 콘티넨탈(3.9%)보다 높다. 다만 전기차 수요 정체로 회사도 완성차 수요 회복이 제한적이라고 봤다. <a class="rid" href="#L3-M-001" title="LG전자 VS(전장)사업본부의 2026년 2분기 매출은 3조 259억 원(+6.2%), 영업이익은 1,912억 원으로 2분기 기준 최대였다. 영업이익률은 6.3%다. 회사는 전기차 수요 정체로 완성차 수요 회복이 제한적이지만 수주잔고를 바탕으로 매출 성장을 이어가겠다고 밝혔다.">L3-M-001</a><a class="rid" href="#L3-M-002" title="LG전자 VS사업본부의 2026년 1분기 영업이익률은 6.9%로 출범 후 처음 6%대에 올랐다. 보쉬 모빌리티 부문(1.8%)의 3배를 넘고 콘티넨탈(3.9%)보다 높다.">L3-M-002</a><a class="rid" href="#L3-E-005" title="LG전자 VS사업본부가 2분기 기준 최대 영업이익(1,912억 원)을 냈다.">L3-E-005</a><a class="rid" href="#L3-I-002" title="수익 기회는 매출보다 이익률에서 먼저 드러난다. VS 매출 성장은 6%대지만 영업이익률은 6~7%로 보쉬 모빌리티의 3배를 넘는다. 통합 콕핏처럼 공급 범위가 넓어지면 이익률을 더 끌어올릴 여지가 있다.">L3-I-002</a><a class="rid" href="#L3-I-007" title="전기차 수요 정체는 매출 확대의 제약이다. LG전자는 완성차 수요 회복이 당분간 제한적일 것으로 봤고, VS 2분기 매출은 전 분기보다 1.3% 줄었다.">L3-I-007</a></p><p>배터리 소프트웨어는 판매 채널부터 확보했다. LG에너지솔루션은 GM·Magna·Wipro가 세운 차량 SW 마켓 SDVerse에 배터리 기업 최초로 합류해 배터리 SW 5종을 올렸지만, 고객과 수익 모델은 아직 공개되지 않았다. <a class="rid" href="#L3-M-006" title="LG에너지솔루션은 GM 주도의 차량 소프트웨어 마켓 SDVerse에 배터리 기업 최초로 합류해 배터리 SW 5종(플랫폼 SW, 안전 진단 보정, 셀 상태 진단, 수명 시뮬레이터, 열화 저감)을 올렸다.">L3-M-006</a><a class="rid" href="#L3-E-003" title="LG에너지솔루션이 GM·Magna·Wipro가 세운 차량 SW 마켓 SDVerse에 배터리 기업 최초로 합류했다.">L3-E-003</a><a class="rid" href="#L3-I-005" title="배터리 SW는 판매 채널을 먼저 확보했다. LG에너지솔루션은 GM 주도 마켓에 SW 5종을 올렸지만 고객과 수익 모델은 아직 공개되지 않았다. 셀 공급사가 소프트웨어로 수익을 내는 구조는 실험 단계다.">L3-I-005</a></p></div>
+    <div class="tablewrap"><table><thead><tr><th>방향</th><th>대상</th><th>해석</th><th>근거</th><th>기록</th></tr></thead><tbody><tr id="L3-I-001"><td><span class="dir up">강화</span></td>
+  <td class="tgt">공급 범위 확대</td><td>고객과 차종을 밝힌 AI·SDV 수주는 르노 한 건이다. 계기판과 인포테인먼트를 통합 제어하는 콕핏을 &#x27;유럽 첫 상용 SDV&#x27;에 공급하는 것으로, LG전자가 부품 공급사에서 통합 솔루션 공급사로 넓어지는 첫 공개 사례다.</td><td><a class="rid" href="#L3-E-006" title="LG전자가 르노그룹의 &#x27;유럽 첫 상용 SDV&#x27; New Trafic E-Tech Electric에 계기판과 인포테인먼트를 하나로 통합 제어하는 콕핏 솔루션을 공급한다고 발표했다. 규모·물량은 비공개다.">L3-E-006</a></td><td class="idc"><code>L3-I-001</code></td></tr><tr id="L3-I-002"><td><span class="dir up">강화</span></td>
+  <td class="tgt">수익성</td><td>수익 기회는 매출보다 이익률에서 먼저 드러난다. VS 매출 성장은 6%대지만 영업이익률은 6~7%로 보쉬 모빌리티의 3배를 넘는다. 통합 콕핏처럼 공급 범위가 넓어지면 이익률을 더 끌어올릴 여지가 있다.</td><td><a class="rid" href="#L3-M-001" title="LG전자 VS(전장)사업본부의 2026년 2분기 매출은 3조 259억 원(+6.2%), 영업이익은 1,912억 원으로 2분기 기준 최대였다. 영업이익률은 6.3%다. 회사는 전기차 수요 정체로 완성차 수요 회복이 제한적이지만 수주잔고를 바탕으로 매출 성장을 이어가겠다고 밝혔다.">L3-M-001</a><a class="rid" href="#L3-M-002" title="LG전자 VS사업본부의 2026년 1분기 영업이익률은 6.9%로 출범 후 처음 6%대에 올랐다. 보쉬 모빌리티 부문(1.8%)의 3배를 넘고 콘티넨탈(3.9%)보다 높다.">L3-M-002</a><a class="rid" href="#L3-E-005" title="LG전자 VS사업본부가 2분기 기준 최대 영업이익(1,912억 원)을 냈다.">L3-E-005</a></td><td class="idc"><code>L3-I-002</code></td></tr><tr id="L3-I-003"><td><span class="dir flat">중립</span></td>
+  <td class="tgt">이미 양산 중인 강점</td><td>양산 적용 단계에 있는 것은 AI 이전부터의 강점이다. 텔레매틱스는 점유율 23%로 1위, 차량용 OLED는 15.9%로 2위이며 완성차 10여 곳에 공급한다. 이 기반 위에 AI 기능을 얹는 구조다.</td><td><a class="rid" href="#L3-M-003" title="LG전자는 2025년 4분기 글로벌 텔레매틱스 시장 점유율 23%로 1위였다.">L3-M-003</a><a class="rid" href="#L3-M-005" title="LG디스플레이는 2025년 글로벌 차량용 OLED 매출 점유율 15.9%로 2위였다(1위 삼성디스플레이 70.2%). 글로벌 완성차 10여 곳에 OLED 패널을 공급한다.">L3-M-005</a></td><td class="idc"><code>L3-I-003</code></td></tr><tr id="L3-I-004"><td><span class="dir flat">중립</span></td>
+  <td class="tgt">AI 고유 영역</td><td>AI 고유 영역(AI 캐빈, ADAS, 라이다 센싱)은 아직 콘셉트이거나 고객명 없는 수주 단계다. AI 캐빈 기능은 &#x27;몇 년 안에 상용화&#x27;, 라이다는 2028년 탑재가 목표다. AI에서 나오는 수익은 2028년 전후부터 확인될 것이다.</td><td><a class="rid" href="#L3-E-001" title="LG전자가 CES 2026용 AI 차량 솔루션(투명 OLED 앞유리, 시선 분석 비전 AI, 뒷좌석 AI 큐레이션)과 완성차용 온디바이스 &#x27;AI 캐빈 플랫폼&#x27;을 발표했다. 인캐빈 센싱 등은 글로벌 완성차와 양산을 논의 중이며 몇 년 안에 상용화하겠다고 했다.">L3-E-001</a><a class="rid" href="#L3-M-004" title="LG이노텍은 2030년 자율주행 센싱 매출 약 2조 원, 모빌리티솔루션 전체 약 5조 원을 목표로 한다. Aeva와 함께 개발하는 초슬림·초장거리 라이다 모듈은 2028년 글로벌 완성차 탑재가 목표이며, 고객명은 공개되지 않았다.">L3-M-004</a><a class="rid" href="#L3-E-002" title="LG이노텍이 CES 2026에서 자율주행 부품 16종과 전기차 솔루션 15종(Aeva 공동 라이다, 5G NTN 모듈, 800V 무선 BMS 등)을 공개했다. 고객·수주는 밝히지 않았다.">L3-E-002</a></td><td class="idc"><code>L3-I-004</code></td></tr><tr id="L3-I-005"><td><span class="dir up">강화</span></td>
+  <td class="tgt">배터리 SW</td><td>배터리 SW는 판매 채널을 먼저 확보했다. LG에너지솔루션은 GM 주도 마켓에 SW 5종을 올렸지만 고객과 수익 모델은 아직 공개되지 않았다. 셀 공급사가 소프트웨어로 수익을 내는 구조는 실험 단계다.</td><td><a class="rid" href="#L3-M-006" title="LG에너지솔루션은 GM 주도의 차량 소프트웨어 마켓 SDVerse에 배터리 기업 최초로 합류해 배터리 SW 5종(플랫폼 SW, 안전 진단 보정, 셀 상태 진단, 수명 시뮬레이터, 열화 저감)을 올렸다.">L3-M-006</a><a class="rid" href="#L3-E-003" title="LG에너지솔루션이 GM·Magna·Wipro가 세운 차량 SW 마켓 SDVerse에 배터리 기업 최초로 합류했다.">L3-E-003</a></td><td class="idc"><code>L3-I-005</code></td></tr><tr id="L3-I-006"><td><span class="dir up">강화</span></td>
+  <td class="tgt">ADAS 진입</td><td>NVIDIA 협력은 LG전자가 인포테인먼트에서 ADAS로 공급 범위를 넓히는 통로다. 인포테인먼트 역량과 DRIVE Hyperion을 결합한 ADAS를 개발하고, LG이노텍이 같은 플랫폼용 센싱·통신 부품을 맞춘다.</td><td><a class="rid" href="#L3-E-004" title="LG와 NVIDIA가 M.A.P. 협력을 발표했다. 모빌리티에서는 LG전자가 인포테인먼트 역량에 NVIDIA DRIVE Hyperion을 결합해 차세대 ADAS를 개발하고, LG이노텍이 DRIVE Hyperion용 통신·센싱·조명 부품 개발을 넓힌다.">L3-E-004</a></td><td class="idc"><code>L3-I-006</code></td></tr><tr id="L3-I-007"><td><span class="dir down">약화</span></td>
+  <td class="tgt">시장 역풍</td><td>전기차 수요 정체는 매출 확대의 제약이다. LG전자는 완성차 수요 회복이 당분간 제한적일 것으로 봤고, VS 2분기 매출은 전 분기보다 1.3% 줄었다.</td><td><a class="rid" href="#L3-M-001" title="LG전자 VS(전장)사업본부의 2026년 2분기 매출은 3조 259억 원(+6.2%), 영업이익은 1,912억 원으로 2분기 기준 최대였다. 영업이익률은 6.3%다. 회사는 전기차 수요 정체로 완성차 수요 회복이 제한적이지만 수주잔고를 바탕으로 매출 성장을 이어가겠다고 밝혔다.">L3-M-001</a></td><td class="idc"><code>L3-I-007</code></td></tr></tbody></table></div></section>
+  <section><h2>주요 사건 <small>최신순 · 원문 확인된 것만</small></h2><p class="lead">10월 르노 통합 콕핏 공급 발표가 가장 최근의 큰 사건이다. 그 앞에는 6월 NVIDIA M.A.P. 협력(ADAS·센싱), 4월 LG에너지솔루션의 SDVerse 합류, 연초 CES의 AI 캐빈·자율주행 부품 공개가 있다.</p><ul class="timeline"><li id="L3-E-006"><time>2026-10-06</time><div><b>LG전자·르노</b> LG전자가 르노그룹의 &#x27;유럽 첫 상용 SDV&#x27; New Trafic E-Tech Electric에 계기판과 인포테인먼트를 하나로 통합 제어하는 콕핏 솔루션을 공급한다고 발표했다. 규모·물량은 비공개다.
+  <div class="src"><a href="https://www.etnews.com/20261006000204" target="_blank" rel="noopener">전자신문 (LG전자 발표)</a><span class="grade gB">B</span> <code>L3-E-006</code></div></div></li><li id="L3-E-005"><time>2026-07-30</time><div><b>LG전자</b> LG전자 VS사업본부가 2분기 기준 최대 영업이익(1,912억 원)을 냈다.
+  <div class="src"><a href="https://www.lge.co.kr/kr/upload/admin/investment/result/2026_Q2_Earnings%20Release%20of%20LGE_KR.pdf" target="_blank" rel="noopener">LG전자 2분기 실적 자료 (IR)</a><span class="grade gA">A</span> <code>L3-E-005</code></div></div></li><li id="L3-E-004"><time>2026-06-08</time><div><b>LG·NVIDIA</b> LG와 NVIDIA가 M.A.P. 협력을 발표했다. 모빌리티에서는 LG전자가 인포테인먼트 역량에 NVIDIA DRIVE Hyperion을 결합해 차세대 ADAS를 개발하고, LG이노텍이 DRIVE Hyperion용 통신·센싱·조명 부품 개발을 넓힌다.
+  <div class="src"><a href="https://www.thailand-business-news.com/pr-news/lg-teams-with-nvidia-to-shape-the-future-with-m-a-p-mobility-ai-infra-physical-ai" target="_blank" rel="noopener">PR Newswire (LG 발표)</a><span class="grade gA">A</span> <code>L3-E-004</code></div></div></li><li id="L3-E-003"><time>2026-04-03</time><div><b>LG에너지솔루션</b> LG에너지솔루션이 GM·Magna·Wipro가 세운 차량 SW 마켓 SDVerse에 배터리 기업 최초로 합류했다.
+  <div class="src"><a href="https://www.heraldk.com/article/2026040215280143224" target="_blank" rel="noopener">헤럴드경제 (LG에너지솔루션 발표)</a><span class="grade gB">B</span> <code>L3-E-003</code></div></div></li><li id="L3-E-002"><time>2026-01-05</time><div><b>LG이노텍</b> LG이노텍이 CES 2026에서 자율주행 부품 16종과 전기차 솔루션 15종(Aeva 공동 라이다, 5G NTN 모듈, 800V 무선 BMS 등)을 공개했다. 고객·수주는 밝히지 않았다.
+  <div class="src"><a href="https://tools.prnewswire.com/en-us/live/20823/release/20260105EN56019" target="_blank" rel="noopener">PR Newswire (LG이노텍)</a><span class="grade gA">A</span> <code>L3-E-002</code></div></div></li><li id="L3-E-001"><time>2025-12-17</time><div><b>LG전자</b> LG전자가 CES 2026용 AI 차량 솔루션(투명 OLED 앞유리, 시선 분석 비전 AI, 뒷좌석 AI 큐레이션)과 완성차용 온디바이스 &#x27;AI 캐빈 플랫폼&#x27;을 발표했다. 인캐빈 센싱 등은 글로벌 완성차와 양산을 논의 중이며 몇 년 안에 상용화하겠다고 했다.
+  <div class="src"><a href="https://zdnet.co.kr/view/?no=20251217091749" target="_blank" rel="noopener">ZDNet Korea (LG전자 발표)</a><span class="grade gB">B</span> <code>L3-E-001</code></div></div></li></ul></section>
+  <section><h2>전망 <small>2027년 말까지, 공급 범위가 넓어질까</small></h2><p class="lead">2027년 말을 기준으로 두 시나리오를 세웠다. 갈림길은 르노에 이은 통합 콕핏 수주와 ADAS·라이다 수주가 고객명과 함께 나오는지, 그리고 전기차 수요 정체 속에서 VS 이익률을 지키는지다.</p>
+    <div class="scens"><article class="scen opt" id="L3-F-101"><header><span class="sk">낙관 · Optimistic</span><code>L3-F-101</code></header>
+  <p class="sstmt">2027년 말까지 LG의 공급 범위가 부품에서 통합 콕핏·ADAS로 넓어진다. 고객명을 밝힌 통합 콕핏·SDV 수주가 두 곳 이상이 되고, ADAS 또는 라이다 수주가 고객명과 함께 나오며, VS 이익률은 6% 이상을 지킨다.</p><ol class="ms"><li><time>2026-10</time><span>VS 3분기 이익률 5% 이상</span></li><li><time>2027-06</time><span>르노 외 통합 콕핏 수주, 라이다 수주 고객 공개</span></li><li><time>2027-12</time><span>DRIVE Hyperion 기반 ADAS 수주</span></li></ol>
+  <dl class="sdl"><div><dt>판정 시점</dt><dd>2027-12-31</dd></div><div><dt>판정 방법</dt><dd>세 가지 중 두 가지 이상 충족 시 적중: (1) 고객명 공개 통합 콕핏·SDV 수주 2곳 이상(르노 포함) (2) ADAS 또는 라이다 수주 고객명 공개 (3) VS 2027년 연간 영업이익률 6% 이상</dd></div>
+  <div><dt>전제</dt><dd>전기차 수요가 더 꺾이지 않을 경우</dd></div><div><dt>근거</dt><dd><a class="rid" href="#L3-E-006" title="LG전자가 르노그룹의 &#x27;유럽 첫 상용 SDV&#x27; New Trafic E-Tech Electric에 계기판과 인포테인먼트를 하나로 통합 제어하는 콕핏 솔루션을 공급한다고 발표했다. 규모·물량은 비공개다.">L3-E-006</a><a class="rid" href="#L3-M-002" title="LG전자 VS사업본부의 2026년 1분기 영업이익률은 6.9%로 출범 후 처음 6%대에 올랐다. 보쉬 모빌리티 부문(1.8%)의 3배를 넘고 콘티넨탈(3.9%)보다 높다.">L3-M-002</a><a class="rid" href="#L3-E-004" title="LG와 NVIDIA가 M.A.P. 협력을 발표했다. 모빌리티에서는 LG전자가 인포테인먼트 역량에 NVIDIA DRIVE Hyperion을 결합해 차세대 ADAS를 개발하고, LG이노텍이 DRIVE Hyperion용 통신·센싱·조명 부품 개발을 넓힌다.">L3-E-004</a></dd></div></dl></article><article class="scen pes" id="L3-F-102"><header><span class="sk">비관 · Pessimistic</span><code>L3-F-102</code></header>
+  <p class="sstmt">2027년 말까지 통합 수주는 르노 한 건에 머물고, AI 캐빈·ADAS·라이다는 콘셉트와 개발 단계에 남는다. 전기차 수요 정체로 매출이 정체되고, 완성차의 자체 OS 강화로 LG의 역할이 부품 공급사로 좁아진다.</p><ol class="ms"><li><time>2027-06</time><span>추가 통합 수주 미발표</span></li><li><time>2027-06</time><span>라이다·배터리 SW 고객 미공개</span></li><li><time>2027-12</time><span>VS 매출 정체</span></li></ol>
+  <dl class="sdl"><div><dt>판정 시점</dt><dd>2027-12-31</dd></div><div><dt>판정 방법</dt><dd>낙관 시나리오의 판정 조건 세 가지 중 하나 이하만 충족 시 적중</dd></div>
+  <div><dt>전제</dt><dd>없음</dd></div><div><dt>근거</dt><dd><a class="rid" href="#L3-M-001" title="LG전자 VS(전장)사업본부의 2026년 2분기 매출은 3조 259억 원(+6.2%), 영업이익은 1,912억 원으로 2분기 기준 최대였다. 영업이익률은 6.3%다. 회사는 전기차 수요 정체로 완성차 수요 회복이 제한적이지만 수주잔고를 바탕으로 매출 성장을 이어가겠다고 밝혔다.">L3-M-001</a><a class="rid" href="#L3-M-004" title="LG이노텍은 2030년 자율주행 센싱 매출 약 2조 원, 모빌리티솔루션 전체 약 5조 원을 목표로 한다. Aeva와 함께 개발하는 초슬림·초장거리 라이다 모듈은 2028년 글로벌 완성차 탑재가 목표이며, 고객명은 공개되지 않았다.">L3-M-004</a><a class="rid" href="#L3-M-006" title="LG에너지솔루션은 GM 주도의 차량 소프트웨어 마켓 SDVerse에 배터리 기업 최초로 합류해 배터리 SW 5종(플랫폼 SW, 안전 진단 보정, 셀 상태 진단, 수명 시뮬레이터, 열화 저감)을 올렸다.">L3-M-006</a></dd></div></dl></article></div>
+    <h3 class="subhead">세부 판정 근거</h3>
+    <p class="lead muted">각 세부 전망이 적중하거나 빗나갔을 때 어느 시나리오 쪽 신호인지 표시했다. 확인 시점이 오면 확인 방법대로 판정한다.</p>
+    <div class="tablewrap"><table><thead><tr><th>세부 전망</th><th>확인 시점</th><th>적중 시</th><th>빗나갈 시</th><th>상태</th><th>근거</th></tr></thead><tbody><tr id="L3-F-001"><td class="stmt">LG전자 VS사업본부의 2026년 3분기 매출은 전년보다 늘고, 영업이익률은 5% 이상일 것이다.<small>확인 방법: LG전자 2026년 3분기 실적 확인</small></td>
+  <td class="asof">2026-10-31</td><td><span class="side opt">낙관</span></td><td><span class="side pes">비관</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#L3-M-001" title="LG전자 VS(전장)사업본부의 2026년 2분기 매출은 3조 259억 원(+6.2%), 영업이익은 1,912억 원으로 2분기 기준 최대였다. 영업이익률은 6.3%다. 회사는 전기차 수요 정체로 완성차 수요 회복이 제한적이지만 수주잔고를 바탕으로 매출 성장을 이어가겠다고 밝혔다.">L3-M-001</a><a class="rid" href="#L3-M-002" title="LG전자 VS사업본부의 2026년 1분기 영업이익률은 6.9%로 출범 후 처음 6%대에 올랐다. 보쉬 모빌리티 부문(1.8%)의 3배를 넘고 콘티넨탈(3.9%)보다 높다.">L3-M-002</a></td></tr><tr id="L3-F-006"><td class="stmt">LG디스플레이의 2026년 차량용 OLED 점유율은 15% 이상을 유지할 것이다.<small>확인 방법: Omdia·UBI리서치 등 2026년 차량용 OLED 점유율 확인</small></td>
+  <td class="asof">2027-04-30</td><td><span class="side opt">낙관</span></td><td><span class="side pes">비관</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#L3-M-005" title="LG디스플레이는 2025년 글로벌 차량용 OLED 매출 점유율 15.9%로 2위였다(1위 삼성디스플레이 70.2%). 글로벌 완성차 10여 곳에 OLED 패널을 공급한다.">L3-M-005</a></td></tr><tr id="L3-F-002"><td class="stmt">LG전자는 2027년 6월 말까지 르노 외 완성차의 통합 콕핏·SDV 수주를 고객명을 밝혀 발표할 것이다.<small>확인 방법: LG전자 공식 발표 또는 주요 언론 보도 확인</small></td>
+  <td class="asof">2027-06-30</td><td><span class="side opt">낙관</span></td><td><span class="side pes">비관</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#L3-E-006" title="LG전자가 르노그룹의 &#x27;유럽 첫 상용 SDV&#x27; New Trafic E-Tech Electric에 계기판과 인포테인먼트를 하나로 통합 제어하는 콕핏 솔루션을 공급한다고 발표했다. 규모·물량은 비공개다.">L3-E-006</a></td></tr><tr id="L3-F-004"><td class="stmt">LG이노텍은 2027년 6월 말까지 라이다 또는 AD/ADAS 센싱 수주를 고객명을 밝혀 발표할 것이다.<small>확인 방법: LG이노텍 공식 발표 확인</small></td>
+  <td class="asof">2027-06-30</td><td><span class="side opt">낙관</span></td><td><span class="muted">—</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#L3-M-004" title="LG이노텍은 2030년 자율주행 센싱 매출 약 2조 원, 모빌리티솔루션 전체 약 5조 원을 목표로 한다. Aeva와 함께 개발하는 초슬림·초장거리 라이다 모듈은 2028년 글로벌 완성차 탑재가 목표이며, 고객명은 공개되지 않았다.">L3-M-004</a><a class="rid" href="#L3-E-002" title="LG이노텍이 CES 2026에서 자율주행 부품 16종과 전기차 솔루션 15종(Aeva 공동 라이다, 5G NTN 모듈, 800V 무선 BMS 등)을 공개했다. 고객·수주는 밝히지 않았다.">L3-E-002</a></td></tr><tr id="L3-F-005"><td class="stmt">LG에너지솔루션은 2027년 6월 말까지 배터리 SW(BMS·BMTS·SDVerse 상품)의 완성차 고객을 공개할 것이다.<small>확인 방법: LG에너지솔루션 공식 발표 확인</small></td>
+  <td class="asof">2027-06-30</td><td><span class="side opt">낙관</span></td><td><span class="muted">—</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#L3-M-006" title="LG에너지솔루션은 GM 주도의 차량 소프트웨어 마켓 SDVerse에 배터리 기업 최초로 합류해 배터리 SW 5종(플랫폼 SW, 안전 진단 보정, 셀 상태 진단, 수명 시뮬레이터, 열화 저감)을 올렸다.">L3-M-006</a></td></tr><tr id="L3-F-003"><td class="stmt">LG전자는 2027년 말까지 DRIVE Hyperion 기반 ADAS 수주를 고객명을 밝혀 발표할 것이다.<small>확인 방법: LG전자 공식 발표 확인</small></td>
+  <td class="asof">2027-12-31</td><td><span class="side opt">낙관</span></td><td><span class="muted">—</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#L3-E-004" title="LG와 NVIDIA가 M.A.P. 협력을 발표했다. 모빌리티에서는 LG전자가 인포테인먼트 역량에 NVIDIA DRIVE Hyperion을 결합해 차세대 ADAS를 개발하고, LG이노텍이 DRIVE Hyperion용 통신·센싱·조명 부품 개발을 넓힌다.">L3-E-004</a></td></tr></tbody></table></div></section>
+  <section><h2>제품군별 공급 단계 <small>기존 강점과 AI 신영역 · 수익 수치</small></h2><p class="lead">제품군마다 콘셉트 → 수주(고객 비공개) → 수주(고객·차종 공개) → 양산 적용 중 어디에 있는지 판정했다. 오른쪽 표시는 그 제품군이 AI 이전부터의 강점인지, AI로 새로 여는 영역인지다.</p>
+    <div class="ladder mapgrid auto"><div class="rung"><div class="stage"><b>텔레매틱스 (LG전자)</b></div>
+  <div class="lvcell"><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="lv">양산 적용</span></span></div>
+  <div class="lvcell"><span class="own platform">기존 강점</span></div>
+  <p class="why">점유율 23%, 1위 <a class="rid" href="#L3-M-003" title="LG전자는 2025년 4분기 글로벌 텔레매틱스 시장 점유율 23%로 1위였다.">L3-M-003</a></p></div><div class="rung"><div class="stage"><b>차량용 OLED (LG디스플레이)</b></div>
+  <div class="lvcell"><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="lv">양산 적용</span></span></div>
+  <div class="lvcell"><span class="own platform">기존 강점</span></div>
+  <p class="why">점유율 15.9%(2위), 완성차 10여 곳 공급, 고객명 비공개 <a class="rid" href="#L3-M-005" title="LG디스플레이는 2025년 글로벌 차량용 OLED 매출 점유율 15.9%로 2위였다(1위 삼성디스플레이 70.2%). 글로벌 완성차 10여 곳에 OLED 패널을 공급한다.">L3-M-005</a></p></div><div class="rung"><div class="stage"><b>통합 콕핏·SDV (LG전자)</b></div>
+  <div class="lvcell"><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip"></span><span class="lv">수주(고객·차종 공개)</span></span></div>
+  <div class="lvcell"><span class="own brand">AI 신영역</span></div>
+  <p class="why">르노 New Trafic E-Tech Electric, 규모 비공개 <a class="rid" href="#L3-E-006" title="LG전자가 르노그룹의 &#x27;유럽 첫 상용 SDV&#x27; New Trafic E-Tech Electric에 계기판과 인포테인먼트를 하나로 통합 제어하는 콕핏 솔루션을 공급한다고 발표했다. 규모·물량은 비공개다.">L3-E-006</a></p></div><div class="rung"><div class="stage"><b>AI 캐빈 (LG전자)</b></div>
+  <div class="lvcell"><span class="pips"><span class="pip on"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="lv">콘셉트</span></span></div>
+  <div class="lvcell"><span class="own brand">AI 신영역</span></div>
+  <p class="why">온디바이스 AI 캐빈 플랫폼, 인캐빈 센싱 양산 논의 중 <a class="rid" href="#L3-E-001" title="LG전자가 CES 2026용 AI 차량 솔루션(투명 OLED 앞유리, 시선 분석 비전 AI, 뒷좌석 AI 큐레이션)과 완성차용 온디바이스 &#x27;AI 캐빈 플랫폼&#x27;을 발표했다. 인캐빈 센싱 등은 글로벌 완성차와 양산을 논의 중이며 몇 년 안에 상용화하겠다고 했다.">L3-E-001</a></p></div><div class="rung"><div class="stage"><b>ADAS (LG전자)</b></div>
+  <div class="lvcell"><span class="pips"><span class="pip on"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="lv">콘셉트</span></span></div>
+  <div class="lvcell"><span class="own brand">AI 신영역</span></div>
+  <p class="why">DRIVE Hyperion 기반 개발 착수 <a class="rid" href="#L3-E-004" title="LG와 NVIDIA가 M.A.P. 협력을 발표했다. 모빌리티에서는 LG전자가 인포테인먼트 역량에 NVIDIA DRIVE Hyperion을 결합해 차세대 ADAS를 개발하고, LG이노텍이 DRIVE Hyperion용 통신·센싱·조명 부품 개발을 넓힌다.">L3-E-004</a></p></div><div class="rung"><div class="stage"><b>라이다·센싱 (LG이노텍)</b></div>
+  <div class="lvcell"><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip"></span><span class="pip"></span><span class="lv">수주(고객 비공개)</span></span></div>
+  <div class="lvcell"><span class="own brand">AI 신영역</span></div>
+  <p class="why">Aeva 공동 라이다, 2028년 &#x27;글로벌 완성차&#x27; 탑재 목표 <a class="rid" href="#L3-M-004" title="LG이노텍은 2030년 자율주행 센싱 매출 약 2조 원, 모빌리티솔루션 전체 약 5조 원을 목표로 한다. Aeva와 함께 개발하는 초슬림·초장거리 라이다 모듈은 2028년 글로벌 완성차 탑재가 목표이며, 고객명은 공개되지 않았다.">L3-M-004</a><a class="rid" href="#L3-E-002" title="LG이노텍이 CES 2026에서 자율주행 부품 16종과 전기차 솔루션 15종(Aeva 공동 라이다, 5G NTN 모듈, 800V 무선 BMS 등)을 공개했다. 고객·수주는 밝히지 않았다.">L3-E-002</a></p></div><div class="rung"><div class="stage"><b>배터리 SW (LG에너지솔루션)</b></div>
+  <div class="lvcell"><span class="pips"><span class="pip on"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="lv">콘셉트</span></span></div>
+  <div class="lvcell"><span class="own brand">AI 신영역</span></div>
+  <p class="why">SDVerse에 5종 등록, 고객·수익 모델 미공개 <a class="rid" href="#L3-M-006" title="LG에너지솔루션은 GM 주도의 차량 소프트웨어 마켓 SDVerse에 배터리 기업 최초로 합류해 배터리 SW 5종(플랫폼 SW, 안전 진단 보정, 셀 상태 진단, 수명 시뮬레이터, 열화 저감)을 올렸다.">L3-M-006</a></p></div></div><p class="gapnote">판정: 양산 단계는 기존 강점(텔레매틱스·OLED), AI 신영역 중 고객·차종이 공개된 것은 르노 통합 콕핏 한 건이다 (R1 기준).</p>
+    <h3 class="subhead">수익 수치</h3><p class="lead">수익을 판단할 수 있는 수치를 정리했다. 수주잔고는 회사가 금액을 공개하지 않아 다음 회차에 확인한다.</p>
+    <div class="tablewrap"><table><thead><tr><th>항목</th><th>값</th><th>출처</th><th>시점</th><th>종류</th><th>기록</th></tr></thead><tbody><tr><td class="tgt">VS 2분기 매출</td><td>3조 259억 원 (+6.2%)</td><td>LG전자 IR</td><td>2026-Q2</td><td>실적</td><td><a class="rid" href="#L3-M-001" title="LG전자 VS(전장)사업본부의 2026년 2분기 매출은 3조 259억 원(+6.2%), 영업이익은 1,912억 원으로 2분기 기준 최대였다. 영업이익률은 6.3%다. 회사는 전기차 수요 정체로 완성차 수요 회복이 제한적이지만 수주잔고를 바탕으로 매출 성장을 이어가겠다고 밝혔다.">L3-M-001</a></td></tr><tr><td class="tgt">VS 2분기 영업이익률</td><td>6.3% (영업이익 1,912억 원, 2분기 최대)</td><td>LG전자 IR</td><td>2026-Q2</td><td>실적</td><td><a class="rid" href="#L3-M-001" title="LG전자 VS(전장)사업본부의 2026년 2분기 매출은 3조 259억 원(+6.2%), 영업이익은 1,912억 원으로 2분기 기준 최대였다. 영업이익률은 6.3%다. 회사는 전기차 수요 정체로 완성차 수요 회복이 제한적이지만 수주잔고를 바탕으로 매출 성장을 이어가겠다고 밝혔다.">L3-M-001</a></td></tr><tr><td class="tgt">VS 1분기 영업이익률 vs Tier 1</td><td>6.9% vs 보쉬 1.8%·콘티넨탈 3.9%</td><td>분기보고서·언론</td><td>2026-Q1</td><td>실적</td><td><a class="rid" href="#L3-M-002" title="LG전자 VS사업본부의 2026년 1분기 영업이익률은 6.9%로 출범 후 처음 6%대에 올랐다. 보쉬 모빌리티 부문(1.8%)의 3배를 넘고 콘티넨탈(3.9%)보다 높다.">L3-M-002</a></td></tr><tr><td class="tgt">LG이노텍 센싱 매출</td><td>2030년 약 2조 원 (모빌리티 전체 약 5조 원)</td><td>LG이노텍</td><td>2026-04</td><td>목표</td><td><a class="rid" href="#L3-M-004" title="LG이노텍은 2030년 자율주행 센싱 매출 약 2조 원, 모빌리티솔루션 전체 약 5조 원을 목표로 한다. Aeva와 함께 개발하는 초슬림·초장거리 라이다 모듈은 2028년 글로벌 완성차 탑재가 목표이며, 고객명은 공개되지 않았다.">L3-M-004</a></td></tr></tbody></table></div></section>
+  <section><h2>핵심 지표 <small>추적 지표 6/8개 값 확보</small></h2><p class="lead">추적 지표 8개 중 6개의 값을 원문으로 확인했다. T4 통합 콕핏·SDV 수주와 T8 AI 기능 양산은 수치 대신 사건으로 추적한다(현재 르노 1건, AI 기능 양산 0건). 2030 목표치와 고객 비공개 항목에는 주의 표시를 달았다.</p>
+    <div class="tablewrap"><table><thead><tr><th>추적 지표</th><th>내용 · 출처</th><th style="text-align:right">현재값</th><th>기준 시점</th><th>기록</th></tr></thead><tbody><tr id="L3-M-001"><td class="ind">L3-T1<small>VS 매출·이익</small></td>
+  <td class="stmt">LG전자 VS(전장)사업본부의 2026년 2분기 매출은 3조 259억 원(+6.2%), 영업이익은 1,912억 원으로 2분기 기준 최대였다. 영업이익률은 6.3%다. 회사는 전기차 수요 정체로 완성차 수요 회복이 제한적이지만 수주잔고를 바탕으로 매출 성장을 이어가겠다고 밝혔다. <span class="warn">충돌·주의</span><div class="src"><a href="https://www.lge.co.kr/kr/upload/admin/investment/result/2026_Q2_Earnings%20Release%20of%20LGE_KR.pdf" target="_blank" rel="noopener">LG전자 2분기 실적 자료 (IR)</a><span class="grade gA">A</span></div></td>
+  <td class="num">30259 억 원 (VS 2분기 매출)</td><td class="asof">2026-Q2<small>GLOBAL</small></td><td class="idc"><code>L3-M-001</code></td></tr><tr id="L3-M-002"><td class="ind">L3-T2<small>글로벌 Tier 1 대비 수익성</small></td>
+  <td class="stmt">LG전자 VS사업본부의 2026년 1분기 영업이익률은 6.9%로 출범 후 처음 6%대에 올랐다. 보쉬 모빌리티 부문(1.8%)의 3배를 넘고 콘티넨탈(3.9%)보다 높다. <span class="warn">충돌·주의</span><div class="src"><a href="https://www.mt.co.kr/industry/2026/05/26/2026052614464720033" target="_blank" rel="noopener">머니투데이 (분기보고서·TechInsights 인용)</a><span class="grade gB">B</span></div></td>
+  <td class="num">6.9% (VS 1분기 영업이익률)</td><td class="asof">2026-Q1<small>GLOBAL</small></td><td class="idc"><code>L3-M-002</code></td></tr><tr id="L3-M-003"><td class="ind">L3-T3<small>텔레매틱스·인포테인먼트 점유율</small></td>
+  <td class="stmt">LG전자는 2025년 4분기 글로벌 텔레매틱스 시장 점유율 23%로 1위였다. <div class="src"><a href="https://www.mt.co.kr/industry/2026/05/26/2026052614464720033" target="_blank" rel="noopener">머니투데이 (분기보고서·TechInsights 인용)</a><span class="grade gB">B</span></div></td>
+  <td class="num">23% (텔레매틱스 점유율)</td><td class="asof">2025-Q4<small>GLOBAL</small></td><td class="idc"><code>L3-M-003</code></td></tr><tr id="L3-M-004"><td class="ind">L3-T5<small>센싱 사업</small></td>
+  <td class="stmt">LG이노텍은 2030년 자율주행 센싱 매출 약 2조 원, 모빌리티솔루션 전체 약 5조 원을 목표로 한다. Aeva와 함께 개발하는 초슬림·초장거리 라이다 모듈은 2028년 글로벌 완성차 탑재가 목표이며, 고객명은 공개되지 않았다. <span class="warn">충돌·주의</span><div class="src"><a href="https://v.daum.net/v/20260413060304293" target="_blank" rel="noopener">쿠키뉴스</a><span class="grade gB">B</span></div></td>
+  <td class="num">2 조 원 (2030 센싱 매출 목표)</td><td class="asof">2026-04<small>GLOBAL</small></td><td class="idc"><code>L3-M-004</code></td></tr><tr id="L3-M-005"><td class="ind">L3-T6<small>차량용 디스플레이</small></td>
+  <td class="stmt">LG디스플레이는 2025년 글로벌 차량용 OLED 매출 점유율 15.9%로 2위였다(1위 삼성디스플레이 70.2%). 글로벌 완성차 10여 곳에 OLED 패널을 공급한다. <span class="warn">충돌·주의</span><div class="src"><a href="https://www.mt.co.kr/article/2026082613581788601" target="_blank" rel="noopener">머니투데이</a><span class="grade gB">B</span></div></td>
+  <td class="num">15.9% (차량용 OLED 점유율)</td><td class="asof">2025<small>GLOBAL</small></td><td class="idc"><code>L3-M-005</code></td></tr><tr id="L3-M-006"><td class="ind">L3-T7<small>배터리 SW</small></td>
+  <td class="stmt">LG에너지솔루션은 GM 주도의 차량 소프트웨어 마켓 SDVerse에 배터리 기업 최초로 합류해 배터리 SW 5종(플랫폼 SW, 안전 진단 보정, 셀 상태 진단, 수명 시뮬레이터, 열화 저감)을 올렸다. <span class="warn">충돌·주의</span><div class="src"><a href="https://www.heraldk.com/article/2026040215280143224" target="_blank" rel="noopener">헤럴드경제 (LG에너지솔루션 발표)</a><span class="grade gB">B</span></div></td>
+  <td class="num">5 종 (등록 배터리 SW)</td><td class="asof">2026-04<small>GLOBAL</small></td><td class="idc"><code>L3-M-006</code></td></tr></tbody></table></div></section>
+  <section><h2>미확인·경고 <small>본문 판단에서 빼거나 주의해서 쓴 기록</small></h2>
+    <div class="tablewrap"><table><thead><tr><th>기록</th><th>구분</th><th>진술</th><th>사유</th></tr></thead><tbody><tr><td><code>L3-M-001</code></td><td><span class="wk">주의</span></td><td>LG전자 VS(전장)사업본부의 2026년 2분기 매출은 3조 259억 원(+6.2%), 영업이익은 1,912억 원으로 2분기 기준 최대였다. 영업이익률은 6.3%다. 회사는 전기차 수요 정체로 완성차 수요 회복이 제한적이지만 수주잔고를 바탕으로 매출 성장을 이어가겠다고 밝혔다.</td><td class="muted">수주잔고 금액은 공개되지 않음</td></tr><tr><td><code>L3-M-002</code></td><td><span class="wk">주의</span></td><td>LG전자 VS사업본부의 2026년 1분기 영업이익률은 6.9%로 출범 후 처음 6%대에 올랐다. 보쉬 모빌리티 부문(1.8%)의 3배를 넘고 콘티넨탈(3.9%)보다 높다.</td><td class="muted">경쟁사 수치는 전년 연간 기준</td></tr><tr><td><code>L3-M-004</code></td><td><span class="wk">주의</span></td><td>LG이노텍은 2030년 자율주행 센싱 매출 약 2조 원, 모빌리티솔루션 전체 약 5조 원을 목표로 한다. Aeva와 함께 개발하는 초슬림·초장거리 라이다 모듈은 2028년 글로벌 완성차 탑재가 목표이며, 고객명은 공개되지 않았다.</td><td class="muted">회사 목표 — 실적 아님; 라이다 고객명 비공개</td></tr><tr><td><code>L3-M-005</code></td><td><span class="wk">주의</span></td><td>LG디스플레이는 2025년 글로벌 차량용 OLED 매출 점유율 15.9%로 2위였다(1위 삼성디스플레이 70.2%). 글로벌 완성차 10여 곳에 OLED 패널을 공급한다.</td><td class="muted">고객사 이름 비공개</td></tr><tr><td><code>L3-M-006</code></td><td><span class="wk">주의</span></td><td>LG에너지솔루션은 GM 주도의 차량 소프트웨어 마켓 SDVerse에 배터리 기업 최초로 합류해 배터리 SW 5종(플랫폼 SW, 안전 진단 보정, 셀 상태 진단, 수명 시뮬레이터, 열화 저감)을 올렸다.</td><td class="muted">고객·수익 모델 미공개</td></tr></tbody></table></div></section>
+  <footer>
+    <span>이 글은 4유형 기록 27건(지표 6 · 사건 6 · 해석 7 · 전망 8)에서 생성했습니다. 문장 옆 번호를 누르면 해당 기록으로 이동합니다.</span>
+        <span>출처 등급 A = 1차 조사·공식 발표, B = 주요 언론·2차 보도, C = 블로그·출처 불명(원문 확인 전까지 판단에 쓰지 않음).</span>
+  </footer>
+</main>

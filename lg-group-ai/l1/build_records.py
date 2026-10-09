@@ -18,6 +18,7 @@ SRC = {
  "nvda_map": {"url": "https://technode.global/prnasia/lg-teams-with-nvidia-to-shape-the-future-with-m-a-p-mobility-ai-infra-physical-ai/", "publisher": "PR Newswire (LG 발표)", "date": "2026-06-08", "grade": "A"},
  "ms_plan": {"url": "https://www.datacenterdynamics.com/en/news/microsoft-to-use-lg-electronics-cooling-infrastructure-in-some-ai-data-centers", "publisher": "DatacenterDynamics", "date": "2025-04-21", "grade": "B"},
  "ms_show": {"url": "https://www.koreaherald.com/article/10882162", "publisher": "Korea Herald", "date": "2026-09-22", "grade": "B"},
+ "lge_ir": {"url": "https://www.lge.co.kr/kr/upload/admin/investment/result/2026_Q2_Earnings%20Release%20of%20LGE_KR.pdf", "publisher": "LG전자 2분기 실적 자료 (IR)", "date": "2026-07-30", "grade": "A"},
  "vertiv": {"url": "https://www.marketbeat.com/instant-alerts/vertiv-q2-earnings-call-highlights-2026-08-01/", "publisher": "MarketBeat (Vertiv 2분기 실적)", "date": "2026-08-01", "grade": "B"},
 }
 def src(*keys): return [dict(SRC[k], key=k) for k in keys]
@@ -80,10 +81,13 @@ add(id="L1-E-009", type="사건", importance=2, statement="LG CNS 반기보고�
 add(id="L1-E-010", type="사건", importance=3, statement="LG전자가 북미 Air Control Concept과 총 5GW 규모의 AI 데이터센터 칠러 장기 공급 계약을 맺었다. 물량이 보장되는 방식이며, CDU로의 품목 확대를 협의 중이다.",
     date="2026-10-05", actor="LG전자", sources=src("lge_air"), verified=True)
 
+add(id="L1-E-011", type="사건", importance=3, statement="LG전자가 2분기 실적 자료에서 NVIDIA향 CDU(냉각수 분배장치) 일부 모델의 인증을 마쳤다고 밝혔다.",
+    date="2026-07-30", actor="LG전자", sources=src("lge_ir"), verified=True)
+
 # ---------- 해석 (I) ----------
 add(id="L1-I-001", type="해석", importance=3, target="냉각", direction="강화",
-    statement="냉각은 '계약(고객 공개)' 단계에 들어섰다. 북미 Air Control Concept과의 5GW 장기 공급 계약, 상반기 수주 6,000억 원 이상이 확인됐다. 다만 AI 데이터센터 냉각 매출은 아직 따로 공개되지 않았고, CDU는 공급망 진입 직전이다.",
-    basis=["L1-M-001", "L1-E-010", "L1-M-002", "L1-E-008"])
+    statement="냉각은 '계약(고객 공개)' 단계에 들어섰다. 북미 Air Control Concept과의 5GW 장기 공급 계약, 상반기 수주 6,000억 원 이상이 확인됐다. 다만 AI 데이터센터 냉각 매출은 아직 따로 공개되지 않았고, CDU는 NVIDIA향 일부 모델 인증을 마쳤지만 공급 계약은 공개되지 않았다.",
+    basis=["L1-M-001", "L1-E-010", "L1-M-002", "L1-E-008", "L1-E-011"])
 add(id="L1-I-002", type="해석", importance=3, target="전력·ESS", direction="강화",
     statement="전력·ESS는 '계약' 단계지만 고객이 공개되지 않았다. 상반기 ESS 수주 3조 원에 하이퍼스케일러 AI 데이터센터 프로젝트가 포함됐고, ESS 매출은 4.6배로 늘었다. AI 데이터센터 전용인 800V DC 전력은 NVIDIA와 개발 단계다.",
     basis=["L1-M-003", "L1-M-004", "L1-E-007"])
