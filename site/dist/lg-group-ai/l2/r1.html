@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>L2 LG 피지컬 AI R1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;800&display=swap">
+<style>
+/* Layout: 연구 노트 한 단 — 답 → 서술형 해석 → 근거 표. 기록 번호가 본문의 각주 역할 */
+:root {
+  --paper: #f6f7f9; --ink: #16202b; --muted: #5d6875; --rule: #d6dbe2; --panel: #ffffff;
+  --accent: #1f5f8b; --accent-soft: #e2edf5; --amber: #b4690e; --amber-soft: #f7ead7;
+  --up: #1f7a4d; --down: #b3412f; --flat: #6a7380; --opt: #1f7a4d; --opt-soft: #e1f1e8; --pes: #a3402f; --pes-soft: #f6e3df;
+  --display: "Noto Serif KR", "Apple SD Gothic Neo", serif;
+  --body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #11161c; --ink: #e6ebf1; --muted: #9aa5b1; --rule: #2b333d; --panel: #171e26;
+  --accent: #7fb6dc; --accent-soft: #1b2c3a; --amber: #e2a457; --amber-soft: #33271a;
+  --up: #5fc493; --down: #ec8a78; --flat: #98a2ae; --opt: #6fcf9d; --opt-soft: #17291f; --pes: #ef9a88; --pes-soft: #2f1c18; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --paper: #11161c; --ink: #e6ebf1; --muted: #9aa5b1; --rule: #2b333d; --panel: #171e26;
+  --accent: #7fb6dc; --accent-soft: #1b2c3a; --amber: #e2a457; --amber-soft: #33271a;
+  --up: #5fc493; --down: #ec8a78; --flat: #98a2ae; --opt: #6fcf9d; --opt-soft: #17291f; --pes: #ef9a88; --pes-soft: #2f1c18; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--paper); color: var(--ink); font: 400 16px/1.7 var(--body); padding: 0 20px; }
+main { max-width: 980px; margin: 0 auto; padding-block: 40px 72px; display: grid; gap: 60px; }
+.narrow { max-width: 70ch; }
+a { color: var(--accent); }
+code, .rid { font: 500 12px/1 var(--mono); }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+.eyebrow { font: 500 12px/1.4 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); display: flex; gap: 14px; flex-wrap: wrap; }
+h1 { font: 800 clamp(26px, 4.4vw, 40px)/1.25 var(--display); margin-top: 14px; }
+.question { margin: 16px 0 0; color: var(--muted); font-size: 15px; border-left: 2px solid var(--rule); padding-left: 14px; }
+h2 { font: 600 22px/1.3 var(--display); display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+h2 small { font: 400 13px var(--body); color: var(--muted); }
+section { display: grid; gap: 18px; min-width: 0; }
+.lead { margin: 0; max-width: 70ch; }
+.rid { display: inline-block; padding: 3px 5px; margin: 2px 2px 0 0; border-radius: 3px; background: var(--accent-soft); color: var(--accent); text-decoration: none; vertical-align: 1px; }
+.rid:hover, .rid:focus-visible { outline: 1px solid var(--accent); }
+/* 한 줄 답 */
+.answer { font: 600 clamp(20px, 2.8vw, 26px)/1.55 var(--display); margin: 0; }
+.answer-box { display: grid; gap: 20px; }
+.arows { margin: 0; border-top: 1px solid var(--ink); }
+.arow { display: grid; grid-template-columns: 170px 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+.arow dt { font-weight: 600; }
+.arow dd { margin: 0; min-width: 0; }
+/* 서술형 해석 */
+.narrative { display: grid; gap: 14px; max-width: 70ch; }
+.narrative p { margin: 0; }
+/* 표 */
+.tablewrap { overflow-x: auto; border-top: 1px solid var(--ink); }
+table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 14px; }
+th { text-align: left; font: 500 11px var(--mono); letter-spacing: .05em; color: var(--muted); padding: 10px 8px; border-bottom: 1px solid var(--rule); }
+td { padding: 12px 8px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+td small { display: block; color: var(--muted); font-size: 12px; margin-top: 3px; }
+.num { font: 500 15px var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; }
+.muted { color: var(--muted); }
+.ind { font: 500 12px var(--mono); width: 150px; }
+.ind small { font-family: var(--body); }
+.tgt { font-weight: 600; width: 150px; }
+.asof { font: 400 13px var(--mono); white-space: nowrap; }
+.idc code { color: var(--muted); }
+.src { font-size: 12px; color: var(--muted); margin-top: 6px; }
+.src a { color: var(--muted); }
+.grade { font: 500 10px var(--mono); margin-left: 4px; padding: 1px 4px; border: 1px solid currentColor; border-radius: 2px; }
+.gC { color: var(--amber); }
+.warn, .wk { font: 500 11px var(--mono); color: var(--amber); background: var(--amber-soft); padding: 2px 6px; border-radius: 2px; white-space: nowrap; }
+.dir { font: 500 11px var(--mono); padding: 2px 7px; border-radius: 2px; color: var(--panel); white-space: nowrap; }
+.dir.up { background: var(--up); } .dir.down { background: var(--down); } .dir.flat { background: var(--flat); }
+.fstat { font: 500 11px var(--mono); border: 1px solid var(--accent); color: var(--accent); padding: 2px 6px; border-radius: 2px; white-space: nowrap; }
+/* 사건 */
+.timeline { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
+.timeline li { display: grid; grid-template-columns: 110px 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+.timeline time { font: 500 13px var(--mono); color: var(--muted); padding-top: 2px; }
+.timeline li > div { min-width: 0; }
+/* 시나리오 */
+.scens { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.scen { border-top: 3px solid var(--sc); background: var(--panel); padding: 18px 18px 14px; display: grid; gap: 14px; align-content: start; }
+.scen.opt { --sc: var(--opt); --scs: var(--opt-soft); }
+.scen.pes { --sc: var(--pes); --scs: var(--pes-soft); }
+.scen header { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.sk { font: 600 13px var(--mono); color: var(--sc); letter-spacing: .03em; }
+.scen header code { color: var(--muted); }
+.sstmt { margin: 0; font-size: 15px; }
+.ms { list-style: none; margin: 0; padding: 0 0 0 12px; border-left: 2px solid var(--scs); display: grid; gap: 8px; }
+.ms li { display: grid; grid-template-columns: 70px 1fr; gap: 10px; font-size: 14px; }
+.ms time { font: 500 12px var(--mono); color: var(--sc); padding-top: 2px; }
+.sdl { margin: 0; display: grid; gap: 6px; font-size: 13px; }
+.sdl div { display: grid; grid-template-columns: 70px 1fr; gap: 10px; }
+.sdl dt { color: var(--muted); }
+.sdl dd { margin: 0; min-width: 0; }
+.side { font: 500 11px var(--mono); padding: 2px 7px; border-radius: 2px; white-space: nowrap; margin-right: 4px; }
+.side.opt { color: var(--opt); background: var(--opt-soft); }
+.side.pes { color: var(--pes); background: var(--pes-soft); }
+.subhead { font: 600 15px var(--body); margin: 8px 0 0; }
+/* 사다리 */
+.ladder { border-top: 1px solid var(--ink); }
+.rung { display: grid; grid-template-columns: 150px 170px 170px 1fr; gap: 16px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+.rung[data-frontier="y"] { background: linear-gradient(90deg, var(--amber-soft), transparent 70%); }
+.stage b { display: block; font: 600 18px/1.2 var(--display); }
+.stage span { font: 400 12px var(--mono); color: var(--muted); }
+.region { display: block; font: 500 11px var(--mono); color: var(--muted); letter-spacing: .04em; margin-bottom: 4px; }
+.pips { display: flex; align-items: center; gap: 4px; }
+.pip { width: 16px; height: 8px; border: 1px solid var(--accent); border-radius: 1px; }
+.pip.on { background: var(--accent); }
+.lv { margin-left: 8px; font-size: 14px; font-weight: 500; }
+.why { margin: 0; font-size: 14px; color: var(--muted); min-width: 0; }
+.frontier-note { font-size: 13px; color: var(--amber); font-family: var(--mono); margin: 0; }
+footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 18px; display: grid; gap: 6px; }
+:target { background: var(--accent-soft); }
+@media (max-width: 760px) {
+  .rung { grid-template-columns: 1fr 1fr; }
+  .rung .stage, .rung .why { grid-column: 1 / -1; }
+  .scens { grid-template-columns: 1fr; }
+  .arow, .timeline li { grid-template-columns: 1fr; gap: 4px; }
+}
+
+/* 주도권 지도 (C2) */
+.own { font: 500 12px var(--mono); padding: 3px 8px; border-radius: 2px; white-space: nowrap; display: inline-block; }
+.own.brand { color: var(--up); background: var(--opt-soft); }
+.own.platform { color: var(--accent); background: var(--accent-soft); }
+.own.agent { color: var(--amber); background: var(--amber-soft); }
+.own.contest { color: var(--flat); border: 1px dashed var(--flat); }
+.mapgrid .rung { grid-template-columns: 130px 150px 150px 150px 1fr; }
+@media (max-width: 760px) { .mapgrid .rung { grid-template-columns: 1fr 1fr; } }
+/* 자율 수준 지도 (C4) */
+.mapgrid.auto .rung { grid-template-columns: 130px 220px 220px 1fr; }
+table.levels { min-width: 520px; }
+@media (max-width: 760px) { .mapgrid.auto .rung { grid-template-columns: 1fr; } }
+/* 역량 원장 (I1) */
+.mapgrid.ledger .rung { grid-template-columns: 200px 260px 1fr; }
+@media (max-width: 760px) { .mapgrid.ledger .rung { grid-template-columns: 1fr; } }
+
+/* I3 두 곡선 */
+.curves { display: grid; gap: 14px; margin: 8px 0 18px; }
+.curve { display: grid; grid-template-columns: 150px 1fr; gap: 12px; align-items: center; }
+.curve .cl { font: 600 13px var(--body); }
+.curve .cl small { display: block; font: 400 12px var(--mono); color: var(--muted); }
+.curve .bar { height: 26px; background: var(--accent-soft); border-radius: 2px; position: relative; }
+.curve .bar span { position: absolute; inset: 0 auto 0 0; display: flex; align-items: center; padding: 0 10px; font: 500 12px var(--mono); color: #fff; border-radius: 2px; white-space: nowrap; }
+.curve.inv .bar span { background: var(--accent); }
+.curve.rev .bar span { background: var(--up); }
+.gapnote { border-left: 3px solid var(--amber); padding: 6px 12px; background: var(--amber-soft); font-size: 14px; }
+.mapgrid.layers .rung { grid-template-columns: 150px 200px 110px 1fr; }
+@media (max-width: 720px) { .curve { grid-template-columns: 1fr; } .mapgrid.layers .rung { grid-template-columns: 1fr; } }
+
+/* S1 유입 저울 */
+.balance { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 8px 0 14px; }
+.balance .pan { border: 1px solid var(--rule); border-top: 3px solid var(--down); background: var(--panel); padding: 12px 16px; }
+.balance .pan.gain { border-top-color: var(--up); }
+.balance h4 { margin: 0 0 8px; font: 600 14px var(--body); }
+.balance ul { margin: 0; padding-left: 18px; font-size: 14px; line-height: 1.7; }
+@media (max-width: 720px) { .balance { grid-template-columns: 1fr; } }
+</style>
+<style>
+.sitebar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper); border-bottom: 1px solid var(--rule);
+  margin: 0 -20px; padding: 10px 20px; display: flex; gap: 14px; align-items: center; flex-wrap: wrap; font: 500 13px/1.4 var(--mono); }
+.sitebar a { color: var(--ink); text-decoration: none; }
+.sitebar a:hover, .sitebar a:focus-visible { text-decoration: underline; }
+.sitebar .crumb { color: var(--muted); }
+.sitebar .rounds { margin-left: auto; display: flex; gap: 8px; }
+.sitebar .rounds a[aria-current="page"] { color: var(--accent); }
+</style></head><body><nav class="sitebar" aria-label="사이트"><a href="../../index.html">AXblog</a><span class="crumb">/ LG Group AI / L2</span><span class="rounds"><a href="r1.html" aria-current=page>R1</a></span></nav><main>
+  <header class="narrow">
+    <div class="eyebrow"><span>LG Group AI</span><span>L2 · Physical AI / Smart Manufacturing</span><span>R1 기준 회차 · 2026-10-09</span></div>
+    <h1>LG의 피지컬 AI는 현장에서 어디까지 성과를 냈나</h1>
+    <p class="question">고정 질문 v1.0 — LG는 AI를 공장·물류·로봇·가전의 물리적 작동에 어떻게 적용하며, 실제 성능과 사업 성과는 어디까지 확인되는가?</p>
+  </header>
+  <section class="answer-box"><h2>한 줄 답</h2>
+    <p class="answer narrow">2026년 10월 현재 LG의 피지컬 AI가 사업 성과로 확인된 곳은 공장이다. LG전자 스마트팩토리 외부 수주가 2년 새 약 5,000억 원이 됐고, LG CNS 공장 운영 AI는 설비 10만 개 이상에 적용돼 한 배터리 공장에서 한 달 만에 합격품 비중 90% 이상을 냈다. 물류 휴머노이드는 컬리·LX판토스와의 외부 실증 단계이고, 가전에서는 홈 허브(씽큐 온)가 출시됐지만 홈 로봇 CLOiD는 아직 실험실 안이다. 공개된 성능 수치의 대부분은 자사 공장 측정이거나 회사가 기대하는 값이다. <a class="rid" href="#L2-I-001" title="공장 영역은 &#x27;상용 계약&#x27; 단계다. LG전자 스마트팩토리 외부 수주가 2년 새 약 5,000억 원이 됐고, 조직도 두 배 넘게 키웠다. 다만 연도별 매출과 고객 대부분은 공개되지 않았고, 공개된 성과 수치는 자사 공장 기준이다.">L2-I-001</a><a class="rid" href="#L2-I-002" title="공장 운영 AI는 외부 고객 성과가 숫자로 나온 유일한 영역이다. Factova Control은 설비 10만 개 이상에 적용됐고, 배터리 공장에서 한 달 만에 합격품 비중 90% 이상, 전자 공장에서 생산성 20% 향상을 보였다. 고객 이름은 공개되지 않았다.">L2-I-002</a><a class="rid" href="#L2-I-003" title="물류 로봇과 휴머노이드는 &#x27;외부 실증&#x27; 단계다. 컬리·LX판토스와 업무협약을 맺고 PhysicalWorks로 20곳 넘게 실증 중이지만, 상용 계약과 실측 성과는 아직 없다. 공개된 생산성·비용 수치는 회사가 기대하는 값이다.">L2-I-003</a><a class="rid" href="#L2-I-004" title="가전에서는 홈 허브가 상용 출시 단계, 홈 로봇은 내부 실증 단계다. 씽큐 온은 상황을 판단해 기기를 스스로 작동시키는 기능으로 출시됐고, CLOiD는 공개됐지만 현장 투입은 다음 해로 잡혔다.">L2-I-004</a><a class="rid" href="#L2-I-005" title="성능 수치의 대부분은 자사 공장 측정이거나 회사의 기대 효과다. 외부 고객 현장에서 측정된 수치는 Factova 사례(고객명 비공개) 정도이며, 로봇·휴머노이드의 실측 성과는 아직 공개되지 않았다.">L2-I-005</a></p><dl class="arows"><div class="arow"><dt>상용 계약·성과</dt><dd>공장. 스마트팩토리 외부 수주 약 5,000억 원(2년), Factova Control 설비 10만 개+·배터리 공장 합격품 90%+·전자 공장 생산성 +20%. <a class="rid" href="#L2-M-001" title="LG전자 스마트팩토리 솔루션 사업의 외부 수주는 2024년 전담 조직 신설 이후 2년 만에 약 5,000억 원 규모로 늘었다. 2030년 외부 매출을 조 단위로 키우는 것이 목표다.">L2-M-001</a><a class="rid" href="#L2-M-003" title="LG CNS의 공장 운영 AI &#x27;Factova Control&#x27;은 국내외 설비 10만 개 이상에 적용됐다. 한 배터리 공장에서는 도입 한 달 만에 합격품 비중이 90%를 넘고 불량 반품 비용이 약 70% 줄었으며, 한 전자 공장에서는 작업 생산성이 약 20% 올랐다.">L2-M-003</a></dd></div><div class="arow"><dt>외부 실증</dt><dd>물류 휴머노이드. 컬리 PoC, LX판토스 청라 물류센터(Dexmate 바퀴형 휴머노이드), PhysicalWorks 실증 고객 20곳+. <a class="rid" href="#L2-E-005" title="LG CNS가 컬리 물류센터에서 휴머노이드 실증(PoC)과 물류 자동화 협력 업무협약을 맺었다. 기존 방식 대비 정확도·속도·효율을 측정하며, 정량 목표는 공개되지 않았다.">L2-E-005</a><a class="rid" href="#L2-E-007" title="LG CNS와 LX판토스가 청라 물류센터에 휴머노이드를 투입하는 업무협약을 맺었다. 셔틀 로봇이 꺼낸 물품을 휴머노이드(LG CNS가 3월 투자한 미국 Dexmate의 바퀴형 모델)가 분류 설비로 옮기며, 하반기에 실증 공간을 만든다.">L2-E-007</a><a class="rid" href="#L2-M-004" title="LG CNS의 로봇 학습·운영 플랫폼 PhysicalWorks는 학습 모듈(Forge)로 20곳 넘는 고객과 실증을 진행 중이다. 회사는 로봇 현장 투입 기간이 수개월에서 1~2개월로 줄고, 로봇 100대 규모 운영에서 생산성 15% 이상 향상·운영비 최대 18% 절감을 기대한다고 밝혔다.">L2-M-004</a></dd></div><div class="arow"><dt>상용 출시 / 내부 실증</dt><dd>가전. 씽큐 온은 상황 판단 자동화로 출시, CLOiD는 &#x27;내년 현장 투입&#x27; 계획. <a class="rid" href="#L2-E-001" title="LG전자가 생성형 AI 홈 허브 &#x27;씽큐 온&#x27;을 국내 출시했다. 여러 기기에 걸친 명령을 순서대로 실행하고, 센서로 상황을 판단해 기기를 스스로 작동시킨다.">L2-E-001</a><a class="rid" href="#L2-E-003" title="LG전자 CEO가 CLOiD를 &#x27;내년 실험실에서 나와 현장에 투입&#x27;하겠다고 밝히고 로봇 사업 체계를 제시했다. 산업용은 로보스타, 상업용은 베어로보틱스, 가정용은 CLOiD가 맡고, 액추에이터 브랜드 &#x27;악시움&#x27;을 공개했으며, 센서는 LG이노텍·배터리는 LG에너지솔루션·시스템 통합은 LG CNS와 검토한다. 로봇 파운데이션 모델은 외부 협력이 필요하다고 했다.">L2-E-003</a></dd></div><div class="arow"><dt>증거의 질</dt><dd>자사 공장 수치(창원 생산성 +17%, 품질 비용 -70%)와 기대 효과(로봇 생산성 +15%, 운영비 -18%)가 대부분. 외부 고객 실측은 고객명 비공개 사례뿐. <a class="rid" href="#L2-M-002" title="LG전자 창원 등대공장은 생산성 17% 향상, 불량 관련 품질 비용 70% 감소, 에너지 효율 30% 향상을 기록했다고 회사가 밝혔다. 회사가 보유한 제조 데이터는 770TB다.">L2-M-002</a><a class="rid" href="#L2-M-004" title="LG CNS의 로봇 학습·운영 플랫폼 PhysicalWorks는 학습 모듈(Forge)로 20곳 넘는 고객과 실증을 진행 중이다. 회사는 로봇 현장 투입 기간이 수개월에서 1~2개월로 줄고, 로봇 100대 규모 운영에서 생산성 15% 이상 향상·운영비 최대 18% 절감을 기대한다고 밝혔다.">L2-M-004</a><a class="rid" href="#L2-I-005" title="성능 수치의 대부분은 자사 공장 측정이거나 회사의 기대 효과다. 외부 고객 현장에서 측정된 수치는 Factova 사례(고객명 비공개) 정도이며, 로봇·휴머노이드의 실측 성과는 아직 공개되지 않았다.">L2-I-005</a></dd></div><div class="arow"><dt>빈자리</dt><dd>로봇 파운데이션 모델은 외부 협력 필요. 하드웨어·부품·센서·배터리·통합은 계열사 분업. <a class="rid" href="#L2-E-003" title="LG전자 CEO가 CLOiD를 &#x27;내년 실험실에서 나와 현장에 투입&#x27;하겠다고 밝히고 로봇 사업 체계를 제시했다. 산업용은 로보스타, 상업용은 베어로보틱스, 가정용은 CLOiD가 맡고, 액추에이터 브랜드 &#x27;악시움&#x27;을 공개했으며, 센서는 LG이노텍·배터리는 LG에너지솔루션·시스템 통합은 LG CNS와 검토한다. 로봇 파운데이션 모델은 외부 협력이 필요하다고 했다.">L2-E-003</a><a class="rid" href="#L2-I-006" title="LG는 로봇 밸류체인을 계열사로 나눠 맡는 구조를 만들고 있다. LG전자는 하드웨어와 액추에이터, LG이노텍은 센서, LG에너지솔루션은 배터리, LG CNS는 학습·운영 플랫폼과 통합을 맡는다. 비어 있는 자리는 로봇 파운데이션 모델로, 외부 협력에 기대고 있다.">L2-I-006</a></dd></div></dl></section>
+  <section><h2>해석</h2><div class="narrative"><p>공장은 LG 피지컬 AI 가운데 사업 성과가 가장 분명한 영역이다. LG전자 스마트팩토리 솔루션의 외부 수주는 2024년 전담 조직을 만든 뒤 2년 만에 약 5,000억 원이 됐고, 2030년 외부 매출을 조 단위로 키우는 것이 목표다. LG CNS의 공장 운영 AI Factova Control은 국내외 설비 10만 개 이상에 적용됐고, 한 배터리 공장에서는 한 달 만에 합격품 비중 90% 이상·불량 반품 비용 약 70% 감소, 한 전자 공장에서는 생산성 약 20% 향상을 냈다. <a class="rid" href="#L2-M-001" title="LG전자 스마트팩토리 솔루션 사업의 외부 수주는 2024년 전담 조직 신설 이후 2년 만에 약 5,000억 원 규모로 늘었다. 2030년 외부 매출을 조 단위로 키우는 것이 목표다.">L2-M-001</a><a class="rid" href="#L2-M-003" title="LG CNS의 공장 운영 AI &#x27;Factova Control&#x27;은 국내외 설비 10만 개 이상에 적용됐다. 한 배터리 공장에서는 도입 한 달 만에 합격품 비중이 90%를 넘고 불량 반품 비용이 약 70% 줄었으며, 한 전자 공장에서는 작업 생산성이 약 20% 올랐다.">L2-M-003</a><a class="rid" href="#L2-I-001" title="공장 영역은 &#x27;상용 계약&#x27; 단계다. LG전자 스마트팩토리 외부 수주가 2년 새 약 5,000억 원이 됐고, 조직도 두 배 넘게 키웠다. 다만 연도별 매출과 고객 대부분은 공개되지 않았고, 공개된 성과 수치는 자사 공장 기준이다.">L2-I-001</a><a class="rid" href="#L2-I-002" title="공장 운영 AI는 외부 고객 성과가 숫자로 나온 유일한 영역이다. Factova Control은 설비 10만 개 이상에 적용됐고, 배터리 공장에서 한 달 만에 합격품 비중 90% 이상, 전자 공장에서 생산성 20% 향상을 보였다. 고객 이름은 공개되지 않았다.">L2-I-002</a></p><p>물류 로봇과 휴머노이드는 외부 실증 단계다. LG CNS는 5월 로봇 학습·운영 플랫폼 PhysicalWorks를 공개하고 20곳 넘는 고객과 실증 중이며, 컬리 물류센터 휴머노이드 PoC와 LX판토스 청라 물류센터 휴머노이드 투입 협약을 맺었다. LX판토스 현장에는 LG CNS가 투자한 미국 Dexmate의 바퀴형 휴머노이드가 들어간다. 상용 계약과 실측 성과는 아직 없고, 공개된 생산성 15%·운영비 18% 개선은 회사의 기대치다. <a class="rid" href="#L2-E-004" title="LG CNS가 로봇 학습·운영 플랫폼 PhysicalWorks(Forge·Baton)를 공개하고, 다리형·4족·바퀴형·AMR 로봇 4종의 물류 협업을 시연했다.">L2-E-004</a><a class="rid" href="#L2-M-004" title="LG CNS의 로봇 학습·운영 플랫폼 PhysicalWorks는 학습 모듈(Forge)로 20곳 넘는 고객과 실증을 진행 중이다. 회사는 로봇 현장 투입 기간이 수개월에서 1~2개월로 줄고, 로봇 100대 규모 운영에서 생산성 15% 이상 향상·운영비 최대 18% 절감을 기대한다고 밝혔다.">L2-M-004</a><a class="rid" href="#L2-E-005" title="LG CNS가 컬리 물류센터에서 휴머노이드 실증(PoC)과 물류 자동화 협력 업무협약을 맺었다. 기존 방식 대비 정확도·속도·효율을 측정하며, 정량 목표는 공개되지 않았다.">L2-E-005</a><a class="rid" href="#L2-E-007" title="LG CNS와 LX판토스가 청라 물류센터에 휴머노이드를 투입하는 업무협약을 맺었다. 셔틀 로봇이 꺼낸 물품을 휴머노이드(LG CNS가 3월 투자한 미국 Dexmate의 바퀴형 모델)가 분류 설비로 옮기며, 하반기에 실증 공간을 만든다.">L2-E-007</a><a class="rid" href="#L2-I-003" title="물류 로봇과 휴머노이드는 &#x27;외부 실증&#x27; 단계다. 컬리·LX판토스와 업무협약을 맺고 PhysicalWorks로 20곳 넘게 실증 중이지만, 상용 계약과 실측 성과는 아직 없다. 공개된 생산성·비용 수치는 회사가 기대하는 값이다.">L2-I-003</a></p><p>가전에서는 홈 허브와 홈 로봇의 단계가 다르다. 생성형 AI 홈 허브 씽큐 온은 상황을 판단해 기기를 스스로 작동시키는 기능으로 출시됐다. 반면 CES 2026에서 공개한 홈 로봇 CLOiD는 가격·출시일이 없고, CEO는 &#x27;내년에 실험실에서 나와 현장에 투입&#x27;하겠다고 했다. <a class="rid" href="#L2-E-001" title="LG전자가 생성형 AI 홈 허브 &#x27;씽큐 온&#x27;을 국내 출시했다. 여러 기기에 걸친 명령을 순서대로 실행하고, 센서로 상황을 판단해 기기를 스스로 작동시킨다.">L2-E-001</a><a class="rid" href="#L2-E-002" title="LG전자가 CES 2026에서 다섯 손가락으로 집안일을 하는 홈 로봇 &#x27;CLOiD&#x27;를 공개했다. 가격·출시일은 밝히지 않았다.">L2-E-002</a><a class="rid" href="#L2-E-003" title="LG전자 CEO가 CLOiD를 &#x27;내년 실험실에서 나와 현장에 투입&#x27;하겠다고 밝히고 로봇 사업 체계를 제시했다. 산업용은 로보스타, 상업용은 베어로보틱스, 가정용은 CLOiD가 맡고, 액추에이터 브랜드 &#x27;악시움&#x27;을 공개했으며, 센서는 LG이노텍·배터리는 LG에너지솔루션·시스템 통합은 LG CNS와 검토한다. 로봇 파운데이션 모델은 외부 협력이 필요하다고 했다.">L2-E-003</a><a class="rid" href="#L2-I-004" title="가전에서는 홈 허브가 상용 출시 단계, 홈 로봇은 내부 실증 단계다. 씽큐 온은 상황을 판단해 기기를 스스로 작동시키는 기능으로 출시됐고, CLOiD는 공개됐지만 현장 투입은 다음 해로 잡혔다.">L2-I-004</a></p><p>성능 증거의 질은 아직 약하다. 자주 인용되는 창원 등대공장의 생산성 17%·품질 비용 70% 개선은 자사 공장 수치이고, 로봇 플랫폼 효과는 기대치다. 외부 고객 현장 실측은 고객명이 비공개인 Factova 사례 정도다. 다음 회차부터는 외부 고객의 실측 수치가 나오는지가 핵심 판정 기준이다. <a class="rid" href="#L2-M-002" title="LG전자 창원 등대공장은 생산성 17% 향상, 불량 관련 품질 비용 70% 감소, 에너지 효율 30% 향상을 기록했다고 회사가 밝혔다. 회사가 보유한 제조 데이터는 770TB다.">L2-M-002</a><a class="rid" href="#L2-M-004" title="LG CNS의 로봇 학습·운영 플랫폼 PhysicalWorks는 학습 모듈(Forge)로 20곳 넘는 고객과 실증을 진행 중이다. 회사는 로봇 현장 투입 기간이 수개월에서 1~2개월로 줄고, 로봇 100대 규모 운영에서 생산성 15% 이상 향상·운영비 최대 18% 절감을 기대한다고 밝혔다.">L2-M-004</a><a class="rid" href="#L2-M-003" title="LG CNS의 공장 운영 AI &#x27;Factova Control&#x27;은 국내외 설비 10만 개 이상에 적용됐다. 한 배터리 공장에서는 도입 한 달 만에 합격품 비중이 90%를 넘고 불량 반품 비용이 약 70% 줄었으며, 한 전자 공장에서는 작업 생산성이 약 20% 올랐다.">L2-M-003</a><a class="rid" href="#L2-I-005" title="성능 수치의 대부분은 자사 공장 측정이거나 회사의 기대 효과다. 외부 고객 현장에서 측정된 수치는 Factova 사례(고객명 비공개) 정도이며, 로봇·휴머노이드의 실측 성과는 아직 공개되지 않았다.">L2-I-005</a></p><p>LG는 로봇 밸류체인을 계열사로 나눠 맡는 구조를 만들고 있다. LG전자는 하드웨어와 액추에이터 &#x27;악시움&#x27;, 산업용 로보스타·상업용 베어로보틱스 자회사를, LG이노텍은 센서, LG에너지솔루션은 배터리, LG CNS는 학습·운영 플랫폼과 통합을 맡는다. 비어 있는 자리는 로봇 파운데이션 모델로 외부 협력에 기대고 있다. 7월에는 스마트팩토리 센터를 전무급으로 올리고 로보틱스사업센터를 새로 만들었다. <a class="rid" href="#L2-E-003" title="LG전자 CEO가 CLOiD를 &#x27;내년 실험실에서 나와 현장에 투입&#x27;하겠다고 밝히고 로봇 사업 체계를 제시했다. 산업용은 로보스타, 상업용은 베어로보틱스, 가정용은 CLOiD가 맡고, 액추에이터 브랜드 &#x27;악시움&#x27;을 공개했으며, 센서는 LG이노텍·배터리는 LG에너지솔루션·시스템 통합은 LG CNS와 검토한다. 로봇 파운데이션 모델은 외부 협력이 필요하다고 했다.">L2-E-003</a><a class="rid" href="#L2-E-008" title="LG전자가 스마트팩토리솔루션센터를 전무급으로 격상하고 로보틱스사업센터를 신설했다. 물류사 로지스밸리의 인천공항 글로벌배송센터에 LG전자 스마트팩토리 솔루션이 적용된 것으로 알려졌다.">L2-E-008</a><a class="rid" href="#L2-M-005" title="LG전자 스마트팩토리 조직은 2024년 이후 2배 넘게 커졌다. 2026년 7월 스마트팩토리솔루션센터가 전무급으로 격상되고 로보틱스사업센터가 새로 생겼다.">L2-M-005</a><a class="rid" href="#L2-I-006" title="LG는 로봇 밸류체인을 계열사로 나눠 맡는 구조를 만들고 있다. LG전자는 하드웨어와 액추에이터, LG이노텍은 센서, LG에너지솔루션은 배터리, LG CNS는 학습·운영 플랫폼과 통합을 맡는다. 비어 있는 자리는 로봇 파운데이션 모델로, 외부 협력에 기대고 있다.">L2-I-006</a><a class="rid" href="#L2-I-007" title="조직과 투자는 사업화 쪽으로 움직였다. 스마트팩토리 센터를 전무급으로 올리고 로보틱스사업센터를 새로 만들었으며, LG CNS는 휴머노이드 기업 Dexmate에 투자해 LX판토스 실증에 투입한다.">L2-I-007</a></p></div>
+    <div class="tablewrap"><table><thead><tr><th>방향</th><th>대상</th><th>해석</th><th>근거</th><th>기록</th></tr></thead><tbody><tr id="L2-I-001"><td><span class="dir up">강화</span></td>
+  <td class="tgt">공장 — 외부 스마트팩토리</td><td>공장 영역은 &#x27;상용 계약&#x27; 단계다. LG전자 스마트팩토리 외부 수주가 2년 새 약 5,000억 원이 됐고, 조직도 두 배 넘게 키웠다. 다만 연도별 매출과 고객 대부분은 공개되지 않았고, 공개된 성과 수치는 자사 공장 기준이다.</td><td><a class="rid" href="#L2-M-001" title="LG전자 스마트팩토리 솔루션 사업의 외부 수주는 2024년 전담 조직 신설 이후 2년 만에 약 5,000억 원 규모로 늘었다. 2030년 외부 매출을 조 단위로 키우는 것이 목표다.">L2-M-001</a><a class="rid" href="#L2-M-005" title="LG전자 스마트팩토리 조직은 2024년 이후 2배 넘게 커졌다. 2026년 7월 스마트팩토리솔루션센터가 전무급으로 격상되고 로보틱스사업센터가 새로 생겼다.">L2-M-005</a><a class="rid" href="#L2-M-002" title="LG전자 창원 등대공장은 생산성 17% 향상, 불량 관련 품질 비용 70% 감소, 에너지 효율 30% 향상을 기록했다고 회사가 밝혔다. 회사가 보유한 제조 데이터는 770TB다.">L2-M-002</a></td><td class="idc"><code>L2-I-001</code></td></tr><tr id="L2-I-002"><td><span class="dir up">강화</span></td>
+  <td class="tgt">공장 — 운영 AI</td><td>공장 운영 AI는 외부 고객 성과가 숫자로 나온 유일한 영역이다. Factova Control은 설비 10만 개 이상에 적용됐고, 배터리 공장에서 한 달 만에 합격품 비중 90% 이상, 전자 공장에서 생산성 20% 향상을 보였다. 고객 이름은 공개되지 않았다.</td><td><a class="rid" href="#L2-M-003" title="LG CNS의 공장 운영 AI &#x27;Factova Control&#x27;은 국내외 설비 10만 개 이상에 적용됐다. 한 배터리 공장에서는 도입 한 달 만에 합격품 비중이 90%를 넘고 불량 반품 비용이 약 70% 줄었으며, 한 전자 공장에서는 작업 생산성이 약 20% 올랐다.">L2-M-003</a><a class="rid" href="#L2-E-006" title="LG CNS가 미국 IoT 테크 엑스포에 국내 기업 유일로 참가해 Factova MES·Control로 북미 중소·중견 제조기업 공략을 본격화한다고 밝혔다.">L2-E-006</a></td><td class="idc"><code>L2-I-002</code></td></tr><tr id="L2-I-003"><td><span class="dir up">강화</span></td>
+  <td class="tgt">물류 로봇·휴머노이드</td><td>물류 로봇과 휴머노이드는 &#x27;외부 실증&#x27; 단계다. 컬리·LX판토스와 업무협약을 맺고 PhysicalWorks로 20곳 넘게 실증 중이지만, 상용 계약과 실측 성과는 아직 없다. 공개된 생산성·비용 수치는 회사가 기대하는 값이다.</td><td><a class="rid" href="#L2-E-005" title="LG CNS가 컬리 물류센터에서 휴머노이드 실증(PoC)과 물류 자동화 협력 업무협약을 맺었다. 기존 방식 대비 정확도·속도·효율을 측정하며, 정량 목표는 공개되지 않았다.">L2-E-005</a><a class="rid" href="#L2-E-007" title="LG CNS와 LX판토스가 청라 물류센터에 휴머노이드를 투입하는 업무협약을 맺었다. 셔틀 로봇이 꺼낸 물품을 휴머노이드(LG CNS가 3월 투자한 미국 Dexmate의 바퀴형 모델)가 분류 설비로 옮기며, 하반기에 실증 공간을 만든다.">L2-E-007</a><a class="rid" href="#L2-M-004" title="LG CNS의 로봇 학습·운영 플랫폼 PhysicalWorks는 학습 모듈(Forge)로 20곳 넘는 고객과 실증을 진행 중이다. 회사는 로봇 현장 투입 기간이 수개월에서 1~2개월로 줄고, 로봇 100대 규모 운영에서 생산성 15% 이상 향상·운영비 최대 18% 절감을 기대한다고 밝혔다.">L2-M-004</a></td><td class="idc"><code>L2-I-003</code></td></tr><tr id="L2-I-004"><td><span class="dir flat">중립</span></td>
+  <td class="tgt">가전</td><td>가전에서는 홈 허브가 상용 출시 단계, 홈 로봇은 내부 실증 단계다. 씽큐 온은 상황을 판단해 기기를 스스로 작동시키는 기능으로 출시됐고, CLOiD는 공개됐지만 현장 투입은 다음 해로 잡혔다.</td><td><a class="rid" href="#L2-E-001" title="LG전자가 생성형 AI 홈 허브 &#x27;씽큐 온&#x27;을 국내 출시했다. 여러 기기에 걸친 명령을 순서대로 실행하고, 센서로 상황을 판단해 기기를 스스로 작동시킨다.">L2-E-001</a><a class="rid" href="#L2-E-002" title="LG전자가 CES 2026에서 다섯 손가락으로 집안일을 하는 홈 로봇 &#x27;CLOiD&#x27;를 공개했다. 가격·출시일은 밝히지 않았다.">L2-E-002</a><a class="rid" href="#L2-E-003" title="LG전자 CEO가 CLOiD를 &#x27;내년 실험실에서 나와 현장에 투입&#x27;하겠다고 밝히고 로봇 사업 체계를 제시했다. 산업용은 로보스타, 상업용은 베어로보틱스, 가정용은 CLOiD가 맡고, 액추에이터 브랜드 &#x27;악시움&#x27;을 공개했으며, 센서는 LG이노텍·배터리는 LG에너지솔루션·시스템 통합은 LG CNS와 검토한다. 로봇 파운데이션 모델은 외부 협력이 필요하다고 했다.">L2-E-003</a></td><td class="idc"><code>L2-I-004</code></td></tr><tr id="L2-I-005"><td><span class="dir flat">중립</span></td>
+  <td class="tgt">성능 증거의 질</td><td>성능 수치의 대부분은 자사 공장 측정이거나 회사의 기대 효과다. 외부 고객 현장에서 측정된 수치는 Factova 사례(고객명 비공개) 정도이며, 로봇·휴머노이드의 실측 성과는 아직 공개되지 않았다.</td><td><a class="rid" href="#L2-M-002" title="LG전자 창원 등대공장은 생산성 17% 향상, 불량 관련 품질 비용 70% 감소, 에너지 효율 30% 향상을 기록했다고 회사가 밝혔다. 회사가 보유한 제조 데이터는 770TB다.">L2-M-002</a><a class="rid" href="#L2-M-003" title="LG CNS의 공장 운영 AI &#x27;Factova Control&#x27;은 국내외 설비 10만 개 이상에 적용됐다. 한 배터리 공장에서는 도입 한 달 만에 합격품 비중이 90%를 넘고 불량 반품 비용이 약 70% 줄었으며, 한 전자 공장에서는 작업 생산성이 약 20% 올랐다.">L2-M-003</a><a class="rid" href="#L2-M-004" title="LG CNS의 로봇 학습·운영 플랫폼 PhysicalWorks는 학습 모듈(Forge)로 20곳 넘는 고객과 실증을 진행 중이다. 회사는 로봇 현장 투입 기간이 수개월에서 1~2개월로 줄고, 로봇 100대 규모 운영에서 생산성 15% 이상 향상·운영비 최대 18% 절감을 기대한다고 밝혔다.">L2-M-004</a></td><td class="idc"><code>L2-I-005</code></td></tr><tr id="L2-I-006"><td><span class="dir up">강화</span></td>
+  <td class="tgt">로봇 밸류체인 분업</td><td>LG는 로봇 밸류체인을 계열사로 나눠 맡는 구조를 만들고 있다. LG전자는 하드웨어와 액추에이터, LG이노텍은 센서, LG에너지솔루션은 배터리, LG CNS는 학습·운영 플랫폼과 통합을 맡는다. 비어 있는 자리는 로봇 파운데이션 모델로, 외부 협력에 기대고 있다.</td><td><a class="rid" href="#L2-E-003" title="LG전자 CEO가 CLOiD를 &#x27;내년 실험실에서 나와 현장에 투입&#x27;하겠다고 밝히고 로봇 사업 체계를 제시했다. 산업용은 로보스타, 상업용은 베어로보틱스, 가정용은 CLOiD가 맡고, 액추에이터 브랜드 &#x27;악시움&#x27;을 공개했으며, 센서는 LG이노텍·배터리는 LG에너지솔루션·시스템 통합은 LG CNS와 검토한다. 로봇 파운데이션 모델은 외부 협력이 필요하다고 했다.">L2-E-003</a><a class="rid" href="#L2-E-004" title="LG CNS가 로봇 학습·운영 플랫폼 PhysicalWorks(Forge·Baton)를 공개하고, 다리형·4족·바퀴형·AMR 로봇 4종의 물류 협업을 시연했다.">L2-E-004</a><a class="rid" href="#L2-E-007" title="LG CNS와 LX판토스가 청라 물류센터에 휴머노이드를 투입하는 업무협약을 맺었다. 셔틀 로봇이 꺼낸 물품을 휴머노이드(LG CNS가 3월 투자한 미국 Dexmate의 바퀴형 모델)가 분류 설비로 옮기며, 하반기에 실증 공간을 만든다.">L2-E-007</a></td><td class="idc"><code>L2-I-006</code></td></tr><tr id="L2-I-007"><td><span class="dir up">강화</span></td>
+  <td class="tgt">사업화 의지</td><td>조직과 투자는 사업화 쪽으로 움직였다. 스마트팩토리 센터를 전무급으로 올리고 로보틱스사업센터를 새로 만들었으며, LG CNS는 휴머노이드 기업 Dexmate에 투자해 LX판토스 실증에 투입한다.</td><td><a class="rid" href="#L2-M-005" title="LG전자 스마트팩토리 조직은 2024년 이후 2배 넘게 커졌다. 2026년 7월 스마트팩토리솔루션센터가 전무급으로 격상되고 로보틱스사업센터가 새로 생겼다.">L2-M-005</a><a class="rid" href="#L2-E-008" title="LG전자가 스마트팩토리솔루션센터를 전무급으로 격상하고 로보틱스사업센터를 신설했다. 물류사 로지스밸리의 인천공항 글로벌배송센터에 LG전자 스마트팩토리 솔루션이 적용된 것으로 알려졌다.">L2-E-008</a><a class="rid" href="#L2-E-007" title="LG CNS와 LX판토스가 청라 물류센터에 휴머노이드를 투입하는 업무협약을 맺었다. 셔틀 로봇이 꺼낸 물품을 휴머노이드(LG CNS가 3월 투자한 미국 Dexmate의 바퀴형 모델)가 분류 설비로 옮기며, 하반기에 실증 공간을 만든다.">L2-E-007</a></td><td class="idc"><code>L2-I-007</code></td></tr></tbody></table></div></section>
+  <section><h2>주요 사건 <small>최신순 · 원문 확인된 것만</small></h2><p class="lead">5~6월에 LG CNS의 로봇 사건이 몰렸다. PhysicalWorks 공개, 컬리 휴머노이드 PoC, Factova 북미 진출, LX판토스 휴머노이드 협약이다. LG전자는 연초 CES에서 CLOiD와 로봇 사업 체계를 내놓고, 7월 스마트팩토리·로보틱스 조직을 키웠다.</p><ul class="timeline"><li id="L2-E-008"><time>2026-07</time><div><b>LG전자</b> LG전자가 스마트팩토리솔루션센터를 전무급으로 격상하고 로보틱스사업센터를 신설했다. 물류사 로지스밸리의 인천공항 글로벌배송센터에 LG전자 스마트팩토리 솔루션이 적용된 것으로 알려졌다.
+  <div class="src"><a href="https://www.fnnews.com/news/202607241613595892" target="_blank" rel="noopener">파이낸셜뉴스</a><span class="grade gB">B</span> <code>L2-E-008</code></div></div></li><li id="L2-E-007"><time>2026-06-11</time><div><b>LG CNS·LX판토스</b> LG CNS와 LX판토스가 청라 물류센터에 휴머노이드를 투입하는 업무협약을 맺었다. 셔틀 로봇이 꺼낸 물품을 휴머노이드(LG CNS가 3월 투자한 미국 Dexmate의 바퀴형 모델)가 분류 설비로 옮기며, 하반기에 실증 공간을 만든다.
+  <div class="src"><a href="https://www.dailian.co.kr/news/view/1654748/LG-CNSLX%ED%8C%90%ED%86%A0%EC%8A%A4-%EB%AC%BC%EB%A5%98%EC%84%BC%ED%84%B0-%ED%9C%B4%EB%A8%B8%EB%85%B8-2026" target="_blank" rel="noopener">데일리안 (LG CNS 발표)</a><span class="grade gB">B</span> <code>L2-E-007</code></div></div></li><li id="L2-E-006"><time>2026-05-19</time><div><b>LG CNS</b> LG CNS가 미국 IoT 테크 엑스포에 국내 기업 유일로 참가해 Factova MES·Control로 북미 중소·중견 제조기업 공략을 본격화한다고 밝혔다.
+  <div class="src"><a href="https://www.lg.co.kr/media/release/30179" target="_blank" rel="noopener">LG 보도자료 (LG CNS)</a><span class="grade gA">A</span> <code>L2-E-006</code></div></div></li><li id="L2-E-005"><time>2026-05-18</time><div><b>LG CNS·컬리</b> LG CNS가 컬리 물류센터에서 휴머노이드 실증(PoC)과 물류 자동화 협력 업무협약을 맺었다. 기존 방식 대비 정확도·속도·효율을 측정하며, 정량 목표는 공개되지 않았다.
+  <div class="src"><a href="https://zdnet.co.kr/view/?no=20260518100553" target="_blank" rel="noopener">ZDNet Korea</a><span class="grade gB">B</span> <code>L2-E-005</code></div></div></li><li id="L2-E-004"><time>2026-05-07</time><div><b>LG CNS</b> LG CNS가 로봇 학습·운영 플랫폼 PhysicalWorks(Forge·Baton)를 공개하고, 다리형·4족·바퀴형·AMR 로봇 4종의 물류 협업을 시연했다.
+  <div class="src"><a href="https://www.etoday.co.kr/news/view/2582268" target="_blank" rel="noopener">이투데이 (LG CNS 발표)</a><span class="grade gB">B</span> <code>L2-E-004</code></div></div></li><li id="L2-E-003"><time>2026-01-07</time><div><b>LG전자</b> LG전자 CEO가 CLOiD를 &#x27;내년 실험실에서 나와 현장에 투입&#x27;하겠다고 밝히고 로봇 사업 체계를 제시했다. 산업용은 로보스타, 상업용은 베어로보틱스, 가정용은 CLOiD가 맡고, 액추에이터 브랜드 &#x27;악시움&#x27;을 공개했으며, 센서는 LG이노텍·배터리는 LG에너지솔루션·시스템 통합은 LG CNS와 검토한다. 로봇 파운데이션 모델은 외부 협력이 필요하다고 했다.
+  <div class="src"><a href="https://dealsite.co.kr/articles/154677/068020" target="_blank" rel="noopener">딜사이트 (CES 2026 간담회)</a><span class="grade gB">B</span> <code>L2-E-003</code></div></div></li><li id="L2-E-002"><time>2026-01-04</time><div><b>LG전자</b> LG전자가 CES 2026에서 다섯 손가락으로 집안일을 하는 홈 로봇 &#x27;CLOiD&#x27;를 공개했다. 가격·출시일은 밝히지 않았다.
+  <div class="src"><a href="https://www.lg.com/us/press-release/lg-cloid-home-robot" target="_blank" rel="noopener">LG전자 보도자료</a><span class="grade gA">A</span> <code>L2-E-002</code></div></div></li><li id="L2-E-001"><time>2025-10-22</time><div><b>LG전자</b> LG전자가 생성형 AI 홈 허브 &#x27;씽큐 온&#x27;을 국내 출시했다. 여러 기기에 걸친 명령을 순서대로 실행하고, 센서로 상황을 판단해 기기를 스스로 작동시킨다.
+  <div class="src"><a href="https://www.heraldk.com/article/2025102118250730033" target="_blank" rel="noopener">헤럴드경제</a><span class="grade gB">B</span> <code>L2-E-001</code></div></div></li></ul></section>
+  <section><h2>전망 <small>2027년 말까지, 실증이 성과가 될까</small></h2><p class="lead">2027년 말을 기준으로 두 시나리오를 세웠다. 갈림길은 로봇·휴머노이드가 실증을 넘어 상용 계약과 외부 고객 실측 성과로 이어지는지, 아니면 성과가 계속 자사 공장 수치와 기대 효과에 머무는지다.</p>
+    <div class="scens"><article class="scen opt" id="L2-F-101"><header><span class="sk">낙관 · Optimistic</span><code>L2-F-101</code></header>
+  <p class="sstmt">2027년 말까지 LG의 피지컬 AI가 외부 고객 현장에서 성과로 확인된다. 물류 휴머노이드·로봇 운영 플랫폼의 상용 계약이 나오고, 외부 고객 기준 성능 수치가 공개되며, CLOiD가 현장에 들어간다.</p><ol class="ms"><li><time>2026-12</time><span>LX판토스 실증 공간 구축 완료</span></li><li><time>2027-06</time><span>휴머노이드 실증 정량 결과 공개, PhysicalWorks 첫 상용 계약</span></li><li><time>2027-12</time><span>CLOiD 현장 실증 시작</span></li></ol>
+  <dl class="sdl"><div><dt>판정 시점</dt><dd>2027-12-31</dd></div><div><dt>판정 방법</dt><dd>세 가지 중 두 가지 이상 충족 시 적중: (1) PhysicalWorks 또는 물류 휴머노이드 상용 계약(고객명 공개) (2) 외부 고객 현장 기준 성능 수치 공개(고객명 공개) (3) CLOiD 현장 실증 시작 발표</dd></div>
+  <div><dt>전제</dt><dd>휴머노이드 안전 사고로 실증이 중단되지 않을 경우</dd></div><div><dt>근거</dt><dd><a class="rid" href="#L2-M-004" title="LG CNS의 로봇 학습·운영 플랫폼 PhysicalWorks는 학습 모듈(Forge)로 20곳 넘는 고객과 실증을 진행 중이다. 회사는 로봇 현장 투입 기간이 수개월에서 1~2개월로 줄고, 로봇 100대 규모 운영에서 생산성 15% 이상 향상·운영비 최대 18% 절감을 기대한다고 밝혔다.">L2-M-004</a><a class="rid" href="#L2-E-007" title="LG CNS와 LX판토스가 청라 물류센터에 휴머노이드를 투입하는 업무협약을 맺었다. 셔틀 로봇이 꺼낸 물품을 휴머노이드(LG CNS가 3월 투자한 미국 Dexmate의 바퀴형 모델)가 분류 설비로 옮기며, 하반기에 실증 공간을 만든다.">L2-E-007</a><a class="rid" href="#L2-E-003" title="LG전자 CEO가 CLOiD를 &#x27;내년 실험실에서 나와 현장에 투입&#x27;하겠다고 밝히고 로봇 사업 체계를 제시했다. 산업용은 로보스타, 상업용은 베어로보틱스, 가정용은 CLOiD가 맡고, 액추에이터 브랜드 &#x27;악시움&#x27;을 공개했으며, 센서는 LG이노텍·배터리는 LG에너지솔루션·시스템 통합은 LG CNS와 검토한다. 로봇 파운데이션 모델은 외부 협력이 필요하다고 했다.">L2-E-003</a></dd></div></dl></article><article class="scen pes" id="L2-F-102"><header><span class="sk">비관 · Pessimistic</span><code>L2-F-102</code></header>
+  <p class="sstmt">2027년 말까지 로봇·휴머노이드는 실증에 머물고, 공개되는 성과는 여전히 자사 공장 수치와 기대 효과다. 스마트팩토리 수주는 늘지만 외부 고객 성과가 드러나지 않아 차별화가 약하다.</p><ol class="ms"><li><time>2027-06</time><span>휴머노이드 실증 결과 미공개</span></li><li><time>2027-06</time><span>로봇 플랫폼 상용 계약 없음</span></li><li><time>2027-12</time><span>CLOiD 현장 투입 연기</span></li></ol>
+  <dl class="sdl"><div><dt>판정 시점</dt><dd>2027-12-31</dd></div><div><dt>판정 방법</dt><dd>낙관 시나리오의 판정 조건 세 가지 중 하나 이하만 충족 시 적중</dd></div>
+  <div><dt>전제</dt><dd>없음</dd></div><div><dt>근거</dt><dd><a class="rid" href="#L2-M-002" title="LG전자 창원 등대공장은 생산성 17% 향상, 불량 관련 품질 비용 70% 감소, 에너지 효율 30% 향상을 기록했다고 회사가 밝혔다. 회사가 보유한 제조 데이터는 770TB다.">L2-M-002</a><a class="rid" href="#L2-M-004" title="LG CNS의 로봇 학습·운영 플랫폼 PhysicalWorks는 학습 모듈(Forge)로 20곳 넘는 고객과 실증을 진행 중이다. 회사는 로봇 현장 투입 기간이 수개월에서 1~2개월로 줄고, 로봇 100대 규모 운영에서 생산성 15% 이상 향상·운영비 최대 18% 절감을 기대한다고 밝혔다.">L2-M-004</a><a class="rid" href="#L2-E-005" title="LG CNS가 컬리 물류센터에서 휴머노이드 실증(PoC)과 물류 자동화 협력 업무협약을 맺었다. 기존 방식 대비 정확도·속도·효율을 측정하며, 정량 목표는 공개되지 않았다.">L2-E-005</a></dd></div></dl></article></div>
+    <h3 class="subhead">세부 판정 근거</h3>
+    <p class="lead muted">각 세부 전망이 적중하거나 빗나갔을 때 어느 시나리오 쪽 신호인지 표시했다. 확인 시점이 오면 확인 방법대로 판정한다.</p>
+    <div class="tablewrap"><table><thead><tr><th>세부 전망</th><th>확인 시점</th><th>적중 시</th><th>빗나갈 시</th><th>상태</th><th>근거</th></tr></thead><tbody><tr id="L2-F-001"><td class="stmt">LG CNS와 LX판토스는 2026년 말까지 청라 물류센터 휴머노이드 실증 공간 구축을 마쳤다고 발표할 것이다.<small>확인 방법: LG CNS 또는 LX판토스 공식 발표 확인</small></td>
+  <td class="asof">2026-12-31</td><td><span class="side opt">낙관</span></td><td><span class="muted">—</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#L2-E-007" title="LG CNS와 LX판토스가 청라 물류센터에 휴머노이드를 투입하는 업무협약을 맺었다. 셔틀 로봇이 꺼낸 물품을 휴머노이드(LG CNS가 3월 투자한 미국 Dexmate의 바퀴형 모델)가 분류 설비로 옮기며, 하반기에 실증 공간을 만든다.">L2-E-007</a></td></tr><tr id="L2-F-002"><td class="stmt">2027년 6월 말까지 컬리 또는 LX판토스 휴머노이드 실증의 정량 결과(정확도·속도·처리량)가 공개될 것이다.<small>확인 방법: 회사 발표 또는 주요 언론 보도 확인</small></td>
+  <td class="asof">2027-06-30</td><td><span class="side opt">낙관</span></td><td><span class="side pes">비관</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#L2-E-005" title="LG CNS가 컬리 물류센터에서 휴머노이드 실증(PoC)과 물류 자동화 협력 업무협약을 맺었다. 기존 방식 대비 정확도·속도·효율을 측정하며, 정량 목표는 공개되지 않았다.">L2-E-005</a><a class="rid" href="#L2-E-007" title="LG CNS와 LX판토스가 청라 물류센터에 휴머노이드를 투입하는 업무협약을 맺었다. 셔틀 로봇이 꺼낸 물품을 휴머노이드(LG CNS가 3월 투자한 미국 Dexmate의 바퀴형 모델)가 분류 설비로 옮기며, 하반기에 실증 공간을 만든다.">L2-E-007</a></td></tr><tr id="L2-F-003"><td class="stmt">LG CNS는 2027년 6월 말까지 PhysicalWorks 또는 물류 휴머노이드의 첫 상용 계약을 고객명을 밝혀 발표할 것이다.<small>확인 방법: LG CNS 공식 발표 확인</small></td>
+  <td class="asof">2027-06-30</td><td><span class="side opt">낙관</span></td><td><span class="side pes">비관</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#L2-M-004" title="LG CNS의 로봇 학습·운영 플랫폼 PhysicalWorks는 학습 모듈(Forge)로 20곳 넘는 고객과 실증을 진행 중이다. 회사는 로봇 현장 투입 기간이 수개월에서 1~2개월로 줄고, 로봇 100대 규모 운영에서 생산성 15% 이상 향상·운영비 최대 18% 절감을 기대한다고 밝혔다.">L2-M-004</a><a class="rid" href="#L2-E-004" title="LG CNS가 로봇 학습·운영 플랫폼 PhysicalWorks(Forge·Baton)를 공개하고, 다리형·4족·바퀴형·AMR 로봇 4종의 물류 협업을 시연했다.">L2-E-004</a></td></tr><tr id="L2-F-004"><td class="stmt">LG CNS는 2027년 6월 말까지 Factova의 북미 고객 계약을 고객명을 밝혀 발표할 것이다.<small>확인 방법: LG CNS 공식 발표 확인</small></td>
+  <td class="asof">2027-06-30</td><td><span class="side opt">낙관</span></td><td><span class="muted">—</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#L2-E-006" title="LG CNS가 미국 IoT 테크 엑스포에 국내 기업 유일로 참가해 Factova MES·Control로 북미 중소·중견 제조기업 공략을 본격화한다고 밝혔다.">L2-E-006</a><a class="rid" href="#L2-M-003" title="LG CNS의 공장 운영 AI &#x27;Factova Control&#x27;은 국내외 설비 10만 개 이상에 적용됐다. 한 배터리 공장에서는 도입 한 달 만에 합격품 비중이 90%를 넘고 불량 반품 비용이 약 70% 줄었으며, 한 전자 공장에서는 작업 생산성이 약 20% 올랐다.">L2-M-003</a></td></tr><tr id="L2-F-005"><td class="stmt">LG전자는 2027년 6월 말까지 스마트팩토리 솔루션의 외부 고객 신규 계약을 고객명을 밝혀 발표할 것이다.<small>확인 방법: LG전자 공식 발표 또는 주요 언론 보도 확인</small></td>
+  <td class="asof">2027-06-30</td><td><span class="side opt">낙관</span></td><td><span class="muted">—</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#L2-M-001" title="LG전자 스마트팩토리 솔루션 사업의 외부 수주는 2024년 전담 조직 신설 이후 2년 만에 약 5,000억 원 규모로 늘었다. 2030년 외부 매출을 조 단위로 키우는 것이 목표다.">L2-M-001</a></td></tr><tr id="L2-F-006"><td class="stmt">LG전자는 2027년 말까지 CLOiD의 상업 현장(가정 외 시설 포함) 실증 시작을 발표할 것이다.<small>확인 방법: LG전자 공식 발표 확인</small></td>
+  <td class="asof">2027-12-31</td><td><span class="side opt">낙관</span></td><td><span class="side pes">비관</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#L2-E-003" title="LG전자 CEO가 CLOiD를 &#x27;내년 실험실에서 나와 현장에 투입&#x27;하겠다고 밝히고 로봇 사업 체계를 제시했다. 산업용은 로보스타, 상업용은 베어로보틱스, 가정용은 CLOiD가 맡고, 액추에이터 브랜드 &#x27;악시움&#x27;을 공개했으며, 센서는 LG이노텍·배터리는 LG에너지솔루션·시스템 통합은 LG CNS와 검토한다. 로봇 파운데이션 모델은 외부 협력이 필요하다고 했다.">L2-E-003</a></td></tr></tbody></table></div></section>
+  <section><h2>적용 영역별 증거 수준 <small>영역별 · 성능 수치 원장</small></h2><p class="lead">적용 영역마다 내부 실증 → 외부 실증 → 상용 계약 → 사업 성과(수주·매출 공개) 중 어디에 있는지 판정했다. 오른쪽 표시는 공개된 성능 수치가 어디서 나왔는지다.</p>
+    <div class="ladder mapgrid auto"><div class="rung"><div class="stage"><b>공장 — 외부 스마트팩토리 (LG전자)</b></div>
+  <div class="lvcell"><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="lv">사업 성과</span></span></div>
+  <div class="lvcell"><span class="own platform">자사 공장</span></div>
+  <p class="why">외부 수주 약 5,000억 원(2년), 로지스밸리 적용 보도. 성과 수치는 창원 등대공장 기준 <a class="rid" href="#L2-M-001" title="LG전자 스마트팩토리 솔루션 사업의 외부 수주는 2024년 전담 조직 신설 이후 2년 만에 약 5,000억 원 규모로 늘었다. 2030년 외부 매출을 조 단위로 키우는 것이 목표다.">L2-M-001</a><a class="rid" href="#L2-M-002" title="LG전자 창원 등대공장은 생산성 17% 향상, 불량 관련 품질 비용 70% 감소, 에너지 효율 30% 향상을 기록했다고 회사가 밝혔다. 회사가 보유한 제조 데이터는 770TB다.">L2-M-002</a><a class="rid" href="#L2-E-008" title="LG전자가 스마트팩토리솔루션센터를 전무급으로 격상하고 로보틱스사업센터를 신설했다. 물류사 로지스밸리의 인천공항 글로벌배송센터에 LG전자 스마트팩토리 솔루션이 적용된 것으로 알려졌다.">L2-E-008</a></p></div><div class="rung"><div class="stage"><b>공장 — 운영 AI (LG CNS Factova)</b></div>
+  <div class="lvcell"><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip"></span><span class="lv">상용 계약</span></span></div>
+  <div class="lvcell"><span class="own brand">외부 고객 실측</span></div>
+  <p class="why">설비 10만 개+, 배터리 공장 합격품 90%+·전자 공장 생산성 +20% (고객명 비공개) <a class="rid" href="#L2-M-003" title="LG CNS의 공장 운영 AI &#x27;Factova Control&#x27;은 국내외 설비 10만 개 이상에 적용됐다. 한 배터리 공장에서는 도입 한 달 만에 합격품 비중이 90%를 넘고 불량 반품 비용이 약 70% 줄었으며, 한 전자 공장에서는 작업 생산성이 약 20% 올랐다.">L2-M-003</a></p></div><div class="rung"><div class="stage"><b>물류 로봇·휴머노이드 (LG CNS)</b></div>
+  <div class="lvcell"><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip"></span><span class="pip"></span><span class="lv">외부 실증</span></span></div>
+  <div class="lvcell"><span class="own agent">회사 기대치</span></div>
+  <p class="why">컬리 PoC, LX판토스 청라 협약, Forge 실증 20곳+ <a class="rid" href="#L2-E-005" title="LG CNS가 컬리 물류센터에서 휴머노이드 실증(PoC)과 물류 자동화 협력 업무협약을 맺었다. 기존 방식 대비 정확도·속도·효율을 측정하며, 정량 목표는 공개되지 않았다.">L2-E-005</a><a class="rid" href="#L2-E-007" title="LG CNS와 LX판토스가 청라 물류센터에 휴머노이드를 투입하는 업무협약을 맺었다. 셔틀 로봇이 꺼낸 물품을 휴머노이드(LG CNS가 3월 투자한 미국 Dexmate의 바퀴형 모델)가 분류 설비로 옮기며, 하반기에 실증 공간을 만든다.">L2-E-007</a><a class="rid" href="#L2-M-004" title="LG CNS의 로봇 학습·운영 플랫폼 PhysicalWorks는 학습 모듈(Forge)로 20곳 넘는 고객과 실증을 진행 중이다. 회사는 로봇 현장 투입 기간이 수개월에서 1~2개월로 줄고, 로봇 100대 규모 운영에서 생산성 15% 이상 향상·운영비 최대 18% 절감을 기대한다고 밝혔다.">L2-M-004</a></p></div><div class="rung"><div class="stage"><b>가전 — 홈 허브 (씽큐 온)</b></div>
+  <div class="lvcell"><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip"></span><span class="lv">상용 계약</span></span></div>
+  <div class="lvcell"><span class="own contest">수치 없음</span></div>
+  <p class="why">상황 판단 자동화 기능으로 출시. 이용·성과 수치 미공개 <a class="rid" href="#L2-E-001" title="LG전자가 생성형 AI 홈 허브 &#x27;씽큐 온&#x27;을 국내 출시했다. 여러 기기에 걸친 명령을 순서대로 실행하고, 센서로 상황을 판단해 기기를 스스로 작동시킨다.">L2-E-001</a></p></div><div class="rung"><div class="stage"><b>가전 — 홈 로봇 (CLOiD)</b></div>
+  <div class="lvcell"><span class="pips"><span class="pip on"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="lv">내부 실증</span></span></div>
+  <div class="lvcell"><span class="own contest">수치 없음</span></div>
+  <p class="why">CES 공개, 가격·출시일 없음, &#x27;내년 현장 투입&#x27; 계획 <a class="rid" href="#L2-E-002" title="LG전자가 CES 2026에서 다섯 손가락으로 집안일을 하는 홈 로봇 &#x27;CLOiD&#x27;를 공개했다. 가격·출시일은 밝히지 않았다.">L2-E-002</a><a class="rid" href="#L2-E-003" title="LG전자 CEO가 CLOiD를 &#x27;내년 실험실에서 나와 현장에 투입&#x27;하겠다고 밝히고 로봇 사업 체계를 제시했다. 산업용은 로보스타, 상업용은 베어로보틱스, 가정용은 CLOiD가 맡고, 액추에이터 브랜드 &#x27;악시움&#x27;을 공개했으며, 센서는 LG이노텍·배터리는 LG에너지솔루션·시스템 통합은 LG CNS와 검토한다. 로봇 파운데이션 모델은 외부 협력이 필요하다고 했다.">L2-E-003</a></p></div></div><p class="gapnote">판정: 공장은 사업 성과까지 왔지만 성능 증거는 자사 공장 중심이고, 로봇·휴머노이드는 외부 실증, 홈 로봇은 내부 실증 단계다 (R1 기준).</p>
+    <h3 class="subhead">성능 수치 원장</h3><p class="lead">공개된 성능 수치를 한 줄씩 기록하고, 측정 주체와 근거 종류를 표시했다. 다음 회차부터 &#x27;외부 고객 실측&#x27; 줄이 늘어나는지를 본다.</p>
+    <div class="tablewrap"><table><thead><tr><th>수치</th><th>대상</th><th>측정 주체</th><th>시점</th><th>근거 종류</th><th>기록</th></tr></thead><tbody><tr><td class="tgt">생산성 +17%, 품질 비용 -70%, 에너지 효율 +30%</td><td>LG전자 창원 등대공장</td><td>LG전자</td><td>2024 발표</td><td>자사 공장</td><td><a class="rid" href="#L2-M-002" title="LG전자 창원 등대공장은 생산성 17% 향상, 불량 관련 품질 비용 70% 감소, 에너지 효율 30% 향상을 기록했다고 회사가 밝혔다. 회사가 보유한 제조 데이터는 770TB다.">L2-M-002</a></td></tr><tr><td class="tgt">합격품 비중 90%+ (1개월), 불량 반품 비용 -70%</td><td>배터리 공장 (고객명 비공개)</td><td>LG CNS</td><td>2026-05</td><td>외부 고객 실측</td><td><a class="rid" href="#L2-M-003" title="LG CNS의 공장 운영 AI &#x27;Factova Control&#x27;은 국내외 설비 10만 개 이상에 적용됐다. 한 배터리 공장에서는 도입 한 달 만에 합격품 비중이 90%를 넘고 불량 반품 비용이 약 70% 줄었으며, 한 전자 공장에서는 작업 생산성이 약 20% 올랐다.">L2-M-003</a></td></tr><tr><td class="tgt">작업 생산성 +20%, 공정 데이터 90%+ 자동 수집</td><td>전자 공장 (고객명 비공개)</td><td>LG CNS</td><td>2026-05</td><td>외부 고객 실측</td><td><a class="rid" href="#L2-M-003" title="LG CNS의 공장 운영 AI &#x27;Factova Control&#x27;은 국내외 설비 10만 개 이상에 적용됐다. 한 배터리 공장에서는 도입 한 달 만에 합격품 비중이 90%를 넘고 불량 반품 비용이 약 70% 줄었으며, 한 전자 공장에서는 작업 생산성이 약 20% 올랐다.">L2-M-003</a></td></tr><tr><td class="tgt">로봇 투입 기간 수개월 → 1~2개월</td><td>PhysicalWorks Forge</td><td>LG CNS</td><td>2026-05</td><td>회사 기대치</td><td><a class="rid" href="#L2-M-004" title="LG CNS의 로봇 학습·운영 플랫폼 PhysicalWorks는 학습 모듈(Forge)로 20곳 넘는 고객과 실증을 진행 중이다. 회사는 로봇 현장 투입 기간이 수개월에서 1~2개월로 줄고, 로봇 100대 규모 운영에서 생산성 15% 이상 향상·운영비 최대 18% 절감을 기대한다고 밝혔다.">L2-M-004</a></td></tr><tr><td class="tgt">생산성 +15% 이상, 운영비 최대 -18%</td><td>로봇 100대 운영 (Baton)</td><td>LG CNS</td><td>2026-05</td><td>회사 기대치</td><td><a class="rid" href="#L2-M-004" title="LG CNS의 로봇 학습·운영 플랫폼 PhysicalWorks는 학습 모듈(Forge)로 20곳 넘는 고객과 실증을 진행 중이다. 회사는 로봇 현장 투입 기간이 수개월에서 1~2개월로 줄고, 로봇 100대 규모 운영에서 생산성 15% 이상 향상·운영비 최대 18% 절감을 기대한다고 밝혔다.">L2-M-004</a></td></tr></tbody></table></div></section>
+  <section><h2>핵심 지표 <small>추적 지표 5/8개 값 확보</small></h2><p class="lead">추적 지표 8개 중 5개의 값을 원문으로 확인했다. T5 물류 휴머노이드 실증, T6 로봇 사업 체계, T7 가전 피지컬 AI는 수치 대신 사건으로 추적한다. 자사 공장 수치와 회사 기대치는 외부 고객 성과와 구분해 표시했다. 글로벌 경쟁사(Siemens·Rockwell) 비교 지표는 다음 회차에 확보한다.</p>
+    <div class="tablewrap"><table><thead><tr><th>추적 지표</th><th>내용 · 출처</th><th style="text-align:right">현재값</th><th>기준 시점</th><th>기록</th></tr></thead><tbody><tr id="L2-M-001"><td class="ind">L2-T1<small>스마트팩토리 외부 수주</small></td>
+  <td class="stmt">LG전자 스마트팩토리 솔루션 사업의 외부 수주는 2024년 전담 조직 신설 이후 2년 만에 약 5,000억 원 규모로 늘었다. 2030년 외부 매출을 조 단위로 키우는 것이 목표다. <span class="warn">충돌·주의</span><div class="src"><a href="https://www.fnnews.com/news/202607241613595892" target="_blank" rel="noopener">파이낸셜뉴스</a><span class="grade gB">B</span></div></td>
+  <td class="num">5000 억 원 (2년 누적 수주)</td><td class="asof">2026-07<small>GLOBAL</small></td><td class="idc"><code>L2-M-001</code></td></tr><tr id="L2-M-002"><td class="ind">L2-T2<small>자사 공장 성과</small></td>
+  <td class="stmt">LG전자 창원 등대공장은 생산성 17% 향상, 불량 관련 품질 비용 70% 감소, 에너지 효율 30% 향상을 기록했다고 회사가 밝혔다. 회사가 보유한 제조 데이터는 770TB다. <span class="warn">충돌·주의</span><div class="src"><a href="https://www.australianmanufacturing.com.au/lg-integrates-ai-with-66-year-manufacturing-expertise-for-smart-factories" target="_blank" rel="noopener">Australian Manufacturing (LG 발표)</a><span class="grade gB">B</span></div></td>
+  <td class="num">17% (생산성 향상)</td><td class="asof">2024-07<small>KR</small></td><td class="idc"><code>L2-M-002</code></td></tr><tr id="L2-M-003"><td class="ind">L2-T3<small>공장 운영 AI 적용·성과</small></td>
+  <td class="stmt">LG CNS의 공장 운영 AI &#x27;Factova Control&#x27;은 국내외 설비 10만 개 이상에 적용됐다. 한 배터리 공장에서는 도입 한 달 만에 합격품 비중이 90%를 넘고 불량 반품 비용이 약 70% 줄었으며, 한 전자 공장에서는 작업 생산성이 약 20% 올랐다. <span class="warn">충돌·주의</span><div class="src"><a href="https://www.lg.co.kr/media/release/30179" target="_blank" rel="noopener">LG 보도자료 (LG CNS)</a><span class="grade gA">A</span></div></td>
+  <td class="num">10 만 개 이상 (적용 설비)</td><td class="asof">2026-05<small>GLOBAL</small></td><td class="idc"><code>L2-M-003</code></td></tr><tr id="L2-M-004"><td class="ind">L2-T4<small>로봇 운영 플랫폼</small></td>
+  <td class="stmt">LG CNS의 로봇 학습·운영 플랫폼 PhysicalWorks는 학습 모듈(Forge)로 20곳 넘는 고객과 실증을 진행 중이다. 회사는 로봇 현장 투입 기간이 수개월에서 1~2개월로 줄고, 로봇 100대 규모 운영에서 생산성 15% 이상 향상·운영비 최대 18% 절감을 기대한다고 밝혔다. <span class="warn">충돌·주의</span><div class="src"><a href="https://www.etoday.co.kr/news/view/2582268" target="_blank" rel="noopener">이투데이 (LG CNS 발표)</a><span class="grade gB">B</span></div></td>
+  <td class="num">20 곳 이상 (Forge 실증 고객)</td><td class="asof">2026-05<small>KR</small></td><td class="idc"><code>L2-M-004</code></td></tr><tr id="L2-M-005"><td class="ind">L2-T8<small>조직·투자</small></td>
+  <td class="stmt">LG전자 스마트팩토리 조직은 2024년 이후 2배 넘게 커졌다. 2026년 7월 스마트팩토리솔루션센터가 전무급으로 격상되고 로보틱스사업센터가 새로 생겼다. <div class="src"><a href="https://www.fnnews.com/news/202607241613595892" target="_blank" rel="noopener">파이낸셜뉴스</a><span class="grade gB">B</span></div></td>
+  <td class="num">2 배 이상 (조직 규모, 2년)</td><td class="asof">2026-07<small>KR</small></td><td class="idc"><code>L2-M-005</code></td></tr></tbody></table></div></section>
+  <section><h2>미확인·경고 <small>본문 판단에서 빼거나 주의해서 쓴 기록</small></h2>
+    <div class="tablewrap"><table><thead><tr><th>기록</th><th>구분</th><th>진술</th><th>사유</th></tr></thead><tbody><tr><td><code>L2-M-001</code></td><td><span class="wk">주의</span></td><td>LG전자 스마트팩토리 솔루션 사업의 외부 수주는 2024년 전담 조직 신설 이후 2년 만에 약 5,000억 원 규모로 늘었다. 2030년 외부 매출을 조 단위로 키우는 것이 목표다.</td><td class="muted">연도별 수주·매출 미공개; 2030 목표는 회사 목표</td></tr><tr><td><code>L2-M-002</code></td><td><span class="wk">주의</span></td><td>LG전자 창원 등대공장은 생산성 17% 향상, 불량 관련 품질 비용 70% 감소, 에너지 효율 30% 향상을 기록했다고 회사가 밝혔다. 회사가 보유한 제조 데이터는 770TB다.</td><td class="muted">자사 공장 수치 — 외부 고객 성과 아님; 조사 기간 이전 — 기준선</td></tr><tr><td><code>L2-M-003</code></td><td><span class="wk">주의</span></td><td>LG CNS의 공장 운영 AI &#x27;Factova Control&#x27;은 국내외 설비 10만 개 이상에 적용됐다. 한 배터리 공장에서는 도입 한 달 만에 합격품 비중이 90%를 넘고 불량 반품 비용이 약 70% 줄었으며, 한 전자 공장에서는 작업 생산성이 약 20% 올랐다.</td><td class="muted">고객 공장 이름 비공개</td></tr><tr><td><code>L2-M-004</code></td><td><span class="wk">주의</span></td><td>LG CNS의 로봇 학습·운영 플랫폼 PhysicalWorks는 학습 모듈(Forge)로 20곳 넘는 고객과 실증을 진행 중이다. 회사는 로봇 현장 투입 기간이 수개월에서 1~2개월로 줄고, 로봇 100대 규모 운영에서 생산성 15% 이상 향상·운영비 최대 18% 절감을 기대한다고 밝혔다.</td><td class="muted">회사 추정·기대 효과</td></tr><tr><td><code>L2-E-008</code></td><td><span class="wk">주의</span></td><td>LG전자가 스마트팩토리솔루션센터를 전무급으로 격상하고 로보틱스사업센터를 신설했다. 물류사 로지스밸리의 인천공항 글로벌배송센터에 LG전자 스마트팩토리 솔루션이 적용된 것으로 알려졌다.</td><td class="muted">로지스밸리 적용은 &#x27;알려졌다&#x27; 수준 보도</td></tr></tbody></table></div></section>
+  <footer>
+    <span>이 글은 4유형 기록 28건(지표 5 · 사건 8 · 해석 7 · 전망 8)에서 생성했습니다. 문장 옆 번호를 누르면 해당 기록으로 이동합니다.</span>
+        <span>출처 등급 A = 1차 조사·공식 발표, B = 주요 언론·2차 보도, C = 블로그·출처 불명(원문 확인 전까지 판단에 쓰지 않음).</span>
+  </footer>
+</main>
+</body></html>
