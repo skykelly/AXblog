@@ -62,5 +62,12 @@ AI 산업 전체의 기술·제품·경쟁·확산 구조를 추적한다. 고�
   - 추적 지표 값 확보 7/8 (K6 AI for Science 독립 검증 성과 없음)
   - 아티클: [`t1/article_r1.html`](t1/article_r1.html)
 
+### T2 · AI Products & Applications
+- **R1 (2026-10-09, 기준 회차):** 기록 28건 (지표 8 · 사건 6 · 해석 6 · 전망 8 — 낙관·비관 시나리오 2 + 세부 판정 전망 6)
+  - 한 줄 답: 대규모 운영에 들어선 AI 제품은 대화형 Assistant(ChatGPT 주 9억 명), Coding Agent(Claude Code 연환산 25억 달러+), 로보택시(Waymo 주 50만 회) 셋. 업무형 Agent는 정식 출시·성과 미공개, 휴머노이드는 파일럿.
+  - 걸림돌: 코딩 에이전트의 운영 데이터 삭제 사고 1년여 9건, 기업 성과 측정 25%
+  - 추적 지표 값 확보 6/8 (K3 업무형 Agent 이용량 미공개, K8 한국은 사건으로 추적)
+  - 아티클: [`t2/article_r1.html`](t2/article_r1.html)
+
 ## 파일
 질문 폴더(`t1/` …)의 구성은 Customer Lab과 같다: `request_r1.md`, `records.jsonl`, `build_records.py`, `render_article.py`, `article_r1.html`. 공통 스타일은 저장소 루트의 `lib/article.css`.
