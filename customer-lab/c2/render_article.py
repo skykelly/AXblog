@@ -109,9 +109,9 @@ map_rows = "".join(f"""<div class="rung"><div class="stage"><b>{E(ko)}</b><span>
   <p class="why">{E(w)} {tags(ids)}</p></div>""" for ko, en, l, g, k, w, ids in MAP)
 
 # 6. 핵심 지표 ---------------------------------------------------------
-INDICATOR_NAMES = {"C2-T1": "플랫폼 자체 쇼핑 Agent 규모", "C2-T2": "AI 답변 내 광고", "C2-T3": "Agent 거래 프로토콜·결제망",
-                   "C2-T4": "상담 접점의 AI 이용 구조", "C2-T5": "브랜드 자체 AI Agent 도입", "C2-T6": "외부 Agent 차단·허용",
-                   "C2-T7": "한국 메신저·포털 커머스 Agent", "C2-T8": "리테일 미디어 매출"}
+INDICATOR_NAMES = {"C2-K1": "플랫폼 자체 쇼핑 Agent 규모", "C2-K2": "AI 답변 내 광고", "C2-K3": "Agent 거래 프로토콜·결제망",
+                   "C2-K4": "상담 접점의 AI 이용 구조", "C2-K5": "브랜드 자체 AI Agent 도입", "C2-K6": "외부 Agent 차단·허용",
+                   "C2-K7": "한국 메신저·포털 커머스 Agent", "C2-K8": "리테일 미디어 매출"}
 metrics = sorted([r for r in recs if r["type"] == "지표"], key=lambda r: (r["indicator"], -r["importance"]))
 filled = {r["indicator"] for r in metrics if r.get("verified")}
 empty_ind = [f"{k} {v}" for k, v in INDICATOR_NAMES.items() if k not in filled]

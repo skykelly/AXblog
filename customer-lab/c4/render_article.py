@@ -109,9 +109,9 @@ LEVEL_TABLE = "".join(f"<tr><td><code>{k}</code></td><td>{E(AL_NAME[k])}</td><td
     ("L3", "AI가 상황을 판단해 여러 기기를 엮어 실행, 사람은 사후 확인"), ("L4", "목표만 주면 물리 작업까지 스스로 수행")])
 
 # 6. 핵심 지표 ---------------------------------------------------------
-INDICATOR_NAMES = {"C4-T1": "생성형 AI 홈 허브 출시·보급", "C4-T2": "AI 허브가 닿는 설치 기반", "C4-T3": "홈 로봇 출시·판매",
-                   "C4-T4": "AI 가전 기능 경험률", "C4-T5": "AI 자율에 대한 수용 태도", "C4-T6": "개인정보·통제 우려",
-                   "C4-T7": "연결 표준 기기 수", "C4-T8": "AI 가전 판매 비중"}
+INDICATOR_NAMES = {"C4-K1": "생성형 AI 홈 허브 출시·보급", "C4-K2": "AI 허브가 닿는 설치 기반", "C4-K3": "홈 로봇 출시·판매",
+                   "C4-K4": "AI 가전 기능 경험률", "C4-K5": "AI 자율에 대한 수용 태도", "C4-K6": "개인정보·통제 우려",
+                   "C4-K7": "연결 표준 기기 수", "C4-K8": "AI 가전 판매 비중"}
 metrics = sorted([r for r in recs if r["type"] == "지표"], key=lambda r: (r["indicator"], -r["importance"]))
 filled = {r["indicator"] for r in metrics if r.get("verified")}
 empty_ind = [f"{k} {v}" for k, v in INDICATOR_NAMES.items() if k not in filled]

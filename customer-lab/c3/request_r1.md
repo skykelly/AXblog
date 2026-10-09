@@ -18,14 +18,14 @@ AI-assisted·AI-generated·개인화·생성형 온디맨드 콘텐츠, 상품 �
 ## 추적 지표 (v1.0)
 | ID | 지표 | 단위 | 정의 | 우선 출처 |
 |---|---|---|---|---|
-| C3-T1 | 신규 웹 글 중 AI 생성 비중 | % | 새로 발행된 영문 기사·글 중 주로 AI가 쓴 비율 | Graphite, Originality.ai |
-| C3-T2 | 상품 리뷰의 AI 생성 추세 | % | AI 생성 의심 리뷰 비율·증가율 | Originality.ai, 플랫폼 발표 |
-| C3-T3 | AI 경유 정보 신뢰도 | % | AI 챗봇이 전한 뉴스·정보를 믿는 비율, AI 챗봇 뉴스 이용률 | Reuters Institute DNR |
-| C3-T4 | 원천 매체로의 유입 | % | 퍼블리셔 검색 유입 변화, AI에서 원문 클릭 비율 | Chartbeat, Reuters Institute |
-| C3-T5 | AI 답변의 인용 원천 | 순위 | AI 검색이 가장 많이 인용하는 도메인 | Peec, Profound 등 |
-| C3-T6 | AI 광고에 대한 소비자 태도 | % | AI로 만든 광고에 대한 호감·구매 의향 | IAB, 업계 조사 |
-| C3-T7 | AI 콘텐츠 표시 규제 | 상태 | AI 생성물·가상인물 광고·리뷰 표시 의무와 시행 상태 | 법령, 정부 발표 |
-| C3-T8 | 한국 소비자의 AI 정보 신뢰 | % | AI 쇼핑 정보의 허위·편향 우려 등 | Criteo, 국내 조사 |
+| C3-K1 | 신규 웹 글 중 AI 생성 비중 | % | 새로 발행된 영문 기사·글 중 주로 AI가 쓴 비율 | Graphite, Originality.ai |
+| C3-K2 | 상품 리뷰의 AI 생성 추세 | % | AI 생성 의심 리뷰 비율·증가율 | Originality.ai, 플랫폼 발표 |
+| C3-K3 | AI 경유 정보 신뢰도 | % | AI 챗봇이 전한 뉴스·정보를 믿는 비율, AI 챗봇 뉴스 이용률 | Reuters Institute DNR |
+| C3-K4 | 원천 매체로의 유입 | % | 퍼블리셔 검색 유입 변화, AI에서 원문 클릭 비율 | Chartbeat, Reuters Institute |
+| C3-K5 | AI 답변의 인용 원천 | 순위 | AI 검색이 가장 많이 인용하는 도메인 | Peec, Profound 등 |
+| C3-K6 | AI 광고에 대한 소비자 태도 | % | AI로 만든 광고에 대한 호감·구매 의향 | IAB, 업계 조사 |
+| C3-K7 | AI 콘텐츠 표시 규제 | 상태 | AI 생성물·가상인물 광고·리뷰 표시 의무와 시행 상태 | 법령, 정부 발표 |
+| C3-K8 | 한국 소비자의 AI 정보 신뢰 | % | AI 쇼핑 정보의 허위·편향 우려 등 | Criteo, 국내 조사 |
 
 ## 출처 기준
 - 우선: 정부·법령, 1차 조사기관(Reuters Institute, IAB, Chartbeat), 측정 기관 원자료

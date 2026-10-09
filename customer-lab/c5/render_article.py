@@ -98,9 +98,9 @@ rank_rows = "".join(f"""<tr><td class="num">{n}</td><td class="tgt">{E(ch)}</td>
   <td><span class="own {SPEED[sp]}">{E(sp)}</span></td><td>{E(dm)}</td><td>{tags(ids)}</td></tr>""" for n, ch, sz, sp, dm, ids in RANK)
 
 # 6. 핵심 지표 ---------------------------------------------------------
-INDICATOR_NAMES = {"C5-T1": "1인 가구 비중", "C5-T2": "고령 가구 비중", "C5-T3": "출생아 수·합계출산율",
-                   "C5-T4": "혼인 건수", "C5-T5": "인구이동(이사)", "C5-T6": "아파트 입주 물량",
-                   "C5-T7": "가계 내구재 지출", "C5-T8": "생활 사건 연계 소비"}
+INDICATOR_NAMES = {"C5-K1": "1인 가구 비중", "C5-K2": "고령 가구 비중", "C5-K3": "출생아 수·합계출산율",
+                   "C5-K4": "혼인 건수", "C5-K5": "인구이동(이사)", "C5-K6": "아파트 입주 물량",
+                   "C5-K7": "가계 내구재 지출", "C5-K8": "생활 사건 연계 소비"}
 metrics = sorted([r for r in recs if r["type"] == "지표"], key=lambda r: (r["indicator"], -r["importance"]))
 filled = {r["indicator"] for r in metrics if r.get("verified")}
 empty_ind = [f"{k} {v}" for k, v in INDICATOR_NAMES.items() if k not in filled]

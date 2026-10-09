@@ -133,9 +133,9 @@ ladder_rows = "".join(f"""<div class="rung" data-frontier="{'y' if ko in ('추�
 # 6. 핵심 지표
 # =====================================================================
 INDICATOR_NAMES = {
-    "C1-T1": "생성형 AI 이용률 (한국)", "C1-T2": "생성형 AI 이용률 (미국·글로벌)", "C1-T3": "Zero-click·AI 요약 클릭률",
-    "C1-T4": "리테일 AI 유입 트래픽", "C1-T5": "쇼핑에 AI를 쓰는 소비자", "C1-T6": "구매 위임 의향·우려",
-    "C1-T7": "에이전트 결제 상용 사례 수", "C1-T8": "한국 AI 검색·쇼핑 에이전트",
+    "C1-K1": "생성형 AI 이용률 (한국)", "C1-K2": "생성형 AI 이용률 (미국·글로벌)", "C1-K3": "Zero-click·AI 요약 클릭률",
+    "C1-K4": "리테일 AI 유입 트래픽", "C1-K5": "쇼핑에 AI를 쓰는 소비자", "C1-K6": "구매 위임 의향·우려",
+    "C1-K7": "에이전트 결제 상용 사례 수", "C1-K8": "한국 AI 검색·쇼핑 에이전트",
 }
 metrics = sorted([r for r in recs if r["type"] == "지표" and r.get("status") == "유효"], key=lambda r: (r["indicator"], -r["importance"]))
 filled = {r["indicator"] for r in metrics}

@@ -1,4 +1,4 @@
-"""records.jsonl → 기준 아티클 HTML (I1 R1).
+"""records.jsonl → 기준 아티클 HTML (T1 R1).
 순서: 한 줄 답 → 해석 → 주요 사건 → 전망 → 역량 원장 → 핵심 지표 → 미확인·경고
 """
 import json, html, re, sys
@@ -22,13 +22,13 @@ QUESTION = "AI가 새롭게 할 수 있게 된 일은 무엇이고, 기술의 �
 # 1. 한 줄 답 ----------------------------------------------------------
 ONE_LINE = ("2026년 10월 현재 AI는 사람이 반나절에서 하루 걸리는 소프트웨어 작업을 절반의 확률로 해내고(METR 기준 12~16시간 이상), 이 능력은 몇 시간짜리 업무를 끝까지 수행하는 에이전트로 이미 제품이 됐다. "
             "한계선은 ‘처음 보는 환경에서 스스로 규칙을 배우는 추론’(ARC-AGI-3 최고 30%)과 월드 모델·AI 과학 발견으로 옮겨갔고, 이 영역은 아직 시연 단계다.")
-ONE_LINE_BASIS = ["I1-I-001", "I1-I-002", "I1-I-005"]
+ONE_LINE_BASIS = ["T1-I-001", "T1-I-002", "T1-I-005"]
 ANSWER_ROWS = [
-    ("새로 할 수 있게 된 일", "몇 시간짜리 일을 끝까지 맡기기. METR 작업 길이 최고치는 16시간 이상이고, OpenAI는 7월 시간 단위 프로젝트 에이전트 ChatGPT Work를 내놓았다.", ["I1-M-001", "I1-E-004"]),
-    ("포화된 영역", "정형 추론 퍼즐(ARC-AGI-2 90.4%)과 100만 토큰 문맥은 프런티어 모델의 기본이 됐다.", ["I1-M-004", "I1-M-007"]),
-    ("새 한계선", "처음 보는 상호작용 환경에서의 추론(ARC-AGI-3 30.2%), 1분으로 제한된 월드 모델, 검증을 기다리는 AI 수학 증명.", ["I1-M-003", "I1-E-001", "I1-E-007"]),
-    ("경쟁 구도", "오픈 웨이트가 2.8조 파라미터(Kimi K3)로 바짝 추격하고, 9월 신모델은 성능만큼 가격 인하(Opus 5.5 −40%, GPT-6 Sol 반값)를 내세웠다.", ["I1-M-008", "I1-E-009"]),
-    ("한국", "정부 프로젝트 평가에서 국가별 3위권(AAII 40점 이상 구간). LG K-엑사원 2.0(7,500억 파라미터)은 SKT·업스테이지와 함께 3차 단계로 올라갔다.", ["I1-M-010", "I1-E-008"]),
+    ("새로 할 수 있게 된 일", "몇 시간짜리 일을 끝까지 맡기기. METR 작업 길이 최고치는 16시간 이상이고, OpenAI는 7월 시간 단위 프로젝트 에이전트 ChatGPT Work를 내놓았다.", ["T1-M-001", "T1-E-004"]),
+    ("포화된 영역", "정형 추론 퍼즐(ARC-AGI-2 90.4%)과 100만 토큰 문맥은 프런티어 모델의 기본이 됐다.", ["T1-M-004", "T1-M-007"]),
+    ("새 한계선", "처음 보는 상호작용 환경에서의 추론(ARC-AGI-3 30.2%), 1분으로 제한된 월드 모델, 검증을 기다리는 AI 수학 증명.", ["T1-M-003", "T1-E-001", "T1-E-007"]),
+    ("경쟁 구도", "오픈 웨이트가 2.8조 파라미터(Kimi K3)로 바짝 추격하고, 9월 신모델은 성능만큼 가격 인하(Opus 5.5 −40%, GPT-6 Sol 반값)를 내세웠다.", ["T1-M-008", "T1-E-009"]),
+    ("한국", "정부 프로젝트 평가에서 국가별 3위권(AAII 40점 이상 구간). LG K-엑사원 2.0(7,500억 파라미터)은 SKT·업스테이지와 함께 3차 단계로 올라갔다.", ["T1-M-010", "T1-E-008"]),
 ]
 answer_rows = "".join(f'<div class="arow"><dt>{E(k)}</dt><dd>{E(v)} {tags(ids)}</dd></div>' for k, v, ids in ANSWER_ROWS)
 
@@ -36,19 +36,19 @@ answer_rows = "".join(f'<div class="arow"><dt>{E(k)}</dt><dd>{E(v)} {tags(ids)}<
 NARRATIVE = [
     ("올해 가장 크게 움직인 축은 ‘얼마나 긴 일을 맡길 수 있나’다. METR 측정에서 Claude Opus 4.6은 사람 기준 약 12시간 걸리는 소프트웨어 작업을 절반의 확률로 해냈고, 4월 Mythos Preview는 최소 16시간으로 측정됐다. "
      "이 길이는 2023년 이후 약 131일마다 두 배가 되고 있다. 제품도 같은 방향이다. OpenAI는 7월 GPT-5.6과 함께, 앱과 파일을 넘나들며 몇 시간짜리 프로젝트를 수행하는 ChatGPT Work를 내놓았다.",
-     ["I1-M-001", "I1-M-002", "I1-E-004", "I1-I-001"]),
+     ["T1-M-001", "T1-M-002", "T1-E-004", "T1-I-001"]),
     ("추론의 한계선은 다른 곳으로 옮겨갔다. Claude Opus 5는 정형 추론 퍼즐인 ARC-AGI-2에서 90.4%를 기록해 이 영역을 사실상 포화시켰다. "
      "반면 처음 보는 상호작용 환경에서 규칙을 스스로 익혀야 하는 ARC-AGI-3에서는 최고 점수가 30.2%다. 지금의 한계선은 ‘아는 문제를 푸는 능력’이 아니라 ‘새 환경에 적응하는 능력’에 있다.",
-     ["I1-M-004", "I1-M-003", "I1-E-006", "I1-I-002"]),
+     ["T1-M-004", "T1-M-003", "T1-E-006", "T1-I-002"]),
     ("측정 도구가 모델을 따라가지 못하고 있다. METR는 16시간 이상은 현재 과제로 신뢰하기 어렵다고 밝혔고, 코딩 지수에서는 과적합 논란이 나왔다. "
      "같은 코딩 평가에서도 지표에 따라 1위가 바뀐다(SWE-Bench Pro에서는 Fable 5 80%, GPT-5.6 Sol 64.6%). 단일 벤치마크 순위로 기술 수준을 판정하기 어려워졌다.",
-     ["I1-M-001", "I1-M-006", "I1-I-003"]),
+     ["T1-M-001", "T1-M-006", "T1-I-003"]),
     ("성능 우위는 짧아지고 있다. 중국 Moonshot은 2.8조 파라미터의 Kimi K3를 가중치까지 공개했고, 100만 토큰 문맥은 모든 프런티어 모델의 기본이 됐다. "
      "9월 Anthropic과 OpenAI의 신모델은 성능과 함께 가격 인하를 앞세웠다. 반면 Google은 Gemini 3 Pro 이후 1년 가까이 Pro급 신모델이 없고, Gemini 4를 준비 중이다.",
-     ["I1-M-008", "I1-M-007", "I1-E-009", "I1-E-010", "I1-I-004"]),
+     ["T1-M-008", "T1-M-007", "T1-E-009", "T1-E-010", "T1-I-004"]),
     ("월드 모델과 AI 과학은 시연 단계다. Google의 Project Genie는 실시간으로 걸어 다닐 수 있는 세계를 만들지만 한 번에 60초까지이고, OpenAI가 발표한 에르되시 문제 3건의 진전은 독립 검증을 기다린다. "
      "하드웨어에서는 차세대 가속기용 HBM4(대역폭 2.8TB/s 이상)가 양산에 들어갔다. 한국은 정부 프로젝트 평가에서 국가별 3위권으로 평가됐다.",
-     ["I1-E-001", "I1-E-007", "I1-M-009", "I1-M-010", "I1-I-005", "I1-I-006", "I1-I-007"]),
+     ["T1-E-001", "T1-E-007", "T1-M-009", "T1-M-010", "T1-I-005", "T1-I-006", "T1-I-007"]),
 ]
 narrative_html = "".join(para(t, ids) for t, ids in NARRATIVE)
 DIR = {"강화": "up", "약화": "down", "중립": "flat"}
@@ -92,13 +92,13 @@ ST = ["연구", "시연", "제품 적용 가능"]
 LEDGER_LEAD = ("일곱 개 기술 축을 연구(논문·내부 결과) → 시연(공개 데모·제한 접근) → 제품 적용 가능(일반 사용자·개발자가 사용) 중 어디에 있는지로 판정했다. "
                "다음 한계선은 그 축에서 아직 시연이나 연구 단계에 있는 능력이다.")
 LEDGER = [
-    ("Agent·장시간 작업", "제품 적용 가능", "하루 이상 걸리는 일을 끝까지 맡기기 (METR 16시간 이상은 측정 한계)", ["I1-M-001", "I1-E-004"]),
-    ("Reasoning", "제품 적용 가능", "처음 보는 환경에서 규칙 학습 — ARC-AGI-3 최고 30.2%", ["I1-M-004", "I1-M-003"]),
-    ("Multimodal·Computer use", "제품 적용 가능", "사람 수준의 컴퓨터 조작 신뢰성 (OSWorld-Verified 83%, 자체 발표)", ["I1-M-005"]),
-    ("Long context·Memory", "시연", "100만 토큰 문맥은 표준, 세션을 넘는 장기 기억은 제한적", ["I1-M-007"]),
-    ("World Model", "시연", "60초 제한을 넘는 실시간 세계 생성·물리 일관성", ["I1-E-001"]),
-    ("AI for Science", "시연", "AI가 낸 수학·과학 결과의 독립 검증", ["I1-E-007"]),
-    ("Compute", "제품 적용 가능", "HBM4 양산, 차세대 가속기 대량 출하", ["I1-M-009", "I1-E-002"]),
+    ("Agent·장시간 작업", "제품 적용 가능", "하루 이상 걸리는 일을 끝까지 맡기기 (METR 16시간 이상은 측정 한계)", ["T1-M-001", "T1-E-004"]),
+    ("Reasoning", "제품 적용 가능", "처음 보는 환경에서 규칙 학습 — ARC-AGI-3 최고 30.2%", ["T1-M-004", "T1-M-003"]),
+    ("Multimodal·Computer use", "제품 적용 가능", "사람 수준의 컴퓨터 조작 신뢰성 (OSWorld-Verified 83%, 자체 발표)", ["T1-M-005"]),
+    ("Long context·Memory", "시연", "100만 토큰 문맥은 표준, 세션을 넘는 장기 기억은 제한적", ["T1-M-007"]),
+    ("World Model", "시연", "60초 제한을 넘는 실시간 세계 생성·물리 일관성", ["T1-E-001"]),
+    ("AI for Science", "시연", "AI가 낸 수학·과학 결과의 독립 검증", ["T1-E-007"]),
+    ("Compute", "제품 적용 가능", "HBM4 양산, 차세대 가속기 대량 출하", ["T1-M-009", "T1-E-002"]),
 ]
 def st3(v):
     i = ST.index(v)
@@ -108,9 +108,9 @@ ledger_rows = "".join(f"""<div class="rung"><div class="stage"><b>{E(ax)}</b></d
   <p class="why"><b>다음 한계선</b> · {E(nx)} {tags(ids)}</p></div>""" for ax, v, nx, ids in LEDGER)
 
 # 6. 핵심 지표 ---------------------------------------------------------
-INDICATOR_NAMES = {"I1-T1": "AI 작업 길이", "I1-T2": "새 환경 추론", "I1-T3": "코딩·컴퓨터 사용",
-                   "I1-T4": "문맥 길이·기억", "I1-T5": "오픈 웨이트 수준", "I1-T6": "AI for Science 검증 성과",
-                   "I1-T7": "AI 메모리·칩", "I1-T8": "한국 모델 수준"}
+INDICATOR_NAMES = {"T1-K1": "AI 작업 길이", "T1-K2": "새 환경 추론", "T1-K3": "코딩·컴퓨터 사용",
+                   "T1-K4": "문맥 길이·기억", "T1-K5": "오픈 웨이트 수준", "T1-K6": "AI for Science 검증 성과",
+                   "T1-K7": "AI 메모리·칩", "T1-K8": "한국 모델 수준"}
 metrics = sorted([r for r in recs if r["type"] == "지표"], key=lambda r: (r["indicator"], -r["importance"]))
 filled = {r["indicator"] for r in metrics if r.get("verified")}
 empty_ind = [f"{k} {v}" for k, v in INDICATOR_NAMES.items() if k not in filled]
@@ -130,13 +130,13 @@ warns = [(r, "원문 미확인" if r["type"] in ("지표", "사건") and not r.g
 wrows = "".join(f"""<tr><td><code>{E(r['id'])}</code></td><td><span class="wk">{E(k)}</span></td><td>{E(r['statement'])}</td><td class="muted">{E('; '.join(r.get('check_flags', [])))}</td></tr>""" for r, k in warns)
 counts = {t: sum(1 for r in recs if r["type"] == t) for t in ("지표", "사건", "해석", "전망")}
 
-page = f"""<title>I1 AI 기술 한계선 R1</title>
+page = f"""<title>T1 AI 기술 한계선 R1</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;800&display=swap">
 <style>{CSS}</style>
 <main>
   <header class="narrow">
-    <div class="eyebrow"><span>AI Industry Trend</span><span>I1 · AI Technology &amp; Research</span><span>R1 기준 회차 · 2026-10-09</span></div>
+    <div class="eyebrow"><span>AI Industry Trend</span><span>T1 · AI Technology &amp; Research</span><span>R1 기준 회차 · 2026-10-09</span></div>
     <h1>{E(TITLE)}</h1>
     <p class="question">고정 질문 v1.0 — {E(QUESTION)}</p>
   </header>
@@ -163,8 +163,8 @@ page = f"""<title>I1 AI 기술 한계선 R1</title>
 </main>
 """
 (ROOT / "article_r1.html").write_text(page, encoding="utf-8")
-anchors = set(re.findall(r'id="(I1-[A-Z]-\d{3})"', page))
-bad = sorted({i for i in re.findall(r'href="#(I1-[A-Z]-\d{3})"', page) if i not in anchors})
+anchors = set(re.findall(r'id="(T1-[A-Z]-\d{3})"', page))
+bad = sorted({i for i in re.findall(r'href="#(T1-[A-Z]-\d{3})"', page) if i not in anchors})
 order = [page.index(f"<h2>{h}") for h in ("한 줄 답", "해석", "주요 사건", "전망", "역량 원장", "핵심 지표")]
 print("article_r1.html 생성,", len(page), "bytes; 앵커 없는 근거 링크:", bad or "없음", "; 섹션 순서 정상:", order == sorted(order))
 sys.exit(1 if bad or order != sorted(order) else 0)
