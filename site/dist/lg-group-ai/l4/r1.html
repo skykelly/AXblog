@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>L4 LG 엔터프라이즈 AX R1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;800&display=swap">
+<style>
+/* Layout: 연구 노트 한 단 — 답 → 서술형 해석 → 근거 표. 기록 번호가 본문의 각주 역할 */
+:root {
+  --paper: #f6f7f9; --ink: #16202b; --muted: #5d6875; --rule: #d6dbe2; --panel: #ffffff;
+  --accent: #1f5f8b; --accent-soft: #e2edf5; --amber: #b4690e; --amber-soft: #f7ead7;
+  --up: #1f7a4d; --down: #b3412f; --flat: #6a7380; --opt: #1f7a4d; --opt-soft: #e1f1e8; --pes: #a3402f; --pes-soft: #f6e3df;
+  --display: "Noto Serif KR", "Apple SD Gothic Neo", serif;
+  --body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #11161c; --ink: #e6ebf1; --muted: #9aa5b1; --rule: #2b333d; --panel: #171e26;
+  --accent: #7fb6dc; --accent-soft: #1b2c3a; --amber: #e2a457; --amber-soft: #33271a;
+  --up: #5fc493; --down: #ec8a78; --flat: #98a2ae; --opt: #6fcf9d; --opt-soft: #17291f; --pes: #ef9a88; --pes-soft: #2f1c18; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --paper: #11161c; --ink: #e6ebf1; --muted: #9aa5b1; --rule: #2b333d; --panel: #171e26;
+  --accent: #7fb6dc; --accent-soft: #1b2c3a; --amber: #e2a457; --amber-soft: #33271a;
+  --up: #5fc493; --down: #ec8a78; --flat: #98a2ae; --opt: #6fcf9d; --opt-soft: #17291f; --pes: #ef9a88; --pes-soft: #2f1c18; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--paper); color: var(--ink); font: 400 16px/1.7 var(--body); padding: 0 20px; }
+main { max-width: 980px; margin: 0 auto; padding-block: 40px 72px; display: grid; gap: 60px; }
+.narrow { max-width: 70ch; }
+a { color: var(--accent); }
+code, .rid { font: 500 12px/1 var(--mono); }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+.eyebrow { font: 500 12px/1.4 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); display: flex; gap: 14px; flex-wrap: wrap; }
+h1 { font: 800 clamp(26px, 4.4vw, 40px)/1.25 var(--display); margin-top: 14px; }
+.question { margin: 16px 0 0; color: var(--muted); font-size: 15px; border-left: 2px solid var(--rule); padding-left: 14px; }
+h2 { font: 600 22px/1.3 var(--display); display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+h2 small { font: 400 13px var(--body); color: var(--muted); }
+section { display: grid; gap: 18px; min-width: 0; }
+.lead { margin: 0; max-width: 70ch; }
+.rid { display: inline-block; padding: 3px 5px; margin: 2px 2px 0 0; border-radius: 3px; background: var(--accent-soft); color: var(--accent); text-decoration: none; vertical-align: 1px; }
+.rid:hover, .rid:focus-visible { outline: 1px solid var(--accent); }
+/* 한 줄 답 */
+.answer { font: 600 clamp(20px, 2.8vw, 26px)/1.55 var(--display); margin: 0; }
+.answer-box { display: grid; gap: 20px; }
+.arows { margin: 0; border-top: 1px solid var(--ink); }
+.arow { display: grid; grid-template-columns: 170px 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+.arow dt { font-weight: 600; }
+.arow dd { margin: 0; min-width: 0; }
+/* 서술형 해석 */
+.narrative { display: grid; gap: 14px; max-width: 70ch; }
+.narrative p { margin: 0; }
+/* 표 */
+.tablewrap { overflow-x: auto; border-top: 1px solid var(--ink); }
+table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 14px; }
+th { text-align: left; font: 500 11px var(--mono); letter-spacing: .05em; color: var(--muted); padding: 10px 8px; border-bottom: 1px solid var(--rule); }
+td { padding: 12px 8px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+td small { display: block; color: var(--muted); font-size: 12px; margin-top: 3px; }
+.num { font: 500 15px var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; }
+.muted { color: var(--muted); }
+.ind { font: 500 12px var(--mono); width: 150px; }
+.ind small { font-family: var(--body); }
+.tgt { font-weight: 600; width: 150px; }
+.asof { font: 400 13px var(--mono); white-space: nowrap; }
+.idc code { color: var(--muted); }
+.src { font-size: 12px; color: var(--muted); margin-top: 6px; }
+.src a { color: var(--muted); }
+.grade { font: 500 10px var(--mono); margin-left: 4px; padding: 1px 4px; border: 1px solid currentColor; border-radius: 2px; }
+.gC { color: var(--amber); }
+.warn, .wk { font: 500 11px var(--mono); color: var(--amber); background: var(--amber-soft); padding: 2px 6px; border-radius: 2px; white-space: nowrap; }
+.dir { font: 500 11px var(--mono); padding: 2px 7px; border-radius: 2px; color: var(--panel); white-space: nowrap; }
+.dir.up { background: var(--up); } .dir.down { background: var(--down); } .dir.flat { background: var(--flat); }
+.fstat { font: 500 11px var(--mono); border: 1px solid var(--accent); color: var(--accent); padding: 2px 6px; border-radius: 2px; white-space: nowrap; }
+/* 사건 */
+.timeline { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
+.timeline li { display: grid; grid-template-columns: 110px 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+.timeline time { font: 500 13px var(--mono); color: var(--muted); padding-top: 2px; }
+.timeline li > div { min-width: 0; }
+/* 시나리오 */
+.scens { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.scen { border-top: 3px solid var(--sc); background: var(--panel); padding: 18px 18px 14px; display: grid; gap: 14px; align-content: start; }
+.scen.opt { --sc: var(--opt); --scs: var(--opt-soft); }
+.scen.pes { --sc: var(--pes); --scs: var(--pes-soft); }
+.scen header { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.sk { font: 600 13px var(--mono); color: var(--sc); letter-spacing: .03em; }
+.scen header code { color: var(--muted); }
+.sstmt { margin: 0; font-size: 15px; }
+.ms { list-style: none; margin: 0; padding: 0 0 0 12px; border-left: 2px solid var(--scs); display: grid; gap: 8px; }
+.ms li { display: grid; grid-template-columns: 70px 1fr; gap: 10px; font-size: 14px; }
+.ms time { font: 500 12px var(--mono); color: var(--sc); padding-top: 2px; }
+.sdl { margin: 0; display: grid; gap: 6px; font-size: 13px; }
+.sdl div { display: grid; grid-template-columns: 70px 1fr; gap: 10px; }
+.sdl dt { color: var(--muted); }
+.sdl dd { margin: 0; min-width: 0; }
+.side { font: 500 11px var(--mono); padding: 2px 7px; border-radius: 2px; white-space: nowrap; margin-right: 4px; }
+.side.opt { color: var(--opt); background: var(--opt-soft); }
+.side.pes { color: var(--pes); background: var(--pes-soft); }
+.subhead { font: 600 15px var(--body); margin: 8px 0 0; }
+/* 사다리 */
+.ladder { border-top: 1px solid var(--ink); }
+.rung { display: grid; grid-template-columns: 150px 170px 170px 1fr; gap: 16px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+.rung[data-frontier="y"] { background: linear-gradient(90deg, var(--amber-soft), transparent 70%); }
+.stage b { display: block; font: 600 18px/1.2 var(--display); }
+.stage span { font: 400 12px var(--mono); color: var(--muted); }
+.region { display: block; font: 500 11px var(--mono); color: var(--muted); letter-spacing: .04em; margin-bottom: 4px; }
+.pips { display: flex; align-items: center; gap: 4px; }
+.pip { width: 16px; height: 8px; border: 1px solid var(--accent); border-radius: 1px; }
+.pip.on { background: var(--accent); }
+.lv { margin-left: 8px; font-size: 14px; font-weight: 500; }
+.why { margin: 0; font-size: 14px; color: var(--muted); min-width: 0; }
+.frontier-note { font-size: 13px; color: var(--amber); font-family: var(--mono); margin: 0; }
+footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 18px; display: grid; gap: 6px; }
+:target { background: var(--accent-soft); }
+@media (max-width: 760px) {
+  .rung { grid-template-columns: 1fr 1fr; }
+  .rung .stage, .rung .why { grid-column: 1 / -1; }
+  .scens { grid-template-columns: 1fr; }
+  .arow, .timeline li { grid-template-columns: 1fr; gap: 4px; }
+}
+
+/* 주도권 지도 (C2) */
+.own { font: 500 12px var(--mono); padding: 3px 8px; border-radius: 2px; white-space: nowrap; display: inline-block; }
+.own.brand { color: var(--up); background: var(--opt-soft); }
+.own.platform { color: var(--accent); background: var(--accent-soft); }
+.own.agent { color: var(--amber); background: var(--amber-soft); }
+.own.contest { color: var(--flat); border: 1px dashed var(--flat); }
+.mapgrid .rung { grid-template-columns: 130px 150px 150px 150px 1fr; }
+@media (max-width: 760px) { .mapgrid .rung { grid-template-columns: 1fr 1fr; } }
+/* 자율 수준 지도 (C4) */
+.mapgrid.auto .rung { grid-template-columns: 130px 220px 220px 1fr; }
+table.levels { min-width: 520px; }
+@media (max-width: 760px) { .mapgrid.auto .rung { grid-template-columns: 1fr; } }
+/* 역량 원장 (I1) */
+.mapgrid.ledger .rung { grid-template-columns: 200px 260px 1fr; }
+@media (max-width: 760px) { .mapgrid.ledger .rung { grid-template-columns: 1fr; } }
+
+/* I3 두 곡선 */
+.curves { display: grid; gap: 14px; margin: 8px 0 18px; }
+.curve { display: grid; grid-template-columns: 150px 1fr; gap: 12px; align-items: center; }
+.curve .cl { font: 600 13px var(--body); }
+.curve .cl small { display: block; font: 400 12px var(--mono); color: var(--muted); }
+.curve .bar { height: 26px; background: var(--accent-soft); border-radius: 2px; position: relative; }
+.curve .bar span { position: absolute; inset: 0 auto 0 0; display: flex; align-items: center; padding: 0 10px; font: 500 12px var(--mono); color: #fff; border-radius: 2px; white-space: nowrap; }
+.curve.inv .bar span { background: var(--accent); }
+.curve.rev .bar span { background: var(--up); }
+.gapnote { border-left: 3px solid var(--amber); padding: 6px 12px; background: var(--amber-soft); font-size: 14px; }
+.mapgrid.layers .rung { grid-template-columns: 150px 200px 110px 1fr; }
+@media (max-width: 720px) { .curve { grid-template-columns: 1fr; } .mapgrid.layers .rung { grid-template-columns: 1fr; } }
+
+/* S1 유입 저울 */
+.balance { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 8px 0 14px; }
+.balance .pan { border: 1px solid var(--rule); border-top: 3px solid var(--down); background: var(--panel); padding: 12px 16px; }
+.balance .pan.gain { border-top-color: var(--up); }
+.balance h4 { margin: 0 0 8px; font: 600 14px var(--body); }
+.balance ul { margin: 0; padding-left: 18px; font-size: 14px; line-height: 1.7; }
+@media (max-width: 720px) { .balance { grid-template-columns: 1fr; } }
+</style>
+<style>
+.sitebar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper); border-bottom: 1px solid var(--rule);
+  margin: 0 -20px; padding: 10px 20px; display: flex; gap: 14px; align-items: center; flex-wrap: wrap; font: 500 13px/1.4 var(--mono); }
+.sitebar a { color: var(--ink); text-decoration: none; }
+.sitebar a:hover, .sitebar a:focus-visible { text-decoration: underline; }
+.sitebar .crumb { color: var(--muted); }
+.sitebar .rounds { margin-left: auto; display: flex; gap: 8px; }
+.sitebar .rounds a[aria-current="page"] { color: var(--accent); }
+</style></head><body><nav class="sitebar" aria-label="사이트"><a href="../../index.html">AXblog</a><span class="crumb">/ LG Group AI / L4</span><span class="rounds"><a href="r1.html" aria-current=page>R1</a></span></nav><main>
+  <header class="narrow">
+    <div class="eyebrow"><span>LG Group AI</span><span>L4 · Enterprise AX / Agentic Operating Model</span><span>R1 기준 회차 · 2026-10-09</span></div>
+    <h1>LG의 AX는 목표에서 결과로 얼마나 넘어왔나</h1>
+    <p class="question">고정 질문 v1.0 — LG는 내부 업무와 외부 고객 사업에서 AI를 어떻게 실행 체계로 전환하며, 사용·품질·생산성·매출 성과는 무엇인가?</p>
+  </header>
+  <section class="answer-box"><h2>한 줄 답</h2>
+    <p class="answer narrow">2026년 10월 현재 LG의 AX는 계열사마다 단계가 다르다. LG CNS는 외부 사업화(상반기 AI·클라우드 매출 1조 6,714억 원, 전체의 59%)까지 왔고, LG디스플레이·LG에너지솔루션은 업무 단위 성과(설계 한 달→8시간, 리튬 가격 예측 정확도 90%+)를 공개했으며, LG전자는 업무 적용(LGenie 월 3만 명), LG화학은 교육 단계(3,000명)다. 목표는 전사 단위(엔솔 2028년 생산성 50%, LGD 30%)인데 공개된 결과는 업무 단위에 머물고, LG전자가 만든 업무 에이전트는 절반 이상(96개 중 50개)이 사라졌다. <a class="rid" href="#L4-I-001" title="계열사마다 AX 단계가 다르다. LG CNS는 외부 사업화(AI·클라우드 매출 59%), LG디스플레이와 LG에너지솔루션은 업무 단위 성과 공개, LG전자는 업무 적용(LGenie 월 3만 명), LG화학은 교육·도구 배포 단계다.">L4-I-001</a><a class="rid" href="#L4-I-002" title="목표는 전사 단위인데 결과는 업무 단위다. LG에너지솔루션 50%, LG디스플레이 30% 같은 전사 생산성 목표에 대응하는 전사 결과치는 아직 어느 계열사도 공개하지 않았다. 공개된 결과는 설계·품질·가격 예측 같은 개별 업무의 개선이다.">L4-I-002</a><a class="rid" href="#L4-I-003" title="업무 에이전트의 절반은 살아남지 못한다. LG전자 사례에서 96개 중 46개만 남았고, 기술에서 출발한 에이전트가 사라졌다. AX의 실행 체계는 에이전트를 많이 만드는 것이 아니라 현업 문제를 먼저 정의하는 방식으로 바뀌고 있다.">L4-I-003</a><a class="rid" href="#L4-I-004" title="그룹 내부가 외부 AX 사업의 시험장 역할을 한다. Palantir 협력은 LG 계열사 품질 관리 PoC를 거쳐 본 계약이 됐고, Claude Enterprise도 그룹 적용 뒤 외부로 넓힌다. LG CNS는 이 경로로 AI·클라우드 매출을 전체의 59%까지 키웠다.">L4-I-004</a></p><dl class="arows"><div class="arow"><dt>외부 사업화</dt><dd>LG CNS. AI·클라우드 매출 59%, Palantir(그룹 PoC → 본 계약), Claude Enterprise 그룹 통합 계약, ChatGPT Enterprise 고객 약 10곳. <a class="rid" href="#L4-M-007" title="LG CNS의 2026년 상반기 AI·클라우드 매출은 1조 6,714억 원으로 전체 매출의 약 59%다. 대외 매출 비중은 51.1%다.">L4-M-007</a><a class="rid" href="#L4-E-002" title="LG CNS가 Palantir와 전략적 파트너십을 맺었다. LG 계열사 한 곳의 품질 관리 영역 PoC를 마친 뒤 본 계약으로 이어졌고, 전방배치 엔지니어링(FDE) 조직을 만들어 LG그룹부터 적용한 뒤 외부로 넓힌다.">L4-E-002</a><a class="rid" href="#L4-E-007" title="LG CNS가 Anthropic과 Claude Enterprise 도입 계약을 맺었다. LG CNS 전 직원이 쓰고, LG그룹 전 계열사로 적용할 수 있는 통합 계약이며, 외부 기업 도입도 지원한다.">L4-E-007</a><a class="rid" href="#L4-M-008" title="LG CNS가 2월부터 공급하는 ChatGPT Enterprise는 1분기 기준 약 10곳의 고객이 계약했다.">L4-M-008</a></dd></div><div class="arow"><dt>성과 공개</dt><dd>LG디스플레이(설계 30일→8시간, 품질 3주→2일, 연 2,000억 원), LG에너지솔루션(리튬 가격 예측 90%+, ESS 셀 100만 개 학습). <a class="rid" href="#L4-M-004" title="LG디스플레이는 AI로 이형 디스플레이 설계 기간을 한 달에서 8시간으로, 품질 개선 기간을 평균 3주에서 2일로 줄였다. OLED AI 생산 체계로 연 2,000억 원 이상의 원가 효과를 보고, 사내 AI 비서 Hi-D 도입 후 일일 업무 생산성이 약 10% 올랐다고 밝혔다.">L4-M-004</a><a class="rid" href="#L4-M-005" title="LG에너지솔루션이 LG AI연구원과 만든 리튬 가격 예측 모델은 정확도 90% 이상으로 알려졌다. ESS 안전진단 체계는 배터리 셀 100만 개 이상의 데이터를 학습했고, 500개 이상 ESS 사이트에서 연 100TB 넘는 데이터를 분석한다.">L4-M-005</a></dd></div><div class="arow"><dt>업무 적용</dt><dd>LG전자. LGenie 월 3만 명, 에이전트 96개 중 46개 생존. <a class="rid" href="#L4-M-001" title="LG전자 사내 AX 플랫폼 LGenie의 월간 사용자는 약 3만 명이다.">L4-M-001</a><a class="rid" href="#L4-M-002" title="LG전자가 지난해 개발한 업무 AI 에이전트 96개 가운데 지금도 쓰이는 것은 46개로 절반이 안 된다. 기술(OCR·비전 AI)부터 시작해 쓸 곳을 찾은 경우가 실패했고, 현업의 반복 비효율에서 출발한 경우가 성공했다.">L4-M-002</a></dd></div><div class="arow"><dt>교육·도구 배포</dt><dd>LG화학. AX 교육 3,000명(사무직 절반), 1인 1에이전트. <a class="rid" href="#L4-M-006" title="LG화학의 AX 교육 이수자가 3,000명을 넘었다. 지난 반년간 사무직의 절반이 교육을 마쳤고, CEO를 포함한 리더 약 1,000명이 먼저 교육받았다. &#x27;1인 1에이전트&#x27; 방식으로 개인 업무용 AI 에이전트를 만든다.">L4-M-006</a></dd></div><div class="arow"><dt>목표 vs 결과</dt><dd>전사 생산성 목표(엔솔 50%·LGD 30%)에 대응하는 전사 결과치는 아직 공개되지 않음. <a class="rid" href="#L4-M-003" title="LG에너지솔루션은 2028년까지 AX로 전사 생산성을 50% 개선하겠다고 밝혔다. 연초의 &#x27;2030년까지 30%&#x27; 목표를 앞당기고 높인 것이다. LG디스플레이는 3년 안에 업무 생산성 30% 이상 향상이 목표다.">L4-M-003</a><a class="rid" href="#L4-I-002" title="목표는 전사 단위인데 결과는 업무 단위다. LG에너지솔루션 50%, LG디스플레이 30% 같은 전사 생산성 목표에 대응하는 전사 결과치는 아직 어느 계열사도 공개하지 않았다. 공개된 결과는 설계·품질·가격 예측 같은 개별 업무의 개선이다.">L4-I-002</a></dd></div></dl></section>
+  <section><h2>해석</h2><div class="narrative"><p>계열사마다 AX의 단계가 다르다. LG CNS는 상반기 AI·클라우드 매출 1조 6,714억 원으로 전체의 약 59%를 차지해 외부 사업화 단계에 있다. LG디스플레이와 LG에너지솔루션은 업무 단위 성과를 숫자로 공개했고, LG전자는 사내 플랫폼 LGenie를 월 3만 명이 쓰는 업무 적용 단계, LG화학은 반년 만에 사무직 절반(3,000명)이 교육을 마친 교육·도구 배포 단계다. <a class="rid" href="#L4-M-007" title="LG CNS의 2026년 상반기 AI·클라우드 매출은 1조 6,714억 원으로 전체 매출의 약 59%다. 대외 매출 비중은 51.1%다.">L4-M-007</a><a class="rid" href="#L4-M-004" title="LG디스플레이는 AI로 이형 디스플레이 설계 기간을 한 달에서 8시간으로, 품질 개선 기간을 평균 3주에서 2일로 줄였다. OLED AI 생산 체계로 연 2,000억 원 이상의 원가 효과를 보고, 사내 AI 비서 Hi-D 도입 후 일일 업무 생산성이 약 10% 올랐다고 밝혔다.">L4-M-004</a><a class="rid" href="#L4-M-005" title="LG에너지솔루션이 LG AI연구원과 만든 리튬 가격 예측 모델은 정확도 90% 이상으로 알려졌다. ESS 안전진단 체계는 배터리 셀 100만 개 이상의 데이터를 학습했고, 500개 이상 ESS 사이트에서 연 100TB 넘는 데이터를 분석한다.">L4-M-005</a><a class="rid" href="#L4-M-001" title="LG전자 사내 AX 플랫폼 LGenie의 월간 사용자는 약 3만 명이다.">L4-M-001</a><a class="rid" href="#L4-M-006" title="LG화학의 AX 교육 이수자가 3,000명을 넘었다. 지난 반년간 사무직의 절반이 교육을 마쳤고, CEO를 포함한 리더 약 1,000명이 먼저 교육받았다. &#x27;1인 1에이전트&#x27; 방식으로 개인 업무용 AI 에이전트를 만든다.">L4-M-006</a><a class="rid" href="#L4-I-001" title="계열사마다 AX 단계가 다르다. LG CNS는 외부 사업화(AI·클라우드 매출 59%), LG디스플레이와 LG에너지솔루션은 업무 단위 성과 공개, LG전자는 업무 적용(LGenie 월 3만 명), LG화학은 교육·도구 배포 단계다.">L4-I-001</a></p><p>목표는 전사 단위인데 결과는 업무 단위다. LG에너지솔루션은 2028년까지 전사 생산성 50% 개선을, LG디스플레이는 3년 내 30% 향상을 내걸었다. 공개된 결과는 LG디스플레이의 설계 기간 한 달→8시간, 품질 개선 3주→2일, 연 2,000억 원 원가 효과, LG에너지솔루션의 리튬 가격 예측 정확도 90% 이상처럼 개별 업무의 개선이다. 전사 결과치를 공개한 계열사는 아직 없다. <a class="rid" href="#L4-M-003" title="LG에너지솔루션은 2028년까지 AX로 전사 생산성을 50% 개선하겠다고 밝혔다. 연초의 &#x27;2030년까지 30%&#x27; 목표를 앞당기고 높인 것이다. LG디스플레이는 3년 안에 업무 생산성 30% 이상 향상이 목표다.">L4-M-003</a><a class="rid" href="#L4-M-004" title="LG디스플레이는 AI로 이형 디스플레이 설계 기간을 한 달에서 8시간으로, 품질 개선 기간을 평균 3주에서 2일로 줄였다. OLED AI 생산 체계로 연 2,000억 원 이상의 원가 효과를 보고, 사내 AI 비서 Hi-D 도입 후 일일 업무 생산성이 약 10% 올랐다고 밝혔다.">L4-M-004</a><a class="rid" href="#L4-M-005" title="LG에너지솔루션이 LG AI연구원과 만든 리튬 가격 예측 모델은 정확도 90% 이상으로 알려졌다. ESS 안전진단 체계는 배터리 셀 100만 개 이상의 데이터를 학습했고, 500개 이상 ESS 사이트에서 연 100TB 넘는 데이터를 분석한다.">L4-M-005</a><a class="rid" href="#L4-I-002" title="목표는 전사 단위인데 결과는 업무 단위다. LG에너지솔루션 50%, LG디스플레이 30% 같은 전사 생산성 목표에 대응하는 전사 결과치는 아직 어느 계열사도 공개하지 않았다. 공개된 결과는 설계·품질·가격 예측 같은 개별 업무의 개선이다.">L4-I-002</a><a class="rid" href="#L4-I-006" title="AI가 업무 시간 단축을 넘어 의사결정 품질에도 쓰인다. LG에너지솔루션의 리튬 가격 예측은 정확도 90% 이상으로 알려졌고, ESS 안전진단은 셀 100만 개·사이트 500곳의 데이터를 쓴다. CEO가 매월 AI 거버넌스 위원회를 주재한다.">L4-I-006</a></p><p>업무 에이전트의 절반은 살아남지 못한다. LG전자가 5월 AX Fair에서 공개한 바로는 지난해 만든 에이전트 96개 중 46개만 쓰이고 있다. OCR·비전 AI 같은 기술에서 출발해 쓸 곳을 찾은 에이전트는 사라졌고, 현업의 반복 비효율에서 출발한 에이전트가 남았다. 실행 체계의 초점이 &#x27;많이 만들기&#x27;에서 &#x27;문제부터 정의하기&#x27;로 옮겨가고 있다. <a class="rid" href="#L4-M-002" title="LG전자가 지난해 개발한 업무 AI 에이전트 96개 가운데 지금도 쓰이는 것은 46개로 절반이 안 된다. 기술(OCR·비전 AI)부터 시작해 쓸 곳을 찾은 경우가 실패했고, 현업의 반복 비효율에서 출발한 경우가 성공했다.">L4-M-002</a><a class="rid" href="#L4-E-005" title="LG전자가 AX Fair 2026에서 지난해 만든 업무 에이전트 96개 중 46개만 살아남았다고 공개했다. &#x27;기술보다 현업의 문제를 먼저 정의하는 것&#x27;이 AX의 핵심이라고 했다.">L4-E-005</a><a class="rid" href="#L4-I-003" title="업무 에이전트의 절반은 살아남지 못한다. LG전자 사례에서 96개 중 46개만 남았고, 기술에서 출발한 에이전트가 사라졌다. AX의 실행 체계는 에이전트를 많이 만드는 것이 아니라 현업 문제를 먼저 정의하는 방식으로 바뀌고 있다.">L4-I-003</a></p><p>그룹 내부는 외부 AX 사업의 시험장이다. LG CNS의 Palantir 협력은 LG 계열사 품질 관리 PoC를 거쳐 본 계약이 됐고, 전방배치 엔지니어링 조직을 만들어 그룹부터 적용한 뒤 외부로 넓힌다. 6월 Anthropic과 맺은 Claude Enterprise 계약도 그룹 전 계열사에 적용할 수 있는 통합 계약이며, 외부 기업 도입까지 지원한다. <a class="rid" href="#L4-E-002" title="LG CNS가 Palantir와 전략적 파트너십을 맺었다. LG 계열사 한 곳의 품질 관리 영역 PoC를 마친 뒤 본 계약으로 이어졌고, 전방배치 엔지니어링(FDE) 조직을 만들어 LG그룹부터 적용한 뒤 외부로 넓힌다.">L4-E-002</a><a class="rid" href="#L4-E-007" title="LG CNS가 Anthropic과 Claude Enterprise 도입 계약을 맺었다. LG CNS 전 직원이 쓰고, LG그룹 전 계열사로 적용할 수 있는 통합 계약이며, 외부 기업 도입도 지원한다.">L4-E-007</a><a class="rid" href="#L4-I-004" title="그룹 내부가 외부 AX 사업의 시험장 역할을 한다. Palantir 협력은 LG 계열사 품질 관리 PoC를 거쳐 본 계약이 됐고, Claude Enterprise도 그룹 적용 뒤 외부로 넓힌다. LG CNS는 이 경로로 AI·클라우드 매출을 전체의 59%까지 키웠다.">L4-I-004</a></p><p>LG의 AX는 여러 외부 플랫폼을 조합한다. 데이터 통합과 의사결정은 Palantir, 그룹 업무 AI는 Claude, 외부 재판매는 ChatGPT Enterprise(1분기 고객 약 10곳)를 쓴다. 자체 모델 EXAONE을 포함한 역할 분담은 공개되지 않았다. LG에너지솔루션은 CEO가 매월 AI 거버넌스 위원회를 주재하며 도입·보안·변화관리를 점검한다. <a class="rid" href="#L4-E-002" title="LG CNS가 Palantir와 전략적 파트너십을 맺었다. LG 계열사 한 곳의 품질 관리 영역 PoC를 마친 뒤 본 계약으로 이어졌고, 전방배치 엔지니어링(FDE) 조직을 만들어 LG그룹부터 적용한 뒤 외부로 넓힌다.">L4-E-002</a><a class="rid" href="#L4-E-007" title="LG CNS가 Anthropic과 Claude Enterprise 도입 계약을 맺었다. LG CNS 전 직원이 쓰고, LG그룹 전 계열사로 적용할 수 있는 통합 계약이며, 외부 기업 도입도 지원한다.">L4-E-007</a><a class="rid" href="#L4-M-008" title="LG CNS가 2월부터 공급하는 ChatGPT Enterprise는 1분기 기준 약 10곳의 고객이 계약했다.">L4-M-008</a><a class="rid" href="#L4-E-003" title="LG에너지솔루션 CEO가 AX로 2028년까지 생산성 50% 개선 목표를 밝히고, 매월 CEO가 주재하는 AI 거버넌스 위원회를 운영한다고 했다.">L4-E-003</a><a class="rid" href="#L4-I-005" title="LG의 AX는 여러 외부 플랫폼을 조합한다. 데이터 통합·의사결정은 Palantir, 그룹 통합 업무 AI는 Anthropic Claude, 외부 재판매는 OpenAI ChatGPT Enterprise(고객 약 10곳)를 쓴다. 자체 모델 EXAONE과의 역할 분담은 공개되지 않았다.">L4-I-005</a><a class="rid" href="#L4-I-007" title="사용과 교육은 넓게 퍼지고 있다. LG전자 LGenie는 월 3만 명이 쓰고, LG화학은 반년 만에 사무직 절반이 AX 교육을 마쳤다. 다만 사용률과 시간 절감 같은 결과치는 공개되지 않았다.">L4-I-007</a></p></div>
+    <div class="tablewrap"><table><thead><tr><th>방향</th><th>대상</th><th>해석</th><th>근거</th><th>기록</th></tr></thead><tbody><tr id="L4-I-001"><td><span class="dir flat">중립</span></td>
+  <td class="tgt">계열사별 AX 단계</td><td>계열사마다 AX 단계가 다르다. LG CNS는 외부 사업화(AI·클라우드 매출 59%), LG디스플레이와 LG에너지솔루션은 업무 단위 성과 공개, LG전자는 업무 적용(LGenie 월 3만 명), LG화학은 교육·도구 배포 단계다.</td><td><a class="rid" href="#L4-M-007" title="LG CNS의 2026년 상반기 AI·클라우드 매출은 1조 6,714억 원으로 전체 매출의 약 59%다. 대외 매출 비중은 51.1%다.">L4-M-007</a><a class="rid" href="#L4-M-004" title="LG디스플레이는 AI로 이형 디스플레이 설계 기간을 한 달에서 8시간으로, 품질 개선 기간을 평균 3주에서 2일로 줄였다. OLED AI 생산 체계로 연 2,000억 원 이상의 원가 효과를 보고, 사내 AI 비서 Hi-D 도입 후 일일 업무 생산성이 약 10% 올랐다고 밝혔다.">L4-M-004</a><a class="rid" href="#L4-M-005" title="LG에너지솔루션이 LG AI연구원과 만든 리튬 가격 예측 모델은 정확도 90% 이상으로 알려졌다. ESS 안전진단 체계는 배터리 셀 100만 개 이상의 데이터를 학습했고, 500개 이상 ESS 사이트에서 연 100TB 넘는 데이터를 분석한다.">L4-M-005</a><a class="rid" href="#L4-M-001" title="LG전자 사내 AX 플랫폼 LGenie의 월간 사용자는 약 3만 명이다.">L4-M-001</a><a class="rid" href="#L4-M-006" title="LG화학의 AX 교육 이수자가 3,000명을 넘었다. 지난 반년간 사무직의 절반이 교육을 마쳤고, CEO를 포함한 리더 약 1,000명이 먼저 교육받았다. &#x27;1인 1에이전트&#x27; 방식으로 개인 업무용 AI 에이전트를 만든다.">L4-M-006</a></td><td class="idc"><code>L4-I-001</code></td></tr><tr id="L4-I-002"><td><span class="dir flat">중립</span></td>
+  <td class="tgt">목표치와 결과치</td><td>목표는 전사 단위인데 결과는 업무 단위다. LG에너지솔루션 50%, LG디스플레이 30% 같은 전사 생산성 목표에 대응하는 전사 결과치는 아직 어느 계열사도 공개하지 않았다. 공개된 결과는 설계·품질·가격 예측 같은 개별 업무의 개선이다.</td><td><a class="rid" href="#L4-M-003" title="LG에너지솔루션은 2028년까지 AX로 전사 생산성을 50% 개선하겠다고 밝혔다. 연초의 &#x27;2030년까지 30%&#x27; 목표를 앞당기고 높인 것이다. LG디스플레이는 3년 안에 업무 생산성 30% 이상 향상이 목표다.">L4-M-003</a><a class="rid" href="#L4-M-004" title="LG디스플레이는 AI로 이형 디스플레이 설계 기간을 한 달에서 8시간으로, 품질 개선 기간을 평균 3주에서 2일로 줄였다. OLED AI 생산 체계로 연 2,000억 원 이상의 원가 효과를 보고, 사내 AI 비서 Hi-D 도입 후 일일 업무 생산성이 약 10% 올랐다고 밝혔다.">L4-M-004</a><a class="rid" href="#L4-M-005" title="LG에너지솔루션이 LG AI연구원과 만든 리튬 가격 예측 모델은 정확도 90% 이상으로 알려졌다. ESS 안전진단 체계는 배터리 셀 100만 개 이상의 데이터를 학습했고, 500개 이상 ESS 사이트에서 연 100TB 넘는 데이터를 분석한다.">L4-M-005</a></td><td class="idc"><code>L4-I-002</code></td></tr><tr id="L4-I-003"><td><span class="dir flat">중립</span></td>
+  <td class="tgt">에이전트 생존율</td><td>업무 에이전트의 절반은 살아남지 못한다. LG전자 사례에서 96개 중 46개만 남았고, 기술에서 출발한 에이전트가 사라졌다. AX의 실행 체계는 에이전트를 많이 만드는 것이 아니라 현업 문제를 먼저 정의하는 방식으로 바뀌고 있다.</td><td><a class="rid" href="#L4-M-002" title="LG전자가 지난해 개발한 업무 AI 에이전트 96개 가운데 지금도 쓰이는 것은 46개로 절반이 안 된다. 기술(OCR·비전 AI)부터 시작해 쓸 곳을 찾은 경우가 실패했고, 현업의 반복 비효율에서 출발한 경우가 성공했다.">L4-M-002</a><a class="rid" href="#L4-E-005" title="LG전자가 AX Fair 2026에서 지난해 만든 업무 에이전트 96개 중 46개만 살아남았다고 공개했다. &#x27;기술보다 현업의 문제를 먼저 정의하는 것&#x27;이 AX의 핵심이라고 했다.">L4-E-005</a></td><td class="idc"><code>L4-I-003</code></td></tr><tr id="L4-I-004"><td><span class="dir up">강화</span></td>
+  <td class="tgt">외부 사업화 경로</td><td>그룹 내부가 외부 AX 사업의 시험장 역할을 한다. Palantir 협력은 LG 계열사 품질 관리 PoC를 거쳐 본 계약이 됐고, Claude Enterprise도 그룹 적용 뒤 외부로 넓힌다. LG CNS는 이 경로로 AI·클라우드 매출을 전체의 59%까지 키웠다.</td><td><a class="rid" href="#L4-E-002" title="LG CNS가 Palantir와 전략적 파트너십을 맺었다. LG 계열사 한 곳의 품질 관리 영역 PoC를 마친 뒤 본 계약으로 이어졌고, 전방배치 엔지니어링(FDE) 조직을 만들어 LG그룹부터 적용한 뒤 외부로 넓힌다.">L4-E-002</a><a class="rid" href="#L4-E-007" title="LG CNS가 Anthropic과 Claude Enterprise 도입 계약을 맺었다. LG CNS 전 직원이 쓰고, LG그룹 전 계열사로 적용할 수 있는 통합 계약이며, 외부 기업 도입도 지원한다.">L4-E-007</a><a class="rid" href="#L4-M-007" title="LG CNS의 2026년 상반기 AI·클라우드 매출은 1조 6,714억 원으로 전체 매출의 약 59%다. 대외 매출 비중은 51.1%다.">L4-M-007</a></td><td class="idc"><code>L4-I-004</code></td></tr><tr id="L4-I-005"><td><span class="dir flat">중립</span></td>
+  <td class="tgt">외부 플랫폼 조합</td><td>LG의 AX는 여러 외부 플랫폼을 조합한다. 데이터 통합·의사결정은 Palantir, 그룹 통합 업무 AI는 Anthropic Claude, 외부 재판매는 OpenAI ChatGPT Enterprise(고객 약 10곳)를 쓴다. 자체 모델 EXAONE과의 역할 분담은 공개되지 않았다.</td><td><a class="rid" href="#L4-E-002" title="LG CNS가 Palantir와 전략적 파트너십을 맺었다. LG 계열사 한 곳의 품질 관리 영역 PoC를 마친 뒤 본 계약으로 이어졌고, 전방배치 엔지니어링(FDE) 조직을 만들어 LG그룹부터 적용한 뒤 외부로 넓힌다.">L4-E-002</a><a class="rid" href="#L4-E-007" title="LG CNS가 Anthropic과 Claude Enterprise 도입 계약을 맺었다. LG CNS 전 직원이 쓰고, LG그룹 전 계열사로 적용할 수 있는 통합 계약이며, 외부 기업 도입도 지원한다.">L4-E-007</a><a class="rid" href="#L4-M-008" title="LG CNS가 2월부터 공급하는 ChatGPT Enterprise는 1분기 기준 약 10곳의 고객이 계약했다.">L4-M-008</a></td><td class="idc"><code>L4-I-005</code></td></tr><tr id="L4-I-006"><td><span class="dir up">강화</span></td>
+  <td class="tgt">의사결정 품질</td><td>AI가 업무 시간 단축을 넘어 의사결정 품질에도 쓰인다. LG에너지솔루션의 리튬 가격 예측은 정확도 90% 이상으로 알려졌고, ESS 안전진단은 셀 100만 개·사이트 500곳의 데이터를 쓴다. CEO가 매월 AI 거버넌스 위원회를 주재한다.</td><td><a class="rid" href="#L4-M-005" title="LG에너지솔루션이 LG AI연구원과 만든 리튬 가격 예측 모델은 정확도 90% 이상으로 알려졌다. ESS 안전진단 체계는 배터리 셀 100만 개 이상의 데이터를 학습했고, 500개 이상 ESS 사이트에서 연 100TB 넘는 데이터를 분석한다.">L4-M-005</a><a class="rid" href="#L4-E-003" title="LG에너지솔루션 CEO가 AX로 2028년까지 생산성 50% 개선 목표를 밝히고, 매월 CEO가 주재하는 AI 거버넌스 위원회를 운영한다고 했다.">L4-E-003</a></td><td class="idc"><code>L4-I-006</code></td></tr><tr id="L4-I-007"><td><span class="dir up">강화</span></td>
+  <td class="tgt">확산</td><td>사용과 교육은 넓게 퍼지고 있다. LG전자 LGenie는 월 3만 명이 쓰고, LG화학은 반년 만에 사무직 절반이 AX 교육을 마쳤다. 다만 사용률과 시간 절감 같은 결과치는 공개되지 않았다.</td><td><a class="rid" href="#L4-M-001" title="LG전자 사내 AX 플랫폼 LGenie의 월간 사용자는 약 3만 명이다.">L4-M-001</a><a class="rid" href="#L4-M-006" title="LG화학의 AX 교육 이수자가 3,000명을 넘었다. 지난 반년간 사무직의 절반이 교육을 마쳤고, CEO를 포함한 리더 약 1,000명이 먼저 교육받았다. &#x27;1인 1에이전트&#x27; 방식으로 개인 업무용 AI 에이전트를 만든다.">L4-M-006</a></td><td class="idc"><code>L4-I-007</code></td></tr></tbody></table></div></section>
+  <section><h2>주요 사건 <small>최신순 · 원문 확인된 것만</small></h2><p class="lead">3월 Palantir, 6월 Anthropic과의 계약이 LG AX의 외부 플랫폼 축을 만들었다. 그 사이 LG에너지솔루션은 2028년 생산성 50% 목표를, LG전자는 에이전트 생존율 48%라는 내부 교훈을, LG화학은 교육 3,000명 돌파를 밝혔다.</p><ul class="timeline"><li id="L4-E-008"><time>2026-09-23</time><div><b>LG CNS</b> LG CNS 반기보고서에서 상반기 AI·클라우드 매출 1조 6,714억 원(약 59%)이 확인됐다.
+  <div class="src"><a href="https://www.thelec.kr/news/articleView.html?idxno=62708" target="_blank" rel="noopener">디일렉 (LG CNS 반기보고서)</a><span class="grade gB">B</span> <code>L4-E-008</code></div></div></li><li id="L4-E-007"><time>2026-06-09</time><div><b>LG CNS·Anthropic</b> LG CNS가 Anthropic과 Claude Enterprise 도입 계약을 맺었다. LG CNS 전 직원이 쓰고, LG그룹 전 계열사로 적용할 수 있는 통합 계약이며, 외부 기업 도입도 지원한다.
+  <div class="src"><a href="https://view.asiae.co.kr/article/2026060908300307384" target="_blank" rel="noopener">아시아경제 (LG CNS 발표)</a><span class="grade gB">B</span> <code>L4-E-007</code></div></div></li><li id="L4-E-006"><time>2026-05-28</time><div><b>LG화학</b> LG화학이 AX 교육 이수자 3,000명 돌파와 &#x27;1인 1에이전트&#x27; 방식을 발표했다.
+  <div class="src"><a href="https://ceoscoredaily.com/page/view/2026052809581976650" target="_blank" rel="noopener">CEO스코어데일리 (LG화학 발표)</a><span class="grade gB">B</span> <code>L4-E-006</code></div></div></li><li id="L4-E-005"><time>2026-05-27</time><div><b>LG전자</b> LG전자가 AX Fair 2026에서 지난해 만든 업무 에이전트 96개 중 46개만 살아남았다고 공개했다. &#x27;기술보다 현업의 문제를 먼저 정의하는 것&#x27;이 AX의 핵심이라고 했다.
+  <div class="src"><a href="https://v.daum.net/v/20260527175602742" target="_blank" rel="noopener">다음 뉴스 (AX Fair 2026 현장)</a><span class="grade gB">B</span> <code>L4-E-005</code></div></div></li><li id="L4-E-004"><time>2026-04-30</time><div><b>LG CNS</b> LG CNS가 1분기 실적에서 AI·클라우드 매출 7,654억 원(전체의 약 58%)과 ChatGPT Enterprise 고객 약 10곳을 밝혔다.
+  <div class="src"><a href="https://byline.network/2026/04/30-525/" target="_blank" rel="noopener">바이라인네트워크 (LG CNS 1분기 실적)</a><span class="grade gB">B</span> <code>L4-E-004</code></div></div></li><li id="L4-E-003"><time>2026-04-13</time><div><b>LG에너지솔루션</b> LG에너지솔루션 CEO가 AX로 2028년까지 생산성 50% 개선 목표를 밝히고, 매월 CEO가 주재하는 AI 거버넌스 위원회를 운영한다고 했다.
+  <div class="src"><a href="https://v.daum.net/v/20260427104536341" target="_blank" rel="noopener">다음 뉴스</a><span class="grade gB">B</span> <code>L4-E-003</code></div></div></li><li id="L4-E-002"><time>2026-03-12</time><div><b>LG CNS·Palantir</b> LG CNS가 Palantir와 전략적 파트너십을 맺었다. LG 계열사 한 곳의 품질 관리 영역 PoC를 마친 뒤 본 계약으로 이어졌고, 전방배치 엔지니어링(FDE) 조직을 만들어 LG그룹부터 적용한 뒤 외부로 넓힌다.
+  <div class="src"><a href="https://byline.network/2026/03/12-548/" target="_blank" rel="noopener">바이라인네트워크 (LG CNS 발표)</a><span class="grade gB">B</span> <code>L4-E-002</code></div></div></li><li id="L4-E-001"><time>2025-08-05</time><div><b>LG디스플레이</b> LG디스플레이가 AX 성과(설계 30일→8시간, 품질 개선 3주→2일, 연 2,000억 원 원가 효과)를 공개하고 3년 내 생산성 30% 목표를 밝혔다.
+  <div class="src"><a href="https://www.ajunews.com/view/20250805141250999" target="_blank" rel="noopener">아주경제 (LG디스플레이 AX 세미나)</a><span class="grade gB">B</span> <code>L4-E-001</code></div></div></li></ul></section>
+  <section><h2>전망 <small>2027년 말까지, 목표가 결과가 될까</small></h2><p class="lead">2027년 말을 기준으로 두 시나리오를 세웠다. 갈림길은 계열사가 전사 생산성 결과치를 공개하는지, 그리고 LG CNS가 그룹에서 검증한 AX를 외부 고객에 파는지다.</p>
+    <div class="scens"><article class="scen opt" id="L4-F-101"><header><span class="sk">낙관 · Optimistic</span><code>L4-F-101</code></header>
+  <p class="sstmt">2027년 말까지 LG의 AX가 목표에서 결과로 넘어간다. 두 곳 이상 계열사가 전사 생산성 개선 결과치를 공개하고, LG CNS가 그룹에서 검증한 Palantir·Claude 기반 AX를 외부 고객에 팔며, AI·클라우드 매출 비중이 60%를 넘는다.</p><ol class="ms"><li><time>2026-12</time><span>다른 계열사 Claude 전사 도입</span></li><li><time>2027-03</time><span>엔솔 2026 생산성 실적치 공개</span></li><li><time>2027-06</time><span>Palantir 기반 외부 고객 계약</span></li></ol>
+  <dl class="sdl"><div><dt>판정 시점</dt><dd>2027-12-31</dd></div><div><dt>판정 방법</dt><dd>세 가지 중 두 가지 이상 충족 시 적중: (1) 두 곳 이상 계열사가 전사 생산성 개선 결과치(%) 공개 (2) LG CNS의 Palantir 또는 Claude 기반 외부 고객 계약 공개 (3) LG CNS 2027년 AI·클라우드 매출 비중 60% 이상</dd></div>
+  <div><dt>전제</dt><dd>없음</dd></div><div><dt>근거</dt><dd><a class="rid" href="#L4-M-003" title="LG에너지솔루션은 2028년까지 AX로 전사 생산성을 50% 개선하겠다고 밝혔다. 연초의 &#x27;2030년까지 30%&#x27; 목표를 앞당기고 높인 것이다. LG디스플레이는 3년 안에 업무 생산성 30% 이상 향상이 목표다.">L4-M-003</a><a class="rid" href="#L4-E-002" title="LG CNS가 Palantir와 전략적 파트너십을 맺었다. LG 계열사 한 곳의 품질 관리 영역 PoC를 마친 뒤 본 계약으로 이어졌고, 전방배치 엔지니어링(FDE) 조직을 만들어 LG그룹부터 적용한 뒤 외부로 넓힌다.">L4-E-002</a><a class="rid" href="#L4-M-007" title="LG CNS의 2026년 상반기 AI·클라우드 매출은 1조 6,714억 원으로 전체 매출의 약 59%다. 대외 매출 비중은 51.1%다.">L4-M-007</a></dd></div></dl></article><article class="scen pes" id="L4-F-102"><header><span class="sk">비관 · Pessimistic</span><code>L4-F-102</code></header>
+  <p class="sstmt">2027년 말까지 도구와 교육은 퍼지지만 결과는 개별 업무 단위에 머문다. 전사 생산성 결과치는 공개되지 않고, 에이전트는 계속 만들어지고 사라지며, 외부 플랫폼이 늘어날수록 데이터·권한·비용 관리가 복잡해진다.</p><ol class="ms"><li><time>2027-03</time><span>전사 생산성 결과치 미공개</span></li><li><time>2027-06</time><span>Palantir 외부 고객 미발표</span></li><li><time>2027-12</time><span>AI·클라우드 매출 비중 정체</span></li></ol>
+  <dl class="sdl"><div><dt>판정 시점</dt><dd>2027-12-31</dd></div><div><dt>판정 방법</dt><dd>낙관 시나리오의 판정 조건 세 가지 중 하나 이하만 충족 시 적중</dd></div>
+  <div><dt>전제</dt><dd>없음</dd></div><div><dt>근거</dt><dd><a class="rid" href="#L4-M-002" title="LG전자가 지난해 개발한 업무 AI 에이전트 96개 가운데 지금도 쓰이는 것은 46개로 절반이 안 된다. 기술(OCR·비전 AI)부터 시작해 쓸 곳을 찾은 경우가 실패했고, 현업의 반복 비효율에서 출발한 경우가 성공했다.">L4-M-002</a><a class="rid" href="#L4-M-003" title="LG에너지솔루션은 2028년까지 AX로 전사 생산성을 50% 개선하겠다고 밝혔다. 연초의 &#x27;2030년까지 30%&#x27; 목표를 앞당기고 높인 것이다. LG디스플레이는 3년 안에 업무 생산성 30% 이상 향상이 목표다.">L4-M-003</a><a class="rid" href="#L4-M-008" title="LG CNS가 2월부터 공급하는 ChatGPT Enterprise는 1분기 기준 약 10곳의 고객이 계약했다.">L4-M-008</a></dd></div></dl></article></div>
+    <h3 class="subhead">세부 판정 근거</h3>
+    <p class="lead muted">각 세부 전망이 적중하거나 빗나갔을 때 어느 시나리오 쪽 신호인지 표시했다. 확인 시점이 오면 확인 방법대로 판정한다.</p>
+    <div class="tablewrap"><table><thead><tr><th>세부 전망</th><th>확인 시점</th><th>적중 시</th><th>빗나갈 시</th><th>상태</th><th>근거</th></tr></thead><tbody><tr id="L4-F-003"><td class="stmt">2026년 말까지 LG CNS 외 LG 계열사 한 곳 이상이 Claude 전사 도입을 발표할 것이다.<small>확인 방법: 계열사 공식 발표 또는 주요 언론 보도 확인</small></td>
+  <td class="asof">2026-12-31</td><td><span class="side opt">낙관</span></td><td><span class="muted">—</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#L4-E-007" title="LG CNS가 Anthropic과 Claude Enterprise 도입 계약을 맺었다. LG CNS 전 직원이 쓰고, LG그룹 전 계열사로 적용할 수 있는 통합 계약이며, 외부 기업 도입도 지원한다.">L4-E-007</a></td></tr><tr id="L4-F-006"><td class="stmt">LG화학은 2026년 말까지 사무직 전체의 AX 교육 이수를 발표할 것이다.<small>확인 방법: LG화학 공식 발표 확인</small></td>
+  <td class="asof">2026-12-31</td><td><span class="side opt">낙관</span></td><td><span class="muted">—</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#L4-M-006" title="LG화학의 AX 교육 이수자가 3,000명을 넘었다. 지난 반년간 사무직의 절반이 교육을 마쳤고, CEO를 포함한 리더 약 1,000명이 먼저 교육받았다. &#x27;1인 1에이전트&#x27; 방식으로 개인 업무용 AI 에이전트를 만든다.">L4-M-006</a></td></tr><tr id="L4-F-001"><td class="stmt">LG CNS의 2026년 연간 AI·클라우드 매출 비중은 55% 이상일 것이다.<small>확인 방법: LG CNS 2026년 사업보고서 또는 4분기 실적 확인</small></td>
+  <td class="asof">2027-03-31</td><td><span class="side opt">낙관</span></td><td><span class="side pes">비관</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#L4-M-007" title="LG CNS의 2026년 상반기 AI·클라우드 매출은 1조 6,714억 원으로 전체 매출의 약 59%다. 대외 매출 비중은 51.1%다.">L4-M-007</a></td></tr><tr id="L4-F-004"><td class="stmt">LG에너지솔루션은 2027년 3월 말까지 2026년 AX 생산성 개선 실적치(%)를 공개할 것이다.<small>확인 방법: LG에너지솔루션 실적 발표·공식 발표 확인</small></td>
+  <td class="asof">2027-03-31</td><td><span class="side opt">낙관</span></td><td><span class="side pes">비관</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#L4-M-003" title="LG에너지솔루션은 2028년까지 AX로 전사 생산성을 50% 개선하겠다고 밝혔다. 연초의 &#x27;2030년까지 30%&#x27; 목표를 앞당기고 높인 것이다. LG디스플레이는 3년 안에 업무 생산성 30% 이상 향상이 목표다.">L4-M-003</a><a class="rid" href="#L4-E-003" title="LG에너지솔루션 CEO가 AX로 2028년까지 생산성 50% 개선 목표를 밝히고, 매월 CEO가 주재하는 AI 거버넌스 위원회를 운영한다고 했다.">L4-E-003</a></td></tr><tr id="L4-F-002"><td class="stmt">LG CNS는 2027년 6월 말까지 Palantir 기반 AX 사업의 LG 계열사 외 고객 계약을 발표할 것이다.<small>확인 방법: LG CNS 공식 발표 확인</small></td>
+  <td class="asof">2027-06-30</td><td><span class="side opt">낙관</span></td><td><span class="side pes">비관</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#L4-E-002" title="LG CNS가 Palantir와 전략적 파트너십을 맺었다. LG 계열사 한 곳의 품질 관리 영역 PoC를 마친 뒤 본 계약으로 이어졌고, 전방배치 엔지니어링(FDE) 조직을 만들어 LG그룹부터 적용한 뒤 외부로 넓힌다.">L4-E-002</a></td></tr><tr id="L4-F-005"><td class="stmt">LG전자는 2027년 6월 말까지 AX로 인한 전사 생산성 개선 결과치(%)를 공개할 것이다.<small>확인 방법: LG전자 공식 발표 또는 AX 행사 발표 확인</small></td>
+  <td class="asof">2027-06-30</td><td><span class="side opt">낙관</span></td><td><span class="side pes">비관</span></td>
+  <td><span class="fstat">진행 중</span></td><td><a class="rid" href="#L4-M-001" title="LG전자 사내 AX 플랫폼 LGenie의 월간 사용자는 약 3만 명이다.">L4-M-001</a><a class="rid" href="#L4-M-002" title="LG전자가 지난해 개발한 업무 AI 에이전트 96개 가운데 지금도 쓰이는 것은 46개로 절반이 안 된다. 기술(OCR·비전 AI)부터 시작해 쓸 곳을 찾은 경우가 실패했고, 현업의 반복 비효율에서 출발한 경우가 성공했다.">L4-M-002</a></td></tr></tbody></table></div></section>
+  <section><h2>계열사별 AX 단계 <small>단계 판정 · 목표와 결과</small></h2><p class="lead">계열사마다 교육·도구 배포 → 업무 적용 → 성과 공개(사용·품질·생산성 결과치) → 외부 사업화(매출) 중 어디에 있는지 판정했다. 오른쪽 표시는 공개된 수치가 결과치인지 목표치인지다.</p>
+    <div class="ladder mapgrid auto"><div class="rung"><div class="stage"><b>LG CNS</b></div>
+  <div class="lvcell"><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="lv">외부 사업화</span></span></div>
+  <div class="lvcell"><span class="own brand">매출 공개</span></div>
+  <p class="why">AI·클라우드 매출 1조 6,714억 원(59%), Palantir·Claude·ChatGPT Enterprise <a class="rid" href="#L4-M-007" title="LG CNS의 2026년 상반기 AI·클라우드 매출은 1조 6,714억 원으로 전체 매출의 약 59%다. 대외 매출 비중은 51.1%다.">L4-M-007</a><a class="rid" href="#L4-E-002" title="LG CNS가 Palantir와 전략적 파트너십을 맺었다. LG 계열사 한 곳의 품질 관리 영역 PoC를 마친 뒤 본 계약으로 이어졌고, 전방배치 엔지니어링(FDE) 조직을 만들어 LG그룹부터 적용한 뒤 외부로 넓힌다.">L4-E-002</a><a class="rid" href="#L4-E-007" title="LG CNS가 Anthropic과 Claude Enterprise 도입 계약을 맺었다. LG CNS 전 직원이 쓰고, LG그룹 전 계열사로 적용할 수 있는 통합 계약이며, 외부 기업 도입도 지원한다.">L4-E-007</a></p></div><div class="rung"><div class="stage"><b>LG디스플레이</b></div>
+  <div class="lvcell"><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip"></span><span class="lv">성과 공개</span></span></div>
+  <div class="lvcell"><span class="own brand">결과치 공개</span></div>
+  <p class="why">설계 30일→8시간, 품질 3주→2일, 연 2,000억 원, Hi-D +10% (2025년 발표) <a class="rid" href="#L4-M-004" title="LG디스플레이는 AI로 이형 디스플레이 설계 기간을 한 달에서 8시간으로, 품질 개선 기간을 평균 3주에서 2일로 줄였다. OLED AI 생산 체계로 연 2,000억 원 이상의 원가 효과를 보고, 사내 AI 비서 Hi-D 도입 후 일일 업무 생산성이 약 10% 올랐다고 밝혔다.">L4-M-004</a></p></div><div class="rung"><div class="stage"><b>LG에너지솔루션</b></div>
+  <div class="lvcell"><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip"></span><span class="lv">성과 공개</span></span></div>
+  <div class="lvcell"><span class="own brand">결과치 공개</span></div>
+  <p class="why">리튬 가격 예측 90%+, ESS 셀 100만 개 학습. 2028년 생산성 50%는 목표 <a class="rid" href="#L4-M-005" title="LG에너지솔루션이 LG AI연구원과 만든 리튬 가격 예측 모델은 정확도 90% 이상으로 알려졌다. ESS 안전진단 체계는 배터리 셀 100만 개 이상의 데이터를 학습했고, 500개 이상 ESS 사이트에서 연 100TB 넘는 데이터를 분석한다.">L4-M-005</a><a class="rid" href="#L4-M-003" title="LG에너지솔루션은 2028년까지 AX로 전사 생산성을 50% 개선하겠다고 밝혔다. 연초의 &#x27;2030년까지 30%&#x27; 목표를 앞당기고 높인 것이다. LG디스플레이는 3년 안에 업무 생산성 30% 이상 향상이 목표다.">L4-M-003</a></p></div><div class="rung"><div class="stage"><b>LG전자</b></div>
+  <div class="lvcell"><span class="pips"><span class="pip on"></span><span class="pip on"></span><span class="pip"></span><span class="pip"></span><span class="lv">업무 적용</span></span></div>
+  <div class="lvcell"><span class="own platform">사용 지표만</span></div>
+  <p class="why">LGenie 월 3만 명, 에이전트 96개 중 46개 생존 <a class="rid" href="#L4-M-001" title="LG전자 사내 AX 플랫폼 LGenie의 월간 사용자는 약 3만 명이다.">L4-M-001</a><a class="rid" href="#L4-M-002" title="LG전자가 지난해 개발한 업무 AI 에이전트 96개 가운데 지금도 쓰이는 것은 46개로 절반이 안 된다. 기술(OCR·비전 AI)부터 시작해 쓸 곳을 찾은 경우가 실패했고, 현업의 반복 비효율에서 출발한 경우가 성공했다.">L4-M-002</a></p></div><div class="rung"><div class="stage"><b>LG화학</b></div>
+  <div class="lvcell"><span class="pips"><span class="pip on"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="lv">교육·도구 배포</span></span></div>
+  <div class="lvcell"><span class="own platform">사용 지표만</span></div>
+  <p class="why">AX 교육 3,000명, 1인 1에이전트, 결과치 미공개 <a class="rid" href="#L4-M-006" title="LG화학의 AX 교육 이수자가 3,000명을 넘었다. 지난 반년간 사무직의 절반이 교육을 마쳤고, CEO를 포함한 리더 약 1,000명이 먼저 교육받았다. &#x27;1인 1에이전트&#x27; 방식으로 개인 업무용 AI 에이전트를 만든다.">L4-M-006</a></p></div></div><p class="gapnote">판정: 외부 사업화는 LG CNS, 성과 공개는 LGD·엔솔(업무 단위), 업무 적용은 LG전자, 교육은 LG화학. 전사 결과치를 공개한 계열사는 아직 없다 (R1 기준).</p>
+    <h3 class="subhead">목표치와 결과치</h3><p class="lead">계열사가 밝힌 목표와 공개된 결과를 나란히 놓았다. 전사 목표에 대응하는 전사 결과가 나오는지가 다음 회차의 판정 기준이다.</p>
+    <div class="tablewrap"><table><thead><tr><th>계열사</th><th>목표</th><th>공개된 결과</th><th>결과의 단위</th><th>시점</th><th>기록</th></tr></thead><tbody><tr><td class="tgt">LG에너지솔루션</td><td>2028년까지 전사 생산성 50% 개선</td><td>리튬 가격 예측 정확도 90%+, ESS 안전진단(셀 100만 개)</td><td>업무 단위</td><td>2026-04</td><td><a class="rid" href="#L4-M-003" title="LG에너지솔루션은 2028년까지 AX로 전사 생산성을 50% 개선하겠다고 밝혔다. 연초의 &#x27;2030년까지 30%&#x27; 목표를 앞당기고 높인 것이다. LG디스플레이는 3년 안에 업무 생산성 30% 이상 향상이 목표다.">L4-M-003</a><a class="rid" href="#L4-M-005" title="LG에너지솔루션이 LG AI연구원과 만든 리튬 가격 예측 모델은 정확도 90% 이상으로 알려졌다. ESS 안전진단 체계는 배터리 셀 100만 개 이상의 데이터를 학습했고, 500개 이상 ESS 사이트에서 연 100TB 넘는 데이터를 분석한다.">L4-M-005</a></td></tr><tr><td class="tgt">LG디스플레이</td><td>3년 내 업무 생산성 30% 이상</td><td>설계 30일→8시간, 품질 3주→2일, 연 2,000억 원, Hi-D +10%</td><td>업무 단위</td><td>2025-08</td><td><a class="rid" href="#L4-M-003" title="LG에너지솔루션은 2028년까지 AX로 전사 생산성을 50% 개선하겠다고 밝혔다. 연초의 &#x27;2030년까지 30%&#x27; 목표를 앞당기고 높인 것이다. LG디스플레이는 3년 안에 업무 생산성 30% 이상 향상이 목표다.">L4-M-003</a><a class="rid" href="#L4-M-004" title="LG디스플레이는 AI로 이형 디스플레이 설계 기간을 한 달에서 8시간으로, 품질 개선 기간을 평균 3주에서 2일로 줄였다. OLED AI 생산 체계로 연 2,000억 원 이상의 원가 효과를 보고, 사내 AI 비서 Hi-D 도입 후 일일 업무 생산성이 약 10% 올랐다고 밝혔다.">L4-M-004</a></td></tr><tr><td class="tgt">LG전자</td><td>공개 목표 확인 안 됨 (R1)</td><td>LGenie 월 3만 명, 에이전트 생존 46/96</td><td>사용 지표</td><td>2026-05</td><td><a class="rid" href="#L4-M-001" title="LG전자 사내 AX 플랫폼 LGenie의 월간 사용자는 약 3만 명이다.">L4-M-001</a><a class="rid" href="#L4-M-002" title="LG전자가 지난해 개발한 업무 AI 에이전트 96개 가운데 지금도 쓰이는 것은 46개로 절반이 안 된다. 기술(OCR·비전 AI)부터 시작해 쓸 곳을 찾은 경우가 실패했고, 현업의 반복 비효율에서 출발한 경우가 성공했다.">L4-M-002</a></td></tr><tr><td class="tgt">LG화학</td><td>1인 1에이전트</td><td>교육 3,000명 (사무직 절반)</td><td>사용 지표</td><td>2026-05</td><td><a class="rid" href="#L4-M-006" title="LG화학의 AX 교육 이수자가 3,000명을 넘었다. 지난 반년간 사무직의 절반이 교육을 마쳤고, CEO를 포함한 리더 약 1,000명이 먼저 교육받았다. &#x27;1인 1에이전트&#x27; 방식으로 개인 업무용 AI 에이전트를 만든다.">L4-M-006</a></td></tr><tr><td class="tgt">LG CNS</td><td>그룹 → 외부 AX 사업 확대</td><td>AI·클라우드 매출 59%, ChatGPT Enterprise 고객 약 10곳</td><td>매출</td><td>2026-H1</td><td><a class="rid" href="#L4-M-007" title="LG CNS의 2026년 상반기 AI·클라우드 매출은 1조 6,714억 원으로 전체 매출의 약 59%다. 대외 매출 비중은 51.1%다.">L4-M-007</a><a class="rid" href="#L4-M-008" title="LG CNS가 2월부터 공급하는 ChatGPT Enterprise는 1분기 기준 약 10곳의 고객이 계약했다.">L4-M-008</a></td></tr></tbody></table></div></section>
+  <section><h2>핵심 지표 <small>추적 지표 8/8개 값 확보</small></h2><p class="lead">추적 지표 8개 중 8개의 값을 원문으로 확인했다. 목표치는 결과치와 구분해 표시했고, AX 행사에서 발표된 수치와 기간 이전 발표(LG디스플레이)는 주의 표시를 달았다. 비교 렌즈(Palantir 도입 기업 등)는 다음 회차에 확보한다.</p>
+    <div class="tablewrap"><table><thead><tr><th>추적 지표</th><th>내용 · 출처</th><th style="text-align:right">현재값</th><th>기준 시점</th><th>기록</th></tr></thead><tbody><tr id="L4-M-001"><td class="ind">L4-T1<small>사내 AI 플랫폼 사용</small></td>
+  <td class="stmt">LG전자 사내 AX 플랫폼 LGenie의 월간 사용자는 약 3만 명이다. <span class="warn">충돌·주의</span><div class="src"><a href="https://v.daum.net/v/20260527175602742" target="_blank" rel="noopener">다음 뉴스 (AX Fair 2026 현장)</a><span class="grade gB">B</span></div></td>
+  <td class="num">3 만 명 (월간 사용자)</td><td class="asof">2026-05<small>KR</small></td><td class="idc"><code>L4-M-001</code></td></tr><tr id="L4-M-002"><td class="ind">L4-T2<small>에이전트 생존율</small></td>
+  <td class="stmt">LG전자가 지난해 개발한 업무 AI 에이전트 96개 가운데 지금도 쓰이는 것은 46개로 절반이 안 된다. 기술(OCR·비전 AI)부터 시작해 쓸 곳을 찾은 경우가 실패했고, 현업의 반복 비효율에서 출발한 경우가 성공했다. <span class="warn">충돌·주의</span><div class="src"><a href="https://v.daum.net/v/20260527175602742" target="_blank" rel="noopener">다음 뉴스 (AX Fair 2026 현장)</a><span class="grade gB">B</span></div></td>
+  <td class="num">48% (에이전트 생존율, 46/96)</td><td class="asof">2026-05<small>KR</small></td><td class="idc"><code>L4-M-002</code></td></tr><tr id="L4-M-003"><td class="ind">L4-T3<small>생산성 목표</small></td>
+  <td class="stmt">LG에너지솔루션은 2028년까지 AX로 전사 생산성을 50% 개선하겠다고 밝혔다. 연초의 &#x27;2030년까지 30%&#x27; 목표를 앞당기고 높인 것이다. LG디스플레이는 3년 안에 업무 생산성 30% 이상 향상이 목표다. <span class="warn">충돌·주의</span><div class="src"><a href="https://v.daum.net/v/20260427104536341" target="_blank" rel="noopener">다음 뉴스</a><span class="grade gB">B</span> · <a href="https://www.ajunews.com/view/20250805141250999" target="_blank" rel="noopener">아주경제 (LG디스플레이 AX 세미나)</a><span class="grade gB">B</span></div></td>
+  <td class="num">50% (엔솔 2028 생산성 목표)</td><td class="asof">2026-04<small>KR</small></td><td class="idc"><code>L4-M-003</code></td></tr><tr id="L4-M-004"><td class="ind">L4-T4<small>생산성 결과</small></td>
+  <td class="stmt">LG디스플레이는 AI로 이형 디스플레이 설계 기간을 한 달에서 8시간으로, 품질 개선 기간을 평균 3주에서 2일로 줄였다. OLED AI 생산 체계로 연 2,000억 원 이상의 원가 효과를 보고, 사내 AI 비서 Hi-D 도입 후 일일 업무 생산성이 약 10% 올랐다고 밝혔다. <span class="warn">충돌·주의</span><div class="src"><a href="https://www.ajunews.com/view/20250805141250999" target="_blank" rel="noopener">아주경제 (LG디스플레이 AX 세미나)</a><span class="grade gB">B</span></div></td>
+  <td class="num">2000 억 원 이상 (연간 원가 효과)</td><td class="asof">2025-08<small>KR</small></td><td class="idc"><code>L4-M-004</code></td></tr><tr id="L4-M-005"><td class="ind">L4-T5<small>품질·의사결정 결과</small></td>
+  <td class="stmt">LG에너지솔루션이 LG AI연구원과 만든 리튬 가격 예측 모델은 정확도 90% 이상으로 알려졌다. ESS 안전진단 체계는 배터리 셀 100만 개 이상의 데이터를 학습했고, 500개 이상 ESS 사이트에서 연 100TB 넘는 데이터를 분석한다. <span class="warn">충돌·주의</span><div class="src"><a href="https://v.daum.net/v/20260427104536341" target="_blank" rel="noopener">다음 뉴스</a><span class="grade gB">B</span></div></td>
+  <td class="num">90% 이상 (리튬 가격 예측 정확도)</td><td class="asof">2026-04<small>GLOBAL</small></td><td class="idc"><code>L4-M-005</code></td></tr><tr id="L4-M-006"><td class="ind">L4-T6<small>교육·확산</small></td>
+  <td class="stmt">LG화학의 AX 교육 이수자가 3,000명을 넘었다. 지난 반년간 사무직의 절반이 교육을 마쳤고, CEO를 포함한 리더 약 1,000명이 먼저 교육받았다. &#x27;1인 1에이전트&#x27; 방식으로 개인 업무용 AI 에이전트를 만든다. <span class="warn">충돌·주의</span><div class="src"><a href="https://ceoscoredaily.com/page/view/2026052809581976650" target="_blank" rel="noopener">CEO스코어데일리 (LG화학 발표)</a><span class="grade gB">B</span></div></td>
+  <td class="num">3000 명 이상 (AX 교육 이수)</td><td class="asof">2026-05<small>KR</small></td><td class="idc"><code>L4-M-006</code></td></tr><tr id="L4-M-007"><td class="ind">L4-T7<small>외부 AX 매출</small></td>
+  <td class="stmt">LG CNS의 2026년 상반기 AI·클라우드 매출은 1조 6,714억 원으로 전체 매출의 약 59%다. 대외 매출 비중은 51.1%다. <div class="src"><a href="https://www.thelec.kr/news/articleView.html?idxno=62708" target="_blank" rel="noopener">디일렉 (LG CNS 반기보고서)</a><span class="grade gB">B</span></div></td>
+  <td class="num">16714 억 원 (상반기 AI·클라우드 매출)</td><td class="asof">2026-H1<small>KR</small></td><td class="idc"><code>L4-M-007</code></td></tr><tr id="L4-M-008"><td class="ind">L4-T8<small>외부 플랫폼 계약</small></td>
+  <td class="stmt">LG CNS가 2월부터 공급하는 ChatGPT Enterprise는 1분기 기준 약 10곳의 고객이 계약했다. <span class="warn">충돌·주의</span><div class="src"><a href="https://byline.network/2026/04/30-525/" target="_blank" rel="noopener">바이라인네트워크 (LG CNS 1분기 실적)</a><span class="grade gB">B</span></div></td>
+  <td class="num">10 곳 (ChatGPT Enterprise 고객)</td><td class="asof">2026-04<small>KR</small></td><td class="idc"><code>L4-M-008</code></td></tr></tbody></table></div></section>
+  <section><h2>미확인·경고 <small>본문 판단에서 빼거나 주의해서 쓴 기록</small></h2>
+    <div class="tablewrap"><table><thead><tr><th>기록</th><th>구분</th><th>진술</th><th>사유</th></tr></thead><tbody><tr><td><code>L4-M-001</code></td><td><span class="wk">주의</span></td><td>LG전자 사내 AX 플랫폼 LGenie의 월간 사용자는 약 3만 명이다.</td><td class="muted">행사 발표 수치, 사용률 미공개</td></tr><tr><td><code>L4-M-002</code></td><td><span class="wk">주의</span></td><td>LG전자가 지난해 개발한 업무 AI 에이전트 96개 가운데 지금도 쓰이는 것은 46개로 절반이 안 된다. 기술(OCR·비전 AI)부터 시작해 쓸 곳을 찾은 경우가 실패했고, 현업의 반복 비효율에서 출발한 경우가 성공했다.</td><td class="muted">46개와 LGenie 운영 125개의 관계는 기사에 설명되지 않음</td></tr><tr><td><code>L4-M-003</code></td><td><span class="wk">주의</span></td><td>LG에너지솔루션은 2028년까지 AX로 전사 생산성을 50% 개선하겠다고 밝혔다. 연초의 &#x27;2030년까지 30%&#x27; 목표를 앞당기고 높인 것이다. LG디스플레이는 3년 안에 업무 생산성 30% 이상 향상이 목표다.</td><td class="muted">목표치 — 결과 아님</td></tr><tr><td><code>L4-M-004</code></td><td><span class="wk">주의</span></td><td>LG디스플레이는 AI로 이형 디스플레이 설계 기간을 한 달에서 8시간으로, 품질 개선 기간을 평균 3주에서 2일로 줄였다. OLED AI 생산 체계로 연 2,000억 원 이상의 원가 효과를 보고, 사내 AI 비서 Hi-D 도입 후 일일 업무 생산성이 약 10% 올랐다고 밝혔다.</td><td class="muted">조사 기간 이전 발표 — 기준선</td></tr><tr><td><code>L4-M-005</code></td><td><span class="wk">주의</span></td><td>LG에너지솔루션이 LG AI연구원과 만든 리튬 가격 예측 모델은 정확도 90% 이상으로 알려졌다. ESS 안전진단 체계는 배터리 셀 100만 개 이상의 데이터를 학습했고, 500개 이상 ESS 사이트에서 연 100TB 넘는 데이터를 분석한다.</td><td class="muted">&#x27;알려졌다&#x27; 수준 — 측정 방법 미공개</td></tr><tr><td><code>L4-M-006</code></td><td><span class="wk">주의</span></td><td>LG화학의 AX 교육 이수자가 3,000명을 넘었다. 지난 반년간 사무직의 절반이 교육을 마쳤고, CEO를 포함한 리더 약 1,000명이 먼저 교육받았다. &#x27;1인 1에이전트&#x27; 방식으로 개인 업무용 AI 에이전트를 만든다.</td><td class="muted">시간 절감 등 결과치 미공개</td></tr><tr><td><code>L4-M-008</code></td><td><span class="wk">주의</span></td><td>LG CNS가 2월부터 공급하는 ChatGPT Enterprise는 1분기 기준 약 10곳의 고객이 계약했다.</td><td class="muted">고객명·성과 미공개</td></tr><tr><td><code>L4-E-001</code></td><td><span class="wk">주의</span></td><td>LG디스플레이가 AX 성과(설계 30일→8시간, 품질 개선 3주→2일, 연 2,000억 원 원가 효과)를 공개하고 3년 내 생산성 30% 목표를 밝혔다.</td><td class="muted">조사 기간 이전 — 기준선</td></tr><tr><td><code>L4-E-002</code></td><td><span class="wk">주의</span></td><td>LG CNS가 Palantir와 전략적 파트너십을 맺었다. LG 계열사 한 곳의 품질 관리 영역 PoC를 마친 뒤 본 계약으로 이어졌고, 전방배치 엔지니어링(FDE) 조직을 만들어 LG그룹부터 적용한 뒤 외부로 넓힌다.</td><td class="muted">계약 규모 미공개</td></tr><tr><td><code>L4-E-007</code></td><td><span class="wk">주의</span></td><td>LG CNS가 Anthropic과 Claude Enterprise 도입 계약을 맺었다. LG CNS 전 직원이 쓰고, LG그룹 전 계열사로 적용할 수 있는 통합 계약이며, 외부 기업 도입도 지원한다.</td><td class="muted">계약 규모·사용자 수 미공개</td></tr></tbody></table></div></section>
+  <footer>
+    <span>이 글은 4유형 기록 31건(지표 8 · 사건 8 · 해석 7 · 전망 8)에서 생성했습니다. 문장 옆 번호를 누르면 해당 기록으로 이동합니다.</span>
+        <span>출처 등급 A = 1차 조사·공식 발표, B = 주요 언론·2차 보도, C = 블로그·출처 불명(원문 확인 전까지 판단에 쓰지 않음).</span>
+  </footer>
+</main>
+</body></html>
