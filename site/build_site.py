@@ -191,7 +191,9 @@ portal = f"""<!doctype html>
   <header class="masthead">
     <h1>{E(cat['site']['title'])}</h1>
     <p class="tag">{E(cat['site']['tagline'])}</p>
-    <div class="stats"><span>카테고리 <b>{len(sections)}</b></span><span>질문 <b>{total_q}</b></span><span>발행 아티클 <b>{total_live}</b></span><span>근거 기록 <b>{total_rec}</b>건</span><span>최근 업데이트 <b>{E(last_date)}</b></span></div>  </header>
+    <div class="stats"><span>카테고리 <b>{len(sections)}</b></span><span>질문 <b>{total_q}</b></span><span>발행 아티클 <b>{total_live}</b></span><span>근거 기록 <b>{total_rec}</b>건</span><span>최근 업데이트 <b>{E(last_date)}</b></span></div>
+    <p class="method">같은 질문을 매달 다시 묻고, 무엇이 달라졌는지 근거와 함께 기록합니다.</p>
+  </header>
   <nav class="catnav" aria-label="카테고리">{nav_html}</nav>
   {sec_html}
   <footer><span>AXblog · 원본 기록과 생성 스크립트는 GitHub skykelly/AXblog 저장소에 있습니다.</span></footer>
