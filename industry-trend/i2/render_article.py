@@ -5,6 +5,8 @@ import json, html, re, sys
 from pathlib import Path
 
 ROOT = Path(__file__).parent
+sys.path.insert(0, str(ROOT.parent.parent / "lib"))
+from judge import gauge, criteria_panel, E as _E
 recs = [json.loads(l) for l in (ROOT / "records.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
 by = {r["id"]: r for r in recs}
 E = html.escape
@@ -21,7 +23,7 @@ QUESTION = "AI 제품은 어느 영역에서 시범을 넘어 실제 운영 단�
 
 # 1. 한 줄 답 ----------------------------------------------------------
 ONE_LINE = ("2026년 10월 현재 시범을 넘어 ‘대규모 운영’에 들어선 AI 제품은 세 가지다. 대화형 Assistant(ChatGPT 주 9억 명), Coding Agent(Claude Code 연환산 매출 25억 달러 이상), 로보택시(Waymo 주 50만 회)다. "
-            "몇 시간짜리 일을 맡기는 업무형 Agent는 정식 출시됐지만 운영 성과가 공개되지 않았고, 휴머노이드는 고객 현장 파일럿 단계다.")
+            "몇 시간짜리 일을 맡기는 업무형 Agent는 정식 출시됐지만 운영 성과가 공개되지 않았고, 휴머노이드는 판매가 시작됐지만 고객 현장은 아직 파일럿 규모다.")
 ONE_LINE_BASIS = ["I2-I-001", "I2-I-002", "I2-I-003", "I2-I-004"]
 ANSWER_ROWS = [
     ("대규모 운영", "대화형 Assistant(ChatGPT 주간 9억 명, 유료 5천만 명), Coding Agent(Claude Code 연환산 25억 달러 이상, Uber 커밋 코드 70%를 AI가 작성), 로보택시(Waymo 주 50만 회, 11개 도시).", ["I2-M-001", "I2-M-002", "I2-M-003", "I2-M-004"]),
@@ -89,25 +91,44 @@ frows = "".join(f"""<tr id="{E(r['id'])}"><td class="stmt">{E(r['statement'])}<s
 
 # 5. 상용화 단계 -----------------------------------------------
 SG = ["발표", "베타", "정식 출시", "대규모 운영"]
-STAGE_LEAD = ("제품 영역마다 발표 → 베타(제한 이용) → 정식 출시 → 대규모 운영(이용량·성과·매출 공개) 중 어디에 있는지 판정했다. "
-              "출시 발표만으로는 정식 출시까지만 인정한다. 한국은 국내 서비스 기준이며, 자료가 없으면 비워 두었다.")
+SG_DEF = {
+    "발표": "데모·대기자 명단·계획만 있다.",
+    "베타": "초대·지역·인원 제한 이용, 또는 유료 파일럿이다.",
+    "정식 출시": "누구나 가입·구매할 수 있고 가격이 공개됐다 (지역 한정이면 그 지역 기준).",
+    "대규모 운영": "이용량·매출이 공개되고 영역별 규모 기준을 넘었다.",
+}
+SCALE = {
+    "대화형 Assistant": "주간 이용자 1억 명", "Coding Agent": "연환산 매출 10억 달러",
+    "로보택시": "안전요원 없는 유료 운행 주 10만 회", "업무형 Agent": "유료 기업 1만 곳 또는 연환산 매출 10억 달러",
+    "기업 내 Agent 도입": "시범을 뺀 운영 기업이 과반", "휴머노이드": "상업 현장 유료 가동 1,000대",
+}
+STAGE_LEAD = ("대화형 Assistant, Coding Agent, 로보택시는 대규모 운영 기준을 넘었다. 업무형 Agent, 기업 내 Agent 도입, 휴머노이드는 정식 출시 단계로, "
+              "이용 규모가 기준에 못 미치거나 공개되지 않았다. 한국은 로보택시가 베타, 휴머노이드가 발표 단계이고 나머지는 자료가 없다.")
+# (영역, 글로벌, 글로벌 잠정, 한국, 한국 잠정, 근거, 기록)
 STAGES = [
-    ("대화형 Assistant", "대규모 운영", None, "주간 9억 명, 유료 5천만 명", ["I2-M-001"]),
-    ("Coding Agent", "대규모 운영", None, "연환산 25억 달러 이상, 대형 고객 커밋 코드 70%", ["I2-M-002", "I2-M-003"]),
-    ("로보택시", "대규모 운영", "베타", "Waymo 주 50만 회·11개 도시 / 서울 강남 심야 제한 운행", ["I2-M-004", "I2-E-002"]),
-    ("업무형 Agent", "정식 출시", None, "ChatGPT Work 출시, 이용량 미공개", ["I2-E-004"]),
-    ("기업 내 Agent 도입", "베타", None, "54% 운영·시범, 성과 측정 25%", ["I2-M-007"]),
-    ("휴머노이드", "베타", "발표", "Agility 9개 시설·Figure BMW 파일럿 / 현대차 2028 투입 계획", ["I2-M-005", "I2-E-001"]),
+    ("대화형 Assistant", "대규모 운영", False, None, False, "ChatGPT 주간 9억 명, 유료 5천만 명", ["I2-M-001"]),
+    ("Coding Agent", "대규모 운영", False, None, False, "Claude Code 연환산 25억 달러 이상, Uber 커밋 코드 70%", ["I2-M-002", "I2-M-003"]),
+    ("로보택시", "대규모 운영", False, "베타", False, "Waymo 주간 유료 탑승 약 50만 회·11개 도시 / 서울 강남 평일 심야 제한 운행", ["I2-M-004", "I2-E-002"]),
+    ("업무형 Agent", "정식 출시", False, None, False, "ChatGPT Work 정식 출시, 이용량·유료 기업 수 미공개", ["I2-E-004"]),
+    ("기업 내 Agent 도입", "정식 출시", True, None, False, "미국 기업 54%가 운영 또는 시범 운영(둘이 섞인 수치), 성과 측정 25%", ["I2-M-007"]),
+    ("휴머노이드", "정식 출시", False, "발표", False, "Unitree 2025년 약 5,500대 판매, Agility 9개 고객 시설·Figure BMW 파일럿 / 현대차 2028년 투입 계획", ["I2-M-006", "I2-M-005", "I2-E-001"]),
 ]
-def sg4(v):
+def tip_sg(v, area):
+    t = f"{v} — {SG_DEF[v]}"
+    return t + f" 이 영역의 대규모 운영 기준: {SCALE[area]}."
+def cell(v, pv, area):
     if v is None:
-        return '<span class="lv muted">자료 없음</span>'
-    i = SG.index(v)
-    return "".join(f'<span class="pip{" on" if k <= i else ""}"></span>' for k in range(4)) + f'<span class="lv">{E(v)}</span>'
+        return '<span class="pips"><span class="lv muted">자료 없음</span></span>'
+    return gauge(SG, v, tip_sg(v, area), pv)
+criteria_html = criteria_panel([
+    ("판정 단계: 상용화", ["단계", "기준"], [[gauge(SG, k), E(v)] for k, v in SG_DEF.items()]),
+    ("대규모 운영의 영역별 규모 기준", ["영역", "기준"], [[f"<b>{E(k)}</b>", E(v)] for k, v in SCALE.items()]),
+], extra_rules=["한국은 같은 단계 정의를 쓰고, 규모 기준은 글로벌의 10분의 1로 둔다 (예: 주간 이용자 1,000만 명).",
+                "출시 발표만으로는 정식 출시까지만 인정한다. 대규모 운영에 오른 영역은 이용량 지표로 계속 추적한다."])
 stage_rows = "".join(f"""<div class="rung"><div class="stage"><b>{E(d)}</b></div>
-  <div class="lvcell"><span class="region">글로벌</span><span class="pips">{sg4(g)}</span></div>
-  <div class="lvcell"><span class="region">한국</span><span class="pips">{sg4(k)}</span></div>
-  <p class="why">{E(w)} {tags(ids)}</p></div>""" for d, g, k, w, ids in STAGES)
+  <div class="lvcell"><span class="region">글로벌</span>{cell(g, gp, d)}</div>
+  <div class="lvcell"><span class="region">한국</span>{cell(k, kp, d)}</div>
+  <p class="why">{E(w)} {tags(ids)}</p></div>""" for d, g, gp, k, kp, w, ids in STAGES)
 
 # 6. 핵심 지표 ---------------------------------------------------------
 INDICATOR_NAMES = {"I2-T1": "AI Assistant 이용 규모", "I2-T2": "Coding Agent 매출·이용", "I2-T3": "업무형 Agent 이용량",
@@ -153,6 +174,7 @@ page = f"""<title>I2 AI 제품 상용화 R1</title>
     <p class="lead muted">각 세부 전망이 적중하거나 빗나갔을 때 어느 시나리오 쪽 신호인지 표시했다. 확인 시점이 오면 확인 방법대로 판정한다.</p>
     <div class="tablewrap"><table><thead><tr><th>세부 전망</th><th>확인 시점</th><th>적중 시</th><th>빗나갈 시</th><th>상태</th><th>근거</th></tr></thead><tbody>{frows}</tbody></table></div></section>
   <section><h2>상용화 단계 <small>제품 영역별 · 글로벌과 한국</small></h2><p class="lead">{E(STAGE_LEAD)}</p>
+    {criteria_html}
     <div class="ladder mapgrid auto">{stage_rows}</div></section>
   <section><h2>핵심 지표 <small>추적 지표 {len(filled)}/8개 값 확보</small></h2><p class="lead">{E(METRICS_LEAD)}</p>
     <div class="tablewrap"><table><thead><tr><th>추적 지표</th><th>내용 · 출처</th><th style="text-align:right">현재값</th><th>기준 시점</th><th>기록</th></tr></thead><tbody>{mrows}</tbody></table></div></section>

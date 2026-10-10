@@ -5,6 +5,8 @@ import json, html, re, sys
 from pathlib import Path
 
 ROOT = Path(__file__).parent
+sys.path.insert(0, str(ROOT.parent.parent / "lib"))
+from judge import gauge, criteria_panel, E as _E
 recs = [json.loads(l) for l in (ROOT / "records.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
 by = {r["id"]: r for r in recs}
 E = html.escape
@@ -21,7 +23,7 @@ QUESTION = "AI가 새롭게 할 수 있게 된 일은 무엇이고, 기술의 �
 
 # 1. 한 줄 답 ----------------------------------------------------------
 ONE_LINE = ("2026년 10월 현재 AI는 사람이 반나절에서 하루 걸리는 소프트웨어 작업을 절반의 확률로 해내고(METR 기준 12~16시간 이상), 이 능력은 몇 시간짜리 업무를 끝까지 수행하는 에이전트로 이미 제품이 됐다. "
-            "한계선은 ‘처음 보는 환경에서 스스로 규칙을 배우는 추론’(ARC-AGI-3 최고 30%)과 월드 모델·AI 과학 발견으로 옮겨갔고, 이 영역은 아직 시연 단계다.")
+            "한계선은 ‘처음 보는 환경에서 스스로 규칙을 배우는 추론’(ARC-AGI-3 최고 30%)과 월드 모델·AI 과학 발견으로 옮겨갔고, 이 영역은 아직 시연·연구 단계다.")
 ONE_LINE_BASIS = ["I1-I-001", "I1-I-002", "I1-I-005"]
 ANSWER_ROWS = [
     ("새로 할 수 있게 된 일", "몇 시간짜리 일을 끝까지 맡기기. METR 작업 길이 최고치는 16시간 이상이고, OpenAI는 7월 시간 단위 프로젝트 에이전트 ChatGPT Work를 내놓았다.", ["I1-M-001", "I1-E-004"]),
@@ -88,24 +90,41 @@ frows = "".join(f"""<tr id="{E(r['id'])}"><td class="stmt">{E(r['statement'])}<s
   <td><span class="fstat">{E(r['forecast_status'])}</span></td><td>{tags(r['basis'])}</td></tr>""" for r in details)
 
 # 5. 역량 원장 -----------------------------------------------
-ST = ["연구", "시연", "제품 적용 가능"]
-LEDGER_LEAD = ("일곱 개 기술 축을 연구(논문·내부 결과) → 시연(공개 데모·제한 접근) → 제품 적용 가능(일반 사용자·개발자가 사용) 중 어디에 있는지로 판정했다. "
-               "다음 한계선은 그 축에서 아직 시연이나 연구 단계에 있는 능력이다.")
+ST = ["연구", "시연", "제품 출시", "일상 사용"]
+ST_DEF = {
+    "연구": ("논문·내부 결과로만 확인된다.", "공개 논문, 회사 발표(외부 접근 없음)"),
+    "시연": ("공개 데모나 제한 접근(초대·대기자·연구 프리뷰·상위 요금제 한정)으로 확인된다.", "공개 데모, 제한 프리뷰"),
+    "제품 출시": ("일반 사용자·개발자 누구나 쓸 수 있다. Compute는 양산 출하.", "가격·문서가 공개된 정식 제품"),
+    "일상 사용": ("그 능력이 대규모 업무·서비스에 실제로 쓰이는 것이 확인된다. Compute는 데이터센터 주력 세대.", "이용량·매출·업무 비중 같은 사용 수치"),
+}
+LEDGER_LEAD = ("가장 앞선 축은 Agent·장시간 작업과 Reasoning으로, 일상 사용 단계에 들어섰다. Computer use, 장문 맥락, Compute는 제품 출시 단계이고, "
+               "World Model은 시연, AI for Science는 연구 단계다. 다음 한계선은 그 축에서 아직 한 단계 아래에 있는 능력이다.")
+# (축, 현재 위치, 잠정, 근거, 다음 한계선, 기록)
 LEDGER = [
-    ("Agent·장시간 작업", "제품 적용 가능", "하루 이상 걸리는 일을 끝까지 맡기기 (METR 16시간 이상은 측정 한계)", ["I1-M-001", "I1-E-004"]),
-    ("Reasoning", "제품 적용 가능", "처음 보는 환경에서 규칙 학습 — ARC-AGI-3 최고 30.2%", ["I1-M-004", "I1-M-003"]),
-    ("Multimodal·Computer use", "제품 적용 가능", "사람 수준의 컴퓨터 조작 신뢰성 (OSWorld-Verified 83%, 자체 발표)", ["I1-M-005"]),
-    ("Long context·Memory", "시연", "100만 토큰 문맥은 표준, 세션을 넘는 장기 기억은 제한적", ["I1-M-007"]),
-    ("World Model", "시연", "60초 제한을 넘는 실시간 세계 생성·물리 일관성", ["I1-E-001"]),
-    ("AI for Science", "시연", "AI가 낸 수학·과학 결과의 독립 검증", ["I1-E-007"]),
-    ("Compute", "제품 적용 가능", "HBM4 양산, 차세대 가속기 대량 출하", ["I1-M-009", "I1-E-002"]),
+    ("Agent·장시간 작업", "일상 사용", True, "코딩 에이전트가 실무에 쓰임(Claude Code 연환산 25억 달러, Uber 커밋 코드 70% — I2). AI가 끝내는 작업 길이 12~16시간.",
+     "하루 이상 걸리는 일을 끝까지 맡기기 (METR 16시간 이상은 측정 한계)", ["I1-M-001", "I1-M-002", "I1-E-004"]),
+    ("Reasoning", "일상 사용", True, "추론 모델이 주력 대화형 서비스의 기본값(ChatGPT 주간 9억 명 — I2). 정형 추론 퍼즐 ARC-AGI-2 90.4%로 포화.",
+     "처음 보는 환경에서 규칙 학습 — ARC-AGI-3 최고 30.2%", ["I1-M-004", "I1-M-003"]),
+    ("Multimodal·Computer use", "제품 출시", False, "컴퓨터 조작 기능이 정식 제품으로 제공됨. 실제 업무 이용량은 공개되지 않음.",
+     "사람 수준의 컴퓨터 조작 신뢰성 (OSWorld-Verified 83%, 자체 발표)", ["I1-M-005"]),
+    ("Long context·Memory", "제품 출시", False, "100만 토큰 입력이 프런티어 모델의 표준 사양.",
+     "세션을 넘는 장기 기억 — 아직 제한적", ["I1-M-007"]),
+    ("World Model", "시연", False, "Project Genie가 미국 최상위 요금제 구독자에게만 열림, 한 번에 60초.",
+     "60초 제한을 넘는 실시간 세계 생성·물리 일관성", ["I1-E-001"]),
+    ("AI for Science", "연구", False, "에르되시 문제 진전은 미공개 내부 모델의 회사 발표이고 독립 검증 전.",
+     "AI가 낸 수학·과학 결과의 독립 검증", ["I1-E-007"]),
+    ("Compute", "제품 출시", False, "Vera Rubin용 HBM4 대량 생산·출하 시작. 데이터센터 주력 세대 전환은 진행 중.",
+     "HBM4·차세대 가속기가 데이터센터 주력으로", ["I1-M-009", "I1-E-002"]),
 ]
-def st3(v):
-    i = ST.index(v)
-    return "".join(f'<span class="pip{" on" if k <= i else ""}"></span>' for k in range(3)) + f'<span class="lv">{E(v)}</span>'
+def tip_st(v):
+    d, ev = ST_DEF[v]
+    return f"{v} — {d} 근거: {ev}."
+criteria_html = criteria_panel([
+    ("판정 단계: 기술 축의 성숙도", ["단계", "상태", "인정하는 근거"], [[gauge(ST, k), E(v[0]), E(v[1])] for k, v in ST_DEF.items()]),
+], extra_rules=["다음 한계선은 그 축에서 현재 단계보다 아래(연구·시연)에 있는 능력이며, 한계선이 제품으로 나오면 원장에 새 한계선을 적는다."])
 ledger_rows = "".join(f"""<div class="rung"><div class="stage"><b>{E(ax)}</b></div>
-  <div class="lvcell"><span class="region">현재 위치</span><span class="pips">{st3(v)}</span></div>
-  <p class="why"><b>다음 한계선</b> · {E(nx)} {tags(ids)}</p></div>""" for ax, v, nx, ids in LEDGER)
+  <div class="lvcell"><span class="region">현재 위치</span>{gauge(ST, v, tip_st(v), pv)}</div>
+  <p class="why">{E(why)}<br><b>다음 한계선</b> · {E(nx)} {tags(ids)}</p></div>""" for ax, v, pv, why, nx, ids in LEDGER)
 
 # 6. 핵심 지표 ---------------------------------------------------------
 INDICATOR_NAMES = {"I1-T1": "AI 작업 길이", "I1-T2": "새 환경 추론", "I1-T3": "코딩·컴퓨터 사용",
@@ -151,6 +170,7 @@ page = f"""<title>I1 AI 기술의 경계 R1</title>
     <p class="lead muted">각 세부 전망이 적중하거나 빗나갔을 때 어느 시나리오 쪽 신호인지 표시했다. 확인 시점이 오면 확인 방법대로 판정한다.</p>
     <div class="tablewrap"><table><thead><tr><th>세부 전망</th><th>확인 시점</th><th>적중 시</th><th>빗나갈 시</th><th>상태</th><th>근거</th></tr></thead><tbody>{frows}</tbody></table></div></section>
   <section><h2>역량 원장 <small>기술 축별 현재 위치와 다음 한계선</small></h2><p class="lead">{E(LEDGER_LEAD)}</p>
+    {criteria_html}
     <div class="ladder mapgrid ledger">{ledger_rows}</div></section>
   <section><h2>핵심 지표 <small>추적 지표 {len(filled)}/8개 값 확보</small></h2><p class="lead">{E(METRICS_LEAD)}</p>
     <div class="tablewrap"><table><thead><tr><th>추적 지표</th><th>내용 · 출처</th><th style="text-align:right">현재값</th><th>기준 시점</th><th>기록</th></tr></thead><tbody>{mrows}</tbody></table></div></section>
@@ -168,11 +188,11 @@ bad = sorted({i for i in re.findall(r'href="#(I1-[A-Z]-\d{3})"', page) if i not 
 order = [page.index(f"<h2>{h}") for h in ("한 줄 답", "해석", "주요 사건", "전망", "역량 원장", "핵심 지표")]
 print("article_r1.html 생성,", len(page), "bytes; 앵커 없는 근거 링크:", bad or "없음", "; 섹션 순서 정상:", order == sorted(order))
 # ---------- 포털 신호: 판정 칩과 게이지를 판정 데이터에서 계산해 내보낸다
-SIGNAL_CHIP = '7개 축 중 4개 제품화'
-SIGNAL_GAUGE = '기술 축 7개 중 제품 적용 가능'
+SIGNAL_CHIP = '2개 축 일상 사용, 5개 축 제품 이상'
+SIGNAL_GAUGE = '기술 축 7개 중 제품 출시 이상'
 SIGNAL_FRONTIER = '장기 기억·World Model'
 signal = {"question": 'I1', "round": 1, "chip": SIGNAL_CHIP, "gauge": SIGNAL_GAUGE, "frontier": SIGNAL_FRONTIER,
-          "on": sum(1 for r in LEDGER if r[1] == "제품 적용 가능"), "of": len(LEDGER)}
+          "on": sum(1 for r in LEDGER if ST.index(r[1]) >= ST.index("제품 출시")), "of": len(LEDGER)}
 (ROOT / "signal_r1.json").write_text(json.dumps(signal, ensure_ascii=False, indent=1), encoding="utf-8")
 print("signal_r1.json:", signal["chip"], f'{signal["on"]}/{signal["of"]}')
 sys.exit(1 if bad or order != sorted(order) else 0)

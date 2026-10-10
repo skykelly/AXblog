@@ -1,9 +1,9 @@
 {
  "question": "I1",
  "round": 1,
- "chip": "7개 축 중 4개 제품화",
- "gauge": "기술 축 7개 중 제품 적용 가능",
+ "chip": "2개 축 일상 사용, 5개 축 제품 이상",
+ "gauge": "기술 축 7개 중 제품 출시 이상",
  "frontier": "장기 기억·World Model",
- "on": 4,
+ "on": 5,
  "of": 7
 }

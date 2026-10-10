@@ -5,6 +5,8 @@ import json, html, re, sys
 from pathlib import Path
 
 ROOT = Path(__file__).parent
+sys.path.insert(0, str(ROOT.parent.parent / "lib"))
+from judge import gauge, criteria_panel, E as _E
 recs = [json.loads(l) for l in (ROOT / "records.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
 by = {r["id"]: r for r in recs}
 E = html.escape
@@ -89,25 +91,39 @@ frows = "".join(f"""<tr id="{E(r['id'])}"><td class="stmt">{E(r['statement'])}<s
 
 # 5. 확산 단계와 요인 순위 -----------------------------------------
 SG = ["시험", "초기 확산", "확산", "주류"]
-STAGE_LEAD = ("산업·업무마다 시험(사용률 10% 미만) → 초기 확산(10~25%) → 확산(25~50%) → 주류(50% 이상) 중 어디에 있는지 판정했다. "
-              "글로벌은 미국 인구조사국 업종별 현재 사용률, 업무 기능은 McKinsey의 Agent 확장 보고를 기준으로 했다. 한국은 2024년 기업 조사라 참고값이다.")
+SG_DEF = {
+    "시험": ("사용률 10% 미만", "실제 사용 조사"),
+    "초기 확산": ("사용률 10~25%", "실제 사용 조사"),
+    "확산": ("사용률 25~50%", "실제 사용 조사"),
+    "주류": ("사용률 50% 이상, 그리고 전사로 확장한 기업 25% 이상", "실제 사용 조사 + 전사 확장 조사"),
+}
+STAGE_LEAD = ("글로벌에서 확산 단계에 든 업종은 정보·소프트웨어와 금융·보험이고, 기업 전체는 초기 확산(19.8%)에서 반년째 정체다. 사용률 50%를 넘은 업종은 없다. "
+              "한국은 서비스업과 금융이 50%를 넘었지만 2024년 조사이고 전사 확장 근거가 없어 확산(잠정)이다.")
+# (항목, 글로벌, 글로벌 잠정, 한국, 한국 잠정, 근거, 기록)
 STAGES = [
-    ("정보·소프트웨어", "확산", None, "미국 39.7%, Agent는 소프트웨어 개발에서 가장 많이 확장", ["I4-M-002", "I4-M-004"]),
-    ("금융·보험", "확산", "주류", "미국 33.9% / 한국 금융 57.1%(2024)", ["I4-M-002", "I4-M-009"]),
-    ("서비스 전반", None, "주류", "한국 서비스업 53.0%(2024)", ["I4-M-009"]),
-    ("제조", None, "초기 확산", "Agent는 공급망·재고 업무에서 시험 / 한국 23.8%(2024)", ["I4-M-004", "I4-M-009"]),
-    ("소매", "초기 확산", None, "미국 약 14%로 업종 중 최저", ["I4-M-002"]),
-    ("기업 전체", "초기 확산", "확산", "미국 19.8%(반년째 정체), 250명 이상 37% / 한국 30.6%(2024)", ["I4-M-001", "I4-M-003", "I4-M-009"]),
+    ("정보·소프트웨어", "확산", False, None, False, "미국 39.7%, Agent는 소프트웨어 개발에서 가장 많이 확장", ["I4-M-002", "I4-M-004"]),
+    ("금융·보험", "확산", False, "확산", True, "미국 33.9% / 한국 금융 57.1%(2024, 전사 확장 근거 없음)", ["I4-M-002", "I4-M-009"]),
+    ("서비스 전반", None, False, "확산", True, "한국 서비스업 53.0%(2024, 전사 확장 근거 없음)", ["I4-M-009"]),
+    ("제조", None, False, "초기 확산", True, "Agent는 공급망·재고 업무에서 시험 / 한국 23.8%(2024)", ["I4-M-004", "I4-M-009"]),
+    ("소매", "초기 확산", False, None, False, "미국 약 14%로 업종 중 최저", ["I4-M-002"]),
+    ("기업 전체", "초기 확산", False, "확산", True, "미국 19.8%(반년째 정체), 250명 이상 37%, 전사 확장 44% / 한국 30.6%(2024)", ["I4-M-001", "I4-M-003", "I4-M-004", "I4-M-009"]),
 ]
-def sg4(v):
+def tip_sg(v):
+    th, ev = SG_DEF[v]
+    return f"{v} — 기준: {th}. 근거: {ev}."
+def cell(v, pv):
     if v is None:
-        return '<span class="lv muted">자료 없음</span>'
-    i = SG.index(v)
-    return "".join(f'<span class="pip{" on" if k <= i else ""}"></span>' for k in range(4)) + f'<span class="lv">{E(v)}</span>'
+        return '<span class="pips"><span class="lv muted">자료 없음</span></span>'
+    return gauge(SG, v, tip_sg(v), pv)
+criteria_html = criteria_panel([
+    ("판정 단계: 산업 확산", ["단계", "수치 기준", "인정하는 근거"], [[gauge(SG, k), E(v[0]), E(v[1])] for k, v in SG_DEF.items()]),
+], extra_rules=["'최근 제품·서비스 생산에 AI를 썼다'처럼 실제 사용을 묻는 조사만 인정한다. 도입 계획·관심 조사는 의향으로 본다.",
+                "근거 시점이 판정 시점보다 12개월 넘게 이르면 잠정으로 둔다.",
+                "글로벌은 미국 인구조사국 업종별 사용률, 업무 기능은 McKinsey 확장 보고, 한국은 정부 기업 조사를 쓴다."])
 stage_rows = "".join(f"""<div class="rung"><div class="stage"><b>{E(d)}</b></div>
-  <div class="lvcell"><span class="region">글로벌</span><span class="pips">{sg4(g)}</span></div>
-  <div class="lvcell"><span class="region">한국</span><span class="pips">{sg4(k)}</span></div>
-  <p class="why">{E(w)} {tags(ids)}</p></div>""" for d, g, k, w, ids in STAGES)
+  <div class="lvcell"><span class="region">글로벌</span>{cell(g, gp)}</div>
+  <div class="lvcell"><span class="region">한국</span>{cell(k, kp)}</div>
+  <p class="why">{E(w)} {tags(ids)}</p></div>""" for d, g, gp, k, kp, w, ids in STAGES)
 FACTOR_LEAD = ("이번 달 확산에 영향을 준 요인을 크기 순으로 놓았다. 순위는 영향 범위(산업 전체인지 일부인지)와 이미 수치로 나타났는지를 기준으로 매겼다.")
 FCLS = {"제약": "agent", "촉진": "brand", "중립": "contest"}
 FACTORS = [
@@ -165,6 +181,7 @@ page = f"""<title>I4 AI 확산·정책 R1</title>
     <p class="lead muted">각 세부 전망이 적중하거나 빗나갔을 때 어느 시나리오 쪽 신호인지 표시했다. 확인 시점이 오면 확인 방법대로 판정한다.</p>
     <div class="tablewrap"><table><thead><tr><th>세부 전망</th><th>확인 시점</th><th>적중 시</th><th>빗나갈 시</th><th>상태</th><th>근거</th></tr></thead><tbody>{frows}</tbody></table></div></section>
   <section><h2>확산 단계와 요인 순위 <small>산업·업무별 · 촉진과 제약</small></h2><p class="lead">{E(STAGE_LEAD)}</p>
+    {criteria_html}
     <div class="ladder mapgrid auto">{stage_rows}</div>
     <h3 class="subhead">확산을 밀고 막는 요인 순위</h3><p class="lead">{E(FACTOR_LEAD)}</p>
     <div class="tablewrap"><table><thead><tr><th style="white-space:nowrap">순위</th><th>방향</th><th>요인</th><th>근거</th></tr></thead><tbody>{factor_rows}</tbody></table></div></section>
