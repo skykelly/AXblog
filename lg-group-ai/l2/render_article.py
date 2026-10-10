@@ -5,6 +5,9 @@ import json, html, re, sys
 from pathlib import Path
 
 ROOT = Path(__file__).parent
+sys.path.insert(0, str(ROOT.parent.parent / "lib"))
+from judge import gauge, chip, criteria_panel
+L_RULE = "단계를 올리려면 회사 공식 발표, 공시, 고객사 발표 중 하나가 필요하다. 출처를 밝히지 않은 언론 보도만 있으면 잠정으로 둔다."
 recs = [json.loads(l) for l in (ROOT / "records.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
 by = {r["id"]: r for r in recs}
 E = html.escape
@@ -88,22 +91,37 @@ frows = "".join(f"""<tr id="{E(r['id'])}"><td class="stmt">{E(r['statement'])}<s
 
 # 5. 적용 영역별 증거 수준과 성능 수치 원장 -------------------------
 SG = ["내부 실증", "외부 실증", "상용 계약", "사업 성과"]
-STAGE_LEAD = ("적용 영역마다 내부 실증 → 외부 실증 → 상용 계약 → 사업 성과(수주·매출 공개) 중 어디에 있는지 판정했다. 오른쪽 표시는 공개된 성능 수치가 어디서 나왔는지다.")
+SG_DEF = {
+    "내부 실증": "자사 공장·시설에 적용했다.",
+    "외부 실증": "외부 고객 현장에서 PoC·실증을 한다 (고객이나 현장 공개).",
+    "상용 계약": "외부 고객과의 유료 계약이나 정식 판매가 확인됐다.",
+    "사업 성과": "외부 수주·매출 금액이 공개됐다.",
+}
+STAGE_LEAD = ("공장 쪽이 가장 앞서 있다. LG전자 외부 스마트팩토리는 수주 금액이 보도돼 사업 성과 단계지만 회사가 직접 밝힌 수치는 아니고, 성능 수치도 자사 공장 기준이다. "
+              "LG CNS 공장 운영 AI는 외부 고객 실측 수치까지 나왔다. 물류 로봇·휴머노이드는 외부 실증, 홈 로봇은 내부 실증 단계다.")
 CUST = {"외부 고객 실측": "brand", "자사 공장": "platform", "회사 기대치": "agent", "수치 없음": "contest"}
+CUST_DEF = {"외부 고객 실측": "외부 고객 현장에서 잰 수치다.", "자사 공장": "LG 자체 공장에서 잰 수치다.",
+            "회사 기대치": "실측이 아닌 목표·예상치다.", "수치 없음": "공개된 성능 수치가 없다."}
+# (영역, 단계, 잠정, 성능 수치 출처, 근거, 기록)
 STAGES = [
-    ("공장 — 외부 스마트팩토리 (LG전자)", "사업 성과", "자사 공장", "외부 수주 약 5,000억 원(2년), 로지스밸리 적용 보도. 성과 수치는 창원 등대공장 기준", ["L2-M-001", "L2-M-002", "L2-E-008"]),
-    ("공장 — 운영 AI (LG CNS Factova)", "상용 계약", "외부 고객 실측", "설비 10만 개+, 배터리 공장 합격품 90%+·전자 공장 생산성 +20% (고객명 비공개)", ["L2-M-003"]),
-    ("물류 로봇·휴머노이드 (LG CNS)", "외부 실증", "회사 기대치", "컬리 PoC, LX판토스 청라 협약, Forge 실증 20곳+", ["L2-E-005", "L2-E-007", "L2-M-004"]),
-    ("가전 — 홈 허브 (씽큐 온)", "상용 계약", "수치 없음", "상황 판단 자동화 기능으로 출시. 이용·성과 수치 미공개", ["L2-E-001"]),
-    ("가전 — 홈 로봇 (CLOiD)", "내부 실증", "수치 없음", "CES 공개, 가격·출시일 없음, '내년 현장 투입' 계획", ["L2-E-002", "L2-E-003"]),
+    ("공장 — 외부 스마트팩토리 (LG전자)", "사업 성과", True, "자사 공장", "외부 수주 약 5,000억 원(2년, 언론 보도), 로지스밸리 적용 보도. 성과 수치는 창원 등대공장 기준", ["L2-M-001", "L2-M-002", "L2-E-008"]),
+    ("공장 — 운영 AI (LG CNS Factova)", "상용 계약", False, "외부 고객 실측", "설비 10만 개+, 배터리 공장 합격품 90%+·전자 공장 생산성 +20% (고객명 비공개)", ["L2-M-003"]),
+    ("물류 로봇·휴머노이드 (LG CNS)", "외부 실증", False, "회사 기대치", "컬리 PoC, LX판토스 청라 협약, Forge 실증 20곳+", ["L2-E-005", "L2-E-007", "L2-M-004"]),
+    ("가전 — 홈 허브 (씽큐 온)", "상용 계약", False, "수치 없음", "상황 판단 자동화 기능으로 정식 출시. 이용·성과 수치 미공개", ["L2-E-001"]),
+    ("가전 — 홈 로봇 (CLOiD)", "내부 실증", False, "수치 없음", "CES 공개, 가격·출시일 없음, '내년 현장 투입' 계획", ["L2-E-002", "L2-E-003"]),
 ]
-def sg4(v):
-    i = SG.index(v)
-    return "".join(f'<span class="pip{" on" if k <= i else ""}"></span>' for k in range(4)) + f'<span class="lv">{E(v)}</span>'
+def tip_sg(v):
+    return f"{v} — {SG_DEF[v]}"
+def side(c, pv=False):
+    return chip(c, CUST[c], f"{c} — {CUST_DEF[c]}", pv)
 stage_rows = "".join(f"""<div class="rung"><div class="stage"><b>{E(d)}</b></div>
-  <div class="lvcell"><span class="pips">{sg4(st)}</span></div>
-  <div class="lvcell"><span class="own {CUST[c]}">{E(c)}</span></div>
-  <p class="why">{E(w)} {tags(ids)}</p></div>""" for d, st, c, w, ids in STAGES)
+  <div class="lvcell">{gauge(SG, st, tip_sg(st), pv)}</div>
+  <div class="lvcell">{side(c)}</div>
+  <p class="why">{E(w)} {tags(ids)}</p></div>""" for d, st, pv, c, w, ids in STAGES)
+criteria_html = criteria_panel([
+    ("판정 단계: 증거 수준", ["단계", "기준"], [[gauge(SG, k), E(v)] for k, v in SG_DEF.items()]),
+    ("옆 표시: 성능 수치의 출처 (강한 순)", ["판정", "정의"], [[side(k), E(v)] for k, v in CUST_DEF.items()]),
+], extra_rules=[L_RULE])
 LEDGER_LEAD = "공개된 성능 수치를 한 줄씩 기록하고, 측정 주체와 근거 종류를 표시했다. 다음 회차부터 '외부 고객 실측' 줄이 늘어나는지를 본다."
 LEDGER = [
     ("생산성 +17%, 품질 비용 -70%, 에너지 효율 +30%", "LG전자 창원 등대공장", "LG전자", "2024 발표", "자사 공장", ["L2-M-002"]),
@@ -113,7 +131,7 @@ LEDGER = [
     ("생산성 +15% 이상, 운영비 최대 -18%", "로봇 100대 운영 (Baton)", "LG CNS", "2026-05", "회사 기대치", ["L2-M-004"]),
 ]
 ledger_rows = "".join(f"""<tr><td class="tgt">{E(a)}</td><td>{E(b)}</td><td>{E(c)}</td><td>{E(d)}</td><td>{E(e)}</td><td>{tags(ids)}</td></tr>""" for a, b, c, d, e, ids in LEDGER)
-STAGE_NOTE = "판정: 공장은 사업 성과까지 왔지만 성능 증거는 자사 공장 중심이고, 로봇·휴머노이드는 외부 실증, 홈 로봇은 내부 실증 단계다 (R1 기준)."
+STAGE_NOTE = "판정: 공장은 사업 성과까지 왔지만 성능 증거는 자사 공장 중심이고, 로봇·휴머노이드는 외부 실증, 홈 로봇은 내부 실증 단계다."
 
 # 6. 핵심 지표 ---------------------------------------------------------
 INDICATOR_NAMES = {"L2-T1": "스마트팩토리 외부 수주", "L2-T2": "자사 공장 성과", "L2-T3": "공장 운영 AI 적용·성과",
@@ -160,6 +178,7 @@ page = f"""<title>L2 LG 피지컬 AI R1</title>
     <p class="lead muted">각 세부 전망이 적중하거나 빗나갔을 때 어느 시나리오 쪽 신호인지 표시했다. 확인 시점이 오면 확인 방법대로 판정한다.</p>
     <div class="tablewrap"><table><thead><tr><th>세부 전망</th><th>확인 시점</th><th>적중 시</th><th>빗나갈 시</th><th>상태</th><th>근거</th></tr></thead><tbody>{frows}</tbody></table></div></section>
   <section><h2>적용 영역별 증거 수준 <small>영역별 · 성능 수치 원장</small></h2><p class="lead">{E(STAGE_LEAD)}</p>
+    {criteria_html}
     <div class="ladder mapgrid auto">{stage_rows}</div><p class="gapnote">{E(STAGE_NOTE)}</p>
     <h3 class="subhead">성능 수치 원장</h3><p class="lead">{E(LEDGER_LEAD)}</p>
     <div class="tablewrap"><table><thead><tr><th>수치</th><th>대상</th><th>측정 주체</th><th>시점</th><th>근거 종류</th><th>기록</th></tr></thead><tbody>{ledger_rows}</tbody></table></div></section>

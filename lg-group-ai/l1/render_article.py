@@ -5,6 +5,9 @@ import json, html, re, sys
 from pathlib import Path
 
 ROOT = Path(__file__).parent
+sys.path.insert(0, str(ROOT.parent.parent / "lib"))
+from judge import gauge, chip, criteria_panel
+L_RULE = "단계를 올리려면 회사 공식 발표, 공시, 고객사 발표 중 하나가 필요하다. 출처를 밝히지 않은 언론 보도만 있으면 잠정으로 둔다."
 recs = [json.loads(l) for l in (ROOT / "records.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
 by = {r["id"]: r for r in recs}
 E = html.escape
@@ -89,22 +92,37 @@ frows = "".join(f"""<tr id="{E(r['id'])}"><td class="stmt">{E(r['statement'])}<s
 
 # 5. 제품군별 수요 확보 단계와 계약 원장 ----------------------------
 SG = ["발표·전시", "실증·협의", "계약", "공급·매출"]
-STAGE_LEAD = ("제품군마다 발표·전시 → 실증·협의 → 계약 → 공급·매출(AI 데이터센터 매출이 따로 확인됨) 중 어디에 있는지 판정했다. 오른쪽 표시는 계약 고객이 공개됐는지다.")
+SG_DEF = {
+    "발표·전시": "제품·솔루션 발표, 전시, MOU, 투자·구축 계획.",
+    "실증·협의": "특정 고객과의 PoC·인증·공급 협의가 공식 확인됐다.",
+    "계약": "공급·수주 계약이 공시나 공식 발표로 확인됐다 (규모나 고객 중 하나 이상 공개).",
+    "공급·매출": "AI 데이터센터 매출이 따로 공개됐다.",
+}
+STAGE_LEAD = ("냉각·전력·구축·운영 네 제품군이 계약 단계에 있고, AI 데이터센터 매출을 따로 공개한 제품군은 아직 없다. "
+              "GPU 클라우드는 투자·구축 계획만 있고 외부 고객 계약이나 협의가 확인되지 않아 발표 단계다.")
 CUST = {"고객 공개": "brand", "고객 일부 공개": "platform", "고객 비공개": "agent", "해당 없음": "contest"}
+CUST_DEF = {"고객 공개": "계약 상대 이름이 공개됐다.", "고객 일부 공개": "일부 계약만 상대가 공개됐다.",
+            "고객 비공개": "상대가 공개된 계약이 없다.", "해당 없음": "아직 계약 전이다."}
+# (제품군, 단계, 잠정, 고객 공개, 근거, 기록)
 STAGES = [
-    ("냉각 (LG전자)", "계약", "고객 공개", "Air Control Concept 5GW 장기 공급, 상반기 수주 6,000억 원+. CDU는 NVIDIA향 일부 인증, 냉각 매출 미분리", ["L1-M-001", "L1-E-010", "L1-E-011"]),
-    ("전력·ESS (LG에너지솔루션)", "계약", "고객 비공개", "ESS 수주 3조 원+에 하이퍼스케일러 AI 데이터센터 포함. 800V DC는 NVIDIA와 개발", ["L1-M-003", "L1-E-007"]),
-    ("구축·DBO (LG CNS)", "계약", "고객 일부 공개", "상반기 DBO 수주 1조 원+, 자카르타 인프라. AI Box는 부산 자체 캠퍼스", ["L1-M-005", "L1-E-003"]),
-    ("운영·코로케이션 (LG CNS·U+)", "계약", "고객 일부 공개", "네이버클라우드 6,034억 원(2035년까지), 파주 첫 동 고객 확보(비공개). 가동 2027년", ["L1-M-006", "L1-M-007"]),
-    ("GPU 클라우드 (LG CNS·U+)", "실증·협의", "해당 없음", "CNS GPU 투자 3,814억 원(Vera Rubin 포함), U+ Rubin 기반 인프라 계획. 외부 고객 계약 미확인", ["L1-M-008", "L1-E-007"]),
+    ("냉각 (LG전자)", "계약", False, "고객 공개", "Air Control Concept 5GW 장기 공급, 상반기 수주 6,000억 원+. CDU는 NVIDIA향 일부 인증, 냉각 매출 미분리", ["L1-M-001", "L1-E-010", "L1-E-011"]),
+    ("전력·ESS (LG에너지솔루션)", "계약", False, "고객 비공개", "ESS 수주 3조 원+에 하이퍼스케일러 AI 데이터센터 포함. 800V DC는 NVIDIA와 개발", ["L1-M-003", "L1-E-007"]),
+    ("구축·DBO (LG CNS)", "계약", False, "고객 일부 공개", "상반기 DBO 수주 1조 원+, 자카르타 인프라. AI Box는 부산 자체 캠퍼스", ["L1-M-005", "L1-E-003"]),
+    ("운영·코로케이션 (LG CNS·U+)", "계약", False, "고객 일부 공개", "네이버클라우드 6,034억 원(2035년까지), 파주 첫 동 고객 확보(비공개). 가동 2027년", ["L1-M-006", "L1-M-007"]),
+    ("GPU 클라우드 (LG CNS·U+)", "발표·전시", False, "해당 없음", "CNS GPU 투자 3,814억 원(Vera Rubin 포함), U+ Rubin 기반 인프라 계획. 외부 고객 계약·협의 미확인", ["L1-M-008", "L1-E-007"]),
 ]
-def sg4(v):
-    i = SG.index(v)
-    return "".join(f'<span class="pip{" on" if k <= i else ""}"></span>' for k in range(4)) + f'<span class="lv">{E(v)}</span>'
+def tip_sg(v):
+    return f"{v} — {SG_DEF[v]}"
+def side(c, pv=False):
+    return chip(c, CUST[c], f"{c} — {CUST_DEF[c]}", pv)
 stage_rows = "".join(f"""<div class="rung"><div class="stage"><b>{E(d)}</b></div>
-  <div class="lvcell"><span class="pips">{sg4(st)}</span></div>
-  <div class="lvcell"><span class="own {CUST[c]}">{E(c)}</span></div>
-  <p class="why">{E(w)} {tags(ids)}</p></div>""" for d, st, c, w, ids in STAGES)
+  <div class="lvcell">{gauge(SG, st, tip_sg(st), pv)}</div>
+  <div class="lvcell">{side(c)}</div>
+  <p class="why">{E(w)} {tags(ids)}</p></div>""" for d, st, pv, c, w, ids in STAGES)
+criteria_html = criteria_panel([
+    ("판정 단계: 수요 확보", ["단계", "기준"], [[gauge(SG, k), E(v)] for k, v in SG_DEF.items()]),
+    ("옆 표시: 고객 공개 정도", ["판정", "정의"], [[side(k), E(v)] for k, v in CUST_DEF.items()]),
+], extra_rules=[L_RULE])
 LEDGER_LEAD = "확인된 계약을 한 줄씩 기록했다. 규모·기간이 공개되지 않은 항목은 비워 두고, 계획·협의 단계는 따로 표시했다."
 LEDGER = [
     ("LG전자", "Air Control Concept (북미)", "칠러 장기 공급 (CDU 협의 중)", "총 5GW", "2026-10 체결, 금액·기간 미공개", ["L1-E-010"]),
@@ -115,7 +133,7 @@ LEDGER = [
     ("LG 계열사", "Microsoft", "냉각·전력·IT 인프라 공급 기회 탐색", "미공개", "2026-09 사장단 파트너십, 공급 계약 미확인", ["L1-E-001", "L1-E-012"]),
 ]
 ledger_rows = "".join(f"""<tr><td class="tgt">{E(a)}</td><td>{E(b)}</td><td>{E(c)}</td><td>{E(d)}</td><td>{E(e)}</td><td>{tags(ids)}</td></tr>""" for a, b, c, d, e, ids in LEDGER)
-STAGE_NOTE = "판정: 네 제품군 모두 '계약' 단계, AI 데이터센터 매출로 따로 확인된 제품군은 아직 없다 (R1 기준)."
+STAGE_NOTE = "판정: 네 제품군 모두 '계약' 단계, AI 데이터센터 매출로 따로 확인된 제품군은 아직 없다."
 
 # 6. 핵심 지표 ---------------------------------------------------------
 INDICATOR_NAMES = {"L1-T1": "냉각 수주", "L1-T2": "냉각 사업 규모", "L1-T3": "전력·ESS 수주",
@@ -162,6 +180,7 @@ page = f"""<title>L1 LG AI 데이터센터 R1</title>
     <p class="lead muted">각 세부 전망이 적중하거나 빗나갔을 때 어느 시나리오 쪽 신호인지 표시했다. 확인 시점이 오면 확인 방법대로 판정한다.</p>
     <div class="tablewrap"><table><thead><tr><th>세부 전망</th><th>확인 시점</th><th>적중 시</th><th>빗나갈 시</th><th>상태</th><th>근거</th></tr></thead><tbody>{frows}</tbody></table></div></section>
   <section><h2>수요 확보 단계와 계약 원장 <small>제품군별 · 계약 단위</small></h2><p class="lead">{E(STAGE_LEAD)}</p>
+    {criteria_html}
     <div class="ladder mapgrid auto">{stage_rows}</div><p class="gapnote">{E(STAGE_NOTE)}</p>
     <h3 class="subhead">계약 원장</h3><p class="lead">{E(LEDGER_LEAD)}</p>
     <div class="tablewrap"><table><thead><tr><th>계열사</th><th>상대</th><th>내용</th><th>규모</th><th>기간·상태</th><th>기록</th></tr></thead><tbody>{ledger_rows}</tbody></table></div></section>

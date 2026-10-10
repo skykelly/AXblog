@@ -5,6 +5,9 @@ import json, html, re, sys
 from pathlib import Path
 
 ROOT = Path(__file__).parent
+sys.path.insert(0, str(ROOT.parent.parent / "lib"))
+from judge import gauge, chip, criteria_panel
+L_RULE = "단계를 올리려면 회사 공식 발표, 공시, 고객사 발표 중 하나가 필요하다. 출처를 밝히지 않은 언론 보도만 있으면 잠정으로 둔다."
 recs = [json.loads(l) for l in (ROOT / "records.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
 by = {r["id"]: r for r in recs}
 E = html.escape
@@ -87,24 +90,38 @@ frows = "".join(f"""<tr id="{E(r['id'])}"><td class="stmt">{E(r['statement'])}<s
 
 # 5. 제품군별 공급 단계 ---------------------------------------------
 SG = ["콘셉트", "수주(고객 비공개)", "수주(고객·차종 공개)", "양산 적용"]
-STAGE_LEAD = ("제품군마다 콘셉트 → 수주(고객 비공개) → 수주(고객·차종 공개) → 양산 적용 중 어디에 있는지 판정했다. 오른쪽 표시는 그 제품군이 AI 이전부터의 강점인지, AI로 새로 여는 영역인지다.")
+SG_DEF = {
+    "콘셉트": "전시·개발 착수·협력 발표 단계다.",
+    "수주(고객 비공개)": "수주가 공식 확인됐지만 고객이 비공개다.",
+    "수주(고객·차종 공개)": "고객과 차종이 공개된 수주다.",
+    "양산 적용": "양산 차량에 탑재돼 출하됐다.",
+}
+STAGE_LEAD = ("양산 단계에 있는 것은 AI 이전부터의 강점인 텔레매틱스와 차량용 OLED다. AI 신영역 다섯 가운데 고객·차종이 공개된 수주는 르노 통합 콕핏 한 건이고, "
+              "라이다는 2028년 탑재 목표만 보도됐으며, AI 캐빈·ADAS·배터리 SW는 콘셉트 단계다.")
 CUST = {"기존 강점": "platform", "AI 신영역": "brand"}
+CUST_DEF = {"기존 강점": "AI 이전부터 매출이 있던 제품군이다.", "AI 신영역": "SDV·센싱·AI 캐빈처럼 AI로 새로 여는 제품군이다."}
+# (제품군, 단계, 잠정, 구분, 근거, 기록)
 STAGES = [
-    ("텔레매틱스 (LG전자)", "양산 적용", "기존 강점", "점유율 23%, 1위", ["L3-M-003"]),
-    ("차량용 OLED (LG디스플레이)", "양산 적용", "기존 강점", "점유율 15.9%(2위), 완성차 10여 곳 공급, 고객명 비공개", ["L3-M-005"]),
-    ("통합 콕핏·SDV (LG전자)", "수주(고객·차종 공개)", "AI 신영역", "르노 New Trafic E-Tech Electric, 규모 비공개", ["L3-E-006"]),
-    ("AI 캐빈 (LG전자)", "콘셉트", "AI 신영역", "온디바이스 AI 캐빈 플랫폼, 인캐빈 센싱 양산 논의 중", ["L3-E-001"]),
-    ("ADAS (LG전자)", "콘셉트", "AI 신영역", "DRIVE Hyperion 기반 개발 착수", ["L3-E-004"]),
-    ("라이다·센싱 (LG이노텍)", "수주(고객 비공개)", "AI 신영역", "Aeva 공동 라이다, 2028년 '글로벌 완성차' 탑재 목표", ["L3-M-004", "L3-E-002"]),
-    ("배터리 SW (LG에너지솔루션)", "콘셉트", "AI 신영역", "SDVerse에 5종 등록, 고객·수익 모델 미공개", ["L3-M-006"]),
+    ("텔레매틱스 (LG전자)", "양산 적용", False, "기존 강점", "점유율 23%, 1위", ["L3-M-003"]),
+    ("차량용 OLED (LG디스플레이)", "양산 적용", False, "기존 강점", "점유율 15.9%(2위), 완성차 10여 곳 공급, 고객명 비공개", ["L3-M-005"]),
+    ("통합 콕핏·SDV (LG전자)", "수주(고객·차종 공개)", False, "AI 신영역", "르노 New Trafic E-Tech Electric 공급 발표, 규모·출하 시점 비공개", ["L3-E-006"]),
+    ("AI 캐빈 (LG전자)", "콘셉트", False, "AI 신영역", "온디바이스 AI 캐빈 플랫폼, 인캐빈 센싱 양산 논의 중", ["L3-E-001"]),
+    ("ADAS (LG전자)", "콘셉트", False, "AI 신영역", "DRIVE Hyperion 기반 개발 착수", ["L3-E-004"]),
+    ("라이다·센싱 (LG이노텍)", "수주(고객 비공개)", True, "AI 신영역", "Aeva 공동 라이다, 2028년 '글로벌 완성차' 탑재 목표(언론 보도, 회사는 고객·수주 미공개)", ["L3-M-004", "L3-E-002"]),
+    ("배터리 SW (LG에너지솔루션)", "콘셉트", False, "AI 신영역", "SDVerse에 5종 등록, 고객·수익 모델 미공개", ["L3-M-006"]),
 ]
-def sg4(v):
-    i = SG.index(v)
-    return "".join(f'<span class="pip{" on" if k <= i else ""}"></span>' for k in range(4)) + f'<span class="lv">{E(v)}</span>'
+def tip_sg(v):
+    return f"{v} — {SG_DEF[v]}"
+def side(c, pv=False):
+    return chip(c, CUST[c], f"{c} — {CUST_DEF[c]}", pv)
 stage_rows = "".join(f"""<div class="rung"><div class="stage"><b>{E(d)}</b></div>
-  <div class="lvcell"><span class="pips">{sg4(st)}</span></div>
-  <div class="lvcell"><span class="own {CUST[c]}">{E(c)}</span></div>
-  <p class="why">{E(w)} {tags(ids)}</p></div>""" for d, st, c, w, ids in STAGES)
+  <div class="lvcell">{gauge(SG, st, tip_sg(st), pv)}</div>
+  <div class="lvcell">{side(c)}</div>
+  <p class="why">{E(w)} {tags(ids)}</p></div>""" for d, st, pv, c, w, ids in STAGES)
+criteria_html = criteria_panel([
+    ("판정 단계: 공급 단계", ["단계", "기준"], [[gauge(SG, k), E(v)] for k, v in SG_DEF.items()]),
+    ("옆 표시: 제품군 구분", ["구분", "정의"], [[side(k), E(v)] for k, v in CUST_DEF.items()]),
+], extra_rules=[L_RULE, "포털 게이지는 AI 신영역만 센다. 기존 강점은 비교 기준으로 남긴다."])
 LEDGER_LEAD = "수익을 판단할 수 있는 수치를 정리했다. 수주잔고는 회사가 금액을 공개하지 않아 다음 회차에 확인한다."
 LEDGER = [
     ("VS 2분기 매출", "3조 259억 원 (+6.2%)", "LG전자 IR", "2026-Q2", "실적", ["L3-M-001"]),
@@ -113,7 +130,7 @@ LEDGER = [
     ("LG이노텍 센싱 매출", "2030년 약 2조 원 (모빌리티 전체 약 5조 원)", "LG이노텍", "2026-04", "목표", ["L3-M-004"]),
 ]
 ledger_rows = "".join(f"""<tr><td class="tgt">{E(a)}</td><td>{E(b)}</td><td>{E(c)}</td><td>{E(d)}</td><td>{E(e)}</td><td>{tags(ids)}</td></tr>""" for a, b, c, d, e, ids in LEDGER)
-STAGE_NOTE = "판정: 양산 단계는 기존 강점(텔레매틱스·OLED), AI 신영역 중 고객·차종이 공개된 것은 르노 통합 콕핏 한 건이다 (R1 기준)."
+STAGE_NOTE = "판정: 양산 단계는 기존 강점(텔레매틱스·OLED), AI 신영역 중 고객·차종이 공개된 것은 르노 통합 콕핏 한 건이다."
 
 # 6. 핵심 지표 ---------------------------------------------------------
 INDICATOR_NAMES = {"L3-T1": "VS 매출·이익", "L3-T2": "글로벌 Tier 1 대비 수익성", "L3-T3": "텔레매틱스·인포테인먼트 점유율",
@@ -160,6 +177,7 @@ page = f"""<title>L3 LG AI 모빌리티 R1</title>
     <p class="lead muted">각 세부 전망이 적중하거나 빗나갔을 때 어느 시나리오 쪽 신호인지 표시했다. 확인 시점이 오면 확인 방법대로 판정한다.</p>
     <div class="tablewrap"><table><thead><tr><th>세부 전망</th><th>확인 시점</th><th>적중 시</th><th>빗나갈 시</th><th>상태</th><th>근거</th></tr></thead><tbody>{frows}</tbody></table></div></section>
   <section><h2>제품군별 공급 단계 <small>기존 강점과 AI 신영역 · 수익 수치</small></h2><p class="lead">{E(STAGE_LEAD)}</p>
+    {criteria_html}
     <div class="ladder mapgrid auto">{stage_rows}</div><p class="gapnote">{E(STAGE_NOTE)}</p>
     <h3 class="subhead">수익 수치</h3><p class="lead">{E(LEDGER_LEAD)}</p>
     <div class="tablewrap"><table><thead><tr><th>항목</th><th>값</th><th>출처</th><th>시점</th><th>종류</th><th>기록</th></tr></thead><tbody>{ledger_rows}</tbody></table></div></section>
@@ -180,10 +198,10 @@ order = [page.index(f"<h2>{h}") for h in ("한 줄 답", "해석", "주요 사�
 print("article_r1.html 생성,", len(page), "bytes; 앵커 없는 근거 링크:", bad or "없음", "; 섹션 순서 정상:", order == sorted(order))
 # ---------- 포털 신호: 판정 칩과 게이지를 판정 데이터에서 계산해 내보낸다
 SIGNAL_CHIP = 'AI 신영역 공개 수주 1건'
-SIGNAL_GAUGE = '제품군 7개 중 양산 적용'
+SIGNAL_GAUGE = 'AI 신영역 5개 중 고객 공개 수주 이상'
 SIGNAL_FRONTIER = '통합 콕핏·라이다'
 signal = {"question": 'L3', "round": 1, "chip": SIGNAL_CHIP, "gauge": SIGNAL_GAUGE, "frontier": SIGNAL_FRONTIER,
-          "on": sum(1 for r in STAGES if r[1] == "양산 적용"), "of": len(STAGES)}
+          "on": sum(1 for r in STAGES if r[3] == "AI 신영역" and SG.index(r[1]) >= 2), "of": sum(1 for r in STAGES if r[3] == "AI 신영역")}
 (ROOT / "signal_r1.json").write_text(json.dumps(signal, ensure_ascii=False, indent=1), encoding="utf-8")
 print("signal_r1.json:", signal["chip"], f'{signal["on"]}/{signal["of"]}')
 sys.exit(1 if bad or order != sorted(order) else 0)
