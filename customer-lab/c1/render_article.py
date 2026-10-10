@@ -113,8 +113,7 @@ frows = "".join(f"""<tr id="{E(r['id'])}"><td class="stmt">{E(r['statement'])}<s
 # 5. 단계별 판정
 # =====================================================================
 LEVELS = ["실험", "얼리어답터", "확산", "주류"]
-LADDER_LEAD = ("새 판정 기준(v1.1)으로 다시 매겼다. 가장 앞선 단계는 정리로, 미국에서 확산 단계다. 탐색·추천·결정은 얼리어답터, 위임은 실험 단계다. "
-               "한국은 탐색·정리·결정이 한 칸씩 뒤에 있다. R1 처음 판정보다 낮아진 것은 실제 후퇴가 아니라 기준을 강화한 결과다.")
+LADDER_LEAD = "가장 앞선 단계는 정리로, 미국에서 확산 단계다. 탐색·추천·결정은 얼리어답터, 위임은 실험 단계다. 한국은 탐색·정리·결정이 한 칸씩 뒤에 있다."
 LADDER = [
     ("탐색", "Search", "얼리어답터", "실험", "AI를 주 쇼핑 수단으로 쓰는 소비자는 6개국 평균 14%, 한국 7%. 구글 검색 중 AI Mode로 넘어간 비율 0.34%.", ["C1-M-008", "C1-M-005", "C1-M-009"]),
     ("정리", "Synthesis", "확산", "얼리어답터", "AI 요약이 뜨면 일반 결과 클릭이 절반(15% → 8%). 한국 AI탭은 베타 두 달 누적 400만 명, 6월 정식 출시.", ["C1-M-004", "C1-M-003", "C1-M-014", "C1-E-009"]),
@@ -152,7 +151,7 @@ def cell(level, tip=True):
     i = LEVELS.index(level)
     lab = f'<span class="lv" tabindex="0" data-tip="{E(tip_level(level))}">{E(level)}</span>' if tip else f'<span class="lv">{E(level)}</span>'
     return "".join(f'<span class="pip{" on" if k <= i else ""}"></span>' for k in range(4)) + lab
-criteria_html = f"""<details class="criteria"><summary>판정 기준 보기 <small>v1.1</small></summary>
+criteria_html = f"""<details class="criteria"><summary>판정 기준 보기</summary>
   <div class="crit-body">
     <h4>여정 단계: 소비자가 AI에 넘기는 일</h4>
     <div class="tablewrap"><table class="crit">
