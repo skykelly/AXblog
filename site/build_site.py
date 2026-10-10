@@ -97,16 +97,17 @@ for c in cat["categories"]:
         latest.append((cur["date"], c, q, cur))
     sections.append((c, items))
 
+exec(compile((SITE / "changes.py").read_text(encoding="utf-8"), "changes.py", "exec"))
 exec(compile((SITE / "portal.py").read_text(encoding="utf-8"), "portal.py", "exec"))
 
 # ---------------------------------------------------------------- 점검
 bad = []
-for p in [DIST / "index.html"] + [DIST / x for x in pages]:
+for p in [DIST / "index.html", DIST / "changes.html"] + [DIST / x for x in pages]:
     s = p.read_text(encoding="utf-8")
     for href in re.findall(r'href="([^"#:]+\.html)"', s):
         if not (p.parent / href).resolve().exists():
             bad.append(f"{p.relative_to(DIST)} → {href}")
-(DIST / "manifest.json").write_text(json.dumps({"pages": pages}, ensure_ascii=False, indent=1), encoding="utf-8")
+(DIST / "manifest.json").write_text(json.dumps({"pages": pages + ["changes.html"]}, ensure_ascii=False, indent=1), encoding="utf-8")
 print(f"포털 생성: 카테고리 {len(sections)}, 질문 {total_q}, 아티클 페이지 {len(pages)}")
 print("페이지:", pages)
 print("깨진 내부 링크:", bad or "없음")

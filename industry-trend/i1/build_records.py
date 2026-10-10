@@ -137,6 +137,84 @@ add(id="I1-F-102", type="전망", importance=3, status="유효", forecast_status
     basis=["I1-M-006", "I1-M-001", "I1-E-009", "I1-E-001"],
     signposts=[], result=None)
 
+# ---------- 정정·추가 (2026-10-11 재조사 시험 1회, probe_20261011/diff_report.md) ----------
+# 원본 기록은 ID를 유지한 채 고치고, 고치기 전 진술과 이유를 revisions에 남긴다. 새 기록은 added_on으로 구분한다.
+CHG = "2026-10-11"
+SRC.update({
+ "arc_astra": {"url": "https://arcprize.org/blog/astra", "publisher": "ARC Prize (GPT-6 Astra 검증 결과)", "date": "2026-09-03", "grade": "A"},
+ "benchlm": {"url": "https://benchlm.ai/benchmarks/arcagi3", "publisher": "BenchLM (ARC-AGI-3 순위)", "date": "2026-10-10", "grade": "B"},
+ "fwm_astra": {"url": "https://fourweekmba.com/ai-gpt-6-astra-independent-benchmarks-flat-general-intelligence/", "publisher": "FourWeekMBA (GPT-6 Astra 독립 벤치마크 정리)", "date": "2026-09", "grade": "B"},
+ "ld_argon": {"url": "https://letsdatascience.com/news/google-releases-gemini-4-argon-to-cyber-defenders-1093bb0b", "publisher": "Let's Data Science (Gemini 4 Argon)", "date": "2026-10-07", "grade": "B"},
+ "localai_oct": {"url": "https://local-ai-zone.github.io/blog/October_2026_AI_Model_Updates.html", "publisher": "Local AI Zone (2026년 10월 모델 정리)", "date": "2026-10-07", "grade": "B"},
+ "lwai346": {"url": "https://lastweekin.ai/p/last-week-in-ai-346-719-math-manuscripts", "publisher": "Last Week in AI #346", "date": "2026-10-09", "grade": "B"},
+ "officechai": {"url": "https://officechai.com/ai/openai-has-also-included-proofs-for-23-erdos-problems-in-its-latest-math-proof-drop/", "publisher": "OfficeChai (에르되시 문제 23개)", "date": "2026-10-08", "grade": "B"},
+ "aa_cmp": {"url": "https://artificialanalysis.ai/models/comparisons/glm-5-3-vs-kimi-k3", "publisher": "Artificial Analysis (GLM-5.3 vs Kimi K3)", "date": "2026-10", "grade": "A"},
+ "kedhbm": {"url": "https://www.kedglobal.com/korean-chipmakers/newsView/ked202603080004", "publisher": "KED Global (Rubin HBM4 공급사)", "date": "2026-03-08", "grade": "B"},
+ "llmstats": {"url": "https://llm-stats.com/ai-news", "publisher": "LLM Stats (AI 뉴스 모음)", "date": "2026-10-09", "grade": "B"},
+})
+def _get(i): return next(r for r in records if r["id"] == i)
+def revise(i, kind, why, **ch):
+    r = _get(i)
+    r.setdefault("revisions", []).append({"on": CHG, "kind": kind, "before": r.get("statement") if "statement" in ch else None, "why": why})
+    r.update(ch)
+
+revise("I1-M-003", "누락정정", "R1 조사에서 9월 GPT-6 Astra의 검증 결과를 놓쳤다. 최고 기록은 30.2%가 아니라 62.7%였다.",
+    statement="처음 보는 상호작용 환경에서 규칙을 스스로 익혀야 하는 ARC-AGI-3의 표준 조건 최고 점수는 OpenAI GPT-6 Astra의 62.7%다(ARC Prize 검증, 2026년 9월). 제공사 어댑터 조건에서는 99.9%였으나 조건이 달라 따로 본다. 이전 최고는 7월 Claude Opus 5의 30.2%였다.",
+    value=62.7, as_of="2026-09", definition="ARC Prize 검증, ARC-AGI-3 표준 harness", prev_value=30.2,
+    extra={"adapter_harness": "99.9% (Astra high)", "cost_usd": "표준 62.7% 약 26,100 · 어댑터 99.9% 약 18,800"},
+    sources=src("arc_astra", "benchlm", "arc_opus5"), check_flags=["어댑터 조건 99.9%와 표준 조건 62.7%는 비교할 수 없음", "최고 기록 1건에 약 2.6만 달러"])
+revise("I1-M-004", "갱신", "ARC-AGI-3 최고 기록 모델이 바뀌어 '같은 모델' 표현을 고쳤다.",
+    statement="Claude Opus 5는 ARC-AGI-2에서 90.4%, ARC-AGI-1에서 97.5%를 기록했다(7월). 정형 추론 퍼즐은 사실상 포화됐다.")
+revise("I1-E-006", "갱신", "당시 최고 기록이라는 점을 분명히 했다.",
+    statement="Anthropic이 Claude Opus 5를 출시했고, ARC Prize가 당시 ARC-AGI-3 최고 기록(30.2%)으로 검증했다.")
+revise("I1-E-009", "누락정정", "9월 말 신모델이 빠져 있었다.",
+    statement=_get("I1-E-009")["statement"] + " 9월 말에는 Claude Sonnet 5.5(9/28)와 GPT-6.1 Sol(9/29)이 이어졌다.",
+    sources=_get("I1-E-009")["sources"] + src("localai_oct"))
+add(id="I1-E-011", type="사건", importance=3, added_on=CHG, statement="OpenAI가 GPT-6 Astra를 출시했다(입력 $10·출력 $50/백만 토큰). ARC Prize는 ARC-AGI-3 표준 조건 62.7%로 검증했고, 이는 당시 최고 기록이었다. Artificial Analysis 지능 지수는 약 61로 GPT-5.6 Sol과 같은 수준이다.",
+    date="2026-09-02", actor="OpenAI", sources=src("arc_astra", "fwm_astra"), verified=True, check_flags=["OpenAI 자체 발표 98.6%는 어댑터 조건이라 표준 점수와 다름"])
+add(id="I1-E-012", type="사건", importance=3, added_on=CHG, statement="Google이 Gemini 4 Argon을 발표했지만 Fairwind Program(사이버 방어 신뢰 파트너)에만 제한 공개했고 일반 공개 날짜는 밝히지 않았다. 컨텍스트는 100만 토큰, 가격은 도입기 $2/$10, 이후 $4/$20(백만 토큰)이다.",
+    date="2026-09-30", actor="Google", sources=src("ld_argon"), verified=True, check_flags=["벤치마크는 Google 자체 발표"])
+add(id="I1-E-013", type="사건", importance=3, added_on=CHG, statement="OpenAI가 내부 모델이 쓴 수학 원고 719편(372개 주제군)을 GitHub에 공개했다. 에르되시 문제 결과는 23개이고 19개에 Lean 형식화가 있다. 문제 사이트 운영자 Thomas Bloom은 증명을 면밀히 검토하지 않았고 어느 문제도 해결된 것으로 보면 안 된다고 밝혔다. Terence Tao는 한꺼번에 공개한 방식을 비판했다.",
+    date="2026-10-06", actor="OpenAI", sources=src("lwai346", "officechai"), verified=True, check_flags=["일부 원고 철회·정정은 블로그(C급) 보도뿐이라 원문 확인 전까지 반영하지 않음", "독립 검증 전 — 성과로 확정하지 않음"])
+add(id="I1-E-014", type="사건", importance=2, added_on=CHG, statement="Anthropic이 Claude Haiku 5.5를 내놓았다. 100만 토큰 컨텍스트와 노력 수준 조절을 지원하는 첫 Haiku이고, 10만 토큰 이하 입력은 백만 토큰당 $0.10(출력 $0.50)으로 이전 세대보다 90% 낮다.",
+    date="2026-10-07", actor="Anthropic", sources=src("lwai346", "llmstats"), verified=True, check_flags=["벤치마크는 자체 발표"])
+revise("I1-I-002", "누락정정", "ARC-AGI-3 최고 점수 정정(M-003)에 따라 '아직 30%'라는 결론을 고쳤다.",
+    statement="정형화된 추론 퍼즐은 포화됐고, 한계선은 ‘처음 보는 환경에서 스스로 규칙을 배우는 능력’이다. 이 축의 표준 조건 최고 점수는 7월 30%에서 9월 62.7%로 한 세대 만에 두 배가 됐다. 다만 최고 기록 한 건에 약 2.6만 달러가 들었고 조건에 따라 점수가 크게 갈려, 한계선은 점수에서 비용과 조건으로 옮겨가고 있다.",
+    basis=["I1-M-003", "I1-M-004", "I1-E-006", "I1-E-011"])
+revise("I1-M-008", "갱신", "성능 지수 기준 선두를 추가했다.",
+    statement="중국 Moonshot이 2.8조 파라미터(활성 1,040억), 100만 토큰 문맥의 Kimi K3를 오픈 웨이트로 공개했다. Artificial Analysis 지능 지수는 Kimi K3가 44, Z.ai의 GLM-5.3(7,530억·활성 400억, 8월 공개)이 45로 성능 선두는 GLM-5.3이고 규모는 Kimi K3가 가장 크다. 프런트엔드 코딩 블라인드 평가에서 미국 선두 모델보다 높게 평가됐다는 보도가 나왔다.",
+    sources=_get("I1-M-008")["sources"] + src("aa_cmp"), check_flags=_get("I1-M-008")["check_flags"] + ["두 모델의 1점 차이는 오차 범위일 수 있음"])
+revise("I1-I-004", "갱신", "성능 선두와 서방 오픈 웨이트 소식을 반영했다.",
+    statement="오픈 웨이트 모델이 조 단위 규모와 100만 토큰 문맥으로 프런티어에 바짝 붙었다. 성능 지수는 GLM-5.3(45)과 Kimi K3(44)가 앞서고, 서방에서도 Mistral Large 4와 Reflection AI의 Beam이 가중치 공개를 예고했다. 성능 우위의 지속 기간이 짧아지고, 경쟁의 축이 가격과 배포 방식으로 옮겨가고 있다.")
+revise("I1-M-007", "갱신", "10월 출시 모델을 추가했다.",
+    statement=_get("I1-M-007")["statement"] + " 10월에는 Claude Haiku 5.5와 Gemini 4 Argon도 100만 토큰을 지원한다.",
+    sources=_get("I1-M-007")["sources"] + src("llmstats", "ld_argon"))
+revise("I1-M-009", "상충", "Rubin용 HBM4 공급사 구성에 대한 보도가 엇갈려, 마이크론 발표 표현을 낮추고 상충을 표시했다.",
+    statement="Micron이 NVIDIA Vera Rubin용 HBM4(36GB 12단)를 GTC에서 대량 생산 중이라고 발표했고 1분기부터 출하한다고 밝혔다. 대역폭은 2.8TB/s 이상으로 HBM3E의 2.3배다. Rubin 공급사 구성은 보도가 엇갈려, 3월 KED는 삼성전자·SK하이닉스만 공급한다고 전했다.",
+    sources=_get("I1-M-009")["sources"] + src("kedhbm"), check_flags=["Rubin용 HBM4 공급사 구성이 보도마다 다름(마이크론 제외 vs 3사 모두 양산)"])
+revise("I1-I-007", "갱신", "공급사 구성은 확인이 필요하다는 점을 덧붙였다.",
+    statement="차세대 가속기용 HBM4가 양산 단계에 들어가 다음 세대 학습·추론 시스템의 공급이 시작됐다. 다만 공급사 구성은 확인이 필요하다.")
+revise("I1-I-005", "갱신", "10월 수학 원고 공개와 검증 상태를 반영했다.",
+    statement="월드 모델과 AI 과학 발견은 모두 시연 단계다. Genie는 1분짜리 체험으로 제한돼 있고, OpenAI가 10월에 공개한 수학 원고 719편(에르되시 문제 23개 포함)은 아직 독립 검증을 받지 못했다. 문제 사이트 운영자도 증명을 면밀히 검토하지 않았다고 밝혔다.",
+    basis=["I1-E-001", "I1-E-007", "I1-E-013"])
+revise("I1-F-002", "전망 교체", "기존 기준(50% 초과)은 기록 시점에 이미 62.7%로 충족돼 있었다. 이미 달성된 전망은 둘 수 없어 표준 조건 80%로 교체했다.",
+    statement="ARC-AGI-3 표준 조건 최고 점수는 2027년 6월 말까지 80%를 넘을 것이다.",
+    method="ARC Prize 검증 리더보드의 표준 harness 점수 확인", basis=["I1-M-003", "I1-E-011"])
+revise("I1-F-003", "판정 기준 보완", "9/30 Argon이 제한 공개로 발표돼, 출시의 기준이 필요해졌다.",
+    statement="Google은 2026년 안에 Gemini 4를 일반 공개로 출시할 것이다.",
+    method="Google 공식 발표 확인. 일반 개발자 API 또는 일반 앱 이용이 가능해야 출시로 보고, 제한 공개(예: Fairwind Program)는 제외", basis=["I1-E-010", "I1-E-012"])
+revise("I1-F-004", "전망 점검", "원고 공개 규모는 커졌지만 학술지 게재나 수학자의 공개 확인은 아직 없다. 달성 가능성 판단 근거에 10월 공개 사건을 추가했다.",
+    basis=["I1-E-007", "I1-E-013"])
+_s = _get("I1-F-101")
+revise("I1-F-101", "전망 교체", "ARC-AGI-3 기준을 표준 조건 80%로 바꾼 것(F-002)에 맞췄다.",
+    statement="2027년 말까지 AI가 맡을 수 있는 일의 길이가 하루를 넘어 며칠 단위로 늘고, 처음 보는 환경에서의 추론이 표준 조건 80%를 넘는다. 월드 모델과 AI 과학 발견도 시연을 넘어 제품과 검증된 성과로 들어선다.",
+    milestones=[{"by": "2026-12", "text": "Gemini 4 일반 공개로 3사 모두 새 세대 모델 보유"}, {"by": "2027-03", "text": "METR 50% 작업 길이 24시간 이상 측정"}, {"by": "2027-06", "text": "ARC-AGI-3 표준 조건 80% 돌파, AI 수학 결과 독립 검증"}],
+    method="세 가지 중 두 가지 이상 충족 시 적중: (1) METR 50% 작업 길이 24시간 이상 공식 측정 (2) ARC-AGI-3 표준 조건 검증 점수 80% 이상 (3) AI 주도 수학·과학 결과의 독립 검증",
+    basis=["I1-M-001", "I1-M-002", "I1-M-003", "I1-E-007"])
+revise("I1-F-102", "전망 교체", "표준 조건 점수가 이미 62.7%라 '30%대에 머문다'는 시나리오를 고쳤다.",
+    statement="2027년 말까지 작업 길이 증가가 측정 한계와 신뢰성 문제에 막히고, 처음 보는 환경에서의 추론은 표준 조건 80%를 넘지 못한다. 월드 모델과 AI 과학은 시연 단계에 남고, 경쟁은 성능보다 가격·속도 개선 중심으로 옮겨간다.",
+    milestones=[{"by": "2027-03", "text": "24시간 이상 작업 길이 측정 없음"}, {"by": "2027-06", "text": "ARC-AGI-3 표준 조건 최고 점수 80% 미만"}, {"by": "2027-12", "text": "신모델 발표의 중심이 가격 인하와 속도"}])
+
 # ---------- 검증 ----------
 ids = {r["id"] for r in records}
 _t = {r["id"]: r["type"] for r in records}

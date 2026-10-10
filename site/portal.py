@@ -161,7 +161,7 @@ total_q = sum(len(i) for _, i in sections)
 total_live = sum(1 for _, its in sections for i in its if i["status"] == "live")
 total_rec = sum(int(i["cur"]["records"] or 0) for _, its in sections for i in its if i["status"] == "live")
 latest.sort(key=lambda x: x[0], reverse=True)
-last_date = latest[0][0] if latest else "—"
+last_date = max([latest[0][0]] + [c[0] for c in changes]) if latest else "—"
 
 # ---------- AI Chat 데이터 (포털 요약; 상세는 채팅이 아티클 페이지를 직접 읽는다)
 _chat_q = []
@@ -205,6 +205,7 @@ portal = f"""<!doctype html>
         <div><dt>발행 아티클</dt><dd data-count="{total_live}">{total_live}</dd></div>
         <div><dt>근거 기록</dt><dd data-count="{total_rec}">{total_rec:,}</dd></div>
         <div><dt>판정 대기 전망</dt><dd data-count="{len(forecasts)}">{len(forecasts)}</dd></div>
+        <div><dt>변경 이력</dt><dd><a class="chg-link" href="changes.html">{changes_total}건</a></dd></div>
         <div><dt>최근 업데이트</dt><dd>{E(last_date)}</dd></div>
       </dl>
     </div>

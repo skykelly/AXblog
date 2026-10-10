@@ -229,3 +229,5 @@ body { background: var(--paper); }
 .board[data-view="all"] .tlink .chip { align-self: flex-start; }
 .board[data-view="all"] .gauge { margin-top: auto; }
 @media (min-width: 1001px) { .board[data-view="all"] .colhead { min-height: 92px; } }
+.chg-link { color: inherit; text-decoration: underline; text-decoration-color: var(--signal); text-underline-offset: 4px; }
+.chg-link:hover, .chg-link:focus-visible { color: var(--signal-ink); }
