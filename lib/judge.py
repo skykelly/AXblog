@@ -7,7 +7,7 @@ COMMON_RULES = [
     "의향 설문 수치는 한 단계 낮춰 적용하고, 의향만으로는 2단계를 넘지 않는다.",
     "4단계는 과반이면서 기존 방식이 줄어든 것이 수치로 확인돼야 한다.",
     "4단계에 오른 뒤에도 대표 지표는 핵심 지표 표에서 계속 추적한다.",
-    "기준을 직접 재는 수치가 없어 간접 근거로 판정한 칸은 점선 게이지와 '잠정'으로 표시하고, 그 지표를 다음 조사에서 먼저 찾는다.",
+    "기준을 직접 재는 수치가 없어 간접 근거로 판정한 칸은 '잠정'이며, 게이지의 점선 테두리와 빗금으로 표시한다. 그 지표를 다음 조사에서 먼저 찾는다.",
 ]
 
 def tipattr(text):
@@ -18,12 +18,10 @@ def gauge(levels, level, tip=None, prov=False, label=None, show_label=True):
     i = levels.index(level)
     pips = "".join(f'<span class="pip{" on" if k <= i else ""}"></span>' for k in range(len(levels)))
     lab = f'<span class="lv"{tipattr(tip)}>{E(label or level)}</span>' if show_label else ""
-    tag = '<span class="prov-tag" tabindex="0" data-tip="잠정 — 기준을 직접 재는 수치가 없어 간접 근거로 판정했다.">잠정</span>' if prov else ""
-    return f'<span class="pips{" prov" if prov else ""}">{pips}{lab}{tag}</span>'
+    return f'<span class="pips{" prov" if prov else ""}">{pips}{lab}</span>'
 
 def chip(text, cls, tip=None, prov=False):
-    tag = '<span class="prov-tag" tabindex="0" data-tip="잠정 — 기준을 직접 재는 수치가 없어 간접 근거로 판정했다.">잠정</span>' if prov else ""
-    return f'<span class="own {cls}"{tipattr(tip)}>{E(text)}</span>{tag}'
+    return f'<span class="own {cls}"{tipattr(tip)}>{E(text)}</span>'
 
 def table(headers, rows):
     """rows의 각 칸은 이미 HTML로 만든 문자열."""

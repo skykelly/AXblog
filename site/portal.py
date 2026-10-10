@@ -104,7 +104,7 @@ def tile(c, it):
                  f'<b>{sc}</b><span>점</span><span class="bar" aria-hidden="true"><i style="--v:{sc}%"></i></span></div>'
                  f'<span class="glab">{E(sg["gauge"])} <b>{sg["on"]}/{sg["of"]}</b></span></div>')
         items_html = '<ul class="titems">' + "".join(
-            f'<li><span class="seg s{st}{" prov" if pv else ""}"></span><span>{E(nm)}</span><em>{E(lv[st])}{" · 잠정" if pv else ""}</em></li>' for nm, st, pv in its) + "</ul>"
+            f'<li><span class="seg s{st}{" prov" if pv else ""}"></span><span>{E(nm)}</span><em>{E(lv[st])}</em></li>' for nm, st, pv in its) + "</ul>"
     elif sg.get("kind") == "text":
         gauge = f'<div class="gauge"><span class="gtext">{E(sg["text"])}</span></div>'
     older = "".join(f' <a href="{E(b["path"])}">R{b["n"]}</a>' for b in it["arts"][:-1])
