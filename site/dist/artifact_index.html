@@ -289,6 +289,17 @@ body { background: var(--paper); }
   .band .seg { animation: segin .4s ease-out both; transform-origin: 0 50%; }
   @keyframes segin { from { transform: scaleX(0); } }
 }
+
+/* 판정 점수: 숫자 + 막대 하나 */
+.score { display: grid; grid-template-columns: auto auto minmax(0, 1fr); align-items: baseline; gap: 2px 4px; }
+.score b { font: 600 22px/1 var(--mono); font-variant-numeric: tabular-nums; color: var(--ink); }
+.score > span:not(.bar) { font: 500 11px var(--mono); color: var(--muted); }
+.score .bar { align-self: center; margin-left: 8px; height: 6px; border-radius: 3px; background: var(--border-subtle); overflow: hidden; }
+.score .bar i { display: block; height: 100%; width: var(--v); background: var(--signal); border-radius: 3px; }
+@media (prefers-reduced-motion: no-preference) {
+  .score .bar i { animation: barin .6s ease-out both; animation-delay: .2s; transform-origin: 0 50%; }
+  @keyframes barin { from { transform: scaleX(0); } }
+}
 </style><main class="portal">
   <header class="masthead">
     <div class="mh-text">
@@ -302,7 +313,7 @@ body { background: var(--paper); }
         <div><dt>최근 업데이트</dt><dd>2026-10-09</dd></div>
       </dl>
     </div>
-    <div class="mh-radar"><svg class="radar" viewBox="-14 -14 228 228" role="img" aria-label="20개 질문의 신호 위치. 사분면은 카테고리, 바깥쪽일수록 판정 게이지가 많이 찬 질문"><circle cx="100" cy="100" r="30" class="ring"/><circle cx="100" cy="100" r="55" class="ring"/><circle cx="100" cy="100" r="80" class="ring"/><line x1="100" y1="12" x2="100" y2="188" class="axis"/><line x1="12" y1="100" x2="188" y2="100" class="axis"/><g class="sweep"><path d="M100 100 L100 12 A88 88 0 0 1 162.2 37.8 Z" class="beam"/></g><a href="#customer-lab" class="dot" data-q="C1"><circle cx="108.3" cy="69.1" r="3.6" style="--i:0"/><title>C1 AI는 고객의 쇼핑을 어디까지 대신하고 있나</title></a><a href="#customer-lab" class="dot" data-q="C2"><circle cx="126.5" cy="54.1" r="3.6" style="--i:1"/><title>C2 AI 시대, 고객 접점의 주인은 누구인가</title></a><a href="#customer-lab" class="dot" data-q="C3"><circle cx="132.5" cy="67.5" r="3.6" style="--i:2"/><title>C3 AI가 만든 정보, 소비자는 믿는가</title></a><a href="#customer-lab" class="dot" data-q="C4"><circle cx="161.1" cy="64.8" r="3.6" style="--i:3"/><title>C4 집 안의 AI는 어디까지 스스로 하나</title></a><a href="#customer-lab" class="dot" data-q="C5"><circle cx="168.1" cy="81.8" r="3.6" style="--i:4"/><title>C5 어떤 삶의 변화가 수요를 만드는가</title></a><a href="#industry-trend" class="dot" data-q="I1"><circle cx="164.7" cy="121.0" r="3.6" style="--i:5"/><title>I1 AI 기술의 경계는 어디까지 넓어졌나</title></a><a href="#industry-trend" class="dot" data-q="I2"><circle cx="142.9" cy="131.2" r="3.6" style="--i:6"/><title>I2 AI 제품은 어디까지 실제로 쓰이고 있나</title></a><a href="#industry-trend" class="dot" data-q="I3"><circle cx="124.3" cy="133.4" r="3.6" style="--i:7"/><title>I3 AI에 쏟아진 돈은 어디로 가고, 돌아오고 있나</title></a><a href="#industry-trend" class="dot" data-q="I4"><circle cx="112.8" cy="139.3" r="3.6" style="--i:8"/><title>I4 AI는 어느 산업까지 들어갔고, 무엇이 밀고 막나</title></a><a href="#sales-marketing" class="dot" data-q="S1"><circle cx="89.3" cy="139.9" r="3.6" style="--i:9"/><title>S1 AI 답변 속 브랜드는 어떻게 보이고, 무엇이 노출을 가르나</title></a><a href="#sales-marketing" class="dot" data-q="S2"><circle cx="84.0" cy="127.7" r="3.6" style="--i:10"/><title>S2 AI는 어디까지 대신 사고, 그 돈은 누구에게 가나</title></a><a href="#sales-marketing" class="dot" data-q="S3"><circle cx="67.5" cy="132.5" r="3.6" style="--i:11"/><title>S3 AI는 마케팅을 어디까지 바꿨고, 무엇이 매출로 이어졌나</title></a><a href="#sales-marketing" class="dot" data-q="S4"><circle cx="60.2" cy="123.0" r="3.6" style="--i:12"/><title>S4 AI는 영업과 고객 응대에서 무엇을 맡고, 사람은 무엇을 하나</title></a><a href="#sales-marketing" class="dot" data-q="S5"><circle cx="69.1" cy="108.3" r="3.6" style="--i:13"/><title>S5 영업·마케팅 AI 예산은 누가 가져가고, 무엇이 도입을 가르나</title></a><a href="#lg-group-ai" class="dot" data-q="L1"><circle cx="27.9" cy="83.5" r="3.6" style="--i:14"/><title>L1 LG는 AI 데이터센터 수요를 어디까지 계약과 매출로 잡았나</title></a><a href="#lg-group-ai" class="dot" data-q="L2"><circle cx="71.2" cy="86.1" r="3.6" style="--i:15"/><title>L2 LG의 피지컬 AI는 현장에서 어디까지 성과를 냈나</title></a><a href="#lg-group-ai" class="dot" data-q="L3"><circle cx="75.0" cy="80.0" r="3.6" style="--i:16"/><title>L3 LG의 차량용 AI는 어느 고객·차종까지 들어갔나</title></a><a href="#lg-group-ai" class="dot" data-q="L4"><circle cx="71.3" cy="64.0" r="3.6" style="--i:17"/><title>L4 LG의 AX는 목표에서 결과로 얼마나 넘어왔나</title></a><a href="#lg-group-ai" class="dot" data-q="L5"><circle cx="80.0" cy="58.6" r="3.6" style="--i:18"/><title>L5 AI가 찾은 소재·신약은 어디까지 제품이 됐나</title></a><a href="#lg-group-ai" class="dot" data-q="L6"><circle cx="91.3" cy="62.0" r="3.6" style="--i:19"/><title>L6 LG의 AI 동맹은 무엇을 바꾸고 있나</title></a><text x="171" y="33" text-anchor="middle" class="ql">고객</text><text x="171" y="175" text-anchor="middle" class="ql">산업</text><text x="29" y="175" text-anchor="middle" class="ql">영업</text><text x="29" y="33" text-anchor="middle" class="ql">LG</text></svg></div>
+    <div class="mh-radar"><svg class="radar" viewBox="-14 -14 228 228" role="img" aria-label="20개 질문의 신호 위치. 사분면은 카테고리, 바깥쪽일수록 판정 점수가 높은 질문"><circle cx="100" cy="100" r="30" class="ring"/><circle cx="100" cy="100" r="55" class="ring"/><circle cx="100" cy="100" r="80" class="ring"/><line x1="100" y1="12" x2="100" y2="188" class="axis"/><line x1="12" y1="100" x2="188" y2="100" class="axis"/><g class="sweep"><path d="M100 100 L100 12 A88 88 0 0 1 162.2 37.8 Z" class="beam"/></g><a href="#customer-lab" class="dot" data-q="C1"><circle cx="110.6" cy="60.3" r="3.6" style="--i:0"/><title>C1 AI는 고객의 쇼핑을 어디까지 대신하고 있나</title></a><a href="#customer-lab" class="dot" data-q="C2"><circle cx="115.0" cy="74.1" r="3.6" style="--i:1"/><title>C2 AI 시대, 고객 접점의 주인은 누구인가</title></a><a href="#customer-lab" class="dot" data-q="C3"><circle cx="132.5" cy="67.5" r="3.6" style="--i:2"/><title>C3 AI가 만든 정보, 소비자는 믿는가</title></a><a href="#customer-lab" class="dot" data-q="C4"><circle cx="130.7" cy="82.2" r="3.6" style="--i:3"/><title>C4 집 안의 AI는 어디까지 스스로 하나</title></a><a href="#customer-lab" class="dot" data-q="C5"><circle cx="168.1" cy="81.8" r="3.6" style="--i:4"/><title>C5 어떤 삶의 변화가 수요를 만드는가</title></a><a href="#industry-trend" class="dot" data-q="I1"><circle cx="158.4" cy="119.0" r="3.6" style="--i:5"/><title>I1 AI 기술의 경계는 어디까지 넓어졌나</title></a><a href="#industry-trend" class="dot" data-q="I2"><circle cx="161.6" cy="144.7" r="3.6" style="--i:6"/><title>I2 AI 제품은 어디까지 실제로 쓰이고 있나</title></a><a href="#industry-trend" class="dot" data-q="I3"><circle cx="124.3" cy="133.4" r="3.6" style="--i:7"/><title>I3 AI에 쏟아진 돈은 어디로 가고, 돌아오고 있나</title></a><a href="#industry-trend" class="dot" data-q="I4"><circle cx="116.4" cy="150.4" r="3.6" style="--i:8"/><title>I4 AI는 어느 산업까지 들어갔고, 무엇이 밀고 막나</title></a><a href="#sales-marketing" class="dot" data-q="S1"><circle cx="89.3" cy="139.9" r="3.6" style="--i:9"/><title>S1 AI 답변 속 브랜드는 어떻게 보이고, 무엇이 노출을 가르나</title></a><a href="#sales-marketing" class="dot" data-q="S2"><circle cx="70.0" cy="152.0" r="3.6" style="--i:10"/><title>S2 AI는 어디까지 대신 사고, 그 돈은 누구에게 가나</title></a><a href="#sales-marketing" class="dot" data-q="S3"><circle cx="67.5" cy="132.5" r="3.6" style="--i:11"/><title>S3 AI는 마케팅을 어디까지 바꿨고, 무엇이 매출로 이어졌나</title></a><a href="#sales-marketing" class="dot" data-q="S4"><circle cx="55.9" cy="125.4" r="3.6" style="--i:12"/><title>S4 AI는 영업과 고객 응대에서 무엇을 맡고, 사람은 무엇을 하나</title></a><a href="#sales-marketing" class="dot" data-q="S5"><circle cx="69.1" cy="108.3" r="3.6" style="--i:13"/><title>S5 영업·마케팅 AI 예산은 누가 가져가고, 무엇이 도입을 가르나</title></a><a href="#lg-group-ai" class="dot" data-q="L1"><circle cx="46.3" cy="87.7" r="3.6" style="--i:14"/><title>L1 LG는 AI 데이터센터 수요를 어디까지 계약과 매출로 잡았나</title></a><a href="#lg-group-ai" class="dot" data-q="L2"><circle cx="50.4" cy="76.1" r="3.6" style="--i:15"/><title>L2 LG의 피지컬 AI는 현장에서 어디까지 성과를 냈나</title></a><a href="#lg-group-ai" class="dot" data-q="L3"><circle cx="75.0" cy="80.0" r="3.6" style="--i:16"/><title>L3 LG의 차량용 AI는 어느 고객·차종까지 들어갔나</title></a><a href="#lg-group-ai" class="dot" data-q="L4"><circle cx="74.4" cy="67.9" r="3.6" style="--i:17"/><title>L4 LG의 AX는 목표에서 결과로 얼마나 넘어왔나</title></a><a href="#lg-group-ai" class="dot" data-q="L5"><circle cx="88.2" cy="75.6" r="3.6" style="--i:18"/><title>L5 AI가 찾은 소재·신약은 어디까지 제품이 됐나</title></a><a href="#lg-group-ai" class="dot" data-q="L6"><circle cx="90.9" cy="59.9" r="3.6" style="--i:19"/><title>L6 LG의 AI 동맹은 무엇을 바꾸고 있나</title></a><text x="171" y="33" text-anchor="middle" class="ql">고객</text><text x="171" y="175" text-anchor="middle" class="ql">산업</text><text x="29" y="175" text-anchor="middle" class="ql">영업</text><text x="29" y="33" text-anchor="middle" class="ql">LG</text></svg></div>
   </header>
 
   <section class="signals" aria-labelledby="h-signals">
@@ -311,8 +322,7 @@ body { background: var(--paper); }
   </section>
 
   <section class="boardwrap" aria-labelledby="h-board">
-    <div class="sechead row"><div><h2 id="h-board">신호 보드</h2><p>질문마다 이번 회차의 판정입니다. 띠의 한 칸이 판정 항목 하나이고, 앞선 단계일수록 진합니다. 카드를 가리키면 한 줄 답과 항목별 단계를 볼 수 있습니다.</p>
-      <p class="legend" aria-hidden="true"><span class="seg s0"></span><span class="seg s1"></span><span class="seg s2"></span><span class="seg s3"></span> 1단계 → 4단계 <span class="seg s2 prov"></span> 잠정</p></div>
+    <div class="sechead row"><div><h2 id="h-board">신호 보드</h2><p>질문마다 이번 회차의 판정과 점수입니다. 점수는 판정 항목마다 1단계 0점, 4단계 100점으로 매긴 평균입니다. 카드를 가리키면 한 줄 답과 항목별 단계를 볼 수 있습니다.</p></div>
       <label class="search"><span class="vh">질문 검색</span><input id="q-search" type="search" placeholder="검색  /" autocomplete="off"><output id="q-count" aria-live="polite"></output></label></div>
     <div class="tabs" role="tablist" aria-label="카테고리"><button class="tab" role="tab" id="tab-all" aria-controls="board" aria-selected="true" data-cat="all">전체 <span>20</span></button><button class="tab" role="tab" id="tab-customer-lab" aria-controls="board" aria-selected="false" data-cat="customer-lab"><b>01</b> AI Future Customer Lab <span>5</span></button><button class="tab" role="tab" id="tab-industry-trend" aria-controls="board" aria-selected="false" data-cat="industry-trend"><b>02</b> AI Industry Trend <span>4</span></button><button class="tab" role="tab" id="tab-sales-marketing" aria-controls="board" aria-selected="false" data-cat="sales-marketing"><b>03</b> AI Sales &amp; Marketing <span>5</span></button><button class="tab" role="tab" id="tab-lg-group-ai" aria-controls="board" aria-selected="false" data-cat="lg-group-ai"><b>04</b> LG Group AI <span>6</span></button><span class="tab-ink" aria-hidden="true"></span></div>
     <div class="board" id="board" data-view="all"><section class="col" id="customer-lab" data-cat="customer-lab" aria-labelledby="h-customer-lab">
@@ -322,7 +332,7 @@ body { background: var(--paper); }
     <div class="tno"><b>C1</b><span>Consumer Decision Making</span></div>
     <h3 class="ttl">AI는 고객의 쇼핑을 어디까지 대신하고 있나</h3>
     <span class="chip">정리만 확산, 나머지는 초기</span>
-    <div class="gauge"><span class="band" role="img" aria-label="구매 여정 5단계 중 확산 이상(글로벌) 1/5"><span class="seg s2 prov" title="정리 · 확산 (잠정)"></span><span class="seg s1" title="탐색 · 얼리어답터"></span><span class="seg s1 prov" title="추천 · 얼리어답터 (잠정)"></span><span class="seg s1 prov" title="결정 · 얼리어답터 (잠정)"></span><span class="seg s0 prov" title="위임 · 실험 (잠정)"></span></span><span class="glab">구매 여정 5단계 중 확산 이상(글로벌) <b>1/5</b></span></div>
+    <div class="gauge"><div class="score" title="항목마다 1단계 0점 · 2단계 33점 · 3단계 67점 · 4단계 100점의 평균"><b>33</b><span>점</span><span class="bar" aria-hidden="true"><i style="--v:33%"></i></span></div><span class="glab">구매 여정 5단계 중 확산 이상(글로벌) <b>1/5</b></span></div>
   </a>
   <div class="tmore">
     <p class="tq">소비자는 탐색 → 정리 → 추천 → 결정 → 위임 중 어느 단계까지 AI에 맡기고 있으며, 검색엔진·브랜드 사이트의 역할은 얼마나 줄었는가?</p>
@@ -335,7 +345,7 @@ body { background: var(--paper); }
     <div class="tno"><b>C2</b><span>Customer Experience &amp; Commerce</span></div>
     <h3 class="ttl">AI 시대, 고객 접점의 주인은 누구인가</h3>
     <span class="chip">상담은 고객 Agent, 발견은 플랫폼</span>
-    <div class="gauge"><span class="band" role="img" aria-label="고객 접점 4곳 중 AI 이전이 얼리어답터 이상 2/4"><span class="seg s1 prov" title="발견 · 얼리어답터 (잠정)"></span><span class="seg s1 prov" title="상담 · 얼리어답터 (잠정)"></span><span class="seg s0 prov" title="판매 · 실험 (잠정)"></span><span class="seg s0 prov" title="관계 · 실험 (잠정)"></span></span><span class="glab">고객 접점 4곳 중 AI 이전이 얼리어답터 이상 <b>2/4</b></span></div>
+    <div class="gauge"><div class="score" title="항목마다 1단계 0점 · 2단계 33점 · 3단계 67점 · 4단계 100점의 평균"><b>17</b><span>점</span><span class="bar" aria-hidden="true"><i style="--v:17%"></i></span></div><span class="glab">고객 접점 4곳 중 AI 이전이 얼리어답터 이상 <b>2/4</b></span></div>
   </a>
   <div class="tmore">
     <p class="tq">고객 여정(발견·상담·판매·관계) 중 어느 접점이 AI Agent로 넘어가고 있으며, 그 접점의 주도권은 브랜드·플랫폼·고객 Agent 중 누구에게 있는가?</p>
@@ -348,7 +358,7 @@ body { background: var(--paper); }
     <div class="tno"><b>C3</b><span>Content, Information &amp; Trust</span></div>
     <h3 class="ttl">AI가 만든 정보, 소비자는 믿는가</h3>
     <span class="chip">정보 글만 주류, 신뢰는 낮음</span>
-    <div class="gauge"><span class="band" role="img" aria-label="정보 유형 5개 중 AI 생성·경유가 확산 이상 2/5"><span class="seg s3" title="정보 글 · 주류"></span><span class="seg s2 prov" title="광고 · 확산 (잠정)"></span><span class="seg s1 prov" title="정보 받는 경로 · 얼리어답터 (잠정)"></span><span class="seg s0 prov" title="상품 리뷰 · 실험 (잠정)"></span><span class="seg s0 prov" title="AI 답변의 인용 원천 · 실험 (잠정)"></span></span><span class="glab">정보 유형 5개 중 AI 생성·경유가 확산 이상 <b>2/5</b></span></div>
+    <div class="gauge"><div class="score" title="항목마다 1단계 0점 · 2단계 33점 · 3단계 67점 · 4단계 100점의 평균"><b>40</b><span>점</span><span class="bar" aria-hidden="true"><i style="--v:40%"></i></span></div><span class="glab">정보 유형 5개 중 AI 생성·경유가 확산 이상 <b>2/5</b></span></div>
   </a>
   <div class="tmore">
     <p class="tq">소비자가 구매 판단에 쓰는 정보의 원천은 사람이 만든 것에서 AI가 만든 것으로 어디까지 옮겨갔고, 소비자는 그것을 믿는가?</p>
@@ -361,7 +371,7 @@ body { background: var(--paper); }
     <div class="tno"><b>C4</b><span>Physical AI, Products &amp; Living</span></div>
     <h3 class="ttl">집 안의 AI는 어디까지 스스로 하나</h3>
     <span class="chip">수용은 L2, L3에는 거부 신호</span>
-    <div class="gauge"><span class="band" role="img" aria-label="생활 영역 4개 중 고객 수용이 L2 이상 3/4"><span class="seg s1" title="환경 제어 · L2"></span><span class="seg s1" title="보안·돌봄 · L2"></span><span class="seg s1 prov" title="가사 물리 작업 · L2 (잠정)"></span><span class="seg s0 prov" title="장보기·소모품 · L1 (잠정)"></span></span><span class="glab">생활 영역 4개 중 고객 수용이 L2 이상 <b>3/4</b></span></div>
+    <div class="gauge"><div class="score" title="항목마다 1단계 0점 · 2단계 33점 · 3단계 67점 · 4단계 100점의 평균"><b>25</b><span>점</span><span class="bar" aria-hidden="true"><i style="--v:25%"></i></span></div><span class="glab">생활 영역 4개 중 고객 수용이 L2 이상 <b>3/4</b></span></div>
   </a>
   <div class="tmore">
     <p class="tq">집 안에서 AI가 스스로 판단·실행하는 범위는 어디까지 왔으며, 고객은 어느 수준의 자율을 받아들이는가?</p>
@@ -389,7 +399,7 @@ body { background: var(--paper); }
     <div class="tno"><b>I1</b><span>AI Technology &amp; Research</span></div>
     <h3 class="ttl">AI 기술의 경계는 어디까지 넓어졌나</h3>
     <span class="chip">2개 축 일상 사용, 5개 축 제품 이상</span>
-    <div class="gauge"><span class="band" role="img" aria-label="기술 축 7개 중 제품 출시 이상 5/7"><span class="seg s3 prov" title="Agent·장시간 작업 · 일상 사용 (잠정)"></span><span class="seg s3 prov" title="Reasoning · 일상 사용 (잠정)"></span><span class="seg s2" title="Multimodal·Computer use · 제품 출시"></span><span class="seg s2" title="Long context·Memory · 제품 출시"></span><span class="seg s2" title="Compute · 제품 출시"></span><span class="seg s1" title="World Model · 시연"></span><span class="seg s0" title="AI for Science · 연구"></span></span><span class="glab">기술 축 7개 중 제품 출시 이상 <b>5/7</b></span></div>
+    <div class="gauge"><div class="score" title="항목마다 1단계 0점 · 2단계 33점 · 3단계 67점 · 4단계 100점의 평균"><b>62</b><span>점</span><span class="bar" aria-hidden="true"><i style="--v:62%"></i></span></div><span class="glab">기술 축 7개 중 제품 출시 이상 <b>5/7</b></span></div>
   </a>
   <div class="tmore">
     <p class="tq">AI가 새롭게 할 수 있게 된 일은 무엇이고, 기술의 경계는 어느 축에서 얼마나 넓어졌는가?</p>
@@ -402,7 +412,7 @@ body { background: var(--paper); }
     <div class="tno"><b>I2</b><span>AI Products &amp; Applications</span></div>
     <h3 class="ttl">AI 제품은 어디까지 실제로 쓰이고 있나</h3>
     <span class="chip">3개 영역 대규모 운영</span>
-    <div class="gauge"><span class="band" role="img" aria-label="제품 영역 6개 중 대규모 운영(글로벌) 3/6"><span class="seg s3" title="대화형 Assistant · 대규모 운영"></span><span class="seg s3" title="Coding Agent · 대규모 운영"></span><span class="seg s3" title="로보택시 · 대규모 운영"></span><span class="seg s2" title="업무형 Agent · 정식 출시"></span><span class="seg s2" title="휴머노이드 · 정식 출시"></span><span class="seg s2 prov" title="기업 내 Agent 도입 · 정식 출시 (잠정)"></span></span><span class="glab">제품 영역 6개 중 대규모 운영(글로벌) <b>3/6</b></span></div>
+    <div class="gauge"><div class="score" title="항목마다 1단계 0점 · 2단계 33점 · 3단계 67점 · 4단계 100점의 평균"><b>83</b><span>점</span><span class="bar" aria-hidden="true"><i style="--v:83%"></i></span></div><span class="glab">제품 영역 6개 중 대규모 운영(글로벌) <b>3/6</b></span></div>
   </a>
   <div class="tmore">
     <p class="tq">AI 제품은 어느 영역에서 시범을 넘어 실제 운영 단계에 들어섰는가?</p>
@@ -428,7 +438,7 @@ body { background: var(--paper); }
     <div class="tno"><b>I4</b><span>AI Adoption, Governance &amp; Geopolitics</span></div>
     <h3 class="ttl">AI는 어느 산업까지 들어갔고, 무엇이 밀고 막나</h3>
     <span class="chip">1위 제약 전력·데이터센터</span>
-    <div class="gauge"><span class="band" role="img" aria-label="산업·업무 6개 중 확산 이상(글로벌) 2/6"><span class="seg s2" title="정보·소프트웨어 · 확산"></span><span class="seg s2" title="금융·보험 · 확산"></span><span class="seg s1" title="소매 · 초기 확산"></span><span class="seg s1" title="기업 전체 · 초기 확산"></span></span><span class="glab">산업·업무 6개 중 확산 이상(글로벌) <b>2/6</b></span></div>
+    <div class="gauge"><div class="score" title="항목마다 1단계 0점 · 2단계 33점 · 3단계 67점 · 4단계 100점의 평균"><b>50</b><span>점</span><span class="bar" aria-hidden="true"><i style="--v:50%"></i></span></div><span class="glab">산업·업무 6개 중 확산 이상(글로벌) <b>2/6</b></span></div>
   </a>
   <div class="tmore">
     <p class="tq">AI는 어느 산업·업무까지 실제 운영에 들어갔고, 확산을 가장 크게 밀거나 막는 요인은 무엇인가?</p>
@@ -456,7 +466,7 @@ body { background: var(--paper); }
     <div class="tno"><b>S2</b><span>AI Commerce</span></div>
     <h3 class="ttl">AI는 어디까지 대신 사고, 그 돈은 누구에게 가나</h3>
     <span class="chip">탐색만 대규모, 결제는 시험</span>
-    <div class="gauge"><span class="band" role="img" aria-label="커머스 5단계 중 대규모 운영(글로벌) 1/5"><span class="seg s3" title="탐색·비교 · 대규모 운영"></span><span class="seg s2" title="장바구니·선택 · 정식 운영"></span><span class="seg s2" title="결제 (유통사 앱 안) · 정식 운영"></span><span class="seg s1" title="결제 (외부 AI 안) · 시험"></span><span class="seg s1 prov" title="사후관리 · 시험 (잠정)"></span></span><span class="glab">커머스 5단계 중 대규모 운영(글로벌) <b>1/5</b></span></div>
+    <div class="gauge"><div class="score" title="항목마다 1단계 0점 · 2단계 33점 · 3단계 67점 · 4단계 100점의 평균"><b>60</b><span>점</span><span class="bar" aria-hidden="true"><i style="--v:60%"></i></span></div><span class="glab">커머스 5단계 중 대규모 운영(글로벌) <b>1/5</b></span></div>
   </a>
   <div class="tmore">
     <p class="tq">에이전트 구매는 어느 단계까지 실제 거래가 됐고, 거래 한 건의 수익(수수료·광고·데이터)은 누구에게 가는가?</p>
@@ -469,7 +479,7 @@ body { background: var(--paper); }
     <div class="tno"><b>S3</b><span>AI Marketing</span></div>
     <h3 class="ttl">AI는 마케팅을 어디까지 바꿨고, 무엇이 매출로 이어졌나</h3>
     <span class="chip">깊은 변화일수록 성과 엇갈림</span>
-    <div class="gauge"><span class="band" role="img" aria-label="마케팅 기능 5개 중 AI 운영 이상 2/5"><span class="seg s2" title="타기팅 · AI 운영"></span><span class="seg s2" title="광고 집행·입찰 · AI 운영"></span><span class="seg s1 prov" title="콘텐츠 · AI 생성 (잠정)"></span><span class="seg s1 prov" title="CRM·개인화 · AI 생성 (잠정)"></span><span class="seg s0 prov" title="고객 이해 · AI 보조 (잠정)"></span></span><span class="glab">마케팅 기능 5개 중 AI 운영 이상 <b>2/5</b></span></div>
+    <div class="gauge"><div class="score" title="항목마다 1단계 0점 · 2단계 33점 · 3단계 67점 · 4단계 100점의 평균"><b>40</b><span>점</span><span class="bar" aria-hidden="true"><i style="--v:40%"></i></span></div><span class="glab">마케팅 기능 5개 중 AI 운영 이상 <b>2/5</b></span></div>
   </a>
   <div class="tmore">
     <p class="tq">AI는 고객 이해·타기팅·콘텐츠·광고·CRM의 일하는 방식을 어디까지 바꿨으며, 그중 어떤 방식이 실제 매출과 고객 가치 증가로 이어지고 있는가?</p>
@@ -482,7 +492,7 @@ body { background: var(--paper); }
     <div class="tno"><b>S4</b><span>AI Sales &amp; Customer Service</span></div>
     <h3 class="ttl">AI는 영업과 고객 응대에서 무엇을 맡고, 사람은 무엇을 하나</h3>
     <span class="chip">고객 서비스는 AI 단독, 가운데는 사람</span>
-    <div class="gauge"><span class="band" role="img" aria-label="업무 단계 5개 중 AI 주도(B2B) 2/5"><span class="seg s3 prov" title="고객 서비스 · AI 단독 (잠정)"></span><span class="seg s2 prov" title="리드 발굴 · AI 주도·사람 승인 (잠정)"></span><span class="seg s1" title="구매 상담 · 사람 주도·AI 보조"></span><span class="seg s1 prov" title="제안·견적 · 사람 주도·AI 보조 (잠정)"></span><span class="seg s0 prov" title="협상 · 사람 단독 (잠정)"></span></span><span class="glab">업무 단계 5개 중 AI 주도(B2B) <b>2/5</b></span></div>
+    <div class="gauge"><div class="score" title="항목마다 1단계 0점 · 2단계 33점 · 3단계 67점 · 4단계 100점의 평균"><b>47</b><span>점</span><span class="bar" aria-hidden="true"><i style="--v:47%"></i></span></div><span class="glab">업무 단계 5개 중 AI 주도(B2B) <b>2/5</b></span></div>
   </a>
   <div class="tmore">
     <p class="tq">AI는 리드 발굴·상담·제안·협상·고객 서비스 중 무엇을 수행하며, 사람과의 역할 분담은 어떻게 달라지는가?</p>
@@ -510,7 +520,7 @@ body { background: var(--paper); }
     <div class="tno"><b>L1</b><span>AI Data Center / Infra</span></div>
     <h3 class="ttl">LG는 AI 데이터센터 수요를 어디까지 계약과 매출로 잡았나</h3>
     <span class="chip">4개 제품군 계약 단계</span>
-    <div class="gauge"><span class="band" role="img" aria-label="제품군 5개 중 계약 이상 4/5"><span class="seg s2" title="냉각 (LG전자) · 계약"></span><span class="seg s2" title="전력·ESS (LG에너지솔루션) · 계약"></span><span class="seg s2" title="구축·DBO (LG CNS) · 계약"></span><span class="seg s2" title="운영·코로케이션 (LG CNS·U+) · 계약"></span><span class="seg s0" title="GPU 클라우드 (LG CNS·U+) · 발표·전시"></span></span><span class="glab">제품군 5개 중 계약 이상 <b>4/5</b></span></div>
+    <div class="gauge"><div class="score" title="항목마다 1단계 0점 · 2단계 33점 · 3단계 67점 · 4단계 100점의 평균"><b>53</b><span>점</span><span class="bar" aria-hidden="true"><i style="--v:53%"></i></span></div><span class="glab">제품군 5개 중 계약 이상 <b>4/5</b></span></div>
   </a>
   <div class="tmore">
     <p class="tq">LG는 AI 데이터센터의 냉각·전력·구축·운영 수요를 어떤 제품과 계약으로 확보하고 있으며, 그 수요는 계약·매출로 어디까지 확인되는가?</p>
@@ -523,7 +533,7 @@ body { background: var(--paper); }
     <div class="tno"><b>L2</b><span>Physical AI / Smart Manufacturing</span></div>
     <h3 class="ttl">LG의 피지컬 AI는 현장에서 어디까지 성과를 냈나</h3>
     <span class="chip">공장만 사업 성과</span>
-    <div class="gauge"><span class="band" role="img" aria-label="적용 영역 5개 중 사업 성과 1/5"><span class="seg s3 prov" title="공장 — 외부 스마트팩토리 (LG전자) · 사업 성과 (잠정)"></span><span class="seg s2" title="공장 — 운영 AI (LG CNS Factova) · 상용 계약"></span><span class="seg s2" title="가전 — 홈 허브 (씽큐 온) · 상용 계약"></span><span class="seg s1" title="물류 로봇·휴머노이드 (LG CNS) · 외부 실증"></span><span class="seg s0" title="가전 — 홈 로봇 (CLOiD) · 내부 실증"></span></span><span class="glab">적용 영역 5개 중 사업 성과 <b>1/5</b></span></div>
+    <div class="gauge"><div class="score" title="항목마다 1단계 0점 · 2단계 33점 · 3단계 67점 · 4단계 100점의 평균"><b>53</b><span>점</span><span class="bar" aria-hidden="true"><i style="--v:53%"></i></span></div><span class="glab">적용 영역 5개 중 사업 성과 <b>1/5</b></span></div>
   </a>
   <div class="tmore">
     <p class="tq">LG는 AI를 공장·물류·로봇·가전의 물리적 작동에 어떻게 적용하며, 실제 성능과 사업 성과는 어디까지 확인되는가?</p>
@@ -536,7 +546,7 @@ body { background: var(--paper); }
     <div class="tno"><b>L3</b><span>AI Mobility / SDV·AIDV</span></div>
     <h3 class="ttl">LG의 차량용 AI는 어느 고객·차종까지 들어갔나</h3>
     <span class="chip">AI 신영역 공개 수주 1건</span>
-    <div class="gauge"><span class="band" role="img" aria-label="AI 신영역 5개 중 고객 공개 수주 이상 1/5"><span class="seg s2" title="통합 콕핏·SDV (LG전자) · 수주(고객·차종 공개)"></span><span class="seg s1 prov" title="라이다·센싱 (LG이노텍) · 수주(고객 비공개) (잠정)"></span><span class="seg s0" title="AI 캐빈 (LG전자) · 콘셉트"></span><span class="seg s0" title="ADAS (LG전자) · 콘셉트"></span><span class="seg s0" title="배터리 SW (LG에너지솔루션) · 콘셉트"></span></span><span class="glab">AI 신영역 5개 중 고객 공개 수주 이상 <b>1/5</b></span></div>
+    <div class="gauge"><div class="score" title="항목마다 1단계 0점 · 2단계 33점 · 3단계 67점 · 4단계 100점의 평균"><b>20</b><span>점</span><span class="bar" aria-hidden="true"><i style="--v:20%"></i></span></div><span class="glab">AI 신영역 5개 중 고객 공개 수주 이상 <b>1/5</b></span></div>
   </a>
   <div class="tmore">
     <p class="tq">LG의 차량용 AI·소프트웨어·부품은 어떤 고객과 차종에 적용되며, 공급 범위와 수익 기회는 어떻게 확대되는가?</p>
@@ -549,7 +559,7 @@ body { background: var(--paper); }
     <div class="tno"><b>L4</b><span>Enterprise AX / Agentic Operating Model</span></div>
     <h3 class="ttl">LG의 AX는 목표에서 결과로 얼마나 넘어왔나</h3>
     <span class="chip">업무 성과 2곳, 전사 성과 0</span>
-    <div class="gauge"><span class="band" role="img" aria-label="계열사 5곳 중 업무 단위 성과 이상 2/5"><span class="seg s2" title="LG디스플레이 · 업무 단위 성과"></span><span class="seg s2 prov" title="LG에너지솔루션 · 업무 단위 성과 (잠정)"></span><span class="seg s1" title="LG전자 · 업무 적용"></span><span class="seg s0" title="LG화학 · 교육·도구 배포"></span><span class="seg s0" title="LG CNS · 교육·도구 배포"></span></span><span class="glab">계열사 5곳 중 업무 단위 성과 이상 <b>2/5</b></span></div>
+    <div class="gauge"><div class="score" title="항목마다 1단계 0점 · 2단계 33점 · 3단계 67점 · 4단계 100점의 평균"><b>33</b><span>점</span><span class="bar" aria-hidden="true"><i style="--v:33%"></i></span></div><span class="glab">계열사 5곳 중 업무 단위 성과 이상 <b>2/5</b></span></div>
   </a>
   <div class="tmore">
     <p class="tq">LG는 내부 업무와 외부 고객 사업에서 AI를 어떻게 실행 체계로 전환하며, 사용·품질·생산성·매출 성과는 무엇인가?</p>
@@ -562,7 +572,7 @@ body { background: var(--paper); }
     <div class="tno"><b>L5</b><span>AI for Science / Bio / Materials / Battery</span></div>
     <h3 class="ttl">AI가 찾은 소재·신약은 어디까지 제품이 됐나</h3>
     <span class="chip">제품·임상 진입 0건</span>
-    <div class="gauge"><span class="band" role="img" aria-label="연구 분야 5개 중 실험 검증 이상 2/5"><span class="seg s1" title="화장품 원료 (LG생활건강) · 실험 검증"></span><span class="seg s1" title="기타 소재 (액침 냉각유 등) · 실험 검증"></span><span class="seg s0" title="배터리 소재 (LG에너지솔루션) · 가상 탐색"></span><span class="seg s0" title="신약 — 펩타이드 (LG AI연구원) · 가상 탐색"></span><span class="seg s0" title="신약 — 항체 (LG화학) · 가상 탐색"></span></span><span class="glab">연구 분야 5개 중 실험 검증 이상 <b>2/5</b></span></div>
+    <div class="gauge"><div class="score" title="항목마다 1단계 0점 · 2단계 33점 · 3단계 67점 · 4단계 100점의 평균"><b>13</b><span>점</span><span class="bar" aria-hidden="true"><i style="--v:13%"></i></span></div><span class="glab">연구 분야 5개 중 실험 검증 이상 <b>2/5</b></span></div>
   </a>
   <div class="tmore">
     <p class="tq">AI가 소재·배터리·신약의 탐색과 개발을 얼마나 개선하며, 연구 결과는 실험·제품·사업화로 어디까지 이어지는가?</p>
@@ -575,7 +585,7 @@ body { background: var(--paper); }
     <div class="tno"><b>L6</b><span>Global AI Alliance / Open Innovation</span></div>
     <h3 class="ttl">LG의 AI 동맹은 무엇을 바꾸고 있나</h3>
     <span class="chip">상용 계약 3곳, 모두 LG가 고객</span>
-    <div class="gauge"><span class="band" role="img" aria-label="파트너 10곳 중 상용 계약 이상 3/10"><span class="seg s2" title="Palantir (LG CNS) · 상용 계약"></span><span class="seg s2" title="Anthropic (LG CNS·그룹) · 상용 계약"></span><span class="seg s2" title="OpenAI (LG CNS 재판매) · 상용 계약"></span><span class="seg s1" title="NVIDIA (6개 계열사) · 공동개발·실증"></span><span class="seg s1" title="Skild AI (LG CNS·LGTV) · 공동개발·실증"></span><span class="seg s1" title="Dexmate (LG CNS) · 공동개발·실증"></span><span class="seg s1" title="D&amp;D Pharmatech · LabGenius · 공동개발·실증"></span><span class="seg s0" title="Microsoft (그룹) · 발표·MOU"></span><span class="seg s0" title="CuspAI (LG CNS) · 발표·MOU"></span><span class="seg s0" title="SDVerse (LG에너지솔루션) · 발표·MOU"></span></span><span class="glab">파트너 10곳 중 상용 계약 이상 <b>3/10</b></span></div>
+    <div class="gauge"><div class="score" title="항목마다 1단계 0점 · 2단계 33점 · 3단계 67점 · 4단계 100점의 평균"><b>33</b><span>점</span><span class="bar" aria-hidden="true"><i style="--v:33%"></i></span></div><span class="glab">파트너 10곳 중 상용 계약 이상 <b>3/10</b></span></div>
   </a>
   <div class="tmore">
     <p class="tq">LG는 자체 AI 역량과 외부 파트너를 어떻게 결합하며, 협력이 기술·고객·공급망·시장 접근에 어떤 변화를 만드는가?</p>

@@ -49,6 +49,13 @@ def short(t, n=88):
     t = re.sub(r"\s+", " ", t).strip()
     return t if len(t) <= n else t[: n - 1].rstrip() + "…"
 
+def score_of(sg):
+    """항목마다 1단계 0점 … 4단계 100점, 평균. 잠정도 같은 점수로 넣는다."""
+    if sg.get("kind") != "band" or not sg.get("items"):
+        return None
+    top = len(sg["levels"]) - 1
+    return round(sum(st / top * 100 for _, st, _ in sg["items"]) / len(sg["items"]))
+
 # ---------- 레이더 (사분면 = 카테고리, 점 = 질문, 바깥일수록 게이지가 많이 찬 질문)
 import math as _m
 radar_dots = []
@@ -59,11 +66,12 @@ for ci, (c, items) in enumerate(sections):
     quad_names.append((a0 + 45, c))
     for k, it in enumerate(live):
         sg = it["cur"].get("signal", {})
-        ratio = (sg.get("on", 0) / sg.get("of", 1)) if sg.get("of") else 0.3
+        sc = score_of(sg)
+        ratio = sc / 100 if sc is not None else ((sg.get("on", 0) / sg.get("of", 1)) if sg.get("of") else 0.3)
         ang = _m.radians(a0 + 90 * (k + 1) / (len(live) + 1))
         rad = 18 + ratio * 70
         radar_dots.append((round(100 + rad * _m.cos(ang), 1), round(100 + rad * _m.sin(ang), 1), it["q"]["no"], it["cur"]["title"], c["id"]))
-radar_svg = ['<svg class="radar" viewBox="-14 -14 228 228" role="img" aria-label="20개 질문의 신호 위치. 사분면은 카테고리, 바깥쪽일수록 판정 게이지가 많이 찬 질문">']
+radar_svg = ['<svg class="radar" viewBox="-14 -14 228 228" role="img" aria-label="20개 질문의 신호 위치. 사분면은 카테고리, 바깥쪽일수록 판정 점수가 높은 질문">']
 for rr in (30, 55, 80):
     radar_svg.append(f'<circle cx="100" cy="100" r="{rr}" class="ring"/>')
 radar_svg.append('<line x1="100" y1="12" x2="100" y2="188" class="axis"/><line x1="12" y1="100" x2="188" y2="100" class="axis"/>')
@@ -91,8 +99,9 @@ def tile(c, it):
     if sg.get("kind") == "band" and sg.get("items"):
         lv = sg["levels"]
         its = sorted(sg["items"], key=lambda x: (-x[1], x[2]))
-        segs = "".join(f'<span class="seg s{st}{" prov" if pv else ""}" title="{E(nm)} · {E(lv[st])}{" (잠정)" if pv else ""}"></span>' for nm, st, pv in its)
-        gauge = (f'<div class="gauge"><span class="band" role="img" aria-label="{E(sg["gauge"])} {sg["on"]}/{sg["of"]}">{segs}</span>'
+        sc = score_of(sg)
+        gauge = (f'<div class="gauge"><div class="score" title="항목마다 1단계 0점 · 2단계 33점 · 3단계 67점 · 4단계 100점의 평균">'
+                 f'<b>{sc}</b><span>점</span><span class="bar" aria-hidden="true"><i style="--v:{sc}%"></i></span></div>'
                  f'<span class="glab">{E(sg["gauge"])} <b>{sg["on"]}/{sg["of"]}</b></span></div>')
         items_html = '<ul class="titems">' + "".join(
             f'<li><span class="seg s{st}{" prov" if pv else ""}"></span><span>{E(nm)}</span><em>{E(lv[st])}{" · 잠정" if pv else ""}</em></li>' for nm, st, pv in its) + "</ul>"
@@ -186,8 +195,7 @@ portal = f"""<!doctype html>
   </section>
 
   <section class="boardwrap" aria-labelledby="h-board">
-    <div class="sechead row"><div><h2 id="h-board">신호 보드</h2><p>질문마다 이번 회차의 판정입니다. 띠의 한 칸이 판정 항목 하나이고, 앞선 단계일수록 진합니다. 카드를 가리키면 한 줄 답과 항목별 단계를 볼 수 있습니다.</p>
-      <p class="legend" aria-hidden="true"><span class="seg s0"></span><span class="seg s1"></span><span class="seg s2"></span><span class="seg s3"></span> 1단계 → 4단계 <span class="seg s2 prov"></span> 잠정</p></div>
+    <div class="sechead row"><div><h2 id="h-board">신호 보드</h2><p>질문마다 이번 회차의 판정과 점수입니다. 점수는 판정 항목마다 1단계 0점, 4단계 100점으로 매긴 평균입니다. 카드를 가리키면 한 줄 답과 항목별 단계를 볼 수 있습니다.</p></div>
       <label class="search"><span class="vh">질문 검색</span><input id="q-search" type="search" placeholder="검색  /" autocomplete="off"><output id="q-count" aria-live="polite"></output></label></div>
     <div class="tabs" role="tablist" aria-label="카테고리">{tabs_html}<span class="tab-ink" aria-hidden="true"></span></div>
     <div class="board" id="board" data-view="all">{cols_html}</div>

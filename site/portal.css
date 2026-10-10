@@ -211,3 +211,14 @@ body { background: var(--paper); }
   .band .seg { animation: segin .4s ease-out both; transform-origin: 0 50%; }
   @keyframes segin { from { transform: scaleX(0); } }
 }
+
+/* 판정 점수: 숫자 + 막대 하나 */
+.score { display: grid; grid-template-columns: auto auto minmax(0, 1fr); align-items: baseline; gap: 2px 4px; }
+.score b { font: 600 22px/1 var(--mono); font-variant-numeric: tabular-nums; color: var(--ink); }
+.score > span:not(.bar) { font: 500 11px var(--mono); color: var(--muted); }
+.score .bar { align-self: center; margin-left: 8px; height: 6px; border-radius: 3px; background: var(--border-subtle); overflow: hidden; }
+.score .bar i { display: block; height: 100%; width: var(--v); background: var(--signal); border-radius: 3px; }
+@media (prefers-reduced-motion: no-preference) {
+  .score .bar i { animation: barin .6s ease-out both; animation-delay: .2s; transform-origin: 0 50%; }
+  @keyframes barin { from { transform: scaleX(0); } }
+}
