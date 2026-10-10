@@ -5,6 +5,9 @@ import json, html, re, sys
 from pathlib import Path
 
 ROOT = Path(__file__).parent
+sys.path.insert(0, str(ROOT.parent.parent / "lib"))
+from judge import gauge, chip, criteria_panel
+L_RULE = "단계를 올리려면 회사 공식 발표, 공시, 고객사 발표 중 하나가 필요하다. 출처를 밝히지 않은 언론 보도만 있으면 잠정으로 둔다."
 recs = [json.loads(l) for l in (ROOT / "records.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
 by = {r["id"]: r for r in recs}
 E = html.escape
@@ -20,23 +23,23 @@ TITLE = "LG의 AX는 목표에서 결과로 얼마나 넘어왔나"
 QUESTION = "LG는 내부 업무와 외부 고객 사업에서 AI를 어떻게 실행 체계로 전환하며, 사용·품질·생산성·매출 성과는 무엇인가?"
 
 # 1. 한 줄 답 ----------------------------------------------------------
-ONE_LINE = ("2026년 10월 현재 LG의 AX는 계열사마다 단계가 다르다. LG CNS는 외부 사업화(상반기 AI·클라우드 매출 1조 6,714억 원, 전체의 59%)까지 왔고, LG디스플레이·LG에너지솔루션은 업무 단위 성과(설계 한 달→8시간, 리튬 가격 예측 정확도 90%+)를 공개했으며, LG전자는 업무 적용(LGenie 월 3만 명), LG화학은 교육 단계(3,000명)다. "
+ONE_LINE = ("2026년 10월 현재 LG의 AX는 계열사마다 단계가 다르다. LG디스플레이·LG에너지솔루션은 업무 단위 성과(설계 한 달→8시간, 리튬 가격 예측 정확도 90%+)를 공개했고, LG전자는 업무 적용(LGenie 월 3만 명), LG화학은 교육 단계(3,000명)다. LG CNS는 사내 성과보다 외부 사업화(상반기 AI·클라우드 매출 1조 6,714억 원)가 먼저 드러나 있다. "
             "목표는 전사 단위(엔솔 2028년 생산성 50%, LGD 30%)인데 공개된 결과는 업무 단위에 머물고, LG전자가 만든 업무 에이전트는 절반 이상(96개 중 50개)이 사라졌다.")
 ONE_LINE_BASIS = ["L4-I-001", "L4-I-002", "L4-I-003", "L4-I-004"]
 ANSWER_ROWS = [
-    ("외부 사업화", "LG CNS. AI·클라우드 매출 59%, Palantir(그룹 PoC → 본 계약), Claude Enterprise 그룹 통합 계약, ChatGPT Enterprise 고객 약 10곳.", ["L4-M-007", "L4-E-002", "L4-E-007", "L4-M-008"]),
-    ("성과 공개", "LG디스플레이(설계 30일→8시간, 품질 3주→2일, 연 2,000억 원), LG에너지솔루션(리튬 가격 예측 90%+, ESS 셀 100만 개 학습).", ["L4-M-004", "L4-M-005"]),
+    ("업무 단위 성과", "LG디스플레이(설계 30일→8시간, 품질 3주→2일, 연 2,000억 원), LG에너지솔루션(리튬 가격 예측 90%+, ESS 셀 100만 개 학습).", ["L4-M-004", "L4-M-005"]),
     ("업무 적용", "LG전자. LGenie 월 3만 명, 에이전트 96개 중 46개 생존.", ["L4-M-001", "L4-M-002"]),
-    ("교육·도구 배포", "LG화학. AX 교육 3,000명(사무직 절반), 1인 1에이전트.", ["L4-M-006"]),
+    ("교육·도구 배포", "LG화학(AX 교육 3,000명, 1인 1에이전트), LG CNS(Claude Enterprise 전 직원 도입, 사내 성과 미공개).", ["L4-M-006", "L4-E-007"]),
+    ("외부 사업화", "LG CNS. AI·클라우드 매출 59%, Palantir(그룹 PoC → 본 계약), ChatGPT Enterprise 고객 약 10곳.", ["L4-M-007", "L4-E-002", "L4-M-008"]),
     ("목표 vs 결과", "전사 생산성 목표(엔솔 50%·LGD 30%)에 대응하는 전사 결과치는 아직 공개되지 않음.", ["L4-M-003", "L4-I-002"]),
 ]
 answer_rows = "".join(f'<div class="arow"><dt>{E(k)}</dt><dd>{E(v)} {tags(ids)}</dd></div>' for k, v, ids in ANSWER_ROWS)
 
 # 2. 해석 --------------------------------------------------------------
 NARRATIVE = [
-    ("계열사마다 AX의 단계가 다르다. LG CNS는 상반기 AI·클라우드 매출 1조 6,714억 원으로 전체의 약 59%를 차지해 외부 사업화 단계에 있다. LG디스플레이와 LG에너지솔루션은 업무 단위 성과를 숫자로 공개했고, "
-     "LG전자는 사내 플랫폼 LGenie를 월 3만 명이 쓰는 업무 적용 단계, LG화학은 반년 만에 사무직 절반(3,000명)이 교육을 마친 교육·도구 배포 단계다.",
-     ["L4-M-007", "L4-M-004", "L4-M-005", "L4-M-001", "L4-M-006", "L4-I-001"]),
+    ("계열사마다 AX의 단계가 다르다. LG디스플레이와 LG에너지솔루션은 업무 단위 성과를 숫자로 공개했고, "
+     "LG전자는 사내 플랫폼 LGenie를 월 3만 명이 쓰는 업무 적용 단계, LG화학은 반년 만에 사무직 절반(3,000명)이 교육을 마친 교육·도구 배포 단계다. LG CNS는 상반기 AI·클라우드 매출 1조 6,714억 원(전체의 약 59%)으로 외부 사업화가 앞서 있지만, 전 직원에게 배포한 Claude의 사내 성과는 공개하지 않았다.",
+     ["L4-M-007", "L4-E-007", "L4-M-004", "L4-M-005", "L4-M-001", "L4-M-006", "L4-I-001"]),
     ("목표는 전사 단위인데 결과는 업무 단위다. LG에너지솔루션은 2028년까지 전사 생산성 50% 개선을, LG디스플레이는 3년 내 30% 향상을 내걸었다. 공개된 결과는 LG디스플레이의 설계 기간 한 달→8시간, 품질 개선 3주→2일, 연 2,000억 원 원가 효과, "
      "LG에너지솔루션의 리튬 가격 예측 정확도 90% 이상처럼 개별 업무의 개선이다. 전사 결과치를 공개한 계열사는 아직 없다.",
      ["L4-M-003", "L4-M-004", "L4-M-005", "L4-I-002", "L4-I-006"]),
@@ -86,23 +89,43 @@ frows = "".join(f"""<tr id="{E(r['id'])}"><td class="stmt">{E(r['statement'])}<s
   <td><span class="fstat">{E(r['forecast_status'])}</span></td><td>{tags(r['basis'])}</td></tr>""" for r in details)
 
 # 5. 계열사별 AX 단계와 목표·결과 ---------------------------------
-SG = ["교육·도구 배포", "업무 적용", "성과 공개", "외부 사업화"]
-STAGE_LEAD = ("계열사마다 교육·도구 배포 → 업무 적용 → 성과 공개(사용·품질·생산성 결과치) → 외부 사업화(매출) 중 어디에 있는지 판정했다. 오른쪽 표시는 공개된 수치가 결과치인지 목표치인지다.")
-CUST = {"결과치 공개": "brand", "목표치만": "agent", "사용 지표만": "platform", "매출 공개": "brand"}
+SG = ["교육·도구 배포", "업무 적용", "업무 단위 성과", "전사 성과"]
+SG_DEF = {
+    "교육·도구 배포": "AI 교육, 사내 도구 배포. 사용 수치가 공개되지 않았다.",
+    "업무 적용": "특정 업무에 적용했고, 이용자 수·에이전트 수 같은 사용 지표가 공개됐다.",
+    "업무 단위 성과": "업무 단위의 결과치(시간·비용·품질)가 공개됐다.",
+    "전사 성과": "전사 목표에 대응하는 전사 단위 결과치(생산성·비용)가 공개됐다.",
+}
+STAGE_LEAD = ("가장 앞선 곳은 LG디스플레이와 LG에너지솔루션으로, 업무 단위 성과를 공개했다. LG전자는 사용 지표를 공개한 업무 적용, LG화학과 LG CNS는 교육·도구 배포 단계다. "
+              "전사 목표에 대응하는 전사 결과치를 공개한 계열사는 아직 없다. LG CNS는 내부 AX와 별개로 AI·클라우드 외부 매출을 낸다.")
+CUST = {"결과치": "brand", "목표치만": "agent", "사용 지표만": "platform", "수치 없음": "contest"}
+CUST_DEF = {"결과치": "업무·전사 단위의 실제 결과 수치가 공개됐다.", "목표치만": "목표만 공개되고 결과는 없다.",
+            "사용 지표만": "이용자 수·교육 인원 같은 사용 수치만 공개됐다.", "수치 없음": "공개된 수치가 없다."}
+EXT = {"외부 사업화 있음": "brand", "외부 사업화 없음": "contest"}
+EXT_DEF = {"외부 사업화 있음": "AX 역량을 외부 고객에게 팔아 매출을 공개했다.", "외부 사업화 없음": "외부 매출이 공개되지 않았다."}
+# (계열사, 단계, 잠정, 공개 수치 종류, 외부 사업화, 근거, 기록)
 STAGES = [
-    ("LG CNS", "외부 사업화", "매출 공개", "AI·클라우드 매출 1조 6,714억 원(59%), Palantir·Claude·ChatGPT Enterprise", ["L4-M-007", "L4-E-002", "L4-E-007"]),
-    ("LG디스플레이", "성과 공개", "결과치 공개", "설계 30일→8시간, 품질 3주→2일, 연 2,000억 원, Hi-D +10% (2025년 발표)", ["L4-M-004"]),
-    ("LG에너지솔루션", "성과 공개", "결과치 공개", "리튬 가격 예측 90%+, ESS 셀 100만 개 학습. 2028년 생산성 50%는 목표", ["L4-M-005", "L4-M-003"]),
-    ("LG전자", "업무 적용", "사용 지표만", "LGenie 월 3만 명, 에이전트 96개 중 46개 생존", ["L4-M-001", "L4-M-002"]),
-    ("LG화학", "교육·도구 배포", "사용 지표만", "AX 교육 3,000명, 1인 1에이전트, 결과치 미공개", ["L4-M-006"]),
+    ("LG디스플레이", "업무 단위 성과", False, "결과치", "외부 사업화 없음", "설계 30일→8시간, 품질 3주→2일, 연 2,000억 원 원가 효과, Hi-D 도입 후 일일 생산성 약 +10% (2025년 발표). 3년 내 생산성 30% 목표", ["L4-M-004", "L4-M-003"]),
+    ("LG에너지솔루션", "업무 단위 성과", True, "결과치", "외부 사업화 없음", "리튬 가격 예측 정확도 90%+(보도), ESS 셀 100만 개 학습. 2028년 전사 생산성 50%는 목표", ["L4-M-005", "L4-M-003"]),
+    ("LG전자", "업무 적용", False, "사용 지표만", "외부 사업화 없음", "LGenie 월 3만 명, 업무 에이전트 96개 중 46개 생존 (AX Fair 발표)", ["L4-M-001", "L4-M-002"]),
+    ("LG화학", "교육·도구 배포", False, "사용 지표만", "외부 사업화 없음", "AX 교육 3,000명(사무직 절반), 1인 1에이전트. 결과치 미공개", ["L4-M-006"]),
+    ("LG CNS", "교육·도구 배포", False, "수치 없음", "외부 사업화 있음", "Claude Enterprise 전 직원 도입, 사내 사용·성과 수치 미공개 / AI·클라우드 매출 1조 6,714억 원(59%), ChatGPT Enterprise 고객 약 10곳", ["L4-E-007", "L4-M-007", "L4-M-008"]),
 ]
-def sg4(v):
-    i = SG.index(v)
-    return "".join(f'<span class="pip{" on" if k <= i else ""}"></span>' for k in range(4)) + f'<span class="lv">{E(v)}</span>'
+def tip_sg(v):
+    return f"{v} — {SG_DEF[v]}"
+def side(c, pv=False):
+    return chip(c, CUST[c], f"{c} — {CUST_DEF[c]}", pv)
+def ext(c):
+    return chip(c, EXT[c], f"{c} — {EXT_DEF[c]}")
 stage_rows = "".join(f"""<div class="rung"><div class="stage"><b>{E(d)}</b></div>
-  <div class="lvcell"><span class="pips">{sg4(st)}</span></div>
-  <div class="lvcell"><span class="own {CUST[c]}">{E(c)}</span></div>
-  <p class="why">{E(w)} {tags(ids)}</p></div>""" for d, st, c, w, ids in STAGES)
+  <div class="lvcell">{gauge(SG, st, tip_sg(st), pv)}</div>
+  <div class="lvcell">{side(c)}<br>{ext(x)}</div>
+  <p class="why">{E(w)} {tags(ids)}</p></div>""" for d, st, pv, c, x, w, ids in STAGES)
+criteria_html = criteria_panel([
+    ("판정 단계: AX가 목표에서 결과로 넘어온 정도", ["단계", "기준"], [[gauge(SG, k), E(v)] for k, v in SG_DEF.items()]),
+    ("옆 표시 1: 공개 수치의 종류", ["판정", "정의"], [[side(k), E(v)] for k, v in CUST_DEF.items()]),
+    ("옆 표시 2: 외부 사업화", ["판정", "정의"], [[ext(k), E(v)] for k, v in EXT_DEF.items()]),
+], extra_rules=[L_RULE])
 LEDGER_LEAD = "계열사가 밝힌 목표와 공개된 결과를 나란히 놓았다. 전사 목표에 대응하는 전사 결과가 나오는지가 다음 회차의 판정 기준이다."
 LEDGER = [
     ("LG에너지솔루션", "2028년까지 전사 생산성 50% 개선", "리튬 가격 예측 정확도 90%+, ESS 안전진단(셀 100만 개)", "업무 단위", "2026-04", ["L4-M-003", "L4-M-005"]),
@@ -112,7 +135,7 @@ LEDGER = [
     ("LG CNS", "그룹 → 외부 AX 사업 확대", "AI·클라우드 매출 59%, ChatGPT Enterprise 고객 약 10곳", "매출", "2026-H1", ["L4-M-007", "L4-M-008"]),
 ]
 ledger_rows = "".join(f"""<tr><td class="tgt">{E(a)}</td><td>{E(b)}</td><td>{E(c)}</td><td>{E(d)}</td><td>{E(e)}</td><td>{tags(ids)}</td></tr>""" for a, b, c, d, e, ids in LEDGER)
-STAGE_NOTE = "판정: 외부 사업화는 LG CNS, 성과 공개는 LGD·엔솔(업무 단위), 업무 적용은 LG전자, 교육은 LG화학. 전사 결과치를 공개한 계열사는 아직 없다 (R1 기준)."
+STAGE_NOTE = "판정: 업무 단위 성과는 LGD·엔솔, 업무 적용은 LG전자, 교육·도구 배포는 LG화학·LG CNS. 전사 결과치를 공개한 계열사는 아직 없다."
 
 # 6. 핵심 지표 ---------------------------------------------------------
 INDICATOR_NAMES = {"L4-T1": "사내 AI 플랫폼 사용", "L4-T2": "에이전트 생존율", "L4-T3": "생산성 목표",
@@ -159,6 +182,7 @@ page = f"""<title>L4 LG 엔터프라이즈 AX R1</title>
     <p class="lead muted">각 세부 전망이 적중하거나 빗나갔을 때 어느 시나리오 쪽 신호인지 표시했다. 확인 시점이 오면 확인 방법대로 판정한다.</p>
     <div class="tablewrap"><table><thead><tr><th>세부 전망</th><th>확인 시점</th><th>적중 시</th><th>빗나갈 시</th><th>상태</th><th>근거</th></tr></thead><tbody>{frows}</tbody></table></div></section>
   <section><h2>계열사별 AX 단계 <small>단계 판정 · 목표와 결과</small></h2><p class="lead">{E(STAGE_LEAD)}</p>
+    {criteria_html}
     <div class="ladder mapgrid auto">{stage_rows}</div><p class="gapnote">{E(STAGE_NOTE)}</p>
     <h3 class="subhead">목표치와 결과치</h3><p class="lead">{E(LEDGER_LEAD)}</p>
     <div class="tablewrap"><table><thead><tr><th>계열사</th><th>목표</th><th>공개된 결과</th><th>결과의 단위</th><th>시점</th><th>기록</th></tr></thead><tbody>{ledger_rows}</tbody></table></div></section>
@@ -178,11 +202,15 @@ bad = sorted({i for i in re.findall(r'href="#(L4-[A-Z]-\d{3})"', page) if i not 
 order = [page.index(f"<h2>{h}") for h in ("한 줄 답", "해석", "주요 사건", "전망", "계열사별 AX 단계", "핵심 지표")]
 print("article_r1.html 생성,", len(page), "bytes; 앵커 없는 근거 링크:", bad or "없음", "; 섹션 순서 정상:", order == sorted(order))
 # ---------- 포털 신호: 판정 칩과 게이지를 판정 데이터에서 계산해 내보낸다
-SIGNAL_CHIP = '성과 공개 3곳, 전사 결과 0'
-SIGNAL_GAUGE = '계열사 5곳 중 성과 공개 이상'
+SIGNAL_CHIP = '업무 성과 2곳, 전사 성과 0'
+SIGNAL_GAUGE = '계열사 5곳 중 업무 단위 성과 이상'
 SIGNAL_FRONTIER = '전사 결과치'
 signal = {"question": 'L4', "round": 1, "chip": SIGNAL_CHIP, "gauge": SIGNAL_GAUGE, "frontier": SIGNAL_FRONTIER,
-          "on": sum(1 for r in STAGES if SG.index(r[1]) >= SG.index("성과 공개")), "of": len(STAGES)}
+          "on": sum(1 for r in STAGES if SG.index(r[1]) >= SG.index("업무 단위 성과")), "of": len(STAGES)}
+# 포털 띠: 항목마다 단계(0~3)와 잠정 여부
+signal["kind"] = "band"
+signal["levels"] = list(SG)
+signal["items"] = [[r[0], SG.index(r[1]), bool(r[2])] for r in STAGES if True]
 (ROOT / "signal_r1.json").write_text(json.dumps(signal, ensure_ascii=False, indent=1), encoding="utf-8")
 print("signal_r1.json:", signal["chip"], f'{signal["on"]}/{signal["of"]}')
 sys.exit(1 if bad or order != sorted(order) else 0)

@@ -5,5 +5,49 @@
  "gauge": "기술 축 7개 중 제품 출시 이상",
  "frontier": "장기 기억·World Model",
  "on": 5,
- "of": 7
+ "of": 7,
+ "kind": "band",
+ "levels": [
+  "연구",
+  "시연",
+  "제품 출시",
+  "일상 사용"
+ ],
+ "items": [
+  [
+   "Agent·장시간 작업",
+   3,
+   true
+  ],
+  [
+   "Reasoning",
+   3,
+   true
+  ],
+  [
+   "Multimodal·Computer use",
+   2,
+   false
+  ],
+  [
+   "Long context·Memory",
+   2,
+   false
+  ],
+  [
+   "World Model",
+   1,
+   false
+  ],
+  [
+   "AI for Science",
+   0,
+   false
+  ],
+  [
+   "Compute",
+   2,
+   false
+  ]
+ ]
 }

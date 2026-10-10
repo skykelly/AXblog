@@ -219,6 +219,10 @@ SIGNAL_GAUGE = '커머스 5단계 중 대규모 운영(글로벌)'
 SIGNAL_FRONTIER = '장바구니·결제'
 signal = {"question": 'S2', "round": 1, "chip": SIGNAL_CHIP, "gauge": SIGNAL_GAUGE, "frontier": SIGNAL_FRONTIER,
           "on": sum(1 for r in STAGES if r[1] == "대규모 운영"), "of": len(STAGES)}
+# 포털 띠: 항목마다 단계(0~3)와 잠정 여부
+signal["kind"] = "band"
+signal["levels"] = list(SG)
+signal["items"] = [[r[0], SG.index(r[1]), bool(r[2])] for r in STAGES if True]
 (ROOT / "signal_r1.json").write_text(json.dumps(signal, ensure_ascii=False, indent=1), encoding="utf-8")
 print("signal_r1.json:", signal["chip"], f'{signal["on"]}/{signal["of"]}')
 sys.exit(1 if bad or order != sorted(order) else 0)

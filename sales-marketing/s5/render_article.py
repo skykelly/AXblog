@@ -180,6 +180,9 @@ SIGNAL_GAUGE = '영역 5개 중 주도 기업이 굳어진 곳'
 SIGNAL_FRONTIER = 'CRM·고객 서비스'
 signal = {"question": 'S5', "round": 1, "chip": SIGNAL_CHIP, "gauge": SIGNAL_GAUGE, "frontier": SIGNAL_FRONTIER,
           "on": sum(1 for r in MAP if r[2] == "굳어짐"), "of": len(MAP)}
+# 포털 띠 대신 글자
+signal["kind"] = "text"
+signal["text"] = " · ".join(f"{k} {sum(1 for r in MAP if r[2] == k)}" for k in ("굳어짐", "경합", "흔들림") if any(r[2] == k for r in MAP))
 (ROOT / "signal_r1.json").write_text(json.dumps(signal, ensure_ascii=False, indent=1), encoding="utf-8")
 print("signal_r1.json:", signal["chip"], f'{signal["on"]}/{signal["of"]}')
 sys.exit(1 if bad or order != sorted(order) else 0)

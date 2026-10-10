@@ -208,6 +208,10 @@ SIGNAL_GAUGE = '생활 영역 4개 중 고객 수용이 L2 이상'
 SIGNAL_FRONTIER = '환경 제어 L3 수용'
 signal = {"question": 'C4', "round": 1, "chip": SIGNAL_CHIP, "gauge": SIGNAL_GAUGE, "frontier": SIGNAL_FRONTIER,
           "on": sum(1 for r in MAP if AL.index(r[4]) >= 1), "of": len(MAP)}
+# 포털 띠: 항목마다 단계(0~3)와 잠정 여부
+signal["kind"] = "band"
+signal["levels"] = list(AL)
+signal["items"] = [[r[0], AL.index(r[4]), bool(r[5])] for r in MAP if True]
 (ROOT / "signal_r1.json").write_text(json.dumps(signal, ensure_ascii=False, indent=1), encoding="utf-8")
 print("signal_r1.json:", signal["chip"], f'{signal["on"]}/{signal["of"]}')
 sys.exit(1 if bad or order != sorted(order) else 0)

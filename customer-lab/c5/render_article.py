@@ -163,6 +163,9 @@ SIGNAL_GAUGE = '가구 변화 4개 중 수요를 늘리는 변화'
 SIGNAL_FRONTIER = '출생·혼인'
 signal = {"question": 'C5', "round": 1, "chip": SIGNAL_CHIP, "gauge": SIGNAL_GAUGE, "frontier": SIGNAL_FRONTIER,
           "on": sum(1 for r in RANK if r[3] != "축소"), "of": len(RANK)}
+# 포털 띠 대신 글자
+signal["kind"] = "text"
+signal["text"] = f"수요를 늘리는 변화 {sum(1 for r in RANK if r[3] != '축소')}개 · 줄이는 변화 {sum(1 for r in RANK if r[3] == '축소')}개"
 (ROOT / "signal_r1.json").write_text(json.dumps(signal, ensure_ascii=False, indent=1), encoding="utf-8")
 print("signal_r1.json:", signal["chip"], f'{signal["on"]}/{signal["of"]}')
 sys.exit(1 if bad or order != sorted(order) else 0)

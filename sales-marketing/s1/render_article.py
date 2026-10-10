@@ -181,6 +181,9 @@ SIGNAL_GAUGE = 'AI 노출 신호 6개 중 근거 강함'
 SIGNAL_FRONTIER = 'AI 유입 1%대'
 signal = {"question": 'S1', "round": 1, "chip": SIGNAL_CHIP, "gauge": SIGNAL_GAUGE, "frontier": SIGNAL_FRONTIER,
           "on": sum(1 for r in SIGNALS if r[2] == "강함"), "of": len(SIGNALS)}
+# 포털 띠 대신 글자
+signal["kind"] = "text"
+signal["text"] = f"1위 신호 {SIGNALS[0][1]}"
 (ROOT / "signal_r1.json").write_text(json.dumps(signal, ensure_ascii=False, indent=1), encoding="utf-8")
 print("signal_r1.json:", signal["chip"], f'{signal["on"]}/{signal["of"]}')
 sys.exit(1 if bad or order != sorted(order) else 0)

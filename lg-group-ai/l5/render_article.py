@@ -5,6 +5,9 @@ import json, html, re, sys
 from pathlib import Path
 
 ROOT = Path(__file__).parent
+sys.path.insert(0, str(ROOT.parent.parent / "lib"))
+from judge import gauge, chip, criteria_panel
+L_RULE = "단계를 올리려면 회사 공식 발표, 공시, 고객사 발표 중 하나가 필요하다. 출처를 밝히지 않은 언론 보도만 있으면 잠정으로 둔다."
 recs = [json.loads(l) for l in (ROOT / "records.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
 by = {r["id"]: r for r in recs}
 E = html.escape
@@ -88,22 +91,35 @@ frows = "".join(f"""<tr id="{E(r['id'])}"><td class="stmt">{E(r['statement'])}<s
 
 # 5. 분야별 연구 단계 --------------------------------------------------
 SG = ["가상 탐색", "실험 검증", "제품·임상 진입", "사업화"]
-STAGE_LEAD = ("분야마다 가상 탐색 → 실험 검증 → 제품·임상 진입 → 사업화 중 어디에 있는지 판정했다. 오른쪽 표시는 그 분야를 자체 플랫폼으로 하는지 외부 협력으로 하는지다.")
+SG_DEF = {
+    "가상 탐색": "AI로 후보를 발굴했고, 실험 결과는 공개되지 않았다.",
+    "실험 검증": "실험실·동물·소비자 테스트로 효과를 확인한 결과가 공개됐다.",
+    "제품·임상 진입": "임상시험이 등록됐거나, 제품명·출시 일정이 공식화됐다.",
+    "사업화": "AI가 발굴한 물질로 만든 제품의 판매나 라이선스 수익이 공개됐다.",
+}
+STAGE_LEAD = ("가장 앞선 분야는 화장품 원료와 기타 소재로, 실험으로 효과를 확인한 단계다. 신약과 배터리 소재는 가상 탐색 단계이고, 제품·임상에 들어간 AI 발굴 물질은 아직 없다.")
 CUST = {"자체 플랫폼": "brand", "외부 협력": "platform", "자체+외부": "contest"}
+CUST_DEF = {"자체 플랫폼": "LG의 자체 AI 플랫폼으로 연구한다.", "외부 협력": "외부 기업의 AI·실험 역량에 기대어 연구한다.", "자체+외부": "자체 플랫폼과 외부 협력을 함께 쓴다."}
+# (분야, 단계, 잠정, 연구 주도, 근거, 기록)
 STAGES = [
-    ("화장품 원료 (LG생활건강)", "실험 검증", "자체 플랫폼", "람시딜: 42만 후보 → 하루, 세계모발학회 효과 발표, 제품화 준비", ["L5-M-002"]),
-    ("기타 소재 (액침 냉각유 등)", "실험 검증", "자체+외부", "GS칼텍스와 공동 개발한 AI 데이터센터용 액침 냉각유 실물 전시", ["L5-E-004"]),
-    ("배터리 소재 (LG에너지솔루션)", "가상 탐색", "자체 플랫폼", "AI 에이전트 + 자동 실험 루프 구축, 결과 미공개", ["L5-E-005", "L5-M-004"]),
-    ("신약 — 펩타이드 (LG AI연구원)", "가상 탐색", "외부 협력", "D&D Pharmatech과 경구 펩타이드, 발견 단계", ["L5-E-002"]),
-    ("신약 — 항체 (LG화학)", "가상 탐색", "외부 협력", "LabGenius 다중항체 옵션 계약, Galux 항암 단백질, 자체 MediX", ["L5-E-003"]),
+    ("화장품 원료 (LG생활건강)", "실험 검증", False, "자체 플랫폼", "람시딜: 42만 후보 → 하루, 세계모발학회 효과 발표. 제품명·출시 일정은 미공개", ["L5-M-002"]),
+    ("기타 소재 (액침 냉각유 등)", "실험 검증", False, "자체+외부", "GS칼텍스와 공동 개발한 AI 데이터센터용 액침 냉각유 실물 공개", ["L5-E-004"]),
+    ("배터리 소재 (LG에너지솔루션)", "가상 탐색", False, "자체 플랫폼", "AI 에이전트 + 자동 실험 루프 구축, 결과 미공개", ["L5-E-005", "L5-M-004"]),
+    ("신약 — 펩타이드 (LG AI연구원)", "가상 탐색", False, "외부 협력", "D&D Pharmatech과 경구 펩타이드, 발견 단계", ["L5-E-002"]),
+    ("신약 — 항체 (LG화학)", "가상 탐색", False, "외부 협력", "LabGenius 다중항체 옵션 계약, Galux 항암 단백질, 자체 MediX", ["L5-E-003"]),
 ]
-def sg4(v):
-    i = SG.index(v)
-    return "".join(f'<span class="pip{" on" if k <= i else ""}"></span>' for k in range(4)) + f'<span class="lv">{E(v)}</span>'
+def tip_sg(v):
+    return f"{v} — {SG_DEF[v]}"
+def side(c, pv=False):
+    return chip(c, CUST[c], f"{c} — {CUST_DEF[c]}", pv)
 stage_rows = "".join(f"""<div class="rung"><div class="stage"><b>{E(d)}</b></div>
-  <div class="lvcell"><span class="pips">{sg4(st)}</span></div>
-  <div class="lvcell"><span class="own {CUST[c]}">{E(c)}</span></div>
-  <p class="why">{E(w)} {tags(ids)}</p></div>""" for d, st, c, w, ids in STAGES)
+  <div class="lvcell">{gauge(SG, st, tip_sg(st), pv)}</div>
+  <div class="lvcell">{side(c)}</div>
+  <p class="why">{E(w)} {tags(ids)}</p></div>""" for d, st, pv, c, w, ids in STAGES)
+criteria_html = criteria_panel([
+    ("판정 단계: 연구 단계", ["단계", "기준"], [[gauge(SG, k), E(v)] for k, v in SG_DEF.items()]),
+    ("옆 표시: 연구를 누가 주도하는가", ["판정", "정의"], [[side(k), E(v)] for k, v in CUST_DEF.items()]),
+], extra_rules=[L_RULE, "기간 단축은 회사가 밝힌 결과와 목표를 나눠 적는다."])
 LEDGER_LEAD = "AI가 줄였다고 밝힌 기간과, 줄이겠다는 목표를 나눠 적었다. 다음 회차부터 목표 줄이 결과 줄로 바뀌는지를 본다."
 LEDGER = [
     ("화장품 소재 4,000만 건 검토", "약 22개월", "1일", "결과 (회사 발표)", "2026-02", ["L5-M-001"]),
@@ -112,7 +128,7 @@ LEDGER = [
     ("배터리 개발 기간·자원", "—", "절반 목표", "목표", "2026-07", ["L5-M-004"]),
 ]
 ledger_rows = "".join(f"""<tr><td class="tgt">{E(a)}</td><td>{E(b)}</td><td>{E(c)}</td><td>{E(d)}</td><td>{E(e)}</td><td>{tags(ids)}</td></tr>""" for a, b, c, d, e, ids in LEDGER)
-STAGE_NOTE = "판정: 가장 앞선 분야는 화장품 원료(실험 검증), 신약·배터리 소재는 가상 탐색 단계. 제품·임상에 들어간 AI 발굴 물질은 아직 없다 (R1 기준)."
+STAGE_NOTE = "판정: 가장 앞선 분야는 화장품 원료(실험 검증), 신약·배터리 소재는 가상 탐색 단계. 제품·임상에 들어간 AI 발굴 물질은 아직 없다."
 
 # 6. 핵심 지표 ---------------------------------------------------------
 INDICATOR_NAMES = {"L5-T1": "탐색 속도", "L5-T2": "실험 검증 결과", "L5-T3": "제품·임상 진입",
@@ -159,6 +175,7 @@ page = f"""<title>L5 LG AI for Science R1</title>
     <p class="lead muted">각 세부 전망이 적중하거나 빗나갔을 때 어느 시나리오 쪽 신호인지 표시했다. 확인 시점이 오면 확인 방법대로 판정한다.</p>
     <div class="tablewrap"><table><thead><tr><th>세부 전망</th><th>확인 시점</th><th>적중 시</th><th>빗나갈 시</th><th>상태</th><th>근거</th></tr></thead><tbody>{frows}</tbody></table></div></section>
   <section><h2>분야별 연구 단계 <small>단계 판정 · 기간 단축 원장</small></h2><p class="lead">{E(STAGE_LEAD)}</p>
+    {criteria_html}
     <div class="ladder mapgrid auto">{stage_rows}</div><p class="gapnote">{E(STAGE_NOTE)}</p>
     <h3 class="subhead">기간 단축 원장</h3><p class="lead">{E(LEDGER_LEAD)}</p>
     <div class="tablewrap"><table><thead><tr><th>작업</th><th>기존</th><th>AI 적용</th><th>종류</th><th>시점</th><th>기록</th></tr></thead><tbody>{ledger_rows}</tbody></table></div></section>
@@ -183,6 +200,10 @@ SIGNAL_GAUGE = '연구 분야 5개 중 실험 검증 이상'
 SIGNAL_FRONTIER = '화장품 원료 제품화'
 signal = {"question": 'L5', "round": 1, "chip": SIGNAL_CHIP, "gauge": SIGNAL_GAUGE, "frontier": SIGNAL_FRONTIER,
           "on": sum(1 for r in STAGES if SG.index(r[1]) >= SG.index("실험 검증")), "of": len(STAGES)}
+# 포털 띠: 항목마다 단계(0~3)와 잠정 여부
+signal["kind"] = "band"
+signal["levels"] = list(SG)
+signal["items"] = [[r[0], SG.index(r[1]), bool(r[2])] for r in STAGES if True]
 (ROOT / "signal_r1.json").write_text(json.dumps(signal, ensure_ascii=False, indent=1), encoding="utf-8")
 print("signal_r1.json:", signal["chip"], f'{signal["on"]}/{signal["of"]}')
 sys.exit(1 if bad or order != sorted(order) else 0)

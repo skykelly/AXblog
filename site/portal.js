@@ -137,6 +137,7 @@
     pv.querySelector('.pv-q').textContent = tile.querySelector('.tq').textContent;
     pv.querySelector('.pv-a').textContent = tile.querySelector('.ta').textContent;
     pv.querySelector('.pv-meta').innerHTML = tile.querySelector('.tmeta').innerHTML;
+    var ti = tile.querySelector('.titems'); pv.querySelector('.pv-items').innerHTML = ti ? ti.outerHTML : '';
     pv.querySelector('.pv-go').href = link.getAttribute('href');
   }
   function place(tile) {

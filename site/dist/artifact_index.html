@@ -263,6 +263,32 @@ body { background: var(--paper); }
   @keyframes pop { from { opacity: 0; transform: translateY(6px); } }
   .strip a:hover { transform: translateY(-2px); }
 }
+
+/* 단계 분포 띠: 한 칸 = 판정 항목 하나, 진할수록 앞선 단계, 빗금 = 잠정 */
+:root { --band-0: var(--color-primary-100); --band-1: var(--color-primary-300); --band-2: var(--color-primary-500); --band-3: var(--color-primary-800); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --band-0: #4A1E1D; --band-1: #8E2A26; --band-2: #E0332F; --band-3: #FF8F8B; } }
+:root[data-theme="dark"] { --band-0: #4A1E1D; --band-1: #8E2A26; --band-2: #E0332F; --band-3: #FF8F8B; }
+.band { display: flex; gap: 2px; width: 100%; height: 10px; }
+.band .seg { flex: 1 1 0; height: 100%; border-radius: 1px; }
+.seg { display: inline-block; width: 14px; height: 8px; border-radius: 1px; vertical-align: middle; }
+.seg.s0 { background: var(--band-0); --t: var(--band-0); }
+.seg.s1 { background: var(--band-1); --t: var(--band-1); }
+.seg.s2 { background: var(--band-2); --t: var(--band-2); }
+.seg.s3 { background: var(--band-3); --t: var(--band-3); }
+.seg.prov { background: repeating-linear-gradient(135deg, var(--t) 0 2px, transparent 2px 4px); box-shadow: inset 0 0 0 1px var(--t); }
+.gauge { display: grid; grid-template-columns: minmax(0, 1fr); gap: 5px; }
+.glab { font-size: 11px; color: var(--muted); line-height: 1.4; }
+.glab b { font: 600 11px var(--mono); color: var(--ink); }
+.gtext { font: 500 12px var(--body); color: var(--ink); border-left: 2px solid var(--signal); padding-left: 8px; }
+.legend { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; font: 400 12px var(--mono); color: var(--muted); margin: 2px 0 0; }
+.legend .seg:nth-child(5) { margin-left: 10px; }
+.titems { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: 12px; }
+.titems li { display: grid; grid-template-columns: 14px minmax(0, 1fr) auto; gap: 8px; align-items: center; }
+.titems em { font-style: normal; font: 400 11px var(--mono); color: var(--muted); white-space: nowrap; }
+@media (prefers-reduced-motion: no-preference) {
+  .band .seg { animation: segin .4s ease-out both; transform-origin: 0 50%; }
+  @keyframes segin { from { transform: scaleX(0); } }
+}
 </style><main class="portal">
   <header class="masthead">
     <div class="mh-text">
@@ -276,7 +302,7 @@ body { background: var(--paper); }
         <div><dt>최근 업데이트</dt><dd>2026-10-09</dd></div>
       </dl>
     </div>
-    <div class="mh-radar"><svg class="radar" viewBox="-14 -14 228 228" role="img" aria-label="20개 질문의 신호 위치. 사분면은 카테고리, 바깥쪽일수록 판정 게이지가 많이 찬 질문"><circle cx="100" cy="100" r="30" class="ring"/><circle cx="100" cy="100" r="55" class="ring"/><circle cx="100" cy="100" r="80" class="ring"/><line x1="100" y1="12" x2="100" y2="188" class="axis"/><line x1="12" y1="100" x2="188" y2="100" class="axis"/><g class="sweep"><path d="M100 100 L100 12 A88 88 0 0 1 162.2 37.8 Z" class="beam"/></g><a href="#customer-lab" class="dot" data-q="C1"><circle cx="108.3" cy="69.1" r="3.6" style="--i:0"/><title>C1 AI는 고객의 쇼핑을 어디까지 대신하고 있나</title></a><a href="#customer-lab" class="dot" data-q="C2"><circle cx="126.5" cy="54.1" r="3.6" style="--i:1"/><title>C2 AI 시대, 고객 접점의 주인은 누구인가</title></a><a href="#customer-lab" class="dot" data-q="C3"><circle cx="132.5" cy="67.5" r="3.6" style="--i:2"/><title>C3 AI가 만든 정보, 소비자는 믿는가</title></a><a href="#customer-lab" class="dot" data-q="C4"><circle cx="161.1" cy="64.8" r="3.6" style="--i:3"/><title>C4 집 안의 AI는 어디까지 스스로 하나</title></a><a href="#customer-lab" class="dot" data-q="C5"><circle cx="168.1" cy="81.8" r="3.6" style="--i:4"/><title>C5 어떤 삶의 변화가 수요를 만드는가</title></a><a href="#industry-trend" class="dot" data-q="I1"><circle cx="164.7" cy="121.0" r="3.6" style="--i:5"/><title>I1 AI 기술의 경계는 어디까지 넓어졌나</title></a><a href="#industry-trend" class="dot" data-q="I2"><circle cx="142.9" cy="131.2" r="3.6" style="--i:6"/><title>I2 AI 제품은 어디까지 실제로 쓰이고 있나</title></a><a href="#industry-trend" class="dot" data-q="I3"><circle cx="124.3" cy="133.4" r="3.6" style="--i:7"/><title>I3 AI에 쏟아진 돈은 어디로 가고, 돌아오고 있나</title></a><a href="#industry-trend" class="dot" data-q="I4"><circle cx="112.8" cy="139.3" r="3.6" style="--i:8"/><title>I4 AI는 어느 산업까지 들어갔고, 무엇이 밀고 막나</title></a><a href="#sales-marketing" class="dot" data-q="S1"><circle cx="89.3" cy="139.9" r="3.6" style="--i:9"/><title>S1 AI 답변 속 브랜드는 어떻게 보이고, 무엇이 노출을 가르나</title></a><a href="#sales-marketing" class="dot" data-q="S2"><circle cx="84.0" cy="127.7" r="3.6" style="--i:10"/><title>S2 AI는 어디까지 대신 사고, 그 돈은 누구에게 가나</title></a><a href="#sales-marketing" class="dot" data-q="S3"><circle cx="67.5" cy="132.5" r="3.6" style="--i:11"/><title>S3 AI는 마케팅을 어디까지 바꿨고, 무엇이 매출로 이어졌나</title></a><a href="#sales-marketing" class="dot" data-q="S4"><circle cx="60.2" cy="123.0" r="3.6" style="--i:12"/><title>S4 AI는 영업과 고객 응대에서 무엇을 맡고, 사람은 무엇을 하나</title></a><a href="#sales-marketing" class="dot" data-q="S5"><circle cx="69.1" cy="108.3" r="3.6" style="--i:13"/><title>S5 영업·마케팅 AI 예산은 누가 가져가고, 무엇이 도입을 가르나</title></a><a href="#lg-group-ai" class="dot" data-q="L1"><circle cx="27.9" cy="83.5" r="3.6" style="--i:14"/><title>L1 LG는 AI 데이터센터 수요를 어디까지 계약과 매출로 잡았나</title></a><a href="#lg-group-ai" class="dot" data-q="L2"><circle cx="71.2" cy="86.1" r="3.6" style="--i:15"/><title>L2 LG의 피지컬 AI는 현장에서 어디까지 성과를 냈나</title></a><a href="#lg-group-ai" class="dot" data-q="L3"><circle cx="75.0" cy="80.0" r="3.6" style="--i:16"/><title>L3 LG의 차량용 AI는 어느 고객·차종까지 들어갔나</title></a><a href="#lg-group-ai" class="dot" data-q="L4"><circle cx="62.6" cy="53.1" r="3.6" style="--i:17"/><title>L4 LG의 AX는 목표에서 결과로 얼마나 넘어왔나</title></a><a href="#lg-group-ai" class="dot" data-q="L5"><circle cx="80.0" cy="58.6" r="3.6" style="--i:18"/><title>L5 AI가 찾은 소재·신약은 어디까지 제품이 됐나</title></a><a href="#lg-group-ai" class="dot" data-q="L6"><circle cx="91.3" cy="62.0" r="3.6" style="--i:19"/><title>L6 LG의 AI 동맹은 무엇을 바꾸고 있나</title></a><text x="171" y="33" text-anchor="middle" class="ql">고객</text><text x="171" y="175" text-anchor="middle" class="ql">산업</text><text x="29" y="175" text-anchor="middle" class="ql">영업</text><text x="29" y="33" text-anchor="middle" class="ql">LG</text></svg></div>
+    <div class="mh-radar"><svg class="radar" viewBox="-14 -14 228 228" role="img" aria-label="20개 질문의 신호 위치. 사분면은 카테고리, 바깥쪽일수록 판정 게이지가 많이 찬 질문"><circle cx="100" cy="100" r="30" class="ring"/><circle cx="100" cy="100" r="55" class="ring"/><circle cx="100" cy="100" r="80" class="ring"/><line x1="100" y1="12" x2="100" y2="188" class="axis"/><line x1="12" y1="100" x2="188" y2="100" class="axis"/><g class="sweep"><path d="M100 100 L100 12 A88 88 0 0 1 162.2 37.8 Z" class="beam"/></g><a href="#customer-lab" class="dot" data-q="C1"><circle cx="108.3" cy="69.1" r="3.6" style="--i:0"/><title>C1 AI는 고객의 쇼핑을 어디까지 대신하고 있나</title></a><a href="#customer-lab" class="dot" data-q="C2"><circle cx="126.5" cy="54.1" r="3.6" style="--i:1"/><title>C2 AI 시대, 고객 접점의 주인은 누구인가</title></a><a href="#customer-lab" class="dot" data-q="C3"><circle cx="132.5" cy="67.5" r="3.6" style="--i:2"/><title>C3 AI가 만든 정보, 소비자는 믿는가</title></a><a href="#customer-lab" class="dot" data-q="C4"><circle cx="161.1" cy="64.8" r="3.6" style="--i:3"/><title>C4 집 안의 AI는 어디까지 스스로 하나</title></a><a href="#customer-lab" class="dot" data-q="C5"><circle cx="168.1" cy="81.8" r="3.6" style="--i:4"/><title>C5 어떤 삶의 변화가 수요를 만드는가</title></a><a href="#industry-trend" class="dot" data-q="I1"><circle cx="164.7" cy="121.0" r="3.6" style="--i:5"/><title>I1 AI 기술의 경계는 어디까지 넓어졌나</title></a><a href="#industry-trend" class="dot" data-q="I2"><circle cx="142.9" cy="131.2" r="3.6" style="--i:6"/><title>I2 AI 제품은 어디까지 실제로 쓰이고 있나</title></a><a href="#industry-trend" class="dot" data-q="I3"><circle cx="124.3" cy="133.4" r="3.6" style="--i:7"/><title>I3 AI에 쏟아진 돈은 어디로 가고, 돌아오고 있나</title></a><a href="#industry-trend" class="dot" data-q="I4"><circle cx="112.8" cy="139.3" r="3.6" style="--i:8"/><title>I4 AI는 어느 산업까지 들어갔고, 무엇이 밀고 막나</title></a><a href="#sales-marketing" class="dot" data-q="S1"><circle cx="89.3" cy="139.9" r="3.6" style="--i:9"/><title>S1 AI 답변 속 브랜드는 어떻게 보이고, 무엇이 노출을 가르나</title></a><a href="#sales-marketing" class="dot" data-q="S2"><circle cx="84.0" cy="127.7" r="3.6" style="--i:10"/><title>S2 AI는 어디까지 대신 사고, 그 돈은 누구에게 가나</title></a><a href="#sales-marketing" class="dot" data-q="S3"><circle cx="67.5" cy="132.5" r="3.6" style="--i:11"/><title>S3 AI는 마케팅을 어디까지 바꿨고, 무엇이 매출로 이어졌나</title></a><a href="#sales-marketing" class="dot" data-q="S4"><circle cx="60.2" cy="123.0" r="3.6" style="--i:12"/><title>S4 AI는 영업과 고객 응대에서 무엇을 맡고, 사람은 무엇을 하나</title></a><a href="#sales-marketing" class="dot" data-q="S5"><circle cx="69.1" cy="108.3" r="3.6" style="--i:13"/><title>S5 영업·마케팅 AI 예산은 누가 가져가고, 무엇이 도입을 가르나</title></a><a href="#lg-group-ai" class="dot" data-q="L1"><circle cx="27.9" cy="83.5" r="3.6" style="--i:14"/><title>L1 LG는 AI 데이터센터 수요를 어디까지 계약과 매출로 잡았나</title></a><a href="#lg-group-ai" class="dot" data-q="L2"><circle cx="71.2" cy="86.1" r="3.6" style="--i:15"/><title>L2 LG의 피지컬 AI는 현장에서 어디까지 성과를 냈나</title></a><a href="#lg-group-ai" class="dot" data-q="L3"><circle cx="75.0" cy="80.0" r="3.6" style="--i:16"/><title>L3 LG의 차량용 AI는 어느 고객·차종까지 들어갔나</title></a><a href="#lg-group-ai" class="dot" data-q="L4"><circle cx="71.3" cy="64.0" r="3.6" style="--i:17"/><title>L4 LG의 AX는 목표에서 결과로 얼마나 넘어왔나</title></a><a href="#lg-group-ai" class="dot" data-q="L5"><circle cx="80.0" cy="58.6" r="3.6" style="--i:18"/><title>L5 AI가 찾은 소재·신약은 어디까지 제품이 됐나</title></a><a href="#lg-group-ai" class="dot" data-q="L6"><circle cx="91.3" cy="62.0" r="3.6" style="--i:19"/><title>L6 LG의 AI 동맹은 무엇을 바꾸고 있나</title></a><text x="171" y="33" text-anchor="middle" class="ql">고객</text><text x="171" y="175" text-anchor="middle" class="ql">산업</text><text x="29" y="175" text-anchor="middle" class="ql">영업</text><text x="29" y="33" text-anchor="middle" class="ql">LG</text></svg></div>
   </header>
 
   <section class="signals" aria-labelledby="h-signals">
@@ -285,7 +311,8 @@ body { background: var(--paper); }
   </section>
 
   <section class="boardwrap" aria-labelledby="h-board">
-    <div class="sechead row"><div><h2 id="h-board">신호 보드</h2><p>질문마다 이번 회차의 판정과 진행 게이지입니다. 카드를 가리키면 한 줄 답을 미리 볼 수 있습니다.</p></div>
+    <div class="sechead row"><div><h2 id="h-board">신호 보드</h2><p>질문마다 이번 회차의 판정입니다. 띠의 한 칸이 판정 항목 하나이고, 앞선 단계일수록 진합니다. 카드를 가리키면 한 줄 답과 항목별 단계를 볼 수 있습니다.</p>
+      <p class="legend" aria-hidden="true"><span class="seg s0"></span><span class="seg s1"></span><span class="seg s2"></span><span class="seg s3"></span> 1단계 → 4단계 <span class="seg s2 prov"></span> 잠정</p></div>
       <label class="search"><span class="vh">질문 검색</span><input id="q-search" type="search" placeholder="검색  /" autocomplete="off"><output id="q-count" aria-live="polite"></output></label></div>
     <div class="tabs" role="tablist" aria-label="카테고리"><button class="tab" role="tab" id="tab-all" aria-controls="board" aria-selected="true" data-cat="all">전체 <span>20</span></button><button class="tab" role="tab" id="tab-customer-lab" aria-controls="board" aria-selected="false" data-cat="customer-lab"><b>01</b> AI Future Customer Lab <span>5</span></button><button class="tab" role="tab" id="tab-industry-trend" aria-controls="board" aria-selected="false" data-cat="industry-trend"><b>02</b> AI Industry Trend <span>4</span></button><button class="tab" role="tab" id="tab-sales-marketing" aria-controls="board" aria-selected="false" data-cat="sales-marketing"><b>03</b> AI Sales &amp; Marketing <span>5</span></button><button class="tab" role="tab" id="tab-lg-group-ai" aria-controls="board" aria-selected="false" data-cat="lg-group-ai"><b>04</b> LG Group AI <span>6</span></button><span class="tab-ink" aria-hidden="true"></span></div>
     <div class="board" id="board" data-view="all"><section class="col" id="customer-lab" data-cat="customer-lab" aria-labelledby="h-customer-lab">
@@ -295,11 +322,12 @@ body { background: var(--paper); }
     <div class="tno"><b>C1</b><span>Consumer Decision Making</span></div>
     <h3 class="ttl">AI는 고객의 쇼핑을 어디까지 대신하고 있나</h3>
     <span class="chip">정리만 확산, 나머지는 초기</span>
-    <div class="gauge" title="구매 여정 5단계 중 확산 이상(글로벌)"><span class="pips" aria-hidden="true"><i class="on" style="--k:0"></i><i class="" style="--k:1"></i><i class="" style="--k:2"></i><i class="" style="--k:3"></i><i class="" style="--k:4"></i></span><span class="gnum">1/5</span><span class="glab">구매 여정 5단계 중 확산 이상(글로벌)</span></div>
+    <div class="gauge"><span class="band" role="img" aria-label="구매 여정 5단계 중 확산 이상(글로벌) 1/5"><span class="seg s2 prov" title="정리 · 확산 (잠정)"></span><span class="seg s1" title="탐색 · 얼리어답터"></span><span class="seg s1 prov" title="추천 · 얼리어답터 (잠정)"></span><span class="seg s1 prov" title="결정 · 얼리어답터 (잠정)"></span><span class="seg s0 prov" title="위임 · 실험 (잠정)"></span></span><span class="glab">구매 여정 5단계 중 확산 이상(글로벌) <b>1/5</b></span></div>
   </a>
   <div class="tmore">
     <p class="tq">소비자는 탐색 → 정리 → 추천 → 결정 → 위임 중 어느 단계까지 AI에 맡기고 있으며, 검색엔진·브랜드 사이트의 역할은 얼마나 줄었는가?</p>
     <p class="ta">2026년 10월 현재 AI가 가장 많이 대신하는 일은 검색 결과를 읽고 정리해 주는 것이다. 후보를 추려주는 추천은 일부 소비자에게서 시작됐고, 무엇을 살지 정하고 결제하는 일은 소비자가 직접 한다. 결제까지 AI에 맡기겠다는 소비자는 9%에 그친다.</p>
+    <ul class="titems"><li><span class="seg s2 prov"></span><span>정리</span><em>확산 · 잠정</em></li><li><span class="seg s1"></span><span>탐색</span><em>얼리어답터</em></li><li><span class="seg s1 prov"></span><span>추천</span><em>얼리어답터 · 잠정</em></li><li><span class="seg s1 prov"></span><span>결정</span><em>얼리어답터 · 잠정</em></li><li><span class="seg s0 prov"></span><span>위임</span><em>실험 · 잠정</em></li></ul>
     <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 40건</span><span>질문 v1.1</span></p>
   </div>
 </li><li class="tile" data-search="c2 customer experience &amp; commerce ai 시대, 고객 접점의 주인은 누구인가 고객 여정(발견·상담·판매·관계) 중 어느 접점이 ai agent로 넘어가고 있으며, 그 접점의 주도권은 브랜드·플랫폼·고객 agent 중 누구에게 있는가? 2026년 10월 현재 ai로 가장 많이 넘어간 접점은 발견과 상담이다. 발견은 플랫폼이 광고로 팔고, 상담은 고객이 직접 쓰는 범용 ai로 옮겨가 두 곳 모두 브랜드 손을 떠나고 있다. 결제는 플랫폼·리테일러·고객 agent가 다투는 중이고, 재구매·멤버십 같은 관계 접점만 아직 브랜드에 남아 있다. 상담은 고객 agent, 발견은 플랫폼" data-q="C2">
@@ -307,11 +335,12 @@ body { background: var(--paper); }
     <div class="tno"><b>C2</b><span>Customer Experience &amp; Commerce</span></div>
     <h3 class="ttl">AI 시대, 고객 접점의 주인은 누구인가</h3>
     <span class="chip">상담은 고객 Agent, 발견은 플랫폼</span>
-    <div class="gauge" title="고객 접점 4곳 중 AI 이전이 얼리어답터 이상"><span class="pips" aria-hidden="true"><i class="on" style="--k:0"></i><i class="on" style="--k:1"></i><i class="" style="--k:2"></i><i class="" style="--k:3"></i></span><span class="gnum">2/4</span><span class="glab">고객 접점 4곳 중 AI 이전이 얼리어답터 이상</span></div>
+    <div class="gauge"><span class="band" role="img" aria-label="고객 접점 4곳 중 AI 이전이 얼리어답터 이상 2/4"><span class="seg s1 prov" title="발견 · 얼리어답터 (잠정)"></span><span class="seg s1 prov" title="상담 · 얼리어답터 (잠정)"></span><span class="seg s0 prov" title="판매 · 실험 (잠정)"></span><span class="seg s0 prov" title="관계 · 실험 (잠정)"></span></span><span class="glab">고객 접점 4곳 중 AI 이전이 얼리어답터 이상 <b>2/4</b></span></div>
   </a>
   <div class="tmore">
     <p class="tq">고객 여정(발견·상담·판매·관계) 중 어느 접점이 AI Agent로 넘어가고 있으며, 그 접점의 주도권은 브랜드·플랫폼·고객 Agent 중 누구에게 있는가?</p>
     <p class="ta">2026년 10월 현재 AI로 가장 많이 넘어간 접점은 발견과 상담이다. 발견은 플랫폼이 광고로 팔고, 상담은 고객이 직접 쓰는 범용 AI로 옮겨가 두 곳 모두 브랜드 손을 떠나고 있다. 결제는 플랫폼·리테일러·고객 Agent가 다투는 중이고, 재구매·멤버십 같은 관계 접점만 아직 브랜드에 남아 있다.</p>
+    <ul class="titems"><li><span class="seg s1 prov"></span><span>발견</span><em>얼리어답터 · 잠정</em></li><li><span class="seg s1 prov"></span><span>상담</span><em>얼리어답터 · 잠정</em></li><li><span class="seg s0 prov"></span><span>판매</span><em>실험 · 잠정</em></li><li><span class="seg s0 prov"></span><span>관계</span><em>실험 · 잠정</em></li></ul>
     <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 38건</span><span>질문 v1.0</span></p>
   </div>
 </li><li class="tile" data-search="c3 content, information &amp; trust ai가 만든 정보, 소비자는 믿는가 소비자가 구매 판단에 쓰는 정보의 원천은 사람이 만든 것에서 ai가 만든 것으로 어디까지 옮겨갔고, 소비자는 그것을 믿는가? 2026년 10월 현재 웹에 새로 올라오는 글의 절반은 ai가 쓰고, 원문 대신 ai 요약으로 정보를 받는 소비자도 늘고 있다. 그러나 믿음은 따라오지 않았다. ai가 전해준 뉴스를 믿는 사람은 5명 중 1명이고, 정작 ai는 브랜드 사이트보다 reddit·youtube 같은 사람의 경험담을 가장 많이 인용한다. 정보 글만 주류, 신뢰는 낮음" data-q="C3">
@@ -319,11 +348,12 @@ body { background: var(--paper); }
     <div class="tno"><b>C3</b><span>Content, Information &amp; Trust</span></div>
     <h3 class="ttl">AI가 만든 정보, 소비자는 믿는가</h3>
     <span class="chip">정보 글만 주류, 신뢰는 낮음</span>
-    <div class="gauge" title="정보 유형 5개 중 AI 생성·경유가 확산 이상"><span class="pips" aria-hidden="true"><i class="on" style="--k:0"></i><i class="on" style="--k:1"></i><i class="" style="--k:2"></i><i class="" style="--k:3"></i><i class="" style="--k:4"></i></span><span class="gnum">2/5</span><span class="glab">정보 유형 5개 중 AI 생성·경유가 확산 이상</span></div>
+    <div class="gauge"><span class="band" role="img" aria-label="정보 유형 5개 중 AI 생성·경유가 확산 이상 2/5"><span class="seg s3" title="정보 글 · 주류"></span><span class="seg s2 prov" title="광고 · 확산 (잠정)"></span><span class="seg s1 prov" title="정보 받는 경로 · 얼리어답터 (잠정)"></span><span class="seg s0 prov" title="상품 리뷰 · 실험 (잠정)"></span><span class="seg s0 prov" title="AI 답변의 인용 원천 · 실험 (잠정)"></span></span><span class="glab">정보 유형 5개 중 AI 생성·경유가 확산 이상 <b>2/5</b></span></div>
   </a>
   <div class="tmore">
     <p class="tq">소비자가 구매 판단에 쓰는 정보의 원천은 사람이 만든 것에서 AI가 만든 것으로 어디까지 옮겨갔고, 소비자는 그것을 믿는가?</p>
     <p class="ta">2026년 10월 현재 웹에 새로 올라오는 글의 절반은 AI가 쓰고, 원문 대신 AI 요약으로 정보를 받는 소비자도 늘고 있다. 그러나 믿음은 따라오지 않았다. AI가 전해준 뉴스를 믿는 사람은 5명 중 1명이고, 정작 AI는 브랜드 사이트보다 Reddit·YouTube 같은 사람의 경험담을 가장 많이 인용한다.</p>
+    <ul class="titems"><li><span class="seg s3"></span><span>정보 글</span><em>주류</em></li><li><span class="seg s2 prov"></span><span>광고</span><em>확산 · 잠정</em></li><li><span class="seg s1 prov"></span><span>정보 받는 경로</span><em>얼리어답터 · 잠정</em></li><li><span class="seg s0 prov"></span><span>상품 리뷰</span><em>실험 · 잠정</em></li><li><span class="seg s0 prov"></span><span>AI 답변의 인용 원천</span><em>실험 · 잠정</em></li></ul>
     <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 27건</span><span>질문 v1.0</span></p>
   </div>
 </li><li class="tile" data-search="c4 physical ai, products &amp; living 집 안의 ai는 어디까지 스스로 하나 집 안에서 ai가 스스로 판단·실행하는 범위는 어디까지 왔으며, 고객은 어느 수준의 자율을 받아들이는가? 2026년 10월 현재 집 안 ai는 ‘정해준 조건대로 알아서 하는 것(l2)’까지 제품이 됐고, 생성형 ai 허브가 상황을 판단해 여러 기기를 엮는 l3로 막 넘어가는 중이다. 고객은 조건 자동화(l2)까지 받아들이고, ai가 스스로 판단하는 데에는 거부감이 커지고 있다. 한국에서는 ai 가전에 신중한 소비자(45.7%)가 처음으로 긍정 소비자(36.3%)를 넘었다. 수용은 l2, l3에는 거부 신호" data-q="C4">
@@ -331,11 +361,12 @@ body { background: var(--paper); }
     <div class="tno"><b>C4</b><span>Physical AI, Products &amp; Living</span></div>
     <h3 class="ttl">집 안의 AI는 어디까지 스스로 하나</h3>
     <span class="chip">수용은 L2, L3에는 거부 신호</span>
-    <div class="gauge" title="생활 영역 4개 중 고객 수용이 L2 이상"><span class="pips" aria-hidden="true"><i class="on" style="--k:0"></i><i class="on" style="--k:1"></i><i class="on" style="--k:2"></i><i class="" style="--k:3"></i></span><span class="gnum">3/4</span><span class="glab">생활 영역 4개 중 고객 수용이 L2 이상</span></div>
+    <div class="gauge"><span class="band" role="img" aria-label="생활 영역 4개 중 고객 수용이 L2 이상 3/4"><span class="seg s1" title="환경 제어 · L2"></span><span class="seg s1" title="보안·돌봄 · L2"></span><span class="seg s1 prov" title="가사 물리 작업 · L2 (잠정)"></span><span class="seg s0 prov" title="장보기·소모품 · L1 (잠정)"></span></span><span class="glab">생활 영역 4개 중 고객 수용이 L2 이상 <b>3/4</b></span></div>
   </a>
   <div class="tmore">
     <p class="tq">집 안에서 AI가 스스로 판단·실행하는 범위는 어디까지 왔으며, 고객은 어느 수준의 자율을 받아들이는가?</p>
     <p class="ta">2026년 10월 현재 집 안 AI는 ‘정해준 조건대로 알아서 하는 것(L2)’까지 제품이 됐고, 생성형 AI 허브가 상황을 판단해 여러 기기를 엮는 L3로 막 넘어가는 중이다. 고객은 조건 자동화(L2)까지 받아들이고, AI가 스스로 판단하는 데에는 거부감이 커지고 있다. 한국에서는 AI 가전에 신중한 소비자(45.7%)가 처음으로 긍정 소비자(36.3%)를 넘었다.</p>
+    <ul class="titems"><li><span class="seg s1"></span><span>환경 제어</span><em>L2</em></li><li><span class="seg s1"></span><span>보안·돌봄</span><em>L2</em></li><li><span class="seg s1 prov"></span><span>가사 물리 작업</span><em>L2 · 잠정</em></li><li><span class="seg s0 prov"></span><span>장보기·소모품</span><em>L1 · 잠정</em></li></ul>
     <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 32건</span><span>질문 v1.0</span></p>
   </div>
 </li><li class="tile" data-search="c5 household &amp; life events 어떤 삶의 변화가 수요를 만드는가 어떤 가구 변화와 생활 사건이 새로운 수요를 만들고 있는가? 2026년 10월 현재 수요를 가장 빠르게 만드는 변화는 출생·혼인 반등이다(1~7월 출생아 14.7% 증가, 2025년 혼인 7년 만에 최다). 가장 큰 기반은 고령 가구(전체의 28.8%)와 1인 가구(36.6%)다. 반대로 이사와 입주는 각각 51년, 13년 만의 최저여서 가전·가구 교체를 일으키던 계기가 줄고 있다. 1위 출생·혼인 반등" data-q="C5">
@@ -343,11 +374,12 @@ body { background: var(--paper); }
     <div class="tno"><b>C5</b><span>Household &amp; Life Events</span></div>
     <h3 class="ttl">어떤 삶의 변화가 수요를 만드는가</h3>
     <span class="chip">1위 출생·혼인 반등</span>
-    <div class="gauge" title="가구 변화 4개 중 수요를 늘리는 변화"><span class="pips" aria-hidden="true"><i class="on" style="--k:0"></i><i class="on" style="--k:1"></i><i class="on" style="--k:2"></i><i class="" style="--k:3"></i></span><span class="gnum">3/4</span><span class="glab">가구 변화 4개 중 수요를 늘리는 변화</span></div>
+    <div class="gauge"><span class="gtext">수요를 늘리는 변화 3개 · 줄이는 변화 1개</span></div>
   </a>
   <div class="tmore">
     <p class="tq">어떤 가구 변화와 생활 사건이 새로운 수요를 만들고 있는가?</p>
     <p class="ta">2026년 10월 현재 수요를 가장 빠르게 만드는 변화는 출생·혼인 반등이다(1~7월 출생아 14.7% 증가, 2025년 혼인 7년 만에 최다). 가장 큰 기반은 고령 가구(전체의 28.8%)와 1인 가구(36.6%)다. 반대로 이사와 입주는 각각 51년, 13년 만의 최저여서 가전·가구 교체를 일으키던 계기가 줄고 있다.</p>
+    
     <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 27건</span><span>질문 v1.0</span></p>
   </div>
 </li></ol></section><section class="col" id="industry-trend" data-cat="industry-trend" aria-labelledby="h-industry-trend">
@@ -357,11 +389,12 @@ body { background: var(--paper); }
     <div class="tno"><b>I1</b><span>AI Technology &amp; Research</span></div>
     <h3 class="ttl">AI 기술의 경계는 어디까지 넓어졌나</h3>
     <span class="chip">2개 축 일상 사용, 5개 축 제품 이상</span>
-    <div class="gauge" title="기술 축 7개 중 제품 출시 이상"><span class="pips" aria-hidden="true"><i class="on" style="--k:0"></i><i class="on" style="--k:1"></i><i class="on" style="--k:2"></i><i class="on" style="--k:3"></i><i class="on" style="--k:4"></i><i class="" style="--k:5"></i><i class="" style="--k:6"></i></span><span class="gnum">5/7</span><span class="glab">기술 축 7개 중 제품 출시 이상</span></div>
+    <div class="gauge"><span class="band" role="img" aria-label="기술 축 7개 중 제품 출시 이상 5/7"><span class="seg s3 prov" title="Agent·장시간 작업 · 일상 사용 (잠정)"></span><span class="seg s3 prov" title="Reasoning · 일상 사용 (잠정)"></span><span class="seg s2" title="Multimodal·Computer use · 제품 출시"></span><span class="seg s2" title="Long context·Memory · 제품 출시"></span><span class="seg s2" title="Compute · 제품 출시"></span><span class="seg s1" title="World Model · 시연"></span><span class="seg s0" title="AI for Science · 연구"></span></span><span class="glab">기술 축 7개 중 제품 출시 이상 <b>5/7</b></span></div>
   </a>
   <div class="tmore">
     <p class="tq">AI가 새롭게 할 수 있게 된 일은 무엇이고, 기술의 경계는 어느 축에서 얼마나 넓어졌는가?</p>
     <p class="ta">2026년 10월 현재 AI는 사람이 반나절에서 하루 걸리는 소프트웨어 작업을 절반의 확률로 해내고(METR 기준 12~16시간 이상), 이 능력은 몇 시간짜리 업무를 끝까지 수행하는 에이전트로 이미 제품이 됐다. 한계선은 ‘처음 보는 환경에서 스스로 규칙을 배우는 추론’(ARC-AGI-3 최고 30%)과 월드 모델·AI 과학 발견으로 옮겨갔고, 이 영역은 아직 시연·연구 단계다.</p>
+    <ul class="titems"><li><span class="seg s3 prov"></span><span>Agent·장시간 작업</span><em>일상 사용 · 잠정</em></li><li><span class="seg s3 prov"></span><span>Reasoning</span><em>일상 사용 · 잠정</em></li><li><span class="seg s2"></span><span>Multimodal·Computer use</span><em>제품 출시</em></li><li><span class="seg s2"></span><span>Long context·Memory</span><em>제품 출시</em></li><li><span class="seg s2"></span><span>Compute</span><em>제품 출시</em></li><li><span class="seg s1"></span><span>World Model</span><em>시연</em></li><li><span class="seg s0"></span><span>AI for Science</span><em>연구</em></li></ul>
     <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 35건</span><span>질문 v1.0</span></p>
   </div>
 </li><li class="tile" data-search="i2 ai products &amp; applications ai 제품은 어디까지 실제로 쓰이고 있나 ai 제품은 어느 영역에서 시범을 넘어 실제 운영 단계에 들어섰는가? 2026년 10월 현재 시범을 넘어 ‘대규모 운영’에 들어선 ai 제품은 세 가지다. 대화형 assistant(chatgpt 주 9억 명), coding agent(claude code 연환산 매출 25억 달러 이상), 로보택시(waymo 주 50만 회)다. 몇 시간짜리 일을 맡기는 업무형 agent는 정식 출시됐지만 운영 성과가 공개되지 않았고, 휴머노이드는 판매가 시작됐지만 고객 현장은 아직 파일럿 규모다. 3개 영역 대규모 운영" data-q="I2">
@@ -369,11 +402,12 @@ body { background: var(--paper); }
     <div class="tno"><b>I2</b><span>AI Products &amp; Applications</span></div>
     <h3 class="ttl">AI 제품은 어디까지 실제로 쓰이고 있나</h3>
     <span class="chip">3개 영역 대규모 운영</span>
-    <div class="gauge" title="제품 영역 6개 중 대규모 운영(글로벌)"><span class="pips" aria-hidden="true"><i class="on" style="--k:0"></i><i class="on" style="--k:1"></i><i class="on" style="--k:2"></i><i class="" style="--k:3"></i><i class="" style="--k:4"></i><i class="" style="--k:5"></i></span><span class="gnum">3/6</span><span class="glab">제품 영역 6개 중 대규모 운영(글로벌)</span></div>
+    <div class="gauge"><span class="band" role="img" aria-label="제품 영역 6개 중 대규모 운영(글로벌) 3/6"><span class="seg s3" title="대화형 Assistant · 대규모 운영"></span><span class="seg s3" title="Coding Agent · 대규모 운영"></span><span class="seg s3" title="로보택시 · 대규모 운영"></span><span class="seg s2" title="업무형 Agent · 정식 출시"></span><span class="seg s2" title="휴머노이드 · 정식 출시"></span><span class="seg s2 prov" title="기업 내 Agent 도입 · 정식 출시 (잠정)"></span></span><span class="glab">제품 영역 6개 중 대규모 운영(글로벌) <b>3/6</b></span></div>
   </a>
   <div class="tmore">
     <p class="tq">AI 제품은 어느 영역에서 시범을 넘어 실제 운영 단계에 들어섰는가?</p>
     <p class="ta">2026년 10월 현재 시범을 넘어 ‘대규모 운영’에 들어선 AI 제품은 세 가지다. 대화형 Assistant(ChatGPT 주 9억 명), Coding Agent(Claude Code 연환산 매출 25억 달러 이상), 로보택시(Waymo 주 50만 회)다. 몇 시간짜리 일을 맡기는 업무형 Agent는 정식 출시됐지만 운영 성과가 공개되지 않았고, 휴머노이드는 판매가 시작됐지만 고객 현장은 아직 파일럿 규모다.</p>
+    <ul class="titems"><li><span class="seg s3"></span><span>대화형 Assistant</span><em>대규모 운영</em></li><li><span class="seg s3"></span><span>Coding Agent</span><em>대규모 운영</em></li><li><span class="seg s3"></span><span>로보택시</span><em>대규모 운영</em></li><li><span class="seg s2"></span><span>업무형 Agent</span><em>정식 출시</em></li><li><span class="seg s2"></span><span>휴머노이드</span><em>정식 출시</em></li><li><span class="seg s2 prov"></span><span>기업 내 Agent 도입</span><em>정식 출시 · 잠정</em></li></ul>
     <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 28건</span><span>질문 v1.0</span></p>
   </div>
 </li><li class="tile" data-search="i3 ai industry &amp; economics ai에 쏟아진 돈은 어디로 가고, 돌아오고 있나 ai 산업의 돈은 어디로 흐르고, 그 돈은 수익으로 돌아오고 있는가? 2026년 10월 현재 ai에 들어가는 돈(빅테크 설비투자 연 7천억 달러 이상)은 아직 확인되는 ai 매출보다 몇 배 크지만, 매출이 투자보다 빨리 늘면서 간격이 좁혀지기 시작했다. 지금 돈을 가장 확실하게 버는 곳은 칩·메모리(nvidia 매출총이익률 75%, sk하이닉스 영업이익률 76%)이고, 모델 층은 anthropic이 흑자로 돌아선 반면 openai는 큰 손실이 이어진다. 투자 5배, 간격은 좁혀지는 중" data-q="I3">
@@ -381,11 +415,12 @@ body { background: var(--paper); }
     <div class="tno"><b>I3</b><span>AI Industry &amp; Economics</span></div>
     <h3 class="ttl">AI에 쏟아진 돈은 어디로 가고, 돌아오고 있나</h3>
     <span class="chip">투자 5배, 간격은 좁혀지는 중</span>
-    <div class="gauge" title="가치사슬 6개 층 중 주도권이 굳어진 층"><span class="pips" aria-hidden="true"><i class="on" style="--k:0"></i><i class="on" style="--k:1"></i><i class="" style="--k:2"></i><i class="" style="--k:3"></i><i class="" style="--k:4"></i><i class="" style="--k:5"></i></span><span class="gnum">2/6</span><span class="glab">가치사슬 6개 층 중 주도권이 굳어진 층</span></div>
+    <div class="gauge"><span class="gtext">굳어짐 2 · 경합 2 · 흔들림 1</span></div>
   </a>
   <div class="tmore">
     <p class="tq">AI 산업의 돈은 어디로 흐르고, 그 돈은 수익으로 돌아오고 있는가?</p>
     <p class="ta">2026년 10월 현재 AI에 들어가는 돈(빅테크 설비투자 연 7천억 달러 이상)은 아직 확인되는 AI 매출보다 몇 배 크지만, 매출이 투자보다 빨리 늘면서 간격이 좁혀지기 시작했다. 지금 돈을 가장 확실하게 버는 곳은 칩·메모리(NVIDIA 매출총이익률 75%, SK하이닉스 영업이익률 76%)이고, 모델 층은 Anthropic이 흑자로 돌아선 반면 OpenAI는 큰 손실이 이어진다.</p>
+    
     <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 30건</span><span>질문 v1.0</span></p>
   </div>
 </li><li class="tile" data-search="i4 ai adoption, governance &amp; geopolitics ai는 어느 산업까지 들어갔고, 무엇이 밀고 막나 ai는 어느 산업·업무까지 실제 운영에 들어갔고, 확산을 가장 크게 밀거나 막는 요인은 무엇인가? 2026년 10월 현재 ai가 실제 운영에 들어선 곳은 정보·금융 산업(미국 기업 사용률 34~40%)과 it·소프트웨어 개발 업무다. 소매·제조는 아직 초기 확산(14~24%)이고, 미국 기업 전체 사용률은 반년째 20% 안팎에 멈췄다. 확산을 가장 크게 막는 것은 규제가 아니라 전력(올해 데이터센터 계획의 30~50% 지연)이고, 가장 크게 미는 것은 규제 완화(eu 고위험 의무 연기, 미국 학습 공정 이용 지지)와 대기업의 전사 확장(44%)이다. 1위 제약 전력·데이터센터" data-q="I4">
@@ -393,11 +428,12 @@ body { background: var(--paper); }
     <div class="tno"><b>I4</b><span>AI Adoption, Governance &amp; Geopolitics</span></div>
     <h3 class="ttl">AI는 어느 산업까지 들어갔고, 무엇이 밀고 막나</h3>
     <span class="chip">1위 제약 전력·데이터센터</span>
-    <div class="gauge" title="산업·업무 6개 중 확산 이상(글로벌)"><span class="pips" aria-hidden="true"><i class="on" style="--k:0"></i><i class="on" style="--k:1"></i><i class="" style="--k:2"></i><i class="" style="--k:3"></i><i class="" style="--k:4"></i><i class="" style="--k:5"></i></span><span class="gnum">2/6</span><span class="glab">산업·업무 6개 중 확산 이상(글로벌)</span></div>
+    <div class="gauge"><span class="band" role="img" aria-label="산업·업무 6개 중 확산 이상(글로벌) 2/6"><span class="seg s2" title="정보·소프트웨어 · 확산"></span><span class="seg s2" title="금융·보험 · 확산"></span><span class="seg s1" title="소매 · 초기 확산"></span><span class="seg s1" title="기업 전체 · 초기 확산"></span></span><span class="glab">산업·업무 6개 중 확산 이상(글로벌) <b>2/6</b></span></div>
   </a>
   <div class="tmore">
     <p class="tq">AI는 어느 산업·업무까지 실제 운영에 들어갔고, 확산을 가장 크게 밀거나 막는 요인은 무엇인가?</p>
     <p class="ta">2026년 10월 현재 AI가 실제 운영에 들어선 곳은 정보·금융 산업(미국 기업 사용률 34~40%)과 IT·소프트웨어 개발 업무다. 소매·제조는 아직 초기 확산(14~24%)이고, 미국 기업 전체 사용률은 반년째 20% 안팎에 멈췄다. 확산을 가장 크게 막는 것은 규제가 아니라 전력(올해 데이터센터 계획의 30~50% 지연)이고, 가장 크게 미는 것은 규제 완화(EU 고위험 의무 연기, 미국 학습 공정 이용 지지)와 대기업의 전사 확장(44%)이다.</p>
+    <ul class="titems"><li><span class="seg s2"></span><span>정보·소프트웨어</span><em>확산</em></li><li><span class="seg s2"></span><span>금융·보험</span><em>확산</em></li><li><span class="seg s1"></span><span>소매</span><em>초기 확산</em></li><li><span class="seg s1"></span><span>기업 전체</span><em>초기 확산</em></li></ul>
     <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 36건</span><span>질문 v1.0</span></p>
   </div>
 </li></ol></section><section class="col" id="sales-marketing" data-cat="sales-marketing" aria-labelledby="h-sales-marketing">
@@ -407,11 +443,12 @@ body { background: var(--paper); }
     <div class="tno"><b>S1</b><span>AI Search &amp; GEO</span></div>
     <h3 class="ttl">AI 답변 속 브랜드는 어떻게 보이고, 무엇이 노출을 가르나</h3>
     <span class="chip">저울은 손실 쪽</span>
-    <div class="gauge" title="AI 노출 신호 6개 중 근거 강함"><span class="pips" aria-hidden="true"><i class="on" style="--k:0"></i><i class="on" style="--k:1"></i><i class="" style="--k:2"></i><i class="" style="--k:3"></i><i class="" style="--k:4"></i><i class="" style="--k:5"></i></span><span class="gnum">2/6</span><span class="glab">AI 노출 신호 6개 중 근거 강함</span></div>
+    <div class="gauge"><span class="gtext">1위 신호 제3자 언급·평판</span></div>
   </a>
   <div class="tmore">
     <p class="tq">AI 답변에서 브랜드는 얼마나 노출·인용되고, AI 유입은 검색 유입을 얼마나 대신하고 있으며, 노출을 가르는 신호는 무엇인가?</p>
     <p class="ta">2026년 10월 현재 AI 유입은 브랜드 사이트 방문의 1% 안팎으로, 검색에서 잃는 클릭(구글 검색의 68%가 클릭 없이 끝남)을 메우지 못한다. 다만 AI 유입의 전환율은 비AI보다 60% 높다. AI 답변 노출을 가르는 1순위 신호는 브랜드가 직접 쓴 글이 아니라 웹·커뮤니티의 제3자 언급이며, 기존 검색 순위가 그 기반이고, 구매 직전 질문에서는 상품 페이지가 인용의 약 40%를 차지한다.</p>
+    
     <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 37건</span><span>질문 v1.0</span></p>
   </div>
 </li><li class="tile" data-search="s2 ai commerce ai는 어디까지 대신 사고, 그 돈은 누구에게 가나 에이전트 구매는 어느 단계까지 실제 거래가 됐고, 거래 한 건의 수익(수수료·광고·데이터)은 누구에게 가는가? 2026년 10월 현재 에이전트 구매가 실제 거래로 자리 잡은 단계는 &#x27;탐색·비교&#x27;까지다. 유통사 에이전트가 이를 대규모로 운영하지만(amazon rufus 3억 명·증분 매출 120억 달러), chatgpt 안 결제는 전환율이 사이트의 3분의 1에 그쳐 6개월 만에 접혔다. 그래서 돈은 결제 수수료(4%)보다 에이전트 안 광고로 흐르고, 고객 관계와 데이터는 유통사가 지킨다. 한국은 네이버·카카오가 자기 플랫폼 안에서 결제 단계에 먼저 다가가고 있다. 탐색만 대규모, 결제는 시험" data-q="S2">
@@ -419,11 +456,12 @@ body { background: var(--paper); }
     <div class="tno"><b>S2</b><span>AI Commerce</span></div>
     <h3 class="ttl">AI는 어디까지 대신 사고, 그 돈은 누구에게 가나</h3>
     <span class="chip">탐색만 대규모, 결제는 시험</span>
-    <div class="gauge" title="커머스 5단계 중 대규모 운영(글로벌)"><span class="pips" aria-hidden="true"><i class="on" style="--k:0"></i><i class="" style="--k:1"></i><i class="" style="--k:2"></i><i class="" style="--k:3"></i><i class="" style="--k:4"></i></span><span class="gnum">1/5</span><span class="glab">커머스 5단계 중 대규모 운영(글로벌)</span></div>
+    <div class="gauge"><span class="band" role="img" aria-label="커머스 5단계 중 대규모 운영(글로벌) 1/5"><span class="seg s3" title="탐색·비교 · 대규모 운영"></span><span class="seg s2" title="장바구니·선택 · 정식 운영"></span><span class="seg s2" title="결제 (유통사 앱 안) · 정식 운영"></span><span class="seg s1" title="결제 (외부 AI 안) · 시험"></span><span class="seg s1 prov" title="사후관리 · 시험 (잠정)"></span></span><span class="glab">커머스 5단계 중 대규모 운영(글로벌) <b>1/5</b></span></div>
   </a>
   <div class="tmore">
     <p class="tq">에이전트 구매는 어느 단계까지 실제 거래가 됐고, 거래 한 건의 수익(수수료·광고·데이터)은 누구에게 가는가?</p>
     <p class="ta">2026년 10월 현재 에이전트 구매가 실제 거래로 자리 잡은 단계는 &#x27;탐색·비교&#x27;까지다. 유통사 에이전트가 이를 대규모로 운영하지만(Amazon Rufus 3억 명·증분 매출 120억 달러), ChatGPT 안 결제는 전환율이 사이트의 3분의 1에 그쳐 6개월 만에 접혔다. 그래서 돈은 결제 수수료(4%)보다 에이전트 안 광고로 흐르고, 고객 관계와 데이터는 유통사가 지킨다. 한국은 네이버·카카오가 자기 플랫폼 안에서 결제 단계에 먼저 다가가고 있다.</p>
+    <ul class="titems"><li><span class="seg s3"></span><span>탐색·비교</span><em>대규모 운영</em></li><li><span class="seg s2"></span><span>장바구니·선택</span><em>정식 운영</em></li><li><span class="seg s2"></span><span>결제 (유통사 앱 안)</span><em>정식 운영</em></li><li><span class="seg s1"></span><span>결제 (외부 AI 안)</span><em>시험</em></li><li><span class="seg s1 prov"></span><span>사후관리</span><em>시험 · 잠정</em></li></ul>
     <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 38건</span><span>질문 v1.0</span></p>
   </div>
 </li><li class="tile" data-search="s3 ai marketing ai는 마케팅을 어디까지 바꿨고, 무엇이 매출로 이어졌나 ai는 고객 이해·타기팅·콘텐츠·광고·crm의 일하는 방식을 어디까지 바꿨으며, 그중 어떤 방식이 실제 매출과 고객 가치 증가로 이어지고 있는가? 2026년 10월 현재 ai가 일하는 방식을 가장 깊이 바꾼 곳은 광고 집행과 타기팅이다. 플랫폼 ai가 스스로 운영하는 단계(meta advantage+ 연환산 750억 달러)에 들어섰다. 콘텐츠는 ai가 만들고 사람이 고르는 방식이 표준이 됐고(마케터 74% 사용), 고객 이해와 crm은 아직 보조~생성 단계다. 매출 효과는 광고 ai에서 가장 많이 측정됐지만 결과가 엇갈린다. 플랫폼은 전환 15% 증가를 말하지만, 독립 실험에서는 전환당 비용이 16% 오르거나 증분 수익률이 수동 캠페인보다 12% 낮았다. 깊은 변화일수록 성과 엇갈림" data-q="S3">
@@ -431,11 +469,12 @@ body { background: var(--paper); }
     <div class="tno"><b>S3</b><span>AI Marketing</span></div>
     <h3 class="ttl">AI는 마케팅을 어디까지 바꿨고, 무엇이 매출로 이어졌나</h3>
     <span class="chip">깊은 변화일수록 성과 엇갈림</span>
-    <div class="gauge" title="마케팅 기능 5개 중 AI 운영 이상"><span class="pips" aria-hidden="true"><i class="on" style="--k:0"></i><i class="on" style="--k:1"></i><i class="" style="--k:2"></i><i class="" style="--k:3"></i><i class="" style="--k:4"></i></span><span class="gnum">2/5</span><span class="glab">마케팅 기능 5개 중 AI 운영 이상</span></div>
+    <div class="gauge"><span class="band" role="img" aria-label="마케팅 기능 5개 중 AI 운영 이상 2/5"><span class="seg s2" title="타기팅 · AI 운영"></span><span class="seg s2" title="광고 집행·입찰 · AI 운영"></span><span class="seg s1 prov" title="콘텐츠 · AI 생성 (잠정)"></span><span class="seg s1 prov" title="CRM·개인화 · AI 생성 (잠정)"></span><span class="seg s0 prov" title="고객 이해 · AI 보조 (잠정)"></span></span><span class="glab">마케팅 기능 5개 중 AI 운영 이상 <b>2/5</b></span></div>
   </a>
   <div class="tmore">
     <p class="tq">AI는 고객 이해·타기팅·콘텐츠·광고·CRM의 일하는 방식을 어디까지 바꿨으며, 그중 어떤 방식이 실제 매출과 고객 가치 증가로 이어지고 있는가?</p>
     <p class="ta">2026년 10월 현재 AI가 일하는 방식을 가장 깊이 바꾼 곳은 광고 집행과 타기팅이다. 플랫폼 AI가 스스로 운영하는 단계(Meta Advantage+ 연환산 750억 달러)에 들어섰다. 콘텐츠는 AI가 만들고 사람이 고르는 방식이 표준이 됐고(마케터 74% 사용), 고객 이해와 CRM은 아직 보조~생성 단계다. 매출 효과는 광고 AI에서 가장 많이 측정됐지만 결과가 엇갈린다. 플랫폼은 전환 15% 증가를 말하지만, 독립 실험에서는 전환당 비용이 16% 오르거나 증분 수익률이 수동 캠페인보다 12% 낮았다.</p>
+    <ul class="titems"><li><span class="seg s2"></span><span>타기팅</span><em>AI 운영</em></li><li><span class="seg s2"></span><span>광고 집행·입찰</span><em>AI 운영</em></li><li><span class="seg s1 prov"></span><span>콘텐츠</span><em>AI 생성 · 잠정</em></li><li><span class="seg s1 prov"></span><span>CRM·개인화</span><em>AI 생성 · 잠정</em></li><li><span class="seg s0 prov"></span><span>고객 이해</span><em>AI 보조 · 잠정</em></li></ul>
     <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 32건</span><span>질문 v1.0</span></p>
   </div>
 </li><li class="tile" data-search="s4 ai sales &amp; customer service ai는 영업과 고객 응대에서 무엇을 맡고, 사람은 무엇을 하나 ai는 리드 발굴·상담·제안·협상·고객 서비스 중 무엇을 수행하며, 사람과의 역할 분담은 어떻게 달라지는가? 2026년 10월 현재 ai는 영업 과정의 양 끝을 맡는다. 앞단의 리드 발굴(셀러 54%가 ai 에이전트 사용)과 뒷단의 고객 서비스(salesforce 문의 70%를 ai 단독 해결)는 ai가 주도하고, 가운데의 구매 상담·제안·협상은 사람이 주도한다. 사람의 역할은 &#x27;정보 전달&#x27;에서 &#x27;검증과 예외 처리&#x27;로 바뀌고 있다. b2b 구매자의 69%가 ai 정보를 영업 담당자에게 확인받고 싶어 하고, 고객의 87%는 ai 응대에도 사람 연결을 요구한다. 고객 서비스는 ai 단독, 가운데는 사람" data-q="S4">
@@ -443,11 +482,12 @@ body { background: var(--paper); }
     <div class="tno"><b>S4</b><span>AI Sales &amp; Customer Service</span></div>
     <h3 class="ttl">AI는 영업과 고객 응대에서 무엇을 맡고, 사람은 무엇을 하나</h3>
     <span class="chip">고객 서비스는 AI 단독, 가운데는 사람</span>
-    <div class="gauge" title="업무 단계 5개 중 AI 주도(B2B)"><span class="pips" aria-hidden="true"><i class="on" style="--k:0"></i><i class="on" style="--k:1"></i><i class="" style="--k:2"></i><i class="" style="--k:3"></i><i class="" style="--k:4"></i></span><span class="gnum">2/5</span><span class="glab">업무 단계 5개 중 AI 주도(B2B)</span></div>
+    <div class="gauge"><span class="band" role="img" aria-label="업무 단계 5개 중 AI 주도(B2B) 2/5"><span class="seg s3 prov" title="고객 서비스 · AI 단독 (잠정)"></span><span class="seg s2 prov" title="리드 발굴 · AI 주도·사람 승인 (잠정)"></span><span class="seg s1" title="구매 상담 · 사람 주도·AI 보조"></span><span class="seg s1 prov" title="제안·견적 · 사람 주도·AI 보조 (잠정)"></span><span class="seg s0 prov" title="협상 · 사람 단독 (잠정)"></span></span><span class="glab">업무 단계 5개 중 AI 주도(B2B) <b>2/5</b></span></div>
   </a>
   <div class="tmore">
     <p class="tq">AI는 리드 발굴·상담·제안·협상·고객 서비스 중 무엇을 수행하며, 사람과의 역할 분담은 어떻게 달라지는가?</p>
     <p class="ta">2026년 10월 현재 AI는 영업 과정의 양 끝을 맡는다. 앞단의 리드 발굴(셀러 54%가 AI 에이전트 사용)과 뒷단의 고객 서비스(Salesforce 문의 70%를 AI 단독 해결)는 AI가 주도하고, 가운데의 구매 상담·제안·협상은 사람이 주도한다. 사람의 역할은 &#x27;정보 전달&#x27;에서 &#x27;검증과 예외 처리&#x27;로 바뀌고 있다. B2B 구매자의 69%가 AI 정보를 영업 담당자에게 확인받고 싶어 하고, 고객의 87%는 AI 응대에도 사람 연결을 요구한다.</p>
+    <ul class="titems"><li><span class="seg s3 prov"></span><span>고객 서비스</span><em>AI 단독 · 잠정</em></li><li><span class="seg s2 prov"></span><span>리드 발굴</span><em>AI 주도·사람 승인 · 잠정</em></li><li><span class="seg s1"></span><span>구매 상담</span><em>사람 주도·AI 보조</em></li><li><span class="seg s1 prov"></span><span>제안·견적</span><em>사람 주도·AI 보조 · 잠정</em></li><li><span class="seg s0 prov"></span><span>협상</span><em>사람 단독 · 잠정</em></li></ul>
     <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 31건</span><span>질문 v1.0</span></p>
   </div>
 </li><li class="tile" data-search="s5 market, competition &amp; economics 영업·마케팅 ai 예산은 누가 가져가고, 무엇이 도입을 가르나 어떤 기업과 제품이 영업·마케팅 예산과 고객 접점을 확보하고 있으며, 도입 확대와 수익성을 결정하는 조건은 무엇인가? 2026년 10월 현재 영업·마케팅 ai 예산과 고객 접점을 가장 크게 확보한 곳은 광고 플랫폼이다. meta advantage+ 하나가 연환산 750억 달러로 salesforce agentforce(15억 달러)의 50배다. crm 기존 강자는 ai 매출을 빠르게 키우지만 아직 전체 매출의 3% 수준이고, 고객 서비스 ai에서는 sierra 같은 신생 기업이 기업가치 150억 달러로 빠르게 치고 올라온다. 도입 확대를 가르는 조건은 성과 증명이며, 그래서 과금이 좌석에서 해결·성과당으로 옮겨가고 있다. 광고 플랫폼만 굳어짐" data-q="S5">
@@ -455,11 +495,12 @@ body { background: var(--paper); }
     <div class="tno"><b>S5</b><span>Market, Competition &amp; Economics</span></div>
     <h3 class="ttl">영업·마케팅 AI 예산은 누가 가져가고, 무엇이 도입을 가르나</h3>
     <span class="chip">광고 플랫폼만 굳어짐</span>
-    <div class="gauge" title="영역 5개 중 주도 기업이 굳어진 곳"><span class="pips" aria-hidden="true"><i class="on" style="--k:0"></i><i class="" style="--k:1"></i><i class="" style="--k:2"></i><i class="" style="--k:3"></i><i class="" style="--k:4"></i></span><span class="gnum">1/5</span><span class="glab">영역 5개 중 주도 기업이 굳어진 곳</span></div>
+    <div class="gauge"><span class="gtext">굳어짐 1 · 경합 3 · 흔들림 1</span></div>
   </a>
   <div class="tmore">
     <p class="tq">어떤 기업과 제품이 영업·마케팅 예산과 고객 접점을 확보하고 있으며, 도입 확대와 수익성을 결정하는 조건은 무엇인가?</p>
     <p class="ta">2026년 10월 현재 영업·마케팅 AI 예산과 고객 접점을 가장 크게 확보한 곳은 광고 플랫폼이다. Meta Advantage+ 하나가 연환산 750억 달러로 Salesforce Agentforce(15억 달러)의 50배다. CRM 기존 강자는 AI 매출을 빠르게 키우지만 아직 전체 매출의 3% 수준이고, 고객 서비스 AI에서는 Sierra 같은 신생 기업이 기업가치 150억 달러로 빠르게 치고 올라온다. 도입 확대를 가르는 조건은 성과 증명이며, 그래서 과금이 좌석에서 해결·성과당으로 옮겨가고 있다.</p>
+    
     <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 34건</span><span>질문 v1.0</span></p>
   </div>
 </li></ol></section><section class="col" id="lg-group-ai" data-cat="lg-group-ai" aria-labelledby="h-lg-group-ai">
@@ -469,11 +510,12 @@ body { background: var(--paper); }
     <div class="tno"><b>L1</b><span>AI Data Center / Infra</span></div>
     <h3 class="ttl">LG는 AI 데이터센터 수요를 어디까지 계약과 매출로 잡았나</h3>
     <span class="chip">4개 제품군 계약 단계</span>
-    <div class="gauge" title="제품군 5개 중 계약 이상"><span class="pips" aria-hidden="true"><i class="on" style="--k:0"></i><i class="on" style="--k:1"></i><i class="on" style="--k:2"></i><i class="on" style="--k:3"></i><i class="" style="--k:4"></i></span><span class="gnum">4/5</span><span class="glab">제품군 5개 중 계약 이상</span></div>
+    <div class="gauge"><span class="band" role="img" aria-label="제품군 5개 중 계약 이상 4/5"><span class="seg s2" title="냉각 (LG전자) · 계약"></span><span class="seg s2" title="전력·ESS (LG에너지솔루션) · 계약"></span><span class="seg s2" title="구축·DBO (LG CNS) · 계약"></span><span class="seg s2" title="운영·코로케이션 (LG CNS·U+) · 계약"></span><span class="seg s0" title="GPU 클라우드 (LG CNS·U+) · 발표·전시"></span></span><span class="glab">제품군 5개 중 계약 이상 <b>4/5</b></span></div>
   </a>
   <div class="tmore">
     <p class="tq">LG는 AI 데이터센터의 냉각·전력·구축·운영 수요를 어떤 제품과 계약으로 확보하고 있으며, 그 수요는 계약·매출로 어디까지 확인되는가?</p>
     <p class="ta">2026년 10월 현재 LG는 냉각·전력·구축·운영 네 제품군 모두에서 AI 데이터센터 수요를 &#x27;계약&#x27; 단계까지 확보했다. LG전자 북미 5GW 칠러 장기 계약과 냉각 수주 6,000억 원 이상, LG에너지솔루션 ESS 수주 3조 원(하이퍼스케일러 AI 데이터센터 포함), LG CNS DBO 수주 1조 원 이상, 네이버클라우드 6,034억 원 입주 계약이다. 그러나 AI 데이터센터 매출로 따로 확인된 것은 아직 없다. 냉각·ESS 매출은 기존 사업에 섞여 있고, 파주 AIDC는 2027년 가동이다.</p>
+    <ul class="titems"><li><span class="seg s2"></span><span>냉각 (LG전자)</span><em>계약</em></li><li><span class="seg s2"></span><span>전력·ESS (LG에너지솔루션)</span><em>계약</em></li><li><span class="seg s2"></span><span>구축·DBO (LG CNS)</span><em>계약</em></li><li><span class="seg s2"></span><span>운영·코로케이션 (LG CNS·U+)</span><em>계약</em></li><li><span class="seg s0"></span><span>GPU 클라우드 (LG CNS·U+)</span><em>발표·전시</em></li></ul>
     <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 38건</span><span>질문 v1.0</span></p>
   </div>
 </li><li class="tile" data-search="l2 physical ai / smart manufacturing lg의 피지컬 ai는 현장에서 어디까지 성과를 냈나 lg는 ai를 공장·물류·로봇·가전의 물리적 작동에 어떻게 적용하며, 실제 성능과 사업 성과는 어디까지 확인되는가? 2026년 10월 현재 lg의 피지컬 ai가 사업 성과로 확인된 곳은 공장이다. lg전자 스마트팩토리 외부 수주가 2년 새 약 5,000억 원이 됐고, lg cns 공장 운영 ai는 설비 10만 개 이상에 적용돼 한 배터리 공장에서 한 달 만에 합격품 비중 90% 이상을 냈다. 물류 휴머노이드는 컬리·lx판토스와의 외부 실증 단계이고, 가전에서는 홈 허브(씽큐 온)가 출시됐지만 홈 로봇 cloid는 아직 실험실 안이다. 공개된 성능 수치의 대부분은 자사 공장 측정이거나 회사가 기대하는 값이다. 공장만 사업 성과" data-q="L2">
@@ -481,11 +523,12 @@ body { background: var(--paper); }
     <div class="tno"><b>L2</b><span>Physical AI / Smart Manufacturing</span></div>
     <h3 class="ttl">LG의 피지컬 AI는 현장에서 어디까지 성과를 냈나</h3>
     <span class="chip">공장만 사업 성과</span>
-    <div class="gauge" title="적용 영역 5개 중 사업 성과"><span class="pips" aria-hidden="true"><i class="on" style="--k:0"></i><i class="" style="--k:1"></i><i class="" style="--k:2"></i><i class="" style="--k:3"></i><i class="" style="--k:4"></i></span><span class="gnum">1/5</span><span class="glab">적용 영역 5개 중 사업 성과</span></div>
+    <div class="gauge"><span class="band" role="img" aria-label="적용 영역 5개 중 사업 성과 1/5"><span class="seg s3 prov" title="공장 — 외부 스마트팩토리 (LG전자) · 사업 성과 (잠정)"></span><span class="seg s2" title="공장 — 운영 AI (LG CNS Factova) · 상용 계약"></span><span class="seg s2" title="가전 — 홈 허브 (씽큐 온) · 상용 계약"></span><span class="seg s1" title="물류 로봇·휴머노이드 (LG CNS) · 외부 실증"></span><span class="seg s0" title="가전 — 홈 로봇 (CLOiD) · 내부 실증"></span></span><span class="glab">적용 영역 5개 중 사업 성과 <b>1/5</b></span></div>
   </a>
   <div class="tmore">
     <p class="tq">LG는 AI를 공장·물류·로봇·가전의 물리적 작동에 어떻게 적용하며, 실제 성능과 사업 성과는 어디까지 확인되는가?</p>
     <p class="ta">2026년 10월 현재 LG의 피지컬 AI가 사업 성과로 확인된 곳은 공장이다. LG전자 스마트팩토리 외부 수주가 2년 새 약 5,000억 원이 됐고, LG CNS 공장 운영 AI는 설비 10만 개 이상에 적용돼 한 배터리 공장에서 한 달 만에 합격품 비중 90% 이상을 냈다. 물류 휴머노이드는 컬리·LX판토스와의 외부 실증 단계이고, 가전에서는 홈 허브(씽큐 온)가 출시됐지만 홈 로봇 CLOiD는 아직 실험실 안이다. 공개된 성능 수치의 대부분은 자사 공장 측정이거나 회사가 기대하는 값이다.</p>
+    <ul class="titems"><li><span class="seg s3 prov"></span><span>공장 — 외부 스마트팩토리 (LG전자)</span><em>사업 성과 · 잠정</em></li><li><span class="seg s2"></span><span>공장 — 운영 AI (LG CNS Factova)</span><em>상용 계약</em></li><li><span class="seg s2"></span><span>가전 — 홈 허브 (씽큐 온)</span><em>상용 계약</em></li><li><span class="seg s1"></span><span>물류 로봇·휴머노이드 (LG CNS)</span><em>외부 실증</em></li><li><span class="seg s0"></span><span>가전 — 홈 로봇 (CLOiD)</span><em>내부 실증</em></li></ul>
     <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 28건</span><span>질문 v1.0</span></p>
   </div>
 </li><li class="tile" data-search="l3 ai mobility / sdv·aidv lg의 차량용 ai는 어느 고객·차종까지 들어갔나 lg의 차량용 ai·소프트웨어·부품은 어떤 고객과 차종에 적용되며, 공급 범위와 수익 기회는 어떻게 확대되는가? 2026년 10월 현재 고객과 차종을 밝힌 lg의 ai·sdv 수주는 르노 &#x27;new trafic e-tech electric&#x27;(유럽 첫 상용 sdv)의 통합 콕핏 한 건이다. 부품 공급사에서 통합 솔루션 공급사로 넓어지는 첫 공개 사례다. 양산 적용 단계에 있는 것은 텔레매틱스(점유율 23%, 1위)와 차량용 oled(15.9%, 2위) 같은 기존 강점이고, ai 캐빈·adas·라이다는 콘셉트이거나 고객명 없는 수주 단계다. 수익 기회는 이익률에서 먼저 보인다. vs 영업이익률 6~7%는 보쉬 모빌리티의 3배가 넘는다. ai 신영역 공개 수주 1건" data-q="L3">
@@ -493,23 +536,25 @@ body { background: var(--paper); }
     <div class="tno"><b>L3</b><span>AI Mobility / SDV·AIDV</span></div>
     <h3 class="ttl">LG의 차량용 AI는 어느 고객·차종까지 들어갔나</h3>
     <span class="chip">AI 신영역 공개 수주 1건</span>
-    <div class="gauge" title="AI 신영역 5개 중 고객 공개 수주 이상"><span class="pips" aria-hidden="true"><i class="on" style="--k:0"></i><i class="" style="--k:1"></i><i class="" style="--k:2"></i><i class="" style="--k:3"></i><i class="" style="--k:4"></i></span><span class="gnum">1/5</span><span class="glab">AI 신영역 5개 중 고객 공개 수주 이상</span></div>
+    <div class="gauge"><span class="band" role="img" aria-label="AI 신영역 5개 중 고객 공개 수주 이상 1/5"><span class="seg s2" title="통합 콕핏·SDV (LG전자) · 수주(고객·차종 공개)"></span><span class="seg s1 prov" title="라이다·센싱 (LG이노텍) · 수주(고객 비공개) (잠정)"></span><span class="seg s0" title="AI 캐빈 (LG전자) · 콘셉트"></span><span class="seg s0" title="ADAS (LG전자) · 콘셉트"></span><span class="seg s0" title="배터리 SW (LG에너지솔루션) · 콘셉트"></span></span><span class="glab">AI 신영역 5개 중 고객 공개 수주 이상 <b>1/5</b></span></div>
   </a>
   <div class="tmore">
     <p class="tq">LG의 차량용 AI·소프트웨어·부품은 어떤 고객과 차종에 적용되며, 공급 범위와 수익 기회는 어떻게 확대되는가?</p>
     <p class="ta">2026년 10월 현재 고객과 차종을 밝힌 LG의 AI·SDV 수주는 르노 &#x27;New Trafic E-Tech Electric&#x27;(유럽 첫 상용 SDV)의 통합 콕핏 한 건이다. 부품 공급사에서 통합 솔루션 공급사로 넓어지는 첫 공개 사례다. 양산 적용 단계에 있는 것은 텔레매틱스(점유율 23%, 1위)와 차량용 OLED(15.9%, 2위) 같은 기존 강점이고, AI 캐빈·ADAS·라이다는 콘셉트이거나 고객명 없는 수주 단계다. 수익 기회는 이익률에서 먼저 보인다. VS 영업이익률 6~7%는 보쉬 모빌리티의 3배가 넘는다.</p>
+    <ul class="titems"><li><span class="seg s2"></span><span>통합 콕핏·SDV (LG전자)</span><em>수주(고객·차종 공개)</em></li><li><span class="seg s1 prov"></span><span>라이다·센싱 (LG이노텍)</span><em>수주(고객 비공개) · 잠정</em></li><li><span class="seg s0"></span><span>AI 캐빈 (LG전자)</span><em>콘셉트</em></li><li><span class="seg s0"></span><span>ADAS (LG전자)</span><em>콘셉트</em></li><li><span class="seg s0"></span><span>배터리 SW (LG에너지솔루션)</span><em>콘셉트</em></li></ul>
     <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 27건</span><span>질문 v1.0</span></p>
   </div>
-</li><li class="tile" data-search="l4 enterprise ax / agentic operating model lg의 ax는 목표에서 결과로 얼마나 넘어왔나 lg는 내부 업무와 외부 고객 사업에서 ai를 어떻게 실행 체계로 전환하며, 사용·품질·생산성·매출 성과는 무엇인가? 2026년 10월 현재 lg의 ax는 계열사마다 단계가 다르다. lg cns는 외부 사업화(상반기 ai·클라우드 매출 1조 6,714억 원, 전체의 59%)까지 왔고, lg디스플레이·lg에너지솔루션은 업무 단위 성과(설계 한 달→8시간, 리튬 가격 예측 정확도 90%+)를 공개했으며, lg전자는 업무 적용(lgenie 월 3만 명), lg화학은 교육 단계(3,000명)다. 목표는 전사 단위(엔솔 2028년 생산성 50%, lgd 30%)인데 공개된 결과는 업무 단위에 머물고, lg전자가 만든 업무 에이전트는 절반 이상(96개 중 50개)이 사라졌다. 성과 공개 3곳, 전사 결과 0" data-q="L4">
+</li><li class="tile" data-search="l4 enterprise ax / agentic operating model lg의 ax는 목표에서 결과로 얼마나 넘어왔나 lg는 내부 업무와 외부 고객 사업에서 ai를 어떻게 실행 체계로 전환하며, 사용·품질·생산성·매출 성과는 무엇인가? 2026년 10월 현재 lg의 ax는 계열사마다 단계가 다르다. lg디스플레이·lg에너지솔루션은 업무 단위 성과(설계 한 달→8시간, 리튬 가격 예측 정확도 90%+)를 공개했고, lg전자는 업무 적용(lgenie 월 3만 명), lg화학은 교육 단계(3,000명)다. lg cns는 사내 성과보다 외부 사업화(상반기 ai·클라우드 매출 1조 6,714억 원)가 먼저 드러나 있다. 목표는 전사 단위(엔솔 2028년 생산성 50%, lgd 30%)인데 공개된 결과는 업무 단위에 머물고, lg전자가 만든 업무 에이전트는 절반 이상(96개 중 50개)이 사라졌다. 업무 성과 2곳, 전사 성과 0" data-q="L4">
   <a class="tlink" href="lg-group-ai/l4/r1.html" data-preview>
     <div class="tno"><b>L4</b><span>Enterprise AX / Agentic Operating Model</span></div>
     <h3 class="ttl">LG의 AX는 목표에서 결과로 얼마나 넘어왔나</h3>
-    <span class="chip">성과 공개 3곳, 전사 결과 0</span>
-    <div class="gauge" title="계열사 5곳 중 성과 공개 이상"><span class="pips" aria-hidden="true"><i class="on" style="--k:0"></i><i class="on" style="--k:1"></i><i class="on" style="--k:2"></i><i class="" style="--k:3"></i><i class="" style="--k:4"></i></span><span class="gnum">3/5</span><span class="glab">계열사 5곳 중 성과 공개 이상</span></div>
+    <span class="chip">업무 성과 2곳, 전사 성과 0</span>
+    <div class="gauge"><span class="band" role="img" aria-label="계열사 5곳 중 업무 단위 성과 이상 2/5"><span class="seg s2" title="LG디스플레이 · 업무 단위 성과"></span><span class="seg s2 prov" title="LG에너지솔루션 · 업무 단위 성과 (잠정)"></span><span class="seg s1" title="LG전자 · 업무 적용"></span><span class="seg s0" title="LG화학 · 교육·도구 배포"></span><span class="seg s0" title="LG CNS · 교육·도구 배포"></span></span><span class="glab">계열사 5곳 중 업무 단위 성과 이상 <b>2/5</b></span></div>
   </a>
   <div class="tmore">
     <p class="tq">LG는 내부 업무와 외부 고객 사업에서 AI를 어떻게 실행 체계로 전환하며, 사용·품질·생산성·매출 성과는 무엇인가?</p>
-    <p class="ta">2026년 10월 현재 LG의 AX는 계열사마다 단계가 다르다. LG CNS는 외부 사업화(상반기 AI·클라우드 매출 1조 6,714억 원, 전체의 59%)까지 왔고, LG디스플레이·LG에너지솔루션은 업무 단위 성과(설계 한 달→8시간, 리튬 가격 예측 정확도 90%+)를 공개했으며, LG전자는 업무 적용(LGenie 월 3만 명), LG화학은 교육 단계(3,000명)다. 목표는 전사 단위(엔솔 2028년 생산성 50%, LGD 30%)인데 공개된 결과는 업무 단위에 머물고, LG전자가 만든 업무 에이전트는 절반 이상(96개 중 50개)이 사라졌다.</p>
+    <p class="ta">2026년 10월 현재 LG의 AX는 계열사마다 단계가 다르다. LG디스플레이·LG에너지솔루션은 업무 단위 성과(설계 한 달→8시간, 리튬 가격 예측 정확도 90%+)를 공개했고, LG전자는 업무 적용(LGenie 월 3만 명), LG화학은 교육 단계(3,000명)다. LG CNS는 사내 성과보다 외부 사업화(상반기 AI·클라우드 매출 1조 6,714억 원)가 먼저 드러나 있다. 목표는 전사 단위(엔솔 2028년 생산성 50%, LGD 30%)인데 공개된 결과는 업무 단위에 머물고, LG전자가 만든 업무 에이전트는 절반 이상(96개 중 50개)이 사라졌다.</p>
+    <ul class="titems"><li><span class="seg s2"></span><span>LG디스플레이</span><em>업무 단위 성과</em></li><li><span class="seg s2 prov"></span><span>LG에너지솔루션</span><em>업무 단위 성과 · 잠정</em></li><li><span class="seg s1"></span><span>LG전자</span><em>업무 적용</em></li><li><span class="seg s0"></span><span>LG화학</span><em>교육·도구 배포</em></li><li><span class="seg s0"></span><span>LG CNS</span><em>교육·도구 배포</em></li></ul>
     <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 31건</span><span>질문 v1.0</span></p>
   </div>
 </li><li class="tile" data-search="l5 ai for science / bio / materials / battery ai가 찾은 소재·신약은 어디까지 제품이 됐나 ai가 소재·배터리·신약의 탐색과 개발을 얼마나 개선하며, 연구 결과는 실험·제품·사업화로 어디까지 이어지는가? 2026년 10월 현재 ai는 lg의 탐색 단계를 크게 줄였다. 화장품 소재 4,000만 건 검토가 22개월에서 하루로, 탈모 소재 후보 42만 개 선별이 하루로 줄었다(회사 발표). 그러나 ai로 찾은 물질 가운데 제품·임상까지 간 것은 아직 없다. 가장 앞선 탈모 소재 &#x27;람시딜&#x27;은 학회에서 효과를 발표하고 제품화를 준비 중이고, 신약(펩타이드·항체)은 발견 단계, 배터리는 자동 실험 루프를 만든 단계다. 제품·임상 진입 0건" data-q="L5">
@@ -517,11 +562,12 @@ body { background: var(--paper); }
     <div class="tno"><b>L5</b><span>AI for Science / Bio / Materials / Battery</span></div>
     <h3 class="ttl">AI가 찾은 소재·신약은 어디까지 제품이 됐나</h3>
     <span class="chip">제품·임상 진입 0건</span>
-    <div class="gauge" title="연구 분야 5개 중 실험 검증 이상"><span class="pips" aria-hidden="true"><i class="on" style="--k:0"></i><i class="on" style="--k:1"></i><i class="" style="--k:2"></i><i class="" style="--k:3"></i><i class="" style="--k:4"></i></span><span class="gnum">2/5</span><span class="glab">연구 분야 5개 중 실험 검증 이상</span></div>
+    <div class="gauge"><span class="band" role="img" aria-label="연구 분야 5개 중 실험 검증 이상 2/5"><span class="seg s1" title="화장품 원료 (LG생활건강) · 실험 검증"></span><span class="seg s1" title="기타 소재 (액침 냉각유 등) · 실험 검증"></span><span class="seg s0" title="배터리 소재 (LG에너지솔루션) · 가상 탐색"></span><span class="seg s0" title="신약 — 펩타이드 (LG AI연구원) · 가상 탐색"></span><span class="seg s0" title="신약 — 항체 (LG화학) · 가상 탐색"></span></span><span class="glab">연구 분야 5개 중 실험 검증 이상 <b>2/5</b></span></div>
   </a>
   <div class="tmore">
     <p class="tq">AI가 소재·배터리·신약의 탐색과 개발을 얼마나 개선하며, 연구 결과는 실험·제품·사업화로 어디까지 이어지는가?</p>
     <p class="ta">2026년 10월 현재 AI는 LG의 탐색 단계를 크게 줄였다. 화장품 소재 4,000만 건 검토가 22개월에서 하루로, 탈모 소재 후보 42만 개 선별이 하루로 줄었다(회사 발표). 그러나 AI로 찾은 물질 가운데 제품·임상까지 간 것은 아직 없다. 가장 앞선 탈모 소재 &#x27;람시딜&#x27;은 학회에서 효과를 발표하고 제품화를 준비 중이고, 신약(펩타이드·항체)은 발견 단계, 배터리는 자동 실험 루프를 만든 단계다.</p>
+    <ul class="titems"><li><span class="seg s1"></span><span>화장품 원료 (LG생활건강)</span><em>실험 검증</em></li><li><span class="seg s1"></span><span>기타 소재 (액침 냉각유 등)</span><em>실험 검증</em></li><li><span class="seg s0"></span><span>배터리 소재 (LG에너지솔루션)</span><em>가상 탐색</em></li><li><span class="seg s0"></span><span>신약 — 펩타이드 (LG AI연구원)</span><em>가상 탐색</em></li><li><span class="seg s0"></span><span>신약 — 항체 (LG화학)</span><em>가상 탐색</em></li></ul>
     <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 28건</span><span>질문 v1.0</span></p>
   </div>
 </li><li class="tile" data-search="l6 global ai alliance / open innovation lg의 ai 동맹은 무엇을 바꾸고 있나 lg는 자체 ai 역량과 외부 파트너를 어떻게 결합하며, 협력이 기술·고객·공급망·시장 접근에 어떤 변화를 만드는가? 2026년 10월 현재 lg의 ai 동맹 가운데 상용 계약까지 간 것은 lg가 &#x27;고객&#x27;인 협력이다. palantir(그룹 poc → 본 계약)와 anthropic(그룹 통합 claude 계약)이 그렇다. lg가 &#x27;공급자&#x27;가 되는 협력은 공급망 입구에 섰다. nvidia와는 세 분야·여섯 계열사가 공동개발 중이고 lg전자 cdu와 엔솔 ess가 dsx ready에 들어갔으며, microsoft와는 9월 냉각·전력·it 공급 기회를 함께 찾기로 했다. 다만 의사결정(palantir)·로봇 두뇌(skild·gr00t)·컴퓨팅(nvidia) 같은 핵심층은 외부에 기대고 있다. 상용 계약 3곳, 모두 lg가 고객" data-q="L6">
@@ -529,11 +575,12 @@ body { background: var(--paper); }
     <div class="tno"><b>L6</b><span>Global AI Alliance / Open Innovation</span></div>
     <h3 class="ttl">LG의 AI 동맹은 무엇을 바꾸고 있나</h3>
     <span class="chip">상용 계약 3곳, 모두 LG가 고객</span>
-    <div class="gauge" title="파트너 10곳 중 상용 계약 이상"><span class="pips" aria-hidden="true"><i class="on" style="--k:0"></i><i class="on" style="--k:1"></i><i class="on" style="--k:2"></i><i class="" style="--k:3"></i><i class="" style="--k:4"></i><i class="" style="--k:5"></i><i class="" style="--k:6"></i><i class="" style="--k:7"></i><i class="" style="--k:8"></i><i class="" style="--k:9"></i></span><span class="gnum">3/10</span><span class="glab">파트너 10곳 중 상용 계약 이상</span></div>
+    <div class="gauge"><span class="band" role="img" aria-label="파트너 10곳 중 상용 계약 이상 3/10"><span class="seg s2" title="Palantir (LG CNS) · 상용 계약"></span><span class="seg s2" title="Anthropic (LG CNS·그룹) · 상용 계약"></span><span class="seg s2" title="OpenAI (LG CNS 재판매) · 상용 계약"></span><span class="seg s1" title="NVIDIA (6개 계열사) · 공동개발·실증"></span><span class="seg s1" title="Skild AI (LG CNS·LGTV) · 공동개발·실증"></span><span class="seg s1" title="Dexmate (LG CNS) · 공동개발·실증"></span><span class="seg s1" title="D&amp;D Pharmatech · LabGenius · 공동개발·실증"></span><span class="seg s0" title="Microsoft (그룹) · 발표·MOU"></span><span class="seg s0" title="CuspAI (LG CNS) · 발표·MOU"></span><span class="seg s0" title="SDVerse (LG에너지솔루션) · 발표·MOU"></span></span><span class="glab">파트너 10곳 중 상용 계약 이상 <b>3/10</b></span></div>
   </a>
   <div class="tmore">
     <p class="tq">LG는 자체 AI 역량과 외부 파트너를 어떻게 결합하며, 협력이 기술·고객·공급망·시장 접근에 어떤 변화를 만드는가?</p>
     <p class="ta">2026년 10월 현재 LG의 AI 동맹 가운데 상용 계약까지 간 것은 LG가 &#x27;고객&#x27;인 협력이다. Palantir(그룹 PoC → 본 계약)와 Anthropic(그룹 통합 Claude 계약)이 그렇다. LG가 &#x27;공급자&#x27;가 되는 협력은 공급망 입구에 섰다. NVIDIA와는 세 분야·여섯 계열사가 공동개발 중이고 LG전자 CDU와 엔솔 ESS가 DSX Ready에 들어갔으며, Microsoft와는 9월 냉각·전력·IT 공급 기회를 함께 찾기로 했다. 다만 의사결정(Palantir)·로봇 두뇌(Skild·GR00T)·컴퓨팅(NVIDIA) 같은 핵심층은 외부에 기대고 있다.</p>
+    <ul class="titems"><li><span class="seg s2"></span><span>Palantir (LG CNS)</span><em>상용 계약</em></li><li><span class="seg s2"></span><span>Anthropic (LG CNS·그룹)</span><em>상용 계약</em></li><li><span class="seg s2"></span><span>OpenAI (LG CNS 재판매)</span><em>상용 계약</em></li><li><span class="seg s1"></span><span>NVIDIA (6개 계열사)</span><em>공동개발·실증</em></li><li><span class="seg s1"></span><span>Skild AI (LG CNS·LGTV)</span><em>공동개발·실증</em></li><li><span class="seg s1"></span><span>Dexmate (LG CNS)</span><em>공동개발·실증</em></li><li><span class="seg s1"></span><span>D&amp;D Pharmatech · LabGenius</span><em>공동개발·실증</em></li><li><span class="seg s0"></span><span>Microsoft (그룹)</span><em>발표·MOU</em></li><li><span class="seg s0"></span><span>CuspAI (LG CNS)</span><em>발표·MOU</em></li><li><span class="seg s0"></span><span>SDVerse (LG에너지솔루션)</span><em>발표·MOU</em></li></ul>
     <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 33건</span><span>질문 v1.0</span></p>
   </div>
 </li></ol></section></div>
@@ -550,7 +597,7 @@ body { background: var(--paper); }
 <div class="preview" id="preview" role="dialog" aria-modal="false" aria-labelledby="pv-title" hidden>
   <div class="pv-grip" aria-hidden="true"></div>
   <p class="pv-no"></p><h3 id="pv-title"></h3><span class="chip pv-chip"></span>
-  <p class="tq pv-q"></p><p class="ta pv-a"></p><p class="tmeta pv-meta"></p>
+  <p class="tq pv-q"></p><p class="ta pv-a"></p><div class="pv-items"></div><p class="tmeta pv-meta"></p>
   <div class="pv-act"><a class="pv-go" href="#">아티클 읽기</a><button class="pv-x" type="button">닫기</button></div>
 </div>
 <div class="scrim" hidden></div>
@@ -693,6 +740,7 @@ body { background: var(--paper); }
     pv.querySelector('.pv-q').textContent = tile.querySelector('.tq').textContent;
     pv.querySelector('.pv-a').textContent = tile.querySelector('.ta').textContent;
     pv.querySelector('.pv-meta').innerHTML = tile.querySelector('.tmeta').innerHTML;
+    var ti = tile.querySelector('.titems'); pv.querySelector('.pv-items').innerHTML = ti ? ti.outerHTML : '';
     pv.querySelector('.pv-go').href = link.getAttribute('href');
   }
   function place(tile) {

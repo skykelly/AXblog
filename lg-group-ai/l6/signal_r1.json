@@ -3,7 +3,66 @@
  "round": 1,
  "chip": "상용 계약 3곳, 모두 LG가 고객",
  "gauge": "파트너 10곳 중 상용 계약 이상",
- "frontier": "NVIDIA 실증 → 계약",
+ "frontier": "NVIDIA 공동개발 → 계약",
  "on": 3,
- "of": 10
+ "of": 10,
+ "kind": "band",
+ "levels": [
+  "발표·MOU",
+  "공동개발·실증",
+  "상용 계약",
+  "매출·시장 접근"
+ ],
+ "items": [
+  [
+   "Palantir (LG CNS)",
+   2,
+   false
+  ],
+  [
+   "Anthropic (LG CNS·그룹)",
+   2,
+   false
+  ],
+  [
+   "OpenAI (LG CNS 재판매)",
+   2,
+   false
+  ],
+  [
+   "NVIDIA (6개 계열사)",
+   1,
+   false
+  ],
+  [
+   "Skild AI (LG CNS·LGTV)",
+   1,
+   false
+  ],
+  [
+   "Dexmate (LG CNS)",
+   1,
+   false
+  ],
+  [
+   "D&D Pharmatech · LabGenius",
+   1,
+   false
+  ],
+  [
+   "Microsoft (그룹)",
+   0,
+   false
+  ],
+  [
+   "CuspAI (LG CNS)",
+   0,
+   false
+  ],
+  [
+   "SDVerse (LG에너지솔루션)",
+   0,
+   false
+  ]
+ ]
 }

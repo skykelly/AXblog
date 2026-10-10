@@ -195,6 +195,10 @@ SIGNAL_GAUGE = '마케팅 기능 5개 중 AI 운영 이상'
 SIGNAL_FRONTIER = '콘텐츠·CRM'
 signal = {"question": 'S3', "round": 1, "chip": SIGNAL_CHIP, "gauge": SIGNAL_GAUGE, "frontier": SIGNAL_FRONTIER,
           "on": sum(1 for r in FUNCS if SG.index(r[1]) >= SG.index("AI 운영")), "of": len(FUNCS)}
+# 포털 띠: 항목마다 단계(0~3)와 잠정 여부
+signal["kind"] = "band"
+signal["levels"] = list(SG)
+signal["items"] = [[r[0], SG.index(r[1]), bool(r[2])] for r in FUNCS if True]
 (ROOT / "signal_r1.json").write_text(json.dumps(signal, ensure_ascii=False, indent=1), encoding="utf-8")
 print("signal_r1.json:", signal["chip"], f'{signal["on"]}/{signal["of"]}')
 sys.exit(1 if bad or order != sorted(order) else 0)

@@ -87,10 +87,17 @@ def tile(c, it):
     a = it["cur"]
     sg = it["cur"].get("signal", {})
     search = " ".join([q["no"], q.get("area", ""), a["title"], a["question"], a["answer"], sg.get("chip", "")]).lower()
-    gauge = ""
-    if sg.get("of"):
-        gauge = (f'<div class="gauge" title="{E(sg["gauge"])}"><span class="pips" aria-hidden="true">{pips(sg["on"], sg["of"])}</span>'
-                 f'<span class="gnum">{sg["on"]}/{sg["of"]}</span><span class="glab">{E(sg["gauge"])}</span></div>')
+    gauge, items_html = "", ""
+    if sg.get("kind") == "band" and sg.get("items"):
+        lv = sg["levels"]
+        its = sorted(sg["items"], key=lambda x: (-x[1], x[2]))
+        segs = "".join(f'<span class="seg s{st}{" prov" if pv else ""}" title="{E(nm)} · {E(lv[st])}{" (잠정)" if pv else ""}"></span>' for nm, st, pv in its)
+        gauge = (f'<div class="gauge"><span class="band" role="img" aria-label="{E(sg["gauge"])} {sg["on"]}/{sg["of"]}">{segs}</span>'
+                 f'<span class="glab">{E(sg["gauge"])} <b>{sg["on"]}/{sg["of"]}</b></span></div>')
+        items_html = '<ul class="titems">' + "".join(
+            f'<li><span class="seg s{st}{" prov" if pv else ""}"></span><span>{E(nm)}</span><em>{E(lv[st])}{" · 잠정" if pv else ""}</em></li>' for nm, st, pv in its) + "</ul>"
+    elif sg.get("kind") == "text":
+        gauge = f'<div class="gauge"><span class="gtext">{E(sg["text"])}</span></div>'
     older = "".join(f' <a href="{E(b["path"])}">R{b["n"]}</a>' for b in it["arts"][:-1])
     return f"""<li class="tile" data-search="{E(search)}" data-q="{E(q['no'])}">
   <a class="tlink" href="{E(a['path'])}" data-preview>
@@ -102,6 +109,7 @@ def tile(c, it):
   <div class="tmore">
     <p class="tq">{E(a['question'])}</p>
     <p class="ta">{E(a['answer'])}</p>
+    {items_html}
     <p class="tmeta"><span class="live">R{a['n']}</span><time>{E(a['date'])}</time><span>기록 {E(a['records'])}건</span><span>질문 {E(a['qver'])}</span>{older}</p>
   </div>
 </li>"""
@@ -178,7 +186,8 @@ portal = f"""<!doctype html>
   </section>
 
   <section class="boardwrap" aria-labelledby="h-board">
-    <div class="sechead row"><div><h2 id="h-board">신호 보드</h2><p>질문마다 이번 회차의 판정과 진행 게이지입니다. 카드를 가리키면 한 줄 답을 미리 볼 수 있습니다.</p></div>
+    <div class="sechead row"><div><h2 id="h-board">신호 보드</h2><p>질문마다 이번 회차의 판정입니다. 띠의 한 칸이 판정 항목 하나이고, 앞선 단계일수록 진합니다. 카드를 가리키면 한 줄 답과 항목별 단계를 볼 수 있습니다.</p>
+      <p class="legend" aria-hidden="true"><span class="seg s0"></span><span class="seg s1"></span><span class="seg s2"></span><span class="seg s3"></span> 1단계 → 4단계 <span class="seg s2 prov"></span> 잠정</p></div>
       <label class="search"><span class="vh">질문 검색</span><input id="q-search" type="search" placeholder="검색  /" autocomplete="off"><output id="q-count" aria-live="polite"></output></label></div>
     <div class="tabs" role="tablist" aria-label="카테고리">{tabs_html}<span class="tab-ink" aria-hidden="true"></span></div>
     <div class="board" id="board" data-view="all">{cols_html}</div>
@@ -195,7 +204,7 @@ portal = f"""<!doctype html>
 <div class="preview" id="preview" role="dialog" aria-modal="false" aria-labelledby="pv-title" hidden>
   <div class="pv-grip" aria-hidden="true"></div>
   <p class="pv-no"></p><h3 id="pv-title"></h3><span class="chip pv-chip"></span>
-  <p class="tq pv-q"></p><p class="ta pv-a"></p><p class="tmeta pv-meta"></p>
+  <p class="tq pv-q"></p><p class="ta pv-a"></p><div class="pv-items"></div><p class="tmeta pv-meta"></p>
   <div class="pv-act"><a class="pv-go" href="#">아티클 읽기</a><button class="pv-x" type="button">닫기</button></div>
 </div>
 <div class="scrim" hidden></div>

@@ -193,6 +193,10 @@ SIGNAL_GAUGE = '기술 축 7개 중 제품 출시 이상'
 SIGNAL_FRONTIER = '장기 기억·World Model'
 signal = {"question": 'I1', "round": 1, "chip": SIGNAL_CHIP, "gauge": SIGNAL_GAUGE, "frontier": SIGNAL_FRONTIER,
           "on": sum(1 for r in LEDGER if ST.index(r[1]) >= ST.index("제품 출시")), "of": len(LEDGER)}
+# 포털 띠: 항목마다 단계(0~3)와 잠정 여부
+signal["kind"] = "band"
+signal["levels"] = list(ST)
+signal["items"] = [[r[0], ST.index(r[1]), bool(r[2])] for r in LEDGER if True]
 (ROOT / "signal_r1.json").write_text(json.dumps(signal, ensure_ascii=False, indent=1), encoding="utf-8")
 print("signal_r1.json:", signal["chip"], f'{signal["on"]}/{signal["of"]}')
 sys.exit(1 if bad or order != sorted(order) else 0)

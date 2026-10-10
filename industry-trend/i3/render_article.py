@@ -178,6 +178,9 @@ SIGNAL_GAUGE = '가치사슬 6개 층 중 주도권이 굳어진 층'
 SIGNAL_FRONTIER = '모델 층'
 signal = {"question": 'I3', "round": 1, "chip": SIGNAL_CHIP, "gauge": SIGNAL_GAUGE, "frontier": SIGNAL_FRONTIER,
           "on": sum(1 for r in LAYERS if r[2] == "굳어짐"), "of": len(LAYERS)}
+# 포털 띠 대신 글자
+signal["kind"] = "text"
+signal["text"] = " · ".join(f"{k} {sum(1 for r in LAYERS if r[2] == k)}" for k in ("굳어짐", "경합", "흔들림") if any(r[2] == k for r in LAYERS))
 (ROOT / "signal_r1.json").write_text(json.dumps(signal, ensure_ascii=False, indent=1), encoding="utf-8")
 print("signal_r1.json:", signal["chip"], f'{signal["on"]}/{signal["of"]}')
 sys.exit(1 if bad or order != sorted(order) else 0)

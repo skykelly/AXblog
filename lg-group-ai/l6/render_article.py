@@ -5,6 +5,9 @@ import json, html, re, sys
 from pathlib import Path
 
 ROOT = Path(__file__).parent
+sys.path.insert(0, str(ROOT.parent.parent / "lib"))
+from judge import gauge, chip, criteria_panel
+L_RULE = "단계를 올리려면 회사 공식 발표, 공시, 고객사 발표 중 하나가 필요하다. 출처를 밝히지 않은 언론 보도만 있으면 잠정으로 둔다."
 recs = [json.loads(l) for l in (ROOT / "records.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
 by = {r["id"]: r for r in recs}
 E = html.escape
@@ -87,28 +90,46 @@ frows = "".join(f"""<tr id="{E(r['id'])}"><td class="stmt">{E(r['statement'])}<s
   <td><span class="fstat">{E(r['forecast_status'])}</span></td><td>{tags(r['basis'])}</td></tr>""" for r in details)
 
 # 5. 파트너별 협력 단계와 종속 위험 ----------------------------------
-SG = ["발표·MOU", "공동개발·투자", "실증", "상용 계약·고객", "매출·시장 접근"]
-STAGE_LEAD = ("파트너마다 발표·MOU → 공동개발·투자 → 실증 → 상용 계약·고객 → 매출·시장 접근 중 어디에 있는지 판정했다. 오른쪽 표시는 그 파트너가 LG 사업의 핵심층(의사결정·로봇 두뇌·컴퓨팅)을 쥐는 정도다. 개별 제품·계약 성과는 L1~L5에 기록한다.")
+SG = ["발표·MOU", "공동개발·실증", "상용 계약", "매출·시장 접근"]
+SG_DEF = {
+    "발표·MOU": "협력 발표, 업무협약.",
+    "공동개발·실증": "공동개발·지분 투자, 또는 현장 실증이 진행 중이다.",
+    "상용 계약": "유료 계약이 확인됐다 (LG가 고객이든 공급자든).",
+    "매출·시장 접근": "협력으로 생긴 LG의 매출, 또는 파트너를 통한 새 시장 진입이 공개됐다.",
+}
+STAGE_LEAD = ("상용 계약까지 간 협력은 Palantir·Anthropic·OpenAI 세 곳이고, 모두 LG가 도구를 사거나 재판매하는 쪽이다. NVIDIA·Skild·Dexmate·신약 파트너는 공동개발·실증, "
+              "Microsoft·CuspAI·SDVerse는 발표 단계다. 협력으로 생긴 LG의 매출이나 새 시장 진입이 공개된 곳은 아직 없다. 개별 제품·계약 성과는 L1~L5에 기록한다.")
 CUST = {"종속 높음": "agent", "종속 중간": "platform", "종속 낮음": "brand"}
+CUST_DEF = {
+    "종속 높음": "LG 사업의 핵심층(의사결정·로봇 두뇌·컴퓨팅)이 그 파트너 기술에 의존하고, 병행하는 대안이 확인되지 않았다.",
+    "종속 중간": "핵심층에 쓰지만, EXAONE이나 다른 파트너 같은 병행 대안이 있다.",
+    "종속 낮음": "주변 기능에 쓰거나, LG가 지분·IP를 확보했다.",
+}
+# (파트너, 단계, 잠정, 종속도, 근거, 기록)
 STAGES = [
-    ("Palantir (LG CNS)", "상용 계약·고객", "종속 높음", "계열사 품질 PoC → 본 계약, FDE 조직. 의사결정·온톨로지층", ["L6-E-002"]),
-    ("Anthropic (LG CNS·그룹)", "상용 계약·고객", "종속 중간", "Claude Enterprise 그룹 통합 계약, 2023년 지분 투자. OpenAI·EXAONE과 병행", ["L6-E-006"]),
-    ("OpenAI (LG CNS 재판매)", "상용 계약·고객", "종속 낮음", "ChatGPT Enterprise 외부 고객 약 10곳", ["L6-M-007"]),
-    ("NVIDIA (6개 계열사)", "실증", "종속 높음", "M.A.P. 공동개발, CDU 인증·DSX Ready 포함, 레퍼런스 로봇 공동 개발. 컴퓨팅·로봇 모델층", ["L6-M-001", "L6-M-002"]),
-    ("Microsoft (그룹)", "발표·MOU", "종속 중간", "사장단 파트너십: 공급 기회 탐색·Copilot 도입·모델 학습 인프라. 금액 미공개", ["L6-M-003"]),
-    ("Skild AI (LG CNS·LGTV)", "공동개발·투자", "종속 높음", "로봇 파운데이션 모델 협력·지분 투자. 현장 실증 결과 미공개. 로봇 두뇌층", ["L6-E-001", "L6-E-003"]),
-    ("Dexmate (LG CNS)", "실증", "종속 낮음", "3월 투자 → 6월 LX판토스 물류 실증", ["L6-E-007"]),
-    ("D&D Pharmatech · LabGenius", "공동개발·투자", "종속 낮음", "AI 신약 공동개발, LabGenius 라이선스 옵션", ["L6-E-008"]),
-    ("CuspAI (LG CNS)", "발표·MOU", "종속 중간", "소재 AI 협력체 창립 멤버, 국내 공급 파트너", ["L6-E-010"]),
-    ("SDVerse (LG에너지솔루션)", "발표·MOU", "종속 낮음", "배터리 SW 5종 등록, 고객 미공개", ["L6-M-006"]),
+    ("Palantir (LG CNS)", "상용 계약", False, "종속 높음", "계열사 품질 PoC → 본 계약, FDE 조직. 의사결정·온톨로지층에 병행 대안 미확인", ["L6-E-002"]),
+    ("Anthropic (LG CNS·그룹)", "상용 계약", False, "종속 중간", "Claude Enterprise 그룹 통합 계약, 2023년 지분 투자. OpenAI·EXAONE과 병행", ["L6-E-006"]),
+    ("OpenAI (LG CNS 재판매)", "상용 계약", False, "종속 낮음", "ChatGPT Enterprise 외부 고객 약 10곳, 재판매 매출 규모 미공개", ["L6-M-007"]),
+    ("NVIDIA (6개 계열사)", "공동개발·실증", False, "종속 높음", "M.A.P. 공동개발, CDU 인증·DSX Ready 포함, 레퍼런스 로봇 공동 개발. 컴퓨팅층에 대안 없음", ["L6-M-001", "L6-M-002"]),
+    ("Skild AI (LG CNS·LGTV)", "공동개발·실증", False, "종속 중간", "로봇 파운데이션 모델 협력·지분 투자, 현장 실증 결과 미공개. 로봇 두뇌층은 NVIDIA 레퍼런스 로봇과 병행", ["L6-E-001", "L6-E-003"]),
+    ("Dexmate (LG CNS)", "공동개발·실증", False, "종속 낮음", "3월 투자 → LX판토스 물류 실증 투입", ["L6-E-007"]),
+    ("D&D Pharmatech · LabGenius", "공동개발·실증", False, "종속 낮음", "AI 신약 공동개발, LabGenius 라이선스 옵션", ["L6-E-008"]),
+    ("Microsoft (그룹)", "발표·MOU", False, "종속 중간", "사장단 파트너십: 공급 기회 탐색·Copilot 도입·모델 학습 인프라. 금액 미공개", ["L6-M-003"]),
+    ("CuspAI (LG CNS)", "발표·MOU", False, "종속 중간", "소재 AI 협력체 창립 멤버, 국내 공급 파트너", ["L6-E-010"]),
+    ("SDVerse (LG에너지솔루션)", "발표·MOU", False, "종속 낮음", "배터리 SW 5종 등록, 고객 미공개", ["L6-M-006"]),
 ]
-def sg5(v):
-    i = SG.index(v)
-    return "".join(f'<span class="pip{" on" if k <= i else ""}"></span>' for k in range(5)) + f'<span class="lv">{E(v)}</span>'
+def tip_sg(v):
+    return f"{v} — {SG_DEF[v]}"
+def side(c, pv=False):
+    return chip(c, CUST[c], f"{c} — {CUST_DEF[c]}", pv)
 stage_rows = "".join(f"""<div class="rung"><div class="stage"><b>{E(d)}</b></div>
-  <div class="lvcell"><span class="pips">{sg5(st)}</span></div>
-  <div class="lvcell"><span class="own {CUST[c]}">{E(c)}</span></div>
-  <p class="why">{E(w)} {tags(ids)}</p></div>""" for d, st, c, w, ids in STAGES)
+  <div class="lvcell">{gauge(SG, st, tip_sg(st), pv)}</div>
+  <div class="lvcell">{side(c)}</div>
+  <p class="why">{E(w)} {tags(ids)}</p></div>""" for d, st, pv, c, w, ids in STAGES)
+criteria_html = criteria_panel([
+    ("판정 단계: 협력 단계", ["단계", "기준"], [[gauge(SG, k), E(v)] for k, v in SG_DEF.items()]),
+    ("옆 표시: 핵심층 종속도", ["판정", "정의"], [[side(k), E(v)] for k, v in CUST_DEF.items()]),
+], extra_rules=[L_RULE])
 LEDGER_LEAD = "LG 사업의 핵심층마다 외부 파트너와 LG가 직접 쥔 자산을 나란히 놓았다. 다음 회차부터 오른쪽 칸이 두꺼워지는지(내재화)를 본다."
 LEDGER = [
     ("의사결정·온톨로지", "Palantir Foundry·AIP", "LG CNS FDE 조직, 그룹 업무 데이터", "높음", "PoC → 본 계약", ["L6-E-002"]),
@@ -118,7 +139,7 @@ LEDGER = [
     ("클라우드·사무 AI", "Microsoft Azure·Copilot", "LG 냉각·전력·IT 공급 후보", "중간", "공급 기회 탐색", ["L6-M-003"]),
 ]
 ledger_rows = "".join(f"""<tr><td class="tgt">{E(a)}</td><td>{E(b)}</td><td>{E(c)}</td><td>{E(d)}</td><td>{E(e)}</td><td>{tags(ids)}</td></tr>""" for a, b, c, d, e, ids in LEDGER)
-STAGE_NOTE = "판정: 상용 계약은 LG가 고객인 협력(Palantir·Anthropic·OpenAI)에서, LG가 공급자인 협력(NVIDIA·Microsoft)은 실증·탐색 단계. 핵심층 다섯 중 셋의 종속이 높다 (R1 기준)."
+STAGE_NOTE = "판정: 상용 계약은 LG가 고객인 협력(Palantir·Anthropic·OpenAI)에서, LG가 공급자인 협력(NVIDIA·Microsoft)은 공동개발·발표 단계. 핵심층 다섯 중 셋의 종속이 높다."
 
 # 6. 핵심 지표 ---------------------------------------------------------
 INDICATOR_NAMES = {"L6-T1": "NVIDIA 협력 범위", "L6-T2": "파트너 공급망 진입", "L6-T3": "그룹이 고객인 플랫폼 계약",
@@ -165,6 +186,7 @@ page = f"""<title>L6 LG 글로벌 AI 동맹 R1</title>
     <p class="lead muted">각 세부 전망이 적중하거나 빗나갔을 때 어느 시나리오 쪽 신호인지 표시했다. 확인 시점이 오면 확인 방법대로 판정한다.</p>
     <div class="tablewrap"><table><thead><tr><th>세부 전망</th><th>확인 시점</th><th>적중 시</th><th>빗나갈 시</th><th>상태</th><th>근거</th></tr></thead><tbody>{frows}</tbody></table></div></section>
   <section><h2>파트너별 협력 단계 <small>단계 판정 · 핵심층 종속 지도</small></h2><p class="lead">{E(STAGE_LEAD)}</p>
+    {criteria_html}
     <div class="ladder mapgrid auto">{stage_rows}</div><p class="gapnote">{E(STAGE_NOTE)}</p>
     <h3 class="subhead">핵심층 종속 지도</h3><p class="lead">{E(LEDGER_LEAD)}</p>
     <div class="tablewrap"><table><thead><tr><th>핵심층</th><th>외부 파트너</th><th>LG가 쥔 자산</th><th>종속</th><th>현재 단계</th><th>기록</th></tr></thead><tbody>{ledger_rows}</tbody></table></div></section>
@@ -186,9 +208,13 @@ print("article_r1.html 생성,", len(page), "bytes; 앵커 없는 근거 링크:
 # ---------- 포털 신호: 판정 칩과 게이지를 판정 데이터에서 계산해 내보낸다
 SIGNAL_CHIP = '상용 계약 3곳, 모두 LG가 고객'
 SIGNAL_GAUGE = '파트너 10곳 중 상용 계약 이상'
-SIGNAL_FRONTIER = 'NVIDIA 실증 → 계약'
+SIGNAL_FRONTIER = 'NVIDIA 공동개발 → 계약'
 signal = {"question": 'L6', "round": 1, "chip": SIGNAL_CHIP, "gauge": SIGNAL_GAUGE, "frontier": SIGNAL_FRONTIER,
-          "on": sum(1 for r in STAGES if SG.index(r[1]) >= SG.index("상용 계약·고객")), "of": len(STAGES)}
+          "on": sum(1 for r in STAGES if SG.index(r[1]) >= SG.index("상용 계약")), "of": len(STAGES)}
+# 포털 띠: 항목마다 단계(0~3)와 잠정 여부
+signal["kind"] = "band"
+signal["levels"] = list(SG)
+signal["items"] = [[r[0], SG.index(r[1]), bool(r[2])] for r in STAGES if True]
 (ROOT / "signal_r1.json").write_text(json.dumps(signal, ensure_ascii=False, indent=1), encoding="utf-8")
 print("signal_r1.json:", signal["chip"], f'{signal["on"]}/{signal["of"]}')
 sys.exit(1 if bad or order != sorted(order) else 0)

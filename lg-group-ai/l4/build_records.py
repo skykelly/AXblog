@@ -69,7 +69,7 @@ add(id="L4-E-008", type="사건", importance=2, statement="LG CNS 반기보고�
 
 # ---------- 해석 (I) ----------
 add(id="L4-I-001", type="해석", importance=3, target="계열사별 AX 단계", direction="중립",
-    statement="계열사마다 AX 단계가 다르다. LG CNS는 외부 사업화(AI·클라우드 매출 59%), LG디스플레이와 LG에너지솔루션은 업무 단위 성과 공개, LG전자는 업무 적용(LGenie 월 3만 명), LG화학은 교육·도구 배포 단계다.",
+    statement="계열사마다 AX 단계가 다르다. LG디스플레이와 LG에너지솔루션은 업무 단위 성과 공개, LG전자는 업무 적용(LGenie 월 3만 명), LG화학과 LG CNS는 교육·도구 배포 단계다. LG CNS는 사내 성과 대신 외부 사업화(AI·클라우드 매출 59%)가 앞서 있다.",
     basis=["L4-M-007", "L4-M-004", "L4-M-005", "L4-M-001", "L4-M-006"])
 add(id="L4-I-002", type="해석", importance=3, target="목표치와 결과치", direction="중립",
     statement="목표는 전사 단위인데 결과는 업무 단위다. LG에너지솔루션 50%, LG디스플레이 30% 같은 전사 생산성 목표에 대응하는 전사 결과치는 아직 어느 계열사도 공개하지 않았다. 공개된 결과는 설계·품질·가격 예측 같은 개별 업무의 개선이다.",

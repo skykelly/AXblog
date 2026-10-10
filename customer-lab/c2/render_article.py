@@ -204,6 +204,10 @@ SIGNAL_GAUGE = '고객 접점 4곳 중 AI 이전이 얼리어답터 이상'
 SIGNAL_FRONTIER = '상담 → 판매'
 signal = {"question": 'C2', "round": 1, "chip": SIGNAL_CHIP, "gauge": SIGNAL_GAUGE, "frontier": SIGNAL_FRONTIER,
           "on": sum(1 for r in MAP if r[2] != "실험"), "of": len(MAP)}
+# 포털 띠: 항목마다 단계(0~3)와 잠정 여부
+signal["kind"] = "band"
+signal["levels"] = list(LEVELS)
+signal["items"] = [[r[0], LEVELS.index(r[2]), bool(r[3])] for r in MAP if True]
 (ROOT / "signal_r1.json").write_text(json.dumps(signal, ensure_ascii=False, indent=1), encoding="utf-8")
 print("signal_r1.json:", signal["chip"], f'{signal["on"]}/{signal["of"]}')
 sys.exit(1 if bad or order != sorted(order) else 0)

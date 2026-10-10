@@ -5,5 +5,44 @@
  "gauge": "제품 영역 6개 중 대규모 운영(글로벌)",
  "frontier": "업무형 Agent",
  "on": 3,
- "of": 6
+ "of": 6,
+ "kind": "band",
+ "levels": [
+  "발표",
+  "베타",
+  "정식 출시",
+  "대규모 운영"
+ ],
+ "items": [
+  [
+   "대화형 Assistant",
+   3,
+   false
+  ],
+  [
+   "Coding Agent",
+   3,
+   false
+  ],
+  [
+   "로보택시",
+   3,
+   false
+  ],
+  [
+   "업무형 Agent",
+   2,
+   false
+  ],
+  [
+   "기업 내 Agent 도입",
+   2,
+   true
+  ],
+  [
+   "휴머노이드",
+   2,
+   false
+  ]
+ ]
 }
