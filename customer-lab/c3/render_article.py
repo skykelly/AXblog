@@ -5,6 +5,8 @@ import json, html, re, sys
 from pathlib import Path
 
 ROOT = Path(__file__).parent
+sys.path.insert(0, str(ROOT.parent.parent / "lib"))
+from judge import ADOPTION, adoption_tip, adoption_block, gauge, chip, criteria_panel
 recs = [json.loads(l) for l in (ROOT / "records.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
 by = {r["id"]: r for r in recs}
 E = html.escape
@@ -20,7 +22,7 @@ TITLE = "AI가 만든 정보, 소비자는 믿는가"
 QUESTION = "소비자가 구매 판단에 쓰는 정보의 원천은 사람이 만든 것에서 AI가 만든 것으로 어디까지 옮겨갔고, 소비자는 그것을 믿는가?"
 
 # 1. 한 줄 답 ----------------------------------------------------------
-ONE_LINE = ("2026년 10월 현재 웹에 새로 올라오는 글의 절반은 AI가 쓰고, 소비자는 그 정보를 원문 대신 AI 요약으로 받아본다. 그러나 믿음은 따라오지 않았다. "
+ONE_LINE = ("2026년 10월 현재 웹에 새로 올라오는 글의 절반은 AI가 쓰고, 원문 대신 AI 요약으로 정보를 받는 소비자도 늘고 있다. 그러나 믿음은 따라오지 않았다. "
             "AI가 전해준 뉴스를 믿는 사람은 5명 중 1명이고, 정작 AI는 브랜드 사이트보다 Reddit·YouTube 같은 사람의 경험담을 가장 많이 인용한다.")
 ONE_LINE_BASIS = ["C3-I-001", "C3-I-002", "C3-I-003", "C3-I-004"]
 ANSWER_ROWS = [
@@ -37,7 +39,7 @@ NARRATIVE = [
     ("정보를 만드는 일은 이미 절반이 AI로 넘어갔다. Graphite가 Common Crawl에서 뽑은 영문 글 55,400건을 탐지기 3종으로 판정한 결과, 2025년 말 신규 글의 50.9%가 주로 AI가 쓴 글이었다. "
      "ChatGPT 출시 1년 뒤 35.9%, 2년 뒤 48%로 올라간 뒤 2025년 초부터는 절반 안팎에서 멈춰 있다.",
      ["C3-M-001", "C3-I-001"]),
-    ("소비자는 그 정보를 원문이 아니라 AI 요약으로 받는다. AI 챗봇으로 매주 뉴스를 보는 사람은 10%(18~24세 17%)로 늘었지만, 챗봇에서 원문을 자주 누르는 사람은 4%뿐이다. "
+    ("정보를 원문 대신 AI 요약으로 받는 소비자도 늘고 있다. AI 챗봇으로 매주 뉴스를 보는 사람은 10%(18~24세 17%)로 늘었지만, 챗봇에서 원문을 자주 누르는 사람은 4%뿐이다. "
      "같은 기간 퍼블리셔로 가는 Google 검색 유입은 40.2% 줄었고, AI 챗봇이 보내주는 유입은 전체의 0.01%에 그쳤다. 정보를 만든 원천이 독자를 잃고 있다.",
      ["C3-M-003", "C3-M-005", "C3-M-006", "C3-I-002"]),
     ("이용은 늘었지만 신뢰는 따라오지 않았다. AI 챗봇이 전한 뉴스를 믿는다는 사람은 전체의 20%다. 챗봇 이용자는 44%로 높지만 비이용자는 17%에 그친다. "
@@ -89,24 +91,55 @@ frows = "".join(f"""<tr id="{E(r['id'])}"><td class="stmt">{E(r['statement'])}<s
   <td><span class="fstat">{E(r['forecast_status'])}</span></td><td>{tags(r['basis'])}</td></tr>""" for r in details)
 
 # 5. 정보 유형별 지도 -----------------------------------------------
-LEVELS = ["실험", "얼리어답터", "확산", "주류"]
-TRUST = {"측정 없음": "contest", "낮음": "agent", "약화": "agent", "사람 경험담 우위": "brand"}
-MAP_LEAD = "AI가 만드는 쪽(정보 글·광고)은 이미 주류이고, AI를 거쳐 받는 쪽은 얼리어답터 단계다. 신뢰는 어느 유형에서도 오르지 않았고, AI가 기대는 원천은 여전히 사람의 경험담이다."
+LEVELS = ADOPTION
+TRUST = {"상승": "brand", "유지": "neutral", "약화": "agent", "높음": "brand", "보통": "neutral", "낮음": "agent", "측정 없음": "contest", "해당 없음": "contest"}
+MAP_LEAD = ("AI가 만드는 쪽에서는 정보 글만 주류이고, 광고는 확산 단계다. AI를 거쳐 정보를 받는 쪽은 얼리어답터, 리뷰와 AI 답변의 인용 원천은 실험 단계다. "
+            "신뢰는 AI 챗봇이 전한 뉴스가 20%로 낮고, 다른 유형은 반복 측정이 없다. AI 답변이 기대는 원천은 여전히 사람의 경험담이다.")
+# (유형, 영문, 종류, AI 생성·경유 정도, 잠정, 신뢰, 근거 설명, 기록)
 MAP = [
-    ("정보 글", "Articles", "주류", "측정 없음", "신규 영문 웹 글의 50.9%가 AI 글. 2025년 초부터 정체.", ["C3-M-001"]),
-    ("광고", "Ads", "주류", "약화", "광고 임원 83%가 AI로 제작, 젊은 층 호감 45%로 기대와 격차 확대.", ["C3-M-009", "C3-M-008"]),
-    ("상품 리뷰", "Reviews", "얼리어답터", "약화", "AI 의심 리뷰 2022년 대비 약 400% 증가. 플랫폼 대응은 금지·허용으로 갈림.", ["C3-M-002", "C3-E-003"]),
-    ("뉴스·정보 받는 경로", "Delivery", "얼리어답터", "낮음", "매주 AI 챗봇으로 뉴스 10%, 신뢰 20%, 원문 클릭 4%.", ["C3-M-003", "C3-M-004", "C3-M-005"]),
-    ("AI 답변의 인용 원천", "Citations", "실험", "사람 경험담 우위", "Reddit·YouTube가 인용 1·2위. 원천은 아직 사람.", ["C3-M-007"]),
+    ("정보 글", "Articles", "생성", "주류", False, "측정 없음",
+     "신규 영문 웹 글의 50.9%가 AI 글(2023년 말 35.9% → 2024년 말 48%). 2025년 초부터 기준선(50%) 근처에서 정체.", ["C3-M-001"]),
+    ("광고", "Ads", "생성", "확산", True, "보통",
+     "광고 임원 83%가 제작에 AI를 쓴다(사용 여부라 한 단계 낮춰 적용). 젊은 층의 AI 광고 호감 45%, 광고주 기대와 격차 37%p.", ["C3-M-009", "C3-M-008"]),
+    ("상품 리뷰", "Reviews", "생성", "실험", True, "측정 없음",
+     "AI 생성 의심 리뷰가 2022년 대비 약 400% 증가했지만 전체 리뷰 중 비율은 공개되지 않음. 플랫폼 대응은 금지·허용으로 갈림.", ["C3-M-002", "C3-E-003"]),
+    ("정보 받는 경로", "Delivery", "경유", "얼리어답터", True, "낮음",
+     "AI 챗봇으로 매주 뉴스를 보는 사람 10%(18~24세 17%). AI 챗봇 뉴스를 믿는다 20%, 원문을 자주 누른다 4%.", ["C3-M-003", "C3-M-004", "C3-M-005"]),
+    ("AI 답변의 인용 원천", "Citations", "순환", "실험", True, "해당 없음",
+     "AI 검색 인용 1·2위는 Reddit·YouTube. 인용 출처 중 AI 생성 콘텐츠의 비율은 측정되지 않음. 원천은 아직 사람.", ["C3-M-007"]),
 ]
-def lvl(level):
-    i = LEVELS.index(level)
-    return "".join(f'<span class="pip{" on" if k <= i else ""}"></span>' for k in range(4)) + f'<span class="lv">{E(level)}</span>'
-def trust(t): return f'<span class="own {TRUST[t]}">{E(t)}</span>'
-map_rows = "".join(f"""<div class="rung"><div class="stage"><b>{E(ko)}</b><span>{E(en)}</span></div>
-  <div class="lvcell"><span class="region">AI 생성·경유 정도</span><span class="pips">{lvl(l)}</span></div>
-  <div class="lvcell"><span class="region">소비자 신뢰</span>{trust(t)}</div>
-  <p class="why">{E(w)} {tags(ids)}</p></div>""" for ko, en, l, t, w, ids in MAP)
+TYPE_DEF = {
+    "정보 글": ("생성", "새로 올라오는 웹 글 중 AI가 쓴 비율"),
+    "광고": ("생성", "집행되는 광고 소재 중 AI로 만든 비율"),
+    "상품 리뷰": ("생성", "올라오는 리뷰 중 AI가 쓴 비율"),
+    "정보 받는 경로": ("경유", "소비자가 구매 정보·뉴스를 주로 AI를 거쳐 받는 비율"),
+    "AI 답변의 인용 원천": ("순환", "AI 답변이 인용한 출처 중 AI가 만든 콘텐츠의 비율"),
+}
+TRUST_DEF = [
+    ("상승 / 약화", "같은 기관의 반복 측정에서 3%p 이상 오르거나 내림"),
+    ("유지", "반복 측정에서 변화가 3%p 안"),
+    ("높음 / 보통 / 낮음", "반복 측정이 없을 때 수준만 표시 (신뢰 응답 66% 초과 / 33~66% / 33% 미만)"),
+    ("측정 없음", "신뢰를 잰 조사가 없음"),
+    ("해당 없음", "신뢰를 물을 대상이 아닌 항목"),
+]
+def tip_type(t):
+    k, m = TYPE_DEF[t]
+    return f"{t} ({k}) — 측정: {m}."
+def tip_trust(t):
+    for k, v in TRUST_DEF:
+        if t in k.split(" / "):
+            return f"{t} — {v}."
+    return t
+criteria_html = criteria_panel([
+    ("판정 항목: 다섯 정보 유형", ["유형", "종류", "측정하는 것"], [[f"<b>{E(k)}</b>", E(v[0]), E(v[1])] for k, v in TYPE_DEF.items()]),
+    adoption_block("축 1. AI 생성·경유 정도"),
+    ("축 2. 소비자 신뢰", ["판정", "기준"], [[E(k), E(v)] for k, v in TRUST_DEF]),
+], extra_rules=["생성 항목의 주류는 50% 이상이면서 사람이 만든 콘텐츠의 비중이 줄어든 것이 확인돼야 한다.",
+                "'제작에 AI를 쓴다'처럼 사용 여부만 있는 수치는 '해 본 적 있다'와 같게 보고 한 단계 낮춰 적용한다."])
+map_rows = "".join(f"""<div class="rung"><div class="stage"><b tabindex="0" data-tip="{E(tip_type(ko))}">{E(ko)}</b><span>{E(en)}</span></div>
+  <div class="lvcell"><span class="region">AI 생성·경유 정도</span>{gauge(LEVELS, l, adoption_tip(l), lp)}</div>
+  <div class="lvcell"><span class="region">소비자 신뢰</span>{chip(t, TRUST[t], tip_trust(t))}</div>
+  <p class="why">{E(w)} {tags(ids)}</p></div>""" for ko, en, kind, l, lp, t, w, ids in MAP)
 
 # 6. 핵심 지표 ---------------------------------------------------------
 INDICATOR_NAMES = {"C3-T1": "신규 웹 글 AI 생성 비중", "C3-T2": "상품 리뷰의 AI 생성 추세", "C3-T3": "AI 경유 정보 신뢰도",
@@ -152,7 +185,9 @@ page = f"""<title>C3 정보 원천과 신뢰 R1</title>
     <p class="lead muted">각 세부 전망이 적중하거나 빗나갔을 때 어느 시나리오 쪽 신호인지 표시했다. 확인 시점이 오면 확인 방법대로 판정한다.</p>
     <div class="tablewrap"><table><thead><tr><th>세부 전망</th><th>확인 시점</th><th>적중 시</th><th>빗나갈 시</th><th>상태</th><th>근거</th></tr></thead><tbody>{frows}</tbody></table></div></section>
   <section><h2>정보 유형별 지도 <small>AI 생성·경유 정도 · 소비자 신뢰</small></h2><p class="lead">{E(MAP_LEAD)}</p>
-    <div class="ladder mapgrid">{map_rows}</div></section>
+    {criteria_html}
+    <div class="ladder mapgrid two">{map_rows}</div>
+    <p class="frontier-note">유형 이름과 판정에 마우스를 올리거나 누르면 기준이 보입니다</p></section>
   <section><h2>핵심 지표 <small>추적 지표 {len(filled)}/8개 값 확보</small></h2><p class="lead">{E(METRICS_LEAD)}</p>
     <div class="tablewrap"><table><thead><tr><th>추적 지표</th><th>내용 · 출처</th><th style="text-align:right">현재값</th><th>기준 시점</th><th>기록</th></tr></thead><tbody>{mrows}</tbody></table></div></section>
   <section><h2>미확인·경고 <small>본문 판단에서 빼거나 주의해서 쓴 기록</small></h2>
@@ -169,11 +204,11 @@ bad = sorted({i for i in re.findall(r'href="#(C3-[A-Z]-\d{3})"', page) if i not 
 order = [page.index(f"<h2>{h}") for h in ("한 줄 답", "해석", "주요 사건", "전망", "정보 유형별 지도", "핵심 지표")]
 print("article_r1.html 생성,", len(page), "bytes; 앵커 없는 근거 링크:", bad or "없음", "; 섹션 순서 정상:", order == sorted(order))
 # ---------- 포털 신호: 판정 칩과 게이지를 판정 데이터에서 계산해 내보낸다
-SIGNAL_CHIP = '생성은 주류, 신뢰는 제자리'
-SIGNAL_GAUGE = '정보 유형 5개 중 AI 생성·경유가 주류'
+SIGNAL_CHIP = '정보 글만 주류, 신뢰는 낮음'
+SIGNAL_GAUGE = '정보 유형 5개 중 AI 생성·경유가 확산 이상'
 SIGNAL_FRONTIER = '상품 리뷰'
 signal = {"question": 'C3', "round": 1, "chip": SIGNAL_CHIP, "gauge": SIGNAL_GAUGE, "frontier": SIGNAL_FRONTIER,
-          "on": sum(1 for r in MAP if r[2] == "주류"), "of": len(MAP)}
+          "on": sum(1 for r in MAP if r[3] in ("확산", "주류")), "of": len(MAP)}
 (ROOT / "signal_r1.json").write_text(json.dumps(signal, ensure_ascii=False, indent=1), encoding="utf-8")
 print("signal_r1.json:", signal["chip"], f'{signal["on"]}/{signal["of"]}')
 sys.exit(1 if bad or order != sorted(order) else 0)

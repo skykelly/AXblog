@@ -5,6 +5,8 @@ import json, html, re, sys
 from pathlib import Path
 
 ROOT = Path(__file__).parent
+sys.path.insert(0, str(ROOT.parent.parent / "lib"))
+from judge import gauge, criteria_panel, table
 recs = [json.loads(l) for l in (ROOT / "records.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
 by = {r["id"]: r for r in recs}
 E = html.escape
@@ -21,8 +23,8 @@ QUESTION = "집 안에서 AI가 스스로 판단·실행하는 범위는 어디�
 
 # 1. 한 줄 답 ----------------------------------------------------------
 ONE_LINE = ("2026년 10월 현재 집 안 AI는 ‘정해준 조건대로 알아서 하는 것(L2)’까지 제품이 됐고, 생성형 AI 허브가 상황을 판단해 여러 기기를 엮는 L3로 막 넘어가는 중이다. "
-            "고객 수용은 한 칸 뒤에 있다. 한국에서는 AI 가전에 신중한 소비자(45.7%)가 처음으로 긍정 소비자(36.3%)를 넘었다.")
-ONE_LINE_BASIS = ["C4-I-001", "C4-I-003", "C4-M-001"]
+            "고객은 조건 자동화(L2)까지 받아들이고, AI가 스스로 판단하는 데에는 거부감이 커지고 있다. 한국에서는 AI 가전에 신중한 소비자(45.7%)가 처음으로 긍정 소비자(36.3%)를 넘었다.")
+ONE_LINE_BASIS = ["C4-I-001", "C4-I-003", "C4-M-011", "C4-M-003", "C4-M-001"]
 ANSWER_ROWS = [
     ("AI가 스스로 하는 것", "정해준 조건에 따른 자동 실행(L2). 씽큐 온은 습도가 높으면 제습기를 스스로 켜고, 로봇청소기는 부재 중 움직임을 감지해 사진을 보낸다.", ["C4-E-001", "C4-E-007"]),
     ("막 시작된 것", "상황 판단 실행(L3). 지난 1년 사이 Alexa+(미국 전체, 프라임 무료), Gemini for Home, 씽큐 온이 생성형 AI 허브로 나왔다. Amazon은 기존 기기 97%를 Alexa+로 바꿀 수 있다.", ["C4-E-005", "C4-E-002", "C4-M-008"]),
@@ -87,26 +89,56 @@ frows = "".join(f"""<tr id="{E(r['id'])}"><td class="stmt">{E(r['statement'])}<s
   <td><span class="fstat">{E(r['forecast_status'])}</span></td><td>{tags(r['basis'])}</td></tr>""" for r in details)
 
 # 5. 생활 영역별 자율 수준 -----------------------------------------------
-AL = ["L0", "L1", "L2", "L3", "L4"]
-AL_NAME = {"L0": "수동", "L1": "제안", "L2": "조건 자동화", "L3": "상황 판단 실행", "L4": "위임"}
-MAP_LEAD = ("모든 생활 영역에서 출시된 기술이 고객 수용보다 한 칸 앞서 있다. 장보기는 C1에서 본 것처럼 결제 위임이 막혀 있고, "
-            "물리 작업은 L4 제품이 선판매 단계라 대부분의 가정은 로봇청소기 같은 L2에 머문다.")
+AL = ["L1", "L2", "L3", "L4"]
+AL_NAME = {"L1": "제안", "L2": "조건 자동화", "L3": "상황 판단 실행", "L4": "위임"}
+AL_DEF = {
+    "L1": "AI가 상태를 알리고 추천하며, 실행은 사람이 한다.",
+    "L2": "사람이 정한 조건·루틴대로 AI가 실행한다.",
+    "L3": "AI가 상황을 판단해 여러 기기를 엮어 실행하고, 사람은 사후에 확인한다.",
+    "L4": "목표만 주면 물리 작업까지 스스로 해낸다.",
+}
+MAP_LEAD = ("출시된 기술은 환경 제어만 상황 판단 실행(L3)에 올라섰고, 나머지 영역은 조건 자동화(L2)다. "
+            "고객 수용은 환경 제어·보안·가사가 L2, 장보기가 L1이다. 고객은 조건을 정하고 결과를 확인하는 자율까지 받아들이고, "
+            "AI가 스스로 판단하는 L3에는 거부 신호가 커지고 있다. 물리 작업을 맡기는 L4는 1X NEO가 첫 배송을 앞둔 다음 수준 신호다.")
+# (영역, 영문, 출시된 기술, 기술 잠정, 고객 수용, 수용 잠정, 근거 설명, 기록)
 MAP = [
-    ("환경 제어", "Climate · Light", "L3", "L2", "생성형 허브가 복합 명령·센서 조건 실행. 고객은 조건 자동화까지 쓰고, AI 자체 판단에는 거부감 증가.", ["C4-E-001", "C4-E-005", "C4-M-003"]),
-    ("보안·돌봄", "Security · Care", "L2", "L2", "움직임 감지 시 촬영·알림, 부재 중 자동화 루틴. 사람이 결과를 확인하는 형태라 수용이 쉬움.", ["C4-E-007"]),
-    ("가사 물리 작업", "Chores", "L4", "L2", "휴머노이드 NEO 선판매·생산 시작, CLOiD 시연. 대부분의 가정은 로봇청소기 수준.", ["C4-M-006", "C4-E-003"]),
-    ("장보기·소모품", "Replenishment", "L3", "L1", "설정 가격 자동 구매·반복 주문 기능은 있으나 결제 위임 수용은 낮음(C1 참조).", ["C4-M-009"]),
+    ("환경 제어", "Climate · Light", "L3", False, "L2", False,
+     "씽큐 온·Alexa+(미국 전체)·Gemini for Home이 센서 상황에 따라 여러 기기를 엮어 실행. 연결 기기 보유 미국 가구의 40%가 루틴·연동을 설정해 씀(B). "
+     "거부 신호: 'AI가 스스로 판단하는 것이 불편' 15.8%(+5.1%p), 루틴은 직접·예약 시작을 선호.", ["C4-E-001", "C4-E-005", "C4-M-011", "C4-M-003"]),
+    ("보안·돌봄", "Security · Care", "L2", False, "L2", False,
+     "움직임 감지 시 촬영·알림, 부재 중 자동화 루틴. 스마트홈 기기를 가진 보안 시스템 이용 가구의 53%가 자동 연동을 씀(B).", ["C4-E-007", "C4-M-012"]),
+    ("가사 물리 작업", "Chores", "L2", False, "L2", True,
+     "로봇청소기의 예약·조건 청소가 출하 제품의 최고 수준. 1X NEO는 선판매 1만 대·공장 가동, 첫 배송은 2026년 중 예정이고 LG CLOiD는 시연 단계(다음 수준 신호). "
+     "로봇청소기 보유 고객의 예약 사용 비율은 확인되지 않음.", ["C4-M-006", "C4-E-006", "C4-E-003"]),
+    ("장보기·소모품", "Replenishment", "L2", False, "L1", True,
+     "설정 가격이 되면 자동 구매, 반복 주문은 사람이 정한 조건대로 실행하는 L2. 결제까지 맡기겠다는 의향은 9%(C1)로 수용 근거가 의향뿐이라 한 단계 낮춰 적용.", ["C4-M-009", "C4-I-005"]),
 ]
-def lvl5(v):
-    i = AL.index(v)
-    return "".join(f'<span class="pip{" on" if k <= i else ""}"></span>' for k in range(5)) + f'<span class="lv">{E(v)} {E(AL_NAME[v])}</span>'
+AXIS_DEF = [
+    ("출시된 기술", "일반 소비자가 사서 받을 수 있는(출하·배송된) 제품이 지원하는 최고 수준. 시연·선판매는 인정하지 않고 '다음 수준 신호'로만 적는다."),
+    ("고객 수용", "그 수준의 기능을 쓸 수 있는 기기를 가진 고객 중 실제로 켜고 쓰는 비율이 25% 이상인 최고 수준."),
+]
+GRADE_DEF = [
+    ("A", "제조사·플랫폼이 공개한 이용자 수·사용 비율 (분모 확인 가능)", "확정"),
+    ("B", "실사용 설문 ('쓰고 있다')", "확정"),
+    ("C", "수용 의향 설문 ('맡기겠다', '불편하다')", "한 단계 낮춰 적용하고 잠정"),
+]
+def tip_al(v):
+    return f"{v} {AL_NAME[v]} — {AL_DEF[v]}"
+def tip_axis(name):
+    return dict(AXIS_DEF)[name]
+def lvl(v, prov, axis):
+    return gauge(AL, v, f"{tip_al(v)} ({axis}: {tip_axis(axis)})", prov, label=f"{v} {AL_NAME[v]}")
+criteria_html = criteria_panel([
+    ("판정 단계: 자율 수준 (L0 수동은 AI가 없는 기준선)", ["수준", "이름", "정의"],
+     [[gauge(AL, k, label=k), E(AL_NAME[k]), E(v)] for k, v in AL_DEF.items()]),
+    ("두 축", ["축", "기준"], [[f"<b>{E(k)}</b>", E(v)] for k, v in AXIS_DEF]),
+    ("고객 수용의 근거 등급", ["등급", "근거", "판정"], [[f"<b>{E(a)}</b>", E(b_), E(c)] for a, b_, c in GRADE_DEF]),
+], extra_rules=["회사마다 분모(앱 가입자, 월 활성 사용자, 연결 기기 수)가 달라 판정 근거에 분모를 함께 적는다.",
+                "자율 기능을 끄는 비율, 사생활·오작동 불만, 기능 철회 같은 거부 신호를 반대 근거로 함께 적는다. 거부 신호가 뚜렷하면 그 단계는 잠정으로 둔다."])
 map_rows = "".join(f"""<div class="rung"><div class="stage"><b>{E(ko)}</b><span>{E(en)}</span></div>
-  <div class="lvcell"><span class="region">출시된 기술</span><span class="pips">{lvl5(t)}</span></div>
-  <div class="lvcell"><span class="region">고객 수용</span><span class="pips">{lvl5(c)}</span></div>
-  <p class="why">{E(w)} {tags(ids)}</p></div>""" for ko, en, t, c, w, ids in MAP)
-LEVEL_TABLE = "".join(f"<tr><td><code>{k}</code></td><td>{E(AL_NAME[k])}</td><td>{E(d)}</td></tr>" for k, d in [
-    ("L0", "사람이 직접 또는 앱으로 원격 조작"), ("L1", "AI가 상태를 알리고 추천, 실행은 사람"), ("L2", "사람이 정한 조건·루틴대로 AI가 실행"),
-    ("L3", "AI가 상황을 판단해 여러 기기를 엮어 실행, 사람은 사후 확인"), ("L4", "목표만 주면 물리 작업까지 스스로 수행")])
+  <div class="lvcell"><span class="region">출시된 기술</span>{lvl(t, tp, "출시된 기술")}</div>
+  <div class="lvcell"><span class="region">고객 수용</span>{lvl(c, cp, "고객 수용")}</div>
+  <p class="why">{E(w)} {tags(ids)}</p></div>""" for ko, en, t, tp, c, cp, w, ids in MAP)
 
 # 6. 핵심 지표 ---------------------------------------------------------
 INDICATOR_NAMES = {"C4-T1": "생성형 AI 홈 허브 출시·보급", "C4-T2": "AI 허브가 닿는 설치 기반", "C4-T3": "홈 로봇 출시·판매",
@@ -151,9 +183,10 @@ page = f"""<title>C4 집 안 AI 자율 수준 R1</title>
     <h3 class="subhead">세부 판정 근거</h3>
     <p class="lead muted">각 세부 전망이 적중하거나 빗나갔을 때 어느 시나리오 쪽 신호인지 표시했다. 확인 시점이 오면 확인 방법대로 판정한다.</p>
     <div class="tablewrap"><table><thead><tr><th>세부 전망</th><th>확인 시점</th><th>적중 시</th><th>빗나갈 시</th><th>상태</th><th>근거</th></tr></thead><tbody>{frows}</tbody></table></div></section>
-  <section><h2>생활 영역별 자율 수준 <small>출시된 기술 · 고객 수용 (L0~L4)</small></h2><p class="lead">{E(MAP_LEAD)}</p>
+  <section><h2>생활 영역별 자율 수준 <small>출시된 기술 · 고객 수용 (L1~L4)</small></h2><p class="lead">{E(MAP_LEAD)}</p>
+    {criteria_html}
     <div class="ladder mapgrid auto">{map_rows}</div>
-    <div class="tablewrap"><table class="levels"><thead><tr><th>수준</th><th>이름</th><th>뜻</th></tr></thead><tbody>{LEVEL_TABLE}</tbody></table></div></section>
+    <p class="frontier-note">판정에 마우스를 올리거나 누르면 기준이 보입니다</p></section>
   <section><h2>핵심 지표 <small>추적 지표 {len(filled)}/8개 값 확보</small></h2><p class="lead">{E(METRICS_LEAD)}</p>
     <div class="tablewrap"><table><thead><tr><th>추적 지표</th><th>내용 · 출처</th><th style="text-align:right">현재값</th><th>기준 시점</th><th>기록</th></tr></thead><tbody>{mrows}</tbody></table></div></section>
   <section><h2>미확인·경고 <small>본문 판단에서 빼거나 주의해서 쓴 기록</small></h2>
@@ -170,11 +203,11 @@ bad = sorted({i for i in re.findall(r'href="#(C4-[A-Z]-\d{3})"', page) if i not 
 order = [page.index(f"<h2>{h}") for h in ("한 줄 답", "해석", "주요 사건", "전망", "생활 영역별 자율 수준", "핵심 지표")]
 print("article_r1.html 생성,", len(page), "bytes; 앵커 없는 근거 링크:", bad or "없음", "; 섹션 순서 정상:", order == sorted(order))
 # ---------- 포털 신호: 판정 칩과 게이지를 판정 데이터에서 계산해 내보낸다
-SIGNAL_CHIP = '기술이 수용보다 한 칸 앞'
-SIGNAL_GAUGE = '생활 영역 4개 중 기술과 고객 수용이 같은 곳'
-SIGNAL_FRONTIER = '가사 물리 작업'
+SIGNAL_CHIP = '수용은 L2, L3에는 거부 신호'
+SIGNAL_GAUGE = '생활 영역 4개 중 고객 수용이 L2 이상'
+SIGNAL_FRONTIER = '환경 제어 L3 수용'
 signal = {"question": 'C4', "round": 1, "chip": SIGNAL_CHIP, "gauge": SIGNAL_GAUGE, "frontier": SIGNAL_FRONTIER,
-          "on": sum(1 for r in MAP if r[2] == r[3]), "of": len(MAP)}
+          "on": sum(1 for r in MAP if AL.index(r[4]) >= 1), "of": len(MAP)}
 (ROOT / "signal_r1.json").write_text(json.dumps(signal, ensure_ascii=False, indent=1), encoding="utf-8")
 print("signal_r1.json:", signal["chip"], f'{signal["on"]}/{signal["of"]}')
 sys.exit(1 if bad or order != sorted(order) else 0)

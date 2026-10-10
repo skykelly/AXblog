@@ -6,6 +6,8 @@ import json, html, re, sys
 from pathlib import Path
 
 ROOT = Path(__file__).parent
+sys.path.insert(0, str(ROOT.parent.parent / "lib"))
+from judge import COMMON_RULES, gauge, criteria_panel
 recs = [json.loads(l) for l in (ROOT / "records.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
 by = {r["id"]: r for r in recs}
 E = html.escape
@@ -115,11 +117,11 @@ frows = "".join(f"""<tr id="{E(r['id'])}"><td class="stmt">{E(r['statement'])}<s
 LEVELS = ["실험", "얼리어답터", "확산", "주류"]
 LADDER_LEAD = "가장 앞선 단계는 정리로, 미국에서 확산 단계다. 탐색·추천·결정은 얼리어답터, 위임은 실험 단계다. 한국은 탐색·정리·결정이 한 칸씩 뒤에 있다."
 LADDER = [
-    ("탐색", "Search", "얼리어답터", "실험", "AI를 주 쇼핑 수단으로 쓰는 소비자는 6개국 평균 14%, 한국 7%. 구글 검색 중 AI Mode로 넘어간 비율 0.34%.", ["C1-M-008", "C1-M-005", "C1-M-009"]),
-    ("정리", "Synthesis", "확산", "얼리어답터", "AI 요약이 뜨면 일반 결과 클릭이 절반(15% → 8%). 한국 AI탭은 베타 두 달 누적 400만 명, 6월 정식 출시.", ["C1-M-004", "C1-M-003", "C1-M-014", "C1-E-009"]),
-    ("추천", "Recommendation", "얼리어답터", "얼리어답터", "AI 유입 전환율이 일반 유입보다 60% 높지만 유입 양은 작음. 한국 AI 이용자 49.9%가 AI 추천 제품 구매(전체 소비자로 환산하면 약 4분의 1 이하).", ["C1-M-006", "C1-M-010", "C1-M-001"]),
-    ("결정", "Decision", "얼리어답터", "실험", "범위 안에서 AI가 고르게 하겠다 32%(의향, 한 단계 낮춰 적용). 한국은 AI를 주 쇼핑 수단으로 쓰는 비율 7%.", ["C1-M-011", "C1-M-008", "C1-I-005"]),
-    ("위임", "Delegation", "실험", "실험", "결제까지 맡기겠다 9%(의향). 대표 사례였던 ChatGPT 대화 안 결제는 2026년 3월 철회.", ["C1-M-011", "C1-E-002", "C1-I-003"]),
+    ("탐색", "Search", "얼리어답터", "실험", (False, False), "AI를 주 쇼핑 수단으로 쓰는 소비자는 6개국 평균 14%, 한국 7%. 구글 검색 중 AI Mode로 넘어간 비율 0.34%.", ["C1-M-008", "C1-M-005", "C1-M-009"]),
+    ("정리", "Synthesis", "확산", "얼리어답터", (True, True), "AI 요약이 뜨면 일반 결과 클릭이 절반(15% → 8%). 한국 AI탭은 베타 두 달 누적 400만 명, 6월 정식 출시.", ["C1-M-004", "C1-M-003", "C1-M-014", "C1-E-009"]),
+    ("추천", "Recommendation", "얼리어답터", "얼리어답터", (True, False), "AI 유입 전환율이 일반 유입보다 60% 높지만 유입 양은 작음. 한국 AI 이용자 49.9%가 AI 추천 제품 구매(전체 소비자로 환산하면 약 4분의 1 이하).", ["C1-M-006", "C1-M-010", "C1-M-001"]),
+    ("결정", "Decision", "얼리어답터", "실험", (True, True), "범위 안에서 AI가 고르게 하겠다 32%(의향, 한 단계 낮춰 적용). 한국은 AI를 주 쇼핑 수단으로 쓰는 비율 7%.", ["C1-M-011", "C1-M-008", "C1-I-005"]),
+    ("위임", "Delegation", "실험", "실험", (True, True), "결제까지 맡기겠다 9%(의향). 대표 사례였던 ChatGPT 대화 안 결제는 2026년 3월 철회.", ["C1-M-011", "C1-E-002", "C1-I-003"]),
 ]
 # 판정 기준표 (v1.1) — 아티클의 '판정 기준' 패널과 툴팁에 쓴다
 STEP_DEF = {
@@ -135,39 +137,24 @@ LEVEL_DEF = {
     "확산": ("상당수가 AI와 기존 방식을 함께 쓴다.", "25~50%", "실제 이용 설문 또는 행동 데이터"),
     "주류": ("AI가 기본 경로이고 기존 방식은 예외다.", "50% 이상, 그리고 기존 경로 감소가 수치로 확인", "행동 데이터 필수 (트래픽·거래·쿼리 점유)"),
 }
-CRITERIA_RULES = [
-    "분모는 '써 본 적 있다'가 아니라 '그 일을 주로 AI로 한다'는 비율이다.",
-    "의향 설문 수치는 한 단계 낮춰 적용하고, 의향만으로는 얼리어답터를 넘지 않는다.",
-    "주류는 과반 이용과 기존 경로 감소가 함께 확인돼야 한다.",
-    "주류에 오른 뒤에도 대표 지표는 핵심 지표 표에서 계속 추적한다.",
-]
+CRITERIA_RULES = COMMON_RULES
 def tip_level(lv):
     d, th, ev = LEVEL_DEF[lv]
     return f"{lv} — {d} 기준: {th}. 근거: {ev}."
 def tip_step(st):
     hand, d, q, _, _ = STEP_DEF[st]
     return f"{st}({hand}) — {d} 판별 질문: {q}"
-def cell(level, tip=True):
-    i = LEVELS.index(level)
-    lab = f'<span class="lv" tabindex="0" data-tip="{E(tip_level(level))}">{E(level)}</span>' if tip else f'<span class="lv">{E(level)}</span>'
-    return "".join(f'<span class="pip{" on" if k <= i else ""}"></span>' for k in range(4)) + lab
-criteria_html = f"""<details class="criteria"><summary>판정 기준 보기</summary>
-  <div class="crit-body">
-    <h4>여정 단계: 소비자가 AI에 넘기는 일</h4>
-    <div class="tablewrap"><table class="crit">
-      <thead><tr><th>단계</th><th>넘기는 일</th><th>정의</th><th>판별 질문</th><th>AI 쪽 지표</th><th>기존 경로 감소 지표</th></tr></thead>
-      <tbody>{''.join(f'<tr><td><b>{E(k)}</b></td><td>{E(v[0])}</td><td>{E(v[1])}</td><td>{E(v[2])}</td><td>{E(v[3])}</td><td>{E(v[4])}</td></tr>' for k, v in STEP_DEF.items())}</tbody></table></div>
-    <h4>판정 단계: 모든 여정 단계에 같은 자를 쓴다</h4>
-    <div class="tablewrap"><table class="crit">
-      <thead><tr><th>판정</th><th>상태</th><th>수치 기준</th><th>인정하는 근거</th></tr></thead>
-      <tbody>{''.join(f'<tr><td><span class="pips">{cell(k, tip=False)}</span></td><td>{E(v[0])}</td><td>{E(v[1])}</td><td>{E(v[2])}</td></tr>' for k, v in LEVEL_DEF.items())}</tbody></table></div>
-    <ul class="crit-rules">{''.join(f'<li>{E(x)}</li>' for x in CRITERIA_RULES)}</ul>
-  </div></details>"""
+criteria_html = criteria_panel([
+    ("여정 단계: 소비자가 AI에 넘기는 일", ["단계", "넘기는 일", "정의", "판별 질문", "AI 쪽 지표", "기존 경로 감소 지표"],
+     [[f"<b>{E(k)}</b>"] + [E(x) for x in v] for k, v in STEP_DEF.items()]),
+    ("판정 단계: 모든 여정 단계에 같은 자를 쓴다", ["판정", "상태", "수치 기준", "인정하는 근거"],
+     [[gauge(LEVELS, k)] + [E(x) for x in v] for k, v in LEVEL_DEF.items()]),
+])
 ladder_rows = "".join(f"""<div class="rung" data-frontier="{'y' if ko in ('정리','추천') else 'n'}">
   <div class="stage"><b tabindex="0" data-tip="{E(tip_step(ko))}">{E(ko)}</b><span>{E(en)}</span></div>
-  <div class="lvcell"><span class="region">글로벌·미국</span><span class="pips">{cell(g)}</span></div>
-  <div class="lvcell"><span class="region">한국</span><span class="pips">{cell(k)}</span></div>
-  <p class="why">{E(w)} {tags(ids)}</p></div>""" for ko, en, g, k, w, ids in LADDER)
+  <div class="lvcell"><span class="region">글로벌·미국</span>{gauge(LEVELS, g, tip_level(g), pv[0])}</div>
+  <div class="lvcell"><span class="region">한국</span>{gauge(LEVELS, k, tip_level(k), pv[1])}</div>
+  <p class="why">{E(w)} {tags(ids)}</p></div>""" for ko, en, g, k, pv, w, ids in LADDER)
 
 # =====================================================================
 # 6. 핵심 지표

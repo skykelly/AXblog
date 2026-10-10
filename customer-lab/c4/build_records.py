@@ -7,6 +7,7 @@ from collections import Counter
 
 R = "R1"
 SRC = {
+    "parks_routines": {"url": "https://www.securityinfowatch.com/residential-technologies/article/55141640/the-smart-money-smart-video-automation-and-ecosystems", "publisher": "Security Business (Parks Associates 인용)", "date": "2024-10-21", "grade": "B"},
  "hk_opensurvey": {"url": "https://www.hankyung.com/article/202604012347g", "publisher": "한국경제 (오픈서베이 AI 가전 트렌드 리포트 2026)", "date": "2026-04-01", "grade": "B"},
  "opensurvey": {"url": "https://blog.opensurvey.co.kr/trendreport/ai-home-appliance-2026/", "publisher": "오픈서베이", "date": "2026-03-23", "grade": "A"},
  "x1_factory": {"url": "https://www.globenewswire.com/news-release/2026/04/30/3285118/0/en/1X-Opens-NEO-Factory-in-Hayward-CA", "publisher": "1X 보도자료 (GlobeNewswire)", "date": "2026-04-30", "grade": "A"},
@@ -51,6 +52,13 @@ add(id="C4-M-009", type="지표", indicator="C4-T5", importance=1, statement="�
 add(id="C4-M-010", type="지표", indicator="C4-T8", importance=1, statement="삼성전자 무풍에어컨 판매의 85% 이상이 AI 탑재 모델이었고, 냉장고·세탁기도 절반 이상이 AI 모델이었다.",
     value=85, unit="% 이상(에어컨)", as_of="2025-H1", region="KR", definition="삼성전자 발표, AI 탑재 모델 판매 비중", sources=src("samsung_ai_sales"), verified=True,
     check_flags=["기준 시점이 조사 기간 밖 — 기준선 용도"])
+
+add(id="C4-M-011", type="지표", indicator="C4-T5", importance=3, statement="연결 기기를 가진 미국 인터넷 가구의 40%가 여러 기기를 엮은 연동이나 루틴을 하나 이상 설정해 쓰고, 60%는 기기를 따로따로 쓴다. 이용자 대부분은 루틴을 직접 또는 예약으로 시작하는 쪽을 선호하고, AI가 예측해 자동으로 실행하는 방식은 덜 선호한다.",
+    value=40, unit="% (연결 기기 보유 가구)", as_of="2024", region="US", definition="Parks Associates 조사, 연결 기기 보유 미국 인터넷 가구 중 다기기 연동·루틴 설정 비율", sources=src("parks_routines"), verified=True,
+    check_flags=["조사 시점이 2024년 — 다음 조사에서 최신값 확인"])
+add(id="C4-M-012", type="지표", indicator="C4-T5", importance=2, statement="스마트홈 기기를 가진 보안 시스템 이용 가구의 53%가 여러 기기를 자동으로 함께 움직이는 기능을 쓴다.",
+    value=53, unit="% (보안 시스템 이용 가구)", as_of="2024", region="US", definition="Parks Associates 조사, 스마트홈 기기를 가진 보안 시스템 이용 가구 중 자동 연동 사용 비율", sources=src("parks_routines"), verified=True,
+    check_flags=["조사 시점이 2024년 — 다음 조사에서 최신값 확인"])
 
 # ---------- 사건 (E) ----------
 add(id="C4-E-001", type="사건", importance=3, statement="LG전자가 생성형 AI 홈 허브 '씽큐 온'을 국내 출시했다. 여러 기기에 걸친 복합 명령을 순서대로 실행하고, 센서로 습도가 높으면 제습기를 스스로 켠다.",

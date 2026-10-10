@@ -1,9 +1,9 @@
 {
  "question": "C2",
  "round": 1,
- "chip": "판매 주도권 경합",
- "gauge": "고객 접점 4곳 중 AI 이전이 확산 이상",
- "frontier": "판매",
+ "chip": "상담은 고객 Agent, 발견은 플랫폼",
+ "gauge": "고객 접점 4곳 중 AI 이전이 얼리어답터 이상",
+ "frontier": "상담 → 판매",
  "on": 2,
  "of": 4
 }
