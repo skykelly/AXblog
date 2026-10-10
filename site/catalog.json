@@ -8,7 +8,7 @@
    "id": "customer-lab",
    "no": 1,
    "name": "AI Future Customer Lab",
-   "desc": "고객과 시장이 AI로 어떻게 바뀌는지를 추적한다.",
+   "desc": "고객의 탐색·구매·정보 신뢰·생활과 시장 수요가 AI로 어떻게 바뀌는지 추적한다.",
    "questions": [
     {
      "id": "c1",
@@ -119,7 +119,7 @@
    "id": "lg-group-ai",
    "no": 4,
    "name": "LG Group AI",
-   "desc": "LG 그룹의 AI 전략과 실행을 추적한다.",
+   "desc": "LG 그룹의 AI 인프라·제조·모빌리티·AX·연구개발·동맹이 계약과 성과로 이어지는지 추적한다.",
    "questions": [
     {
      "id": "l1",

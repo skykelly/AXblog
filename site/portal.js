@@ -77,6 +77,21 @@
   window.addEventListener('resize', function () { moveInk(tabs.filter(function (t) { return t.getAttribute('aria-selected') === 'true'; })[0]); });
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { moveInk(tabs.filter(function (t) { return t.getAttribute('aria-selected') === 'true'; })[0]); });
 
+
+  // ---------- 전체 보기에서 카드 높이 맞추기
+  function equalize() {
+    var all = Array.prototype.slice.call(board.querySelectorAll('.tile'));
+    all.forEach(function (t) { t.style.height = ''; });
+    if (board.dataset.view !== 'all') return;
+    var vis = all.filter(function (t) { return t.offsetParent !== null; });
+    var h = vis.reduce(function (m, t) { return Math.max(m, t.offsetHeight); }, 0);
+    if (h) vis.forEach(function (t) { t.style.height = h + 'px'; });
+  }
+  var eqTimer = null;
+  function equalizeSoon() { clearTimeout(eqTimer); eqTimer = setTimeout(equalize, 60); }
+  window.addEventListener('resize', equalizeSoon);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(equalize);
+
   // ---------- 검색
   var input = document.getElementById('q-search'), count = document.getElementById('q-count'), none = document.querySelector('.noresult');
   var tiles = Array.prototype.slice.call(board.querySelectorAll('.tile[data-search]'));
@@ -91,6 +106,7 @@
     cols.forEach(function (c) { c.classList.toggle('empty', words.length > 0 && !c.querySelector('.tile[data-search]:not([hidden])')); });
     count.textContent = words.length ? shown + '개' : '';
     none.hidden = !(words.length && shown === 0);
+    equalize();
   }
   input.addEventListener('input', applySearch);
   input.addEventListener('keydown', function (e) {

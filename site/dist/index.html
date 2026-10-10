@@ -151,9 +151,9 @@ body { background: var(--paper); }
 .tlink { display: grid; gap: 8px; padding: 12px 14px 13px; color: var(--ink); text-decoration: none; }
 .tlink:hover { color: var(--ink); }
 .tlink:focus-visible { outline: 2px solid var(--border-focus); outline-offset: 2px; border-radius: 3px; }
-.tno { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+.tno { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
 .tno b { font: 600 14px var(--mono); }
-.tno span { font: 400 11px var(--mono); color: var(--muted); text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.tno span { font: 400 11px/1.45 var(--mono); color: var(--muted); text-align: right; min-width: 0; text-wrap: balance; }
 .ttl { margin: 0; font: 600 15px/1.4 var(--body); text-wrap: balance; }
 .chip { justify-self: start; font: 500 12px/1.35 var(--body); color: var(--signal-ink); background: var(--signal-soft); padding: 3px 8px; border-radius: 999px; }
 .chip.muted { color: var(--muted); background: var(--panel); margin: 0 14px 12px; display: inline-block; }
@@ -301,6 +301,13 @@ body { background: var(--paper); }
   .score .bar i { animation: barin .6s ease-out both; animation-delay: .2s; transform-origin: 0 50%; }
   @keyframes barin { from { transform: scaleX(0); } }
 }
+
+/* 전체 보기에서는 카드 높이를 맞춘다 (portal.js가 가장 긴 카드 높이를 적용) */
+.board[data-view="all"] .tile { display: flex; flex-direction: column; }
+.board[data-view="all"] .tlink { flex: 1; display: flex; flex-direction: column; }
+.board[data-view="all"] .tlink .chip { align-self: flex-start; }
+.board[data-view="all"] .gauge { margin-top: auto; }
+@media (min-width: 1001px) { .board[data-view="all"] .colhead { min-height: 92px; } }
 </style></head>
 <body><main class="portal">
   <header class="masthead">
@@ -328,7 +335,7 @@ body { background: var(--paper); }
       <label class="search"><span class="vh">질문 검색</span><input id="q-search" type="search" placeholder="검색  /" autocomplete="off"><output id="q-count" aria-live="polite"></output></label></div>
     <div class="tabs" role="tablist" aria-label="카테고리"><button class="tab" role="tab" id="tab-all" aria-controls="board" aria-selected="true" data-cat="all">전체 <span>20</span></button><button class="tab" role="tab" id="tab-customer-lab" aria-controls="board" aria-selected="false" data-cat="customer-lab"><b>01</b> AI Future Customer Lab <span>5</span></button><button class="tab" role="tab" id="tab-industry-trend" aria-controls="board" aria-selected="false" data-cat="industry-trend"><b>02</b> AI Industry Trend <span>4</span></button><button class="tab" role="tab" id="tab-sales-marketing" aria-controls="board" aria-selected="false" data-cat="sales-marketing"><b>03</b> AI Sales &amp; Marketing <span>5</span></button><button class="tab" role="tab" id="tab-lg-group-ai" aria-controls="board" aria-selected="false" data-cat="lg-group-ai"><b>04</b> LG Group AI <span>6</span></button><span class="tab-ink" aria-hidden="true"></span></div>
     <div class="board" id="board" data-view="all"><section class="col" id="customer-lab" data-cat="customer-lab" aria-labelledby="h-customer-lab">
-  <header class="colhead"><span class="cno">01</span><div><h2 id="h-customer-lab">AI Future Customer Lab</h2><p>고객과 시장이 AI로 어떻게 바뀌는지를 추적한다.</p></div></header>
+  <header class="colhead"><span class="cno">01</span><div><h2 id="h-customer-lab">AI Future Customer Lab</h2><p>고객의 탐색·구매·정보 신뢰·생활과 시장 수요가 AI로 어떻게 바뀌는지 추적한다.</p></div></header>
   <ol class="tiles"><li class="tile" data-search="c1 consumer decision making ai는 고객의 쇼핑을 어디까지 대신하고 있나 소비자는 탐색 → 정리 → 추천 → 결정 → 위임 중 어느 단계까지 ai에 맡기고 있으며, 검색엔진·브랜드 사이트의 역할은 얼마나 줄었는가? 2026년 10월 현재 ai가 가장 많이 대신하는 일은 검색 결과를 읽고 정리해 주는 것이다. 후보를 추려주는 추천은 일부 소비자에게서 시작됐고, 무엇을 살지 정하고 결제하는 일은 소비자가 직접 한다. 결제까지 ai에 맡기겠다는 소비자는 9%에 그친다. 정리만 확산, 나머지는 초기" data-q="C1">
   <a class="tlink" href="customer-lab/c1/r1.html" data-preview>
     <div class="tno"><b>C1</b><span>Consumer Decision Making</span></div>
@@ -516,7 +523,7 @@ body { background: var(--paper); }
     <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 34건</span><span>질문 v1.0</span></p>
   </div>
 </li></ol></section><section class="col" id="lg-group-ai" data-cat="lg-group-ai" aria-labelledby="h-lg-group-ai">
-  <header class="colhead"><span class="cno">04</span><div><h2 id="h-lg-group-ai">LG Group AI</h2><p>LG 그룹의 AI 전략과 실행을 추적한다.</p></div></header>
+  <header class="colhead"><span class="cno">04</span><div><h2 id="h-lg-group-ai">LG Group AI</h2><p>LG 그룹의 AI 인프라·제조·모빌리티·AX·연구개발·동맹이 계약과 성과로 이어지는지 추적한다.</p></div></header>
   <ol class="tiles"><li class="tile" data-search="l1 ai data center / infra lg는 ai 데이터센터 수요를 어디까지 계약과 매출로 잡았나 lg는 ai 데이터센터의 냉각·전력·구축·운영 수요를 어떤 제품과 계약으로 확보하고 있으며, 그 수요는 계약·매출로 어디까지 확인되는가? 2026년 10월 현재 lg는 냉각·전력·구축·운영 네 제품군 모두에서 ai 데이터센터 수요를 &#x27;계약&#x27; 단계까지 확보했다. lg전자 북미 5gw 칠러 장기 계약과 냉각 수주 6,000억 원 이상, lg에너지솔루션 ess 수주 3조 원(하이퍼스케일러 ai 데이터센터 포함), lg cns dbo 수주 1조 원 이상, 네이버클라우드 6,034억 원 입주 계약이다. 그러나 ai 데이터센터 매출로 따로 확인된 것은 아직 없다. 냉각·ess 매출은 기존 사업에 섞여 있고, 파주 aidc는 2027년 가동이다. 4개 제품군 계약 단계" data-q="L1">
   <a class="tlink" href="lg-group-ai/l1/r1.html" data-preview>
     <div class="tno"><b>L1</b><span>AI Data Center / Infra</span></div>
@@ -692,6 +699,21 @@ body { background: var(--paper); }
   window.addEventListener('resize', function () { moveInk(tabs.filter(function (t) { return t.getAttribute('aria-selected') === 'true'; })[0]); });
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { moveInk(tabs.filter(function (t) { return t.getAttribute('aria-selected') === 'true'; })[0]); });
 
+
+  // ---------- 전체 보기에서 카드 높이 맞추기
+  function equalize() {
+    var all = Array.prototype.slice.call(board.querySelectorAll('.tile'));
+    all.forEach(function (t) { t.style.height = ''; });
+    if (board.dataset.view !== 'all') return;
+    var vis = all.filter(function (t) { return t.offsetParent !== null; });
+    var h = vis.reduce(function (m, t) { return Math.max(m, t.offsetHeight); }, 0);
+    if (h) vis.forEach(function (t) { t.style.height = h + 'px'; });
+  }
+  var eqTimer = null;
+  function equalizeSoon() { clearTimeout(eqTimer); eqTimer = setTimeout(equalize, 60); }
+  window.addEventListener('resize', equalizeSoon);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(equalize);
+
   // ---------- 검색
   var input = document.getElementById('q-search'), count = document.getElementById('q-count'), none = document.querySelector('.noresult');
   var tiles = Array.prototype.slice.call(board.querySelectorAll('.tile[data-search]'));
@@ -706,6 +728,7 @@ body { background: var(--paper); }
     cols.forEach(function (c) { c.classList.toggle('empty', words.length > 0 && !c.querySelector('.tile[data-search]:not([hidden])')); });
     count.textContent = words.length ? shown + '개' : '';
     none.hidden = !(words.length && shown === 0);
+    equalize();
   }
   input.addEventListener('input', applySearch);
   input.addEventListener('keydown', function (e) {
