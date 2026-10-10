@@ -5,6 +5,8 @@ import json, html, re, sys
 from pathlib import Path
 
 ROOT = Path(__file__).parent
+sys.path.insert(0, str(ROOT.parent.parent / "lib"))
+from judge import gauge, chip, criteria_panel
 recs = [json.loads(l) for l in (ROOT / "records.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
 by = {r["id"]: r for r in recs}
 E = html.escape
@@ -26,7 +28,7 @@ ONE_LINE_BASIS = ["S2-I-001", "S2-I-002", "S2-I-003", "S2-I-004", "S2-I-007"]
 ANSWER_ROWS = [
     ("대규모 운영", "탐색·비교. Amazon Rufus 3억 명, Walmart 앱 이용자 절반이 Sparky 사용(주문액 +35%), Shopify AI 경유 주문 3배.", ["S2-M-001", "S2-M-002", "S2-M-003"]),
     ("시험·후퇴", "외부 AI 안 결제. ChatGPT Instant Checkout은 전환율이 사이트 이동의 3분의 1에 그쳐 2026년 3월 종료. 카드망 에이전트 결제는 수백 건 시험.", ["S2-M-004", "S2-E-004", "S2-M-005"]),
-    ("수익", "결제 수수료 4%(마켓플레이스 8~15%보다 낮음)는 흔들리고, Rufus 안 광고·구글 AI Mode 할인 광고·네이버 AI탭 광고로 이동.", ["S2-M-007", "S2-E-006", "S2-E-002", "S2-E-009"]),
+    ("수익", "AI 플랫폼의 결제 수수료 4% 시도는 외부 AI 결제가 접히며 후퇴했다. 대신 Rufus 안 광고·구글 AI Mode 할인 광고·네이버 AI탭 광고처럼 AI 지면 광고가 열리고 있다.", ["S2-M-007", "S2-E-006", "S2-E-002", "S2-E-009"]),
     ("고객·데이터", "유통사가 판매 당사자로 남고(구글 UCP), Walmart는 자기 에이전트를 ChatGPT 안에 넣어 장바구니를 묶었다.", ["S2-E-002", "S2-E-005"]),
     ("한국", "네이버 쇼핑 에이전트 거래액 3개월 새 2.7배, 하반기 장바구니·배송 추가. 카카오는 카톡 안 쿠팡이츠 주문·결제 에이전트 준비.", ["S2-M-010", "S2-E-008", "S2-E-011"]),
 ]
@@ -88,36 +90,65 @@ frows = "".join(f"""<tr id="{E(r['id'])}"><td class="stmt">{E(r['statement'])}<s
   <td><span class="fstat">{E(r['forecast_status'])}</span></td><td>{tags(r['basis'])}</td></tr>""" for r in details)
 
 # 5. 커머스 단계와 수익 배분 지도 ----------------------------------
+NA = '<span class="pips"><span class="lv muted">자료 없음</span></span>'
 SG = ["계획", "시험", "정식 운영", "대규모 운영"]
-STAGE_LEAD = ("구매 과정을 탐색·비교 → 장바구니·선택 → 결제 → 사후관리로 나누고, 단계마다 계획 → 시험 → 정식 운영 → 대규모 운영(이용량·거래액 공개) 중 어디에 있는지 판정했다. "
-              "글로벌은 유통사 자체 에이전트와 외부 AI를 함께 보되 더 앞선 쪽을 기준으로 했고, 외부 AI 안 결제는 따로 한 줄로 두었다.")
+SG_DEF = {
+    "계획": "발표·로드맵만 있다.",
+    "시험": "제한 지역·일부 이용자·파일럿으로 운영한다.",
+    "정식 운영": "누구나 쓸 수 있다 (지역 한정이면 그 지역 기준).",
+    "대규모 운영": "이용량·거래액이 공개되고, 그 단계 AI 기능 이용자 1억 명 또는 연 거래액 100억 달러 이상이다 (한국은 10분의 1).",
+}
+STEP_DEF = {
+    "탐색·비교": "AI가 상품을 찾아 비교해 준다.",
+    "장바구니·선택": "AI가 고른 상품을 장바구니에 담거나 옵션을 정한다.",
+    "결제 (유통사 앱 안)": "유통사 자체 AI 안에서 주문·결제까지 끝난다.",
+    "결제 (외부 AI 안)": "ChatGPT·Gemini 같은 외부 AI 화면 안에서 결제까지 끝난다.",
+    "사후관리": "재주문·배송·반품·가격 추적을 AI가 맡는다.",
+}
+STAGE_LEAD = ("글로벌에서 대규모 운영에 이른 단계는 탐색·비교 하나다. 장바구니와 유통사 앱 안 결제는 정식 운영, 외부 AI 안 결제와 사후관리는 시험 단계다. "
+              "한국은 탐색·비교가 정식 운영이고, 장바구니와 결제는 계획 단계다.")
+# (단계, 글로벌, 글로벌 잠정, 한국, 한국 잠정, 근거, 기록)
 STAGES = [
-    ("탐색·비교", "대규모 운영", "정식 운영", "Rufus 3억 명·Shopify AI 주문 3배 / 네이버 쇼핑 에이전트 정식, 거래액 2.7배", ["S2-M-001", "S2-M-003", "S2-M-010"]),
-    ("장바구니·선택", "정식 운영", "계획", "Walmart Sparky가 ChatGPT 안에서 장바구니 동기화 / 네이버 하반기 장바구니 추가", ["S2-E-005", "S2-E-008"]),
-    ("결제 (유통사 앱 안)", "정식 운영", "계획", "Rufus 설정 가격 자동 구매 / 카카오 쿠팡이츠 주문·결제 준비", ["S2-M-001", "S2-E-011"]),
-    ("결제 (외부 AI 안)", "시험", None, "ChatGPT 결제 종료, 구글 UCP 미국 한정, 카드망 수백 건", ["S2-E-004", "S2-E-002", "S2-M-005"]),
-    ("사후관리", "시험", None, "Rufus 재주문·신제품 추적 설정, UCP가 사후관리까지 표준에 포함", ["S2-M-001", "S2-E-002"]),
+    ("탐색·비교", "대규모 운영", False, "정식 운영", False, "Rufus 이용 고객 3억 명·Shopify AI 경유 주문 3배 / 네이버 쇼핑 에이전트 정식 출시, 거래액 3개월 새 2.7배(절대 규모 미공개)", ["S2-M-001", "S2-M-003", "S2-M-010"]),
+    ("장바구니·선택", "정식 운영", False, "계획", False, "Walmart Sparky가 ChatGPT 안에서 장바구니 동기화, Walmart 앱 이용자 절반이 Sparky 사용 경험 / 네이버 하반기 장바구니 추가 계획", ["S2-E-005", "S2-M-002", "S2-E-008"]),
+    ("결제 (유통사 앱 안)", "정식 운영", False, "계획", False, "Rufus 설정 가격 자동 구매 / 카카오 쿠팡이츠 주문·결제 준비", ["S2-M-001", "S2-E-011"]),
+    ("결제 (외부 AI 안)", "시험", False, None, False, "ChatGPT 대화 안 결제 종료, 구글 UCP 미국 한정, 카드망 에이전트 결제는 수백 건 규모", ["S2-E-004", "S2-E-002", "S2-M-005"]),
+    ("사후관리", "시험", True, None, False, "Rufus 재주문·신제품 추적 설정, UCP가 사후관리까지 표준에 포함. 이용 규모 미공개", ["S2-M-001", "S2-E-002"]),
 ]
-def sg4(v):
-    if v is None:
-        return '<span class="lv muted">자료 없음</span>'
-    i = SG.index(v)
-    return "".join(f'<span class="pip{" on" if k <= i else ""}"></span>' for k in range(4)) + f'<span class="lv">{E(v)}</span>'
-stage_rows = "".join(f"""<div class="rung"><div class="stage"><b>{E(d)}</b></div>
-  <div class="lvcell"><span class="region">글로벌</span><span class="pips">{sg4(g)}</span></div>
-  <div class="lvcell"><span class="region">한국</span><span class="pips">{sg4(k)}</span></div>
-  <p class="why">{E(w)} {tags(ids)}</p></div>""" for d, g, k, w, ids in STAGES)
-MAP_LEAD = ("거래 한 건에서 생기는 수익과 자산을 네 갈래로 나누고, 지금 누가 가져가는지와 방향을 판정했다. '방향'은 그 자리가 굳어지는지, 다투는 중인지, 흔들리는지다.")
-OWN = {"굳어짐": "brand", "경합": "contest", "흔들림": "agent"}
+def tip_sg(v):
+    return f"{v} — {SG_DEF[v]}"
+def cell(v, pv):
+    return NA if v is None else gauge(SG, v, tip_sg(v), pv)
+stage_rows = "".join(f"""<div class="rung"><div class="stage"><b tabindex="0" data-tip="{E(d)} — {E(STEP_DEF[d])}">{E(d)}</b></div>
+  <div class="lvcell"><span class="region">글로벌</span>{cell(g, gp)}</div>
+  <div class="lvcell"><span class="region">한국</span>{cell(k, kp)}</div>
+  <p class="why">{E(w)} {tags(ids)}</p></div>""" for d, g, gp, k, kp, w, ids in STAGES)
+MAP_LEAD = ("거래 한 건에서 생기는 수익과 자산을 네 갈래로 나눴다. 광고만 AI 지면으로 일부 넘어가기 시작했고(Split), 거래 수수료·결제·고객 관계는 기존 주자가 그대로 가져간다(Hold). "
+            "기존 주자의 몫이 줄어 AI 쪽으로 넘어간(Shift) 갈래는 아직 없다.")
+FLOW = {"Hold": "brand", "Split": "agent", "Shift": "platform"}
+FLOW_DEF = {
+    "Hold": ("기존 주자 유지", "AI 쪽 몫이 공개되지 않았거나 그 수익의 5% 미만이고, 기존 주자 몫의 감소가 없다."),
+    "Split": ("AI와 분할", "AI 쪽 몫이 5% 이상으로 확인되거나, AI 쪽 상품이 정식 운영 중이고 매출이 공개됐다. 기존 주자 몫의 감소는 아직 확인되지 않았다."),
+    "Shift": ("AI로 이동", "기존 주자의 점유율·수수료율·매출 비중이 줄어든 것이 수치로 확인되고, 그 몫이 AI 쪽으로 간 근거가 있다."),
+}
+def flow(v, pv):
+    k, d = FLOW_DEF[v]
+    return chip(v, FLOW[v], f"{v} ({k}) — {d}", pv)
+# (갈래, 지금 가져가는 쪽, 판정, 잠정, 근거, 기록)
 MAP = [
-    ("거래 수수료", "유통사·마켓플레이스", "굳어짐", "AI 플랫폼이 4% 수수료로 진입을 시도했지만 외부 AI 결제가 접히며 후퇴. 마켓플레이스 수수료(8~15%)는 유지", ["S2-M-007", "S2-E-004"]),
-    ("광고", "유통사·AI 플랫폼", "경합", "Amazon Rufus 안 광고 정식화, 구글 AI Mode 할인 광고 시범, 네이버 AI탭 광고 추진", ["S2-E-006", "S2-M-008", "S2-E-002", "S2-E-009"]),
-    ("결제", "기존 카드망·간편결제", "굳어짐", "Visa·Mastercard가 에이전트 결제 표준을 선점, 실거래는 아직 소량. 중국은 Alipay가 자기 앱 안에서 대규모", ["S2-M-005", "S2-E-007"]),
-    ("고객 관계·데이터", "유통사", "굳어짐", "UCP에서도 유통사가 판매 당사자, Walmart는 자기 에이전트로 장바구니 유지. 외부 에이전트 접근권은 소송 중", ["S2-E-002", "S2-E-005", "S2-E-010"]),
+    ("거래 수수료", "유통사·마켓플레이스", "Hold", False, "AI 플랫폼이 4% 수수료로 진입을 시도했지만 외부 AI 결제가 접히며 후퇴. 마켓플레이스 수수료(8~15%)는 유지", ["S2-M-007", "S2-E-004"]),
+    ("광고", "유통사·AI 플랫폼", "Split", True, "Amazon Rufus 안 광고 정식 상품화, 구글 AI Mode 할인 광고 시범, 네이버 AI탭 광고 추진. AI 지면 광고 매출은 따로 공개되지 않음", ["S2-E-006", "S2-M-008", "S2-E-002", "S2-E-009"]),
+    ("결제", "기존 카드망·간편결제", "Hold", False, "Visa·Mastercard가 에이전트 결제 표준을 선점, 실거래는 아직 소량. 중국은 Alipay가 자기 앱 안에서 대규모", ["S2-M-005", "S2-E-007"]),
+    ("고객 관계·데이터", "유통사", "Hold", False, "UCP에서도 유통사가 판매 당사자, Walmart는 자기 에이전트로 장바구니 유지. 외부 에이전트 접근권은 소송 중", ["S2-E-002", "S2-E-005", "S2-E-010"]),
 ]
 map_rows = "".join(f"""<div class="rung"><div class="stage"><b>{E(k)}</b></div><div class="lvcell">{E(who)}</div>
-  <div class="lvcell"><span class="own {OWN[d]}">{E(d)}</span></div><p class="why">{E(w)} {tags(ids)}</p></div>""" for k, who, d, w, ids in MAP)
-
+  <div class="lvcell">{flow(d, pv)}</div><p class="why">{E(w)} {tags(ids)}</p></div>""" for k, who, d, pv, w, ids in MAP)
+criteria_html = criteria_panel([
+    ("구매 단계", ["단계", "AI가 맡는 일"], [[f"<b>{E(k)}</b>", E(v)] for k, v in STEP_DEF.items()]),
+    ("판정 단계: 커머스 운영", ["단계", "기준"], [[gauge(SG, k), E(v)] for k, v in SG_DEF.items()]),
+    ("수익 배분: 수익이 AI 쪽으로 얼마나 넘어갔나", ["판정", "뜻", "확인 기준"], [[flow(k, False), E(v[0]), E(v[1])] for k, v in FLOW_DEF.items()]),
+], extra_rules=["AI 쪽은 AI 대화·답변·에이전트 지면과 그 운영자다. 누가 운영하든 AI 지면에서 생긴 수익이면 AI 쪽으로 본다.",
+                "글로벌은 유통사 자체 에이전트와 외부 AI 가운데 더 앞선 쪽을 기준으로 하고, 외부 AI 안 결제는 따로 한 줄로 둔다."])
 # 6. 핵심 지표 ---------------------------------------------------------
 INDICATOR_NAMES = {"S2-T1": "쇼핑 에이전트 이용 규모", "S2-T2": "AI 경유 주문·거래", "S2-T3": "에이전트 안 결제 전환",
                    "S2-T4": "에이전트 결제 거래 수", "S2-T5": "거래 수수료", "S2-T6": "AI 쇼핑 광고",
@@ -163,6 +194,7 @@ page = f"""<title>S2 AI 커머스 R1</title>
     <p class="lead muted">각 세부 전망이 적중하거나 빗나갔을 때 어느 시나리오 쪽 신호인지 표시했다. 확인 시점이 오면 확인 방법대로 판정한다.</p>
     <div class="tablewrap"><table><thead><tr><th>세부 전망</th><th>확인 시점</th><th>적중 시</th><th>빗나갈 시</th><th>상태</th><th>근거</th></tr></thead><tbody>{frows}</tbody></table></div></section>
   <section><h2>커머스 단계와 수익 배분 지도 <small>글로벌과 한국 · 누가 가져가나</small></h2><p class="lead">{E(STAGE_LEAD)}</p>
+    {criteria_html}
     <div class="ladder mapgrid auto">{stage_rows}</div>
     <h3 class="subhead">수익 배분 지도</h3><p class="lead">{E(MAP_LEAD)}</p>
     <div class="ladder mapgrid layers">{map_rows}</div></section>

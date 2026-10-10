@@ -5,6 +5,8 @@ import json, html, re, sys
 from pathlib import Path
 
 ROOT = Path(__file__).parent
+sys.path.insert(0, str(ROOT.parent.parent / "lib"))
+from judge import gauge, chip, criteria_panel
 recs = [json.loads(l) for l in (ROOT / "records.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
 by = {r["id"]: r for r in recs}
 E = html.escape
@@ -88,26 +90,38 @@ frows = "".join(f"""<tr id="{E(r['id'])}"><td class="stmt">{E(r['statement'])}<s
   <td><span class="fstat">{E(r['forecast_status'])}</span></td><td>{tags(r['basis'])}</td></tr>""" for r in details)
 
 # 5. 업무 단계별 역할 분담 지도 -------------------------------------
+NA = '<span class="pips"><span class="lv muted">자료 없음</span></span>'
 SG = ["사람 단독", "사람 주도·AI 보조", "AI 주도·사람 승인", "AI 단독"]
-STAGE_LEAD = ("업무 단계 다섯 개마다 B2B와 B2C를 나눠 사람 단독 → 사람 주도·AI 보조 → AI 주도·사람 승인 → AI 단독 중 어디에 있는지 판정했다. "
-              "고객 서비스에서 '사람 승인'은 사람에게 넘기는 길이 열려 있는 상태로 본다. 오른쪽에는 그 단계에서 사람이 새로 맡는 역할을 적었다.")
+SG_DEF = {
+    "사람 단독": "아래 기준에 모두 못 미친다.",
+    "사람 주도·AI 보조": "해당 업무 담당자의 25% 이상이 AI 도구를 실제 업무에 쓴다.",
+    "AI 주도·사람 승인": "해당 업무 건의 25% 이상을 AI가 먼저 처리하고, 사람이 승인·수정한다.",
+    "AI 단독": "과반 건을 AI가 사람 승인 없이 끝내고, 사람이 처리하는 비중이 줄어든 것이 확인된다.",
+}
+STAGE_LEAD = ("AI가 가장 깊이 들어간 업무는 고객 서비스다. B2B는 AI가 문의 70%를 사람 없이 끝내는 사례가 나와 AI 단독(잠정)이고, B2C는 AI 주도·사람 승인 단계다. "
+              "리드 발굴도 AI가 먼저 움직이지만, 구매 상담·제안·협상 같은 가운데 단계는 사람이 주도한다. 오른쪽에는 그 단계에서 사람이 새로 맡는 역할을 적었다.")
+# (업무, B2B, B2B 잠정, B2C, B2C 잠정, 근거, 기록)
 STAGES = [
-    ("리드 발굴", "AI 주도·사람 승인", None, "AI 에이전트 54%, AI SDR 44%. 사람 → 대상 선정·메시지 승인, 반응 하락 관리", ["S4-M-001", "S4-M-003", "S4-E-001"]),
-    ("구매 상담", "사람 주도·AI 보조", "AI 주도·사람 승인", "B2B 구매자 69%가 AI 정보를 사람에게 검증 / B2C는 쇼핑 에이전트·외부 AI가 상담 대체. 사람 → 검증·확신 제공", ["S4-M-004", "S4-M-006"]),
-    ("제안·견적", "사람 주도·AI 보조", None, "에이전트가 견적·이메일 작성을 도움(작성 시간 -36% 기대). 사람 → 맞춤 설계·내부 조율", ["S4-M-001"]),
-    ("협상", "사람 단독", None, "판매 측 AI 협상 자료 없음. 구매 측은 AI 협상 선례(Walmart 68% 타결). 사람 → AI 구매 에이전트와의 협상 대비", ["S4-M-007"]),
-    ("고객 서비스", "AI 주도·사람 승인", "AI 주도·사람 승인", "Salesforce 70%(B2B 고객) / 토스뱅크 약 70%·국민은행 41%. 사람 → 예외·복잡·감정 응대", ["S4-M-005", "S4-M-008", "S4-M-006"]),
+    ("리드 발굴", "AI 주도·사람 승인", True, None, False, "B2B 영업팀 44%가 AI SDR 도입, 셀러 54%가 AI 에이전트 사용 경험(도입률이라 처리 비중은 미확인). 사람 → 대상 선정·메시지 승인, 반응 하락 관리", ["S4-M-001", "S4-M-003", "S4-E-001"]),
+    ("구매 상담", "사람 주도·AI 보조", False, "AI 주도·사람 승인", True, "B2B 구매자 69%가 AI 정보를 영업 담당자에게 검증받기 원함 / B2C는 쇼핑 에이전트·외부 AI가 상담을 대신하기 시작(처리 비중 미공개). 사람 → 검증·확신 제공", ["S4-M-004", "S4-M-006"]),
+    ("제안·견적", "사람 주도·AI 보조", True, None, False, "에이전트가 견적·이메일 작성을 도움(작성 시간 -36% 기대). 사람 → 맞춤 설계·내부 조율", ["S4-M-001"]),
+    ("협상", "사람 단독", True, None, False, "판매 측 AI 협상 자료 없음. 구매 측은 AI 협상 선례(Walmart 공급사 68% 타결). 사람 → AI 구매 에이전트와의 협상 대비", ["S4-M-007"]),
+    ("고객 서비스", "AI 단독", True, "AI 주도·사람 승인", False, "Salesforce 고객 지원 문의 430만 건 중 70%를 AI가 사람 없이 해결(한 기업 발표) / 국민은행 AI 처리율 41.3%·상담 인력 1,133명→869명, 토스뱅크 약 70%, 농협 21.7%로 정체. 사람 → 예외·복잡·감정 응대", ["S4-M-005", "S4-M-008", "S4-M-009", "S4-M-006"]),
 ]
-def sg4(v):
-    if v is None:
-        return '<span class="lv muted">자료 없음</span>'
-    i = SG.index(v)
-    return "".join(f'<span class="pip{" on" if k <= i else ""}"></span>' for k in range(4)) + f'<span class="lv">{E(v)}</span>'
+def tip_sg(v):
+    return f"{v} — {SG_DEF[v]}"
+def cell(v, pv):
+    return NA if v is None else gauge(SG, v, tip_sg(v), pv)
+criteria_html = criteria_panel([
+    ("판정 단계: 사람과 AI의 역할 분담", ["단계", "기준"], [[gauge(SG, k), E(v)] for k, v in SG_DEF.items()]),
+], extra_rules=["고객 서비스에서 사람에게 넘기는 길이 열려 있어도 AI 단독을 막지 않는다. 기준은 개별 건마다 사람이 승인하는가다.",
+                "AI 단독은 사람 처리 비중 감소가 필수다. 상담 인력 감소(기업 공시·고용 통계·업계 지표)까지 확인되면 확정하고, 한 기업의 발표뿐이면 잠정으로 둔다.",
+                "AI 도구 도입률만 있으면 처리 비중을 알 수 없어 잠정으로 둔다."])
 stage_rows = "".join(f"""<div class="rung"><div class="stage"><b>{E(d)}</b></div>
-  <div class="lvcell"><span class="region">B2B</span><span class="pips">{sg4(g)}</span></div>
-  <div class="lvcell"><span class="region">B2C</span><span class="pips">{sg4(k)}</span></div>
-  <p class="why">{E(w)} {tags(ids)}</p></div>""" for d, g, k, w, ids in STAGES)
-STAGE_NOTE = "판정: AI는 양 끝(리드 발굴·고객 서비스)을 주도하고, 가운데(상담·제안·협상)는 사람이 주도한다. 사람의 역할은 검증·예외·관계로 좁혀지며 깊어진다 (R1 기준)."
+  <div class="lvcell"><span class="region">B2B</span>{cell(g, gp)}</div>
+  <div class="lvcell"><span class="region">B2C</span>{cell(k, kp)}</div>
+  <p class="why">{E(w)} {tags(ids)}</p></div>""" for d, g, gp, k, kp, w, ids in STAGES)
+STAGE_NOTE = "판정: AI는 양 끝(리드 발굴·고객 서비스)을 주도하고, 가운데(상담·제안·협상)는 사람이 주도한다. 사람의 역할은 검증·예외·관계로 좁혀지며 깊어진다."
 
 # 6. 핵심 지표 ---------------------------------------------------------
 INDICATOR_NAMES = {"S4-T1": "영업 AI 에이전트 사용", "S4-T2": "AI SDR 도입·아웃바운드 반응", "S4-T3": "영업 시간 구조",
@@ -154,6 +168,7 @@ page = f"""<title>S4 AI 영업·고객 응대 R1</title>
     <p class="lead muted">각 세부 전망이 적중하거나 빗나갔을 때 어느 시나리오 쪽 신호인지 표시했다. 확인 시점이 오면 확인 방법대로 판정한다.</p>
     <div class="tablewrap"><table><thead><tr><th>세부 전망</th><th>확인 시점</th><th>적중 시</th><th>빗나갈 시</th><th>상태</th><th>근거</th></tr></thead><tbody>{frows}</tbody></table></div></section>
   <section><h2>업무 단계별 역할 분담 <small>B2B와 B2C · 사람의 새 역할</small></h2><p class="lead">{E(STAGE_LEAD)}</p>
+    {criteria_html}
     <div class="ladder mapgrid auto">{stage_rows}</div><p class="gapnote">{E(STAGE_NOTE)}</p></section>
   <section><h2>핵심 지표 <small>추적 지표 {len(filled)}/8개 값 확보</small></h2><p class="lead">{E(METRICS_LEAD)}</p>
     <div class="tablewrap"><table><thead><tr><th>추적 지표</th><th>내용 · 출처</th><th style="text-align:right">현재값</th><th>기준 시점</th><th>기록</th></tr></thead><tbody>{mrows}</tbody></table></div></section>
@@ -171,7 +186,7 @@ bad = sorted({i for i in re.findall(r'href="#(S4-[A-Z]-\d{3})"', page) if i not 
 order = [page.index(f"<h2>{h}") for h in ("한 줄 답", "해석", "주요 사건", "전망", "업무 단계별 역할 분담", "핵심 지표")]
 print("article_r1.html 생성,", len(page), "bytes; 앵커 없는 근거 링크:", bad or "없음", "; 섹션 순서 정상:", order == sorted(order))
 # ---------- 포털 신호: 판정 칩과 게이지를 판정 데이터에서 계산해 내보낸다
-SIGNAL_CHIP = '양 끝은 AI, 가운데는 사람'
+SIGNAL_CHIP = '고객 서비스는 AI 단독, 가운데는 사람'
 SIGNAL_GAUGE = '업무 단계 5개 중 AI 주도(B2B)'
 SIGNAL_FRONTIER = '구매 상담·제안'
 signal = {"question": 'S4', "round": 1, "chip": SIGNAL_CHIP, "gauge": SIGNAL_GAUGE, "frontier": SIGNAL_FRONTIER,

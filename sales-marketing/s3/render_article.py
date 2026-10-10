@@ -5,6 +5,8 @@ import json, html, re, sys
 from pathlib import Path
 
 ROOT = Path(__file__).parent
+sys.path.insert(0, str(ROOT.parent.parent / "lib"))
+from judge import gauge, chip, criteria_panel
 recs = [json.loads(l) for l in (ROOT / "records.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
 by = {r["id"]: r for r in recs}
 E = html.escape
@@ -86,25 +88,44 @@ frows = "".join(f"""<tr id="{E(r['id'])}"><td class="stmt">{E(r['statement'])}<s
   <td><span class="fstat">{E(r['forecast_status'])}</span></td><td>{tags(r['basis'])}</td></tr>""" for r in details)
 
 # 5. 기능별 변화 단계와 성과 근거 -----------------------------------
-SG = ["AI 보조", "AI 생성", "AI 운영"]
-FUNC_LEAD = ("마케팅 기능 다섯 개마다 AI가 일하는 방식을 어디까지 바꿨는지(AI 보조 → AI 생성 → AI 운영)와, 매출·고객 가치 효과의 근거가 어느 수준인지(업체 주장 → 기업 사례 → 증분 검증)를 판정했다. "
-             "증분 검증이 있어도 결과가 엇갈리면 그렇게 적었다.")
+SG = ["AI 보조", "AI 생성", "AI 운영", "자율 운영"]
+SG_DEF = {
+    "AI 보조": "사람이 하고, AI는 분석·초안을 돕는다.",
+    "AI 생성": "AI가 결과물(소재·세그먼트·문구)을 만들고, 사람이 골라 집행한다.",
+    "AI 운영": "AI가 집행·최적화를 돌리고, 사람은 목표·예산·가드레일만 정한다.",
+    "자율 운영": "AI가 목표·예산 배분까지 정해 실행하고, 사람은 사후에 점검한다. 과반이면서 사람 운영 업무가 줄어든 것이 확인돼야 한다.",
+}
+EV_DEF = {
+    "업체 주장": "벤더·플랫폼의 발표",
+    "기업 사례": "광고주·기업이 밝힌 결과 (벤더가 의뢰한 연구 포함)",
+    "증분 검증": "홀드아웃·지역 실험 같은 통제 실험, 또는 독립 분석. 결과 방향(긍정·엇갈림·부정)이나 범위를 괄호로 함께 적는다",
+}
+FUNC_LEAD = ("타기팅과 광고 집행은 AI 운영 단계로, Meta 광고 매출의 약 3분의 1(연환산 기준)이 AI 자동 캠페인에서 나온다. 콘텐츠와 CRM은 AI 생성, 고객 이해는 AI 보조 단계다. "
+             "목표와 예산까지 AI가 정하는 자율 운영에 이른 기능은 없다.")
 EV = {"업체 주장": "contest", "기업 사례": "platform", "증분 검증 (엇갈림)": "agent", "증분 검증 (클릭 한정)": "agent", "증분 검증": "brand"}
+# (기능, 변화 단계, 잠정, 성과 근거, 근거, 기록)
 FUNCS = [
-    ("고객 이해", "AI 보조", "업체 주장", "고객 예측 분석 42%, 세분화 36%로 가장 덜 쓰임. 합성 응답자 같은 방식은 정확도 근거가 공개되지 않음", ["S3-M-001"]),
-    ("타기팅", "AI 운영", "증분 검증 (엇갈림)", "Advantage+ 연환산 750억 달러, 네이버 광고 성장의 60% 이상. 홀드아웃 실험에서 자동 캠페인 증분 수익률은 수동보다 -12%", ["S3-M-004", "S3-M-010", "S3-M-007"]),
-    ("광고 집행·입찰", "AI 운영", "증분 검증 (엇갈림)", "플랫폼 보고 전환 +15%(같은 수익률) vs 독립 분석 매출 +13%·전환당 비용 +16%", ["S3-M-005", "S3-M-006"]),
-    ("콘텐츠", "AI 생성", "증분 검증 (클릭 한정)", "마케터 74% 사용, Meta AI 도구 소상공인 900만 곳. AI 광고 클릭률은 사람 제작과 비슷하거나 약간 높음, 매출 미측정", ["S3-M-001", "S3-M-004", "S3-M-009"]),
-    ("CRM·개인화", "AI 생성", "기업 사례", "개인화 65%, 자동화 49%. 1:1 의사결정 AI로 갱신율 70%→84%(벤더 의뢰 연구)", ["S3-M-001", "S3-M-008"]),
+    ("고객 이해", "AI 보조", True, "업체 주장", "AI 사용처 중 고객 예측 분석 41.5%, 세분화로 가장 덜 쓰임. 합성 응답자 같은 방식은 정확도 근거가 공개되지 않음", ["S3-M-001"]),
+    ("타기팅", "AI 운영", False, "증분 검증 (엇갈림)", "Advantage+ 연환산 750억 달러(Meta 광고 매출의 약 3분의 1), 네이버 광고 성장의 60% 이상. 홀드아웃 실험에서 자동 캠페인 증분 수익률은 수동보다 -12%", ["S3-M-004", "S3-M-010", "S3-M-007"]),
+    ("광고 집행·입찰", "AI 운영", False, "증분 검증 (엇갈림)", "AI Max 광고주 50만 곳. 플랫폼 보고 전환 +15%(같은 수익률) vs 독립 분석 매출 +13%·전환당 비용 +16%", ["S3-M-005", "S3-M-006", "S3-M-004"]),
+    ("콘텐츠", "AI 생성", True, "증분 검증 (클릭 한정)", "AI를 쓰는 마케터의 73.9%가 콘텐츠 제작에 사용(사용 여부), Meta AI 도구 소상공인 900만 곳. AI 광고 클릭률은 사람 제작과 비슷하거나 약간 높음, 매출 미측정", ["S3-M-001", "S3-M-004", "S3-M-009"]),
+    ("CRM·개인화", "AI 생성", True, "기업 사례", "AI 사용처 중 개인화 65.4%, 자동화 48.9%(사용 여부). 1:1 의사결정 AI로 갱신율 70%→84%(벤더 의뢰 연구)", ["S3-M-001", "S3-M-008"]),
 ]
-def sg3(v):
-    i = SG.index(v)
-    return "".join(f'<span class="pip{" on" if k <= i else ""}"></span>' for k in range(3)) + f'<span class="lv">{E(v)}</span>'
+def tip_sg(v):
+    return f"{v} — {SG_DEF[v]}"
+def tip_ev(v):
+    base = v.split(" (")[0]
+    return f"{v} — {EV_DEF[base]}"
+criteria_html = criteria_panel([
+    ("축 1. AI가 일하는 방식", ["단계", "정의"], [[gauge(SG, k), E(v)] for k, v in SG_DEF.items()]),
+    ("축 2. 성과 근거", ["판정", "정의"], [[f'<span class="own {EV[k]}">{E(k)}</span>', E(v)] for k, v in EV_DEF.items()]),
+], extra_rules=["변화 단계는 그 기능 업무의 25% 이상이 해당 방식으로 돌아가는 최고 단계로 정한다.",
+                "'마케터의 N%가 AI를 쓴다' 같은 사용 여부 수치만 있으면 잠정으로 둔다."])
 func_rows = "".join(f"""<div class="rung"><div class="stage"><b>{E(f)}</b></div>
-  <div class="lvcell"><span class="region">변화 단계</span><span class="pips">{sg3(st)}</span></div>
-  <div class="lvcell"><span class="region">성과 근거</span><span class="own {EV[ev]}">{E(ev)}</span></div>
-  <p class="why">{E(w)} {tags(ids)}</p></div>""" for f, st, ev, w, ids in FUNCS)
-FUNC_NOTE = "판정: 변화가 깊을수록(광고·타기팅) 증분 검증도 많지만 결과가 엇갈리고, 변화가 얕은 곳(고객 이해·CRM)은 아직 업체 주장과 사례에 머문다 (R1 기준)."
+  <div class="lvcell"><span class="region">변화 단계</span>{gauge(SG, st, tip_sg(st), pv)}</div>
+  <div class="lvcell"><span class="region">성과 근거</span><span class="own {EV[ev]}" tabindex="0" data-tip="{E(tip_ev(ev))}">{E(ev)}</span></div>
+  <p class="why">{E(w)} {tags(ids)}</p></div>""" for f, st, pv, ev, w, ids in FUNCS)
+FUNC_NOTE = "판정: 변화가 깊을수록(광고·타기팅) 증분 검증도 많지만 결과가 엇갈리고, 변화가 얕은 곳(고객 이해·CRM)은 아직 업체 주장과 사례에 머문다."
 
 # 6. 핵심 지표 ---------------------------------------------------------
 INDICATOR_NAMES = {"S3-T1": "마케팅 AI 활용 비중", "S3-T2": "AI 성과 체감", "S3-T3": "마케팅 예산 중 AI",
@@ -151,6 +172,7 @@ page = f"""<title>S3 AI 마케팅 R1</title>
     <p class="lead muted">각 세부 전망이 적중하거나 빗나갔을 때 어느 시나리오 쪽 신호인지 표시했다. 확인 시점이 오면 확인 방법대로 판정한다.</p>
     <div class="tablewrap"><table><thead><tr><th>세부 전망</th><th>확인 시점</th><th>적중 시</th><th>빗나갈 시</th><th>상태</th><th>근거</th></tr></thead><tbody>{frows}</tbody></table></div></section>
   <section><h2>기능별 변화 단계와 성과 근거 <small>마케팅 기능 다섯 개</small></h2><p class="lead">{E(FUNC_LEAD)}</p>
+    {criteria_html}
     <div class="ladder mapgrid auto">{func_rows}</div><p class="gapnote">{E(FUNC_NOTE)}</p></section>
   <section><h2>핵심 지표 <small>추적 지표 {len(filled)}/8개 값 확보</small></h2><p class="lead">{E(METRICS_LEAD)}</p>
     <div class="tablewrap"><table><thead><tr><th>추적 지표</th><th>내용 · 출처</th><th style="text-align:right">현재값</th><th>기준 시점</th><th>기록</th></tr></thead><tbody>{mrows}</tbody></table></div></section>
@@ -169,10 +191,10 @@ order = [page.index(f"<h2>{h}") for h in ("한 줄 답", "해석", "주요 사�
 print("article_r1.html 생성,", len(page), "bytes; 앵커 없는 근거 링크:", bad or "없음", "; 섹션 순서 정상:", order == sorted(order))
 # ---------- 포털 신호: 판정 칩과 게이지를 판정 데이터에서 계산해 내보낸다
 SIGNAL_CHIP = '깊은 변화일수록 성과 엇갈림'
-SIGNAL_GAUGE = '마케팅 기능 5개 중 AI 운영 단계'
+SIGNAL_GAUGE = '마케팅 기능 5개 중 AI 운영 이상'
 SIGNAL_FRONTIER = '콘텐츠·CRM'
 signal = {"question": 'S3', "round": 1, "chip": SIGNAL_CHIP, "gauge": SIGNAL_GAUGE, "frontier": SIGNAL_FRONTIER,
-          "on": sum(1 for r in FUNCS if r[1] == "AI 운영"), "of": len(FUNCS)}
+          "on": sum(1 for r in FUNCS if SG.index(r[1]) >= SG.index("AI 운영")), "of": len(FUNCS)}
 (ROOT / "signal_r1.json").write_text(json.dumps(signal, ensure_ascii=False, indent=1), encoding="utf-8")
 print("signal_r1.json:", signal["chip"], f'{signal["on"]}/{signal["of"]}')
 sys.exit(1 if bad or order != sorted(order) else 0)
