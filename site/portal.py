@@ -163,6 +163,28 @@ total_rec = sum(int(i["cur"]["records"] or 0) for _, its in sections for i in it
 latest.sort(key=lambda x: x[0], reverse=True)
 last_date = latest[0][0] if latest else "—"
 
+# ---------- AI Chat 데이터 (포털 요약; 상세는 채팅이 아티클 페이지를 직접 읽는다)
+_chat_q = []
+for c, items in sections:
+    for it in items:
+        if it["status"] != "live":
+            continue
+        a, sg = it["cur"], it["cur"].get("signal", {})
+        items_txt = ""
+        if sg.get("kind") == "band":
+            items_txt = ", ".join(f"{nm} {sg['levels'][st]}{'(잠정)' if pv else ''}" for nm, st, pv in sg["items"])
+        elif sg.get("kind") == "text":
+            items_txt = sg.get("text", "")
+        _chat_q.append({"no": it["q"]["no"], "cat": c.get("short", c["name"]), "title": a["title"], "question": a["question"],
+                        "answer": a["answer"], "chip": sg.get("chip", ""), "score": score_of(sg), "items": items_txt,
+                        "round": a["n"], "date": a["date"], "path": a["path"]})
+CHAT_DATA = {"generated": str(TODAY), "categories": [f"{c['no']:02d} {c['name']}" for c, _ in sections], "questions": _chat_q,
+             "events": [{"date": r["date"], "id": r["id"], "text": r["statement"]} for r in recent],
+             "forecasts": [{"due": r["due"], "id": r["id"], "text": r["statement"]} for r in due_soon]}
+CHAT_HTML = ((SITE / "chat.html").read_text(encoding="utf-8")
+             .replace("%%ICON%%", (SITE / "ai_icon.txt").read_text(encoding="utf-8").strip())
+             .replace("%%DATA%%", json.dumps(CHAT_DATA, ensure_ascii=False).replace("</", "<\\/")))
+
 CSS = (ROOT / "lib" / "article.css").read_text(encoding="utf-8").split("/* 한 줄 답 */")[0]
 PORTAL_CSS = (SITE / "portal.css").read_text(encoding="utf-8")
 PORTAL_JS = (SITE / "portal.js").read_text(encoding="utf-8")
@@ -217,6 +239,7 @@ portal = f"""<!doctype html>
 </div>
 <div class="scrim" hidden></div>
 <script>{PORTAL_JS}</script>
+{CHAT_HTML}
 </body></html>
 """
 (DIST / "index.html").write_text(portal, encoding="utf-8")
