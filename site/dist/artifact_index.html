@@ -2,29 +2,68 @@
 <title>AX Signals</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;800&display=swap">
-<style>
-/* Layout: 연구 노트 한 단 — 답 → 서술형 해석 → 근거 표. 기록 번호가 본문의 각주 역할 */
+<style>/* Layout: 연구 노트 한 단 — 답 → 서술형 해석 → 근거 표. 기록 번호가 본문의 각주 역할 */
+/* Color: LG 컬러 시스템 — Active Red는 신호(현재 경계·판정·진행), Heritage Red는 UI에 쓰지 않음 */
 :root {
-  --paper: #f6f7f9; --ink: #16202b; --muted: #5d6875; --rule: #d6dbe2; --panel: #ffffff;
-  --accent: #1f5f8b; --accent-soft: #e2edf5; --amber: #b4690e; --amber-soft: #f7ead7;
-  --up: #1f7a4d; --down: #b3412f; --flat: #6a7380; --opt: #1f7a4d; --opt-soft: #e1f1e8; --pes: #a3402f; --pes-soft: #f6e3df;
+  /* Primary - Active Red */
+  --color-primary-50: #FFF5F8; --color-primary-100: #FEE3E2; --color-primary-200: #FDC0BE; --color-primary-300: #FE8A87;
+  --color-primary-400: #FF5F5B; --color-primary-500: #FD312E; --color-primary-600: #EA1917; --color-primary-700: #C4110F;
+  --color-primary-800: #8E0E0C; --color-primary-900: #5C0907;
+  /* Secondary - Heritage Red(로고 전용) + Warm Grey */
+  --color-secondary-500: #A50034;
+  --color-warm-100: #F6F3EB; --color-warm-200: #F0ECE4; --color-warm-300: #E6E1D6; --color-warm-500: #CBC8C2;
+  --logo-wordmark: #707070;
+  /* Neutral */
+  --color-neutral-0: #FFFFFF; --color-neutral-50: #F9FAFB; --color-neutral-100: #F3F5F7; --color-neutral-200: #ECEEF0;
+  --color-neutral-300: #DEE1E5; --color-neutral-500: #8F9298; --color-neutral-600: #767980; --color-neutral-700: #43474D;
+  --color-neutral-800: #212731; --color-neutral-900: #111111; --color-neutral-1000: #000000;
+  /* Semantic */
+  --color-success-bg: #E7F6EC; --color-success-fg: #08A53A; --color-warning-bg: #FFF6D6; --color-warning-fg: #B26A00;
+  --color-error-bg: #FEF3F3; --color-error-fg: #EA1917; --color-info-bg: #EAF5FF; --color-info-fg: #0C9AFF;
+  /* Surface */
+  --bg-base: #FFFFFF; --bg-subtle: #F3F5F7; --bg-warm: #F0ECE4; --bg-elevated: #FFFFFF; --bg-overlay: #FFFFFF; --bg-inverse: #111111;
+  /* Text */
+  --text-primary: #111111; --text-secondary: #666666; --text-tertiary: #8F8F8F; --text-on-primary: #FFFFFF; --text-disabled: #BBBBBB; --text-price: #EA1917;
+  /* Border */
+  --border-default: #DDDDDD; --border-subtle: #EEEEEE; --border-strong: #111111; --border-focus: #000000;
+  /* 역할 토큰 (페이지 전체가 이 이름으로 색을 쓴다) */
+  --signal: var(--color-primary-600);          /* 채움·게이지·현재 경계 */
+  --signal-ink: var(--color-primary-700);      /* 흰 바탕 위 빨간 글자 */
+  --signal-hover: var(--color-primary-700);
+  --signal-soft: var(--color-primary-50);
+  --shadow: 0 8px 28px rgba(17, 17, 17, .12);
+  --paper: var(--bg-base); --ink: var(--text-primary); --muted: var(--text-secondary); --rule: var(--border-default); --panel: var(--bg-subtle);
+  --accent: var(--signal); --accent-soft: var(--signal-soft);
+  --amber: var(--color-warning-fg); --amber-soft: var(--color-warning-bg);
+  --up: var(--color-success-fg); --down: var(--color-error-fg); --flat: var(--color-neutral-500);
+  --opt: var(--color-success-fg); --opt-soft: var(--color-success-bg); --pes: var(--color-error-fg); --pes-soft: var(--color-error-bg);
   --display: "Noto Serif KR", "Apple SD Gothic Neo", serif;
   --body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
-  --paper: #11161c; --ink: #e6ebf1; --muted: #9aa5b1; --rule: #2b333d; --panel: #171e26;
-  --accent: #7fb6dc; --accent-soft: #1b2c3a; --amber: #e2a457; --amber-soft: #33271a;
-  --up: #5fc493; --down: #ec8a78; --flat: #98a2ae; --opt: #6fcf9d; --opt-soft: #17291f; --pes: #ef9a88; --pes-soft: #2f1c18; color-scheme: dark; } }
+  --bg-base: #111111; --bg-subtle: #1A1D22; --bg-warm: #24211C; --bg-elevated: #212731; --bg-overlay: #212731; --bg-inverse: #F3F5F7;
+  --text-primary: #F3F5F7; --text-secondary: #A9ADB4; --text-tertiary: #8F9298; --text-disabled: #5A5E66; --text-price: #FF5F5B;
+  --border-default: #343A44; --border-subtle: #262B33; --border-strong: #F3F5F7; --border-focus: #FFFFFF;
+  --color-success-bg: #10291A; --color-success-fg: #3DD06B; --color-warning-bg: #2E2410; --color-warning-fg: #F2B33D;
+  --color-error-bg: #2E1414; --color-error-fg: #FF5F5B; --color-info-bg: #0F2333; --color-info-fg: #5BB8FF;
+  --signal: var(--color-primary-500); --signal-ink: var(--color-primary-400); --signal-hover: var(--color-primary-400); --signal-soft: #2A1414;
+  --shadow: 0 10px 32px rgba(0, 0, 0, .55); color-scheme: dark; } }
 :root[data-theme="dark"] {
-  --paper: #11161c; --ink: #e6ebf1; --muted: #9aa5b1; --rule: #2b333d; --panel: #171e26;
-  --accent: #7fb6dc; --accent-soft: #1b2c3a; --amber: #e2a457; --amber-soft: #33271a;
-  --up: #5fc493; --down: #ec8a78; --flat: #98a2ae; --opt: #6fcf9d; --opt-soft: #17291f; --pes: #ef9a88; --pes-soft: #2f1c18; color-scheme: dark; }
+  --bg-base: #111111; --bg-subtle: #1A1D22; --bg-warm: #24211C; --bg-elevated: #212731; --bg-overlay: #212731; --bg-inverse: #F3F5F7;
+  --text-primary: #F3F5F7; --text-secondary: #A9ADB4; --text-tertiary: #8F9298; --text-disabled: #5A5E66; --text-price: #FF5F5B;
+  --border-default: #343A44; --border-subtle: #262B33; --border-strong: #F3F5F7; --border-focus: #FFFFFF;
+  --color-success-bg: #10291A; --color-success-fg: #3DD06B; --color-warning-bg: #2E2410; --color-warning-fg: #F2B33D;
+  --color-error-bg: #2E1414; --color-error-fg: #FF5F5B; --color-info-bg: #0F2333; --color-info-fg: #5BB8FF;
+  --signal: var(--color-primary-500); --signal-ink: var(--color-primary-400); --signal-hover: var(--color-primary-400); --signal-soft: #2A1414;
+  --shadow: 0 10px 32px rgba(0, 0, 0, .55); color-scheme: dark; }
 * { box-sizing: border-box; }
 body { background: var(--paper); color: var(--ink); font: 400 16px/1.7 var(--body); padding: 0 20px; }
 main { max-width: 980px; margin: 0 auto; padding-block: 40px 72px; display: grid; gap: 60px; }
 .narrow { max-width: 70ch; }
-a { color: var(--accent); }
+a { color: var(--ink); text-decoration-color: var(--signal); text-underline-offset: 3px; }
+a:hover { color: var(--signal-ink); }
+:focus-visible { outline: 2px solid var(--border-focus); outline-offset: 2px; }
 code, .rid { font: 500 12px/1 var(--mono); }
 h1, h2, h3 { text-wrap: balance; margin: 0; }
 .eyebrow { font: 500 12px/1.4 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); display: flex; gap: 14px; flex-wrap: wrap; }
@@ -34,147 +73,709 @@ h2 { font: 600 22px/1.3 var(--display); display: flex; align-items: baseline; ga
 h2 small { font: 400 13px var(--body); color: var(--muted); }
 section { display: grid; gap: 18px; min-width: 0; }
 .lead { margin: 0; max-width: 70ch; }
-.rid { display: inline-block; padding: 3px 5px; margin: 2px 2px 0 0; border-radius: 3px; background: var(--accent-soft); color: var(--accent); text-decoration: none; vertical-align: 1px; }
-.rid:hover, .rid:focus-visible { outline: 1px solid var(--accent); }
+.rid { display: inline-block; padding: 3px 5px; margin: 2px 2px 0 0; border-radius: 3px; background: var(--panel); color: var(--muted); text-decoration: none; vertical-align: 1px; cursor: pointer; }
+.rid:hover { color: var(--signal-ink); background: var(--signal-soft); }
+.rid:focus-visible { outline: 2px solid var(--border-focus); }
 
-/* Layout: 신문 목차 — 카테고리 번호를 큰 숫자로, 질문은 번호 열 + 본문 열의 2단 목록 */
-.portal { max-width: 1080px; }
-.masthead { display: grid; gap: 14px; padding-bottom: 28px; border-bottom: 2px solid var(--ink); }
-.masthead h1 { font: 800 clamp(40px, 7vw, 72px)/1 var(--display); letter-spacing: -0.01em; }
-.masthead .tag { font-size: 17px; max-width: 60ch; margin: 0; }
-.stats { display: flex; gap: 22px; flex-wrap: wrap; font: 500 13px var(--mono); color: var(--muted); }
-.stats b { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
-.method { font-size: 14px; color: var(--muted); margin: 0; max-width: 72ch; }
-.catnav { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; border-bottom: 1px solid var(--rule); }
-.catnav a { padding: 12px 14px 12px 0; text-decoration: none; color: var(--ink); font-size: 14px; display: grid; gap: 2px; border-right: 1px solid var(--rule); padding-left: 14px; }
-.catnav a:first-child { padding-left: 0; }
-.catnav a:last-child { border-right: 0; }
-.catnav b { font: 600 12px var(--mono); color: var(--accent); }
-.catnav span { font: 400 12px var(--mono); color: var(--muted); }
-.catnav a:hover b, .catnav a:focus-visible b { text-decoration: underline; }
-.cat { display: grid; gap: 0; scroll-margin-top: 20px; }
-.cathead { display: grid; grid-template-columns: auto 1fr auto; gap: 18px; align-items: end; padding-bottom: 14px; border-bottom: 1px solid var(--ink); }
-.catno { font: 800 56px/0.9 var(--display); color: var(--accent); }
-.cathead h2 { font: 600 24px/1.2 var(--display); }
-.cathead p { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
-.catcount { font: 500 12px var(--mono); color: var(--muted); white-space: nowrap; }
-.qlist { list-style: none; margin: 0; padding: 0; }
-.qrow { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--rule); }
-.qno b { display: block; font: 600 22px/1.1 var(--mono); }
-.qno span { font: 400 12px var(--mono); color: var(--muted); }
-.qbody { display: grid; gap: 8px; min-width: 0; }
-.qbody h3 { font: 600 20px/1.35 var(--display); }
-.qbody h3 a { color: var(--ink); text-decoration: none; background-image: linear-gradient(var(--accent), var(--accent)); background-size: 0 2px; background-repeat: no-repeat; background-position: 0 100%; transition: background-size .2s; }
-.qbody h3 a:hover, .qbody h3 a:focus-visible { background-size: 100% 2px; }
-.qq { margin: 0; color: var(--muted); font-size: 14px; }
-.qa { margin: 0; font-size: 15px; border-left: 2px solid var(--accent); padding-left: 12px; max-width: 75ch; }
-.qmeta { margin: 0; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; font: 400 12px var(--mono); color: var(--muted); }
-.pill { font: 500 11px var(--mono); padding: 2px 7px; border-radius: 2px; border: 1px solid var(--rule); color: var(--muted); }
-.pill.live { border-color: var(--accent); color: var(--accent); }
-.qrow.planned .qno b { color: var(--muted); }
-.qrow.planned .qq { font-size: 15px; }
-.empty { margin: 0; padding: 20px 0; color: var(--muted); font-size: 14px; border-bottom: 1px solid var(--rule); }
-footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 18px; }
-@media (prefers-reduced-motion: reduce) { .qbody h3 a { transition: none; } }
+/* Layout: 관제판 — 머리(제목·레이더) → 최근 사건 띠 → 카테고리 4열 신호 보드 → 판정 임박 전망 달력 */
+body { background: var(--paper); }
+[hidden] { display: none !important; }
+.portal { max-width: 1200px; gap: 56px; }
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.sechead { display: grid; gap: 6px; }
+.sechead.row { grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 16px; }
+.sechead h2 { font: 600 22px/1.3 var(--display); }
+.sechead p { margin: 0; color: var(--muted); font-size: 14px; max-width: 70ch; }
+
+/* 머리 */
+.masthead { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 32px; align-items: center; padding-bottom: 32px; border-bottom: 2px solid var(--border-strong); }
+.mh-text { display: grid; gap: 14px; min-width: 0; }
+.kicker { margin: 0; display: inline-flex; align-items: center; gap: 10px; font: 500 12px var(--mono); letter-spacing: .06em; color: var(--signal-ink); }
+.live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--signal); box-shadow: 0 0 0 0 var(--signal); }
+.masthead h1 { font: 800 clamp(44px, 8vw, 84px)/0.95 var(--display); letter-spacing: -0.02em; }
+.masthead .tag { font-size: 18px; max-width: 46ch; margin: 0; text-wrap: balance; }
+.method { font-size: 14px; color: var(--muted); margin: 0; }
+.stats { display: flex; flex-wrap: wrap; gap: 10px 28px; margin: 6px 0 0; }
+.stats div { display: grid; gap: 2px; }
+.stats dt { font: 500 11px var(--mono); letter-spacing: .05em; color: var(--muted); }
+.stats dd { margin: 0; font: 600 22px/1.1 var(--mono); font-variant-numeric: tabular-nums; }
+.mh-radar { margin: 0; display: grid; gap: 8px; justify-items: center; }
+.mh-radar figcaption { font-size: 12px; color: var(--muted); text-align: center; max-width: 30ch; }
+.radar { width: 100%; max-width: 260px; height: auto; overflow: visible; }
+.radar .ring { fill: none; stroke: var(--rule); stroke-width: 1; }
+.radar .axis { stroke: var(--border-subtle); stroke-width: 1; }
+.radar .beam { fill: var(--signal); opacity: .10; }
+.radar .sweep { transform-origin: 100px 100px; }
+.radar .dot circle { fill: var(--signal); stroke: var(--paper); stroke-width: 1.5; transition: r .15s; }
+.radar .dot:hover circle, .radar .dot:focus-visible circle { r: 5.5; }
+.radar .ql { font: 600 9px var(--mono); fill: var(--muted); }
+
+/* 최근 사건 띠 */
+.signals { display: grid; gap: 14px; }
+.strip { list-style: none; margin: 0 -20px; padding: 2px 20px 10px; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(240px, 1fr); gap: 12px; overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: thin; }
+.strip li { scroll-snap-align: start; min-width: 0; }
+.strip a { height: 100%; display: grid; align-content: start; gap: 8px; padding: 12px 14px; border: 1px solid var(--rule); border-top: 3px solid var(--signal); background: var(--paper); color: var(--ink); text-decoration: none; border-radius: 2px; transition: border-color .15s, transform .15s; }
+.strip a:hover { border-color: var(--border-strong); border-top-color: var(--signal); }
+.sm { display: flex; gap: 10px; font: 500 12px var(--mono); color: var(--muted); }
+.sm b { color: var(--signal-ink); }
+.st { font-size: 14px; line-height: 1.55; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+
+/* 검색 */
+.search { position: relative; display: flex; align-items: center; gap: 10px; }
+.search input { width: 220px; font: 400 14px var(--body); color: var(--ink); background: var(--paper); border: 1px solid var(--rule); border-radius: 2px; padding: 8px 12px; }
+.search input:focus { outline: 2px solid var(--border-focus); outline-offset: 0; border-color: transparent; }
+.search output { font: 500 12px var(--mono); color: var(--muted); min-width: 5ch; }
+
+/* 탭 */
+.boardwrap { display: grid; gap: 16px; }
+.tabs { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 15; background: var(--paper); display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; border-bottom: 1px solid var(--rule); margin: 0 -20px; padding: 0 20px; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab { position: relative; flex: none; border: 0; background: none; color: var(--muted); font: 500 14px var(--body); padding: 12px 12px 13px; cursor: pointer; display: inline-flex; gap: 6px; align-items: baseline; }
+.tab b { font: 600 12px var(--mono); color: var(--signal-ink); }
+.tab span { font: 400 12px var(--mono); }
+.tab[aria-selected="true"] { color: var(--ink); }
+.tab:hover { color: var(--ink); }
+.tab:focus-visible { outline: 2px solid var(--border-focus); outline-offset: -2px; }
+.tab-ink { position: absolute; bottom: 0; left: 0; height: 2px; width: 0; background: var(--signal); transform: translateX(var(--x, 0)); width: var(--w, 0); }
+
+/* 보드 */
+.board { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; align-items: start; }
+.col { display: grid; gap: 12px; min-width: 0; scroll-margin-top: 60px; }
+.colhead { display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: start; padding-bottom: 10px; border-bottom: 1px solid var(--border-strong); }
+.cno { font: 800 30px/0.9 var(--display); color: var(--signal); }
+.colhead h2 { font: 600 16px/1.25 var(--display); }
+.colhead p { margin: 4px 0 0; font-size: 12px; color: var(--muted); line-height: 1.5; }
+.tiles { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
+.tlink > * { min-width: 0; }
+.tile { border: 1px solid var(--rule); background: var(--paper); border-radius: 3px; transition: border-color .15s, box-shadow .2s, transform .2s; min-width: 0; }
+.tile:hover, .tile:focus-within { border-color: var(--border-strong); }
+.tlink { display: grid; gap: 8px; padding: 12px 14px 13px; color: var(--ink); text-decoration: none; }
+.tlink:hover { color: var(--ink); }
+.tlink:focus-visible { outline: 2px solid var(--border-focus); outline-offset: 2px; border-radius: 3px; }
+.tno { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+.tno b { font: 600 14px var(--mono); }
+.tno span { font: 400 11px var(--mono); color: var(--muted); text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.ttl { margin: 0; font: 600 15px/1.4 var(--body); text-wrap: balance; }
+.chip { justify-self: start; font: 500 12px/1.35 var(--body); color: var(--signal-ink); background: var(--signal-soft); padding: 3px 8px; border-radius: 999px; }
+.chip.muted { color: var(--muted); background: var(--panel); margin: 0 14px 12px; display: inline-block; }
+.gauge { display: grid; grid-template-columns: auto auto 1fr; gap: 4px 8px; align-items: center; }
+.pips { display: flex; gap: 3px; }
+.pips i { width: 10px; height: 6px; border-radius: 1px; background: var(--border-default); }
+.pips i.on { background: var(--signal); }
+.gnum { font: 500 11px var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.glab { grid-column: 1 / -1; font-size: 11px; color: var(--muted); line-height: 1.4; }
+.tmore { display: none; }
+.tile.planned .tno, .tile.planned .ttl { padding: 0 14px; }
+.tile.planned .tno { padding-top: 12px; }
+.tile.planned .ttl { color: var(--muted); font-weight: 400; font-size: 14px; margin: 6px 0 10px; }
+.tile[hidden] { display: none; }
+.col.empty { display: none; }
+
+/* 카테고리 보기: 한 열을 펼쳐 한 줄 답까지 보여준다 */
+.board[data-view="cat"] { grid-template-columns: 1fr; }
+.board[data-view="cat"] .col:not(.on) { display: none; }
+.board[data-view="cat"] .colhead { grid-template-columns: auto 1fr; }
+.board[data-view="cat"] .cno { font-size: 44px; }
+.board[data-view="cat"] .colhead h2 { font-size: 22px; }
+.board[data-view="cat"] .colhead p { font-size: 14px; }
+.board[data-view="cat"] .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.board[data-view="cat"] .tile { display: grid; grid-template-rows: auto 1fr; }
+.board[data-view="cat"] .ttl { font-size: 17px; }
+.board[data-view="cat"] .tmore { display: grid; gap: 8px; padding: 0 14px 14px; align-content: start; }
+.tq { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.55; }
+.ta { margin: 0; font-size: 14px; line-height: 1.65; border-left: 2px solid var(--signal); padding-left: 10px; }
+.tmeta { margin: 0; display: flex; gap: 10px; flex-wrap: wrap; font: 400 11px var(--mono); color: var(--muted); }
+.tmeta .live { color: var(--signal-ink); font-weight: 600; }
+.tmeta a { color: var(--muted); }
+.noresult { margin: 0; color: var(--muted); font-size: 14px; padding: 20px 0; }
+
+/* 판정 임박 전망 */
+.due { display: grid; gap: 16px; }
+.months { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; align-items: start; }
+.month { display: grid; gap: 10px; min-width: 0; }
+.month h3 { display: flex; align-items: baseline; gap: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border-strong); }
+.month h3 b { font: 800 28px/1 var(--display); }
+.month h3 span { font: 500 12px var(--mono); color: var(--muted); }
+.month ol { list-style: none; margin: 0; padding: 0; display: grid; }
+.month li { display: grid; grid-template-columns: 44px 30px minmax(0, 1fr) auto; gap: 8px; padding: 9px 0; border-bottom: 1px solid var(--border-subtle); font-size: 13px; line-height: 1.5; align-items: baseline; }
+.month li time { font: 500 12px var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.month li b { font: 600 12px var(--mono); color: var(--signal-ink); }
+.month li a { color: var(--ink); text-decoration: none; }
+.month li a:hover { text-decoration: underline; text-decoration-color: var(--signal); }
+.month .dl { font: 500 11px var(--mono); color: var(--muted); white-space: nowrap; }
+.month li.extra { display: none; }
+.month.open li.extra { display: grid; }
+.more { justify-self: start; border: 1px solid var(--rule); background: var(--paper); color: var(--ink); font: 500 13px var(--body); padding: 6px 12px; border-radius: 2px; cursor: pointer; }
+.more:hover { border-color: var(--border-strong); }
+
+/* 미리보기: 넓은 화면은 카드 옆 팝오버, 좁은 화면은 아래에서 올라오는 시트 */
+.preview { position: fixed; z-index: 50; width: 360px; max-width: calc(100vw - 32px); background: var(--bg-elevated); color: var(--ink); border: 1px solid var(--rule); border-radius: 6px; box-shadow: var(--shadow); padding: 16px 18px; display: grid; gap: 10px; }
+.preview h3 { font: 600 17px/1.4 var(--display); }
+.pv-no { margin: 0; font: 600 12px var(--mono); color: var(--muted); }
+.pv-grip { display: none; }
+.pv-act { display: flex; gap: 10px; align-items: center; padding-top: 4px; }
+.pv-go { font: 600 14px var(--body); color: var(--text-on-primary); background: var(--color-primary-600); padding: 8px 14px; border-radius: 2px; text-decoration: none; }
+.pv-go:hover { background: var(--color-primary-700); color: var(--text-on-primary); }
+.pv-x { border: 1px solid var(--rule); background: none; color: var(--ink); font: 500 13px var(--body); padding: 7px 12px; border-radius: 2px; cursor: pointer; }
+.preview.hover .pv-act { display: none; }
+.scrim { position: fixed; inset: 0; z-index: 45; background: rgba(17, 17, 17, .4); }
+
+@media (max-width: 1000px) {
+  .board { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 @media (max-width: 760px) {
-  .catnav { grid-template-columns: 1fr 1fr; }
-  .catnav a { border-right: 0; padding-left: 0; }
-  .cathead { grid-template-columns: auto 1fr; }
-  .catcount { grid-column: 1 / -1; }
-  .qrow { grid-template-columns: 1fr; gap: 8px; }
+  .masthead { grid-template-columns: 1fr; gap: 20px; }
+  .mh-radar { grid-template-columns: 120px 1fr; justify-items: start; align-items: center; }
+  .mh-radar figcaption { text-align: left; }
+  .stats dd { font-size: 18px; }
+  .sechead.row { grid-template-columns: 1fr; }
+  .search input { width: 100%; }
+  .search { width: 100%; }
+  .board { grid-template-columns: 1fr; gap: 28px; }
+  .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .tlink { padding: 10px 11px 11px; gap: 6px; }
+  .ttl { font-size: 14px; }
+  .glab { display: none; }
+  .tno span { display: none; }
+  .board[data-view="cat"] .tiles { grid-template-columns: 1fr; }
+  .board[data-view="cat"] .tno span { display: inline; }
+  .month li { grid-template-columns: 44px 30px minmax(0, 1fr); }
+  .month .dl { display: none; }
+  .preview { left: 0 !important; right: 0; top: auto !important; bottom: 0; width: auto; max-width: none; border-radius: 14px 14px 0 0; padding: 10px 20px calc(18px + env(safe-area-inset-bottom, 0px)); max-height: 80vh; overflow-y: auto; }
+  .pv-grip { display: block; justify-self: center; width: 40px; height: 4px; border-radius: 2px; background: var(--rule); margin-bottom: 4px; }
+}
+@media (max-width: 340px) {
+  .tiles { grid-template-columns: 1fr; }
+}
+
+/* 움직임: 첫 화면은 완성된 상태로 그려지고, 움직임은 그 위에 덧붙는다 */
+@media (prefers-reduced-motion: no-preference) {
+  .radar .sweep { animation: sweep 6s linear infinite; }
+  @keyframes sweep { to { transform: rotate(360deg); } }
+  .radar .dot circle { animation: blip 6s ease-out infinite; animation-delay: calc(var(--i) * 0.3s); }
+  @keyframes blip { 0%, 100% { opacity: 1; } 8% { opacity: .35; } }
+  .live-dot { animation: pulse 2.4s ease-out infinite; }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 var(--signal); } 70%, 100% { box-shadow: 0 0 0 8px transparent; } }
+  .pips i.on { animation: fill .5s ease-out both; animation-delay: calc(.25s + var(--k) * 70ms); transform-origin: 0 50%; }
+  @keyframes fill { from { transform: scaleX(0); } }
+  .tile:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+  .tab-ink { transition: transform .28s cubic-bezier(.3, .7, .2, 1), width .28s cubic-bezier(.3, .7, .2, 1); }
+  .board.swap .col { animation: rise .3s ease-out both; }
+  @keyframes rise { from { opacity: .3; transform: translateY(8px); } }
+  .preview { animation: pop .16s ease-out; }
+  @keyframes pop { from { opacity: 0; transform: translateY(6px); } }
+  .strip a:hover { transform: translateY(-2px); }
 }
 </style><main class="portal">
   <header class="masthead">
-    <h1>AX Signals</h1>
-    <p class="tag">고객·산업·영업·LG의 AI 변화를 의견이 아닌 기록으로 쓰는 AI 전환 리포트</p>
-    <div class="stats"><span>카테고리 <b>4</b></span><span>질문 <b>20</b></span><span>발행 아티클 <b>20</b></span><span>근거 기록 <b>648</b>건</span><span>최근 업데이트 <b>2026-10-09</b></span></div>
-    <p class="method">같은 질문을 매달 다시 묻고, 무엇이 달라졌는지 근거와 함께 기록합니다.</p>
+    <div class="mh-text">
+      <p class="kicker"><span class="live-dot" aria-hidden="true"></span>매달 다시 묻는 AI 전환 질문 20개</p>
+      <h1>AX Signals</h1>
+      <p class="tag">고객·산업·영업·LG의 AI 변화를 의견이 아닌 기록으로 쓰는 AI 전환 리포트</p>
+      <p class="method">같은 질문을 매달 다시 묻고, 무엇이 달라졌는지 근거와 함께 기록합니다.</p>
+      <dl class="stats">
+        <div><dt>카테고리</dt><dd data-count="4">4</dd></div>
+        <div><dt>발행 아티클</dt><dd data-count="20">20</dd></div>
+        <div><dt>근거 기록</dt><dd data-count="648">648</dd></div>
+        <div><dt>판정 대기 전망</dt><dd data-count="118">118</dd></div>
+        <div><dt>최근 업데이트</dt><dd>2026-10-09</dd></div>
+      </dl>
+    </div>
+    <figure class="mh-radar"><svg class="radar" viewBox="0 0 200 200" role="img" aria-label="20개 질문의 신호 위치. 사분면은 카테고리, 바깥쪽일수록 판정 게이지가 많이 찬 질문"><circle cx="100" cy="100" r="30" class="ring"/><circle cx="100" cy="100" r="55" class="ring"/><circle cx="100" cy="100" r="80" class="ring"/><line x1="100" y1="12" x2="100" y2="188" class="axis"/><line x1="12" y1="100" x2="188" y2="100" class="axis"/><g class="sweep"><path d="M100 100 L100 12 A88 88 0 0 1 162.2 37.8 Z" class="beam"/></g><a href="#customer-lab" class="dot" data-q="C1"><circle cx="115.5" cy="42.0" r="3.6" style="--i:0"/><title>C1 AI는 고객의 쇼핑을 어디까지 대신하고 있나</title></a><a href="#customer-lab" class="dot" data-q="C2"><circle cx="126.5" cy="54.1" r="3.6" style="--i:1"/><title>C2 AI 시대, 고객 접점의 주인은 누구인가</title></a><a href="#customer-lab" class="dot" data-q="C3"><circle cx="132.5" cy="67.5" r="3.6" style="--i:2"/><title>C3 AI가 만든 정보, 소비자는 믿는가</title></a><a href="#customer-lab" class="dot" data-q="C4"><circle cx="130.7" cy="82.2" r="3.6" style="--i:3"/><title>C4 집 안의 AI는 어디까지 스스로 하나</title></a><a href="#customer-lab" class="dot" data-q="C5"><circle cx="168.1" cy="81.8" r="3.6" style="--i:4"/><title>C5 어떤 삶의 변화가 수요를 만드는가</title></a><a href="#industry-trend" class="dot" data-q="I1"><circle cx="155.2" cy="117.9" r="3.6" style="--i:5"/><title>I1 AI 기술의 경계는 어디까지 넓어졌나</title></a><a href="#industry-trend" class="dot" data-q="I2"><circle cx="142.9" cy="131.2" r="3.6" style="--i:6"/><title>I2 AI 제품은 어디까지 실제로 쓰이고 있나</title></a><a href="#industry-trend" class="dot" data-q="I3"><circle cx="124.3" cy="133.4" r="3.6" style="--i:7"/><title>I3 AI에 쏟아진 돈은 어디로 가고, 돌아오고 있나</title></a><a href="#industry-trend" class="dot" data-q="I4"><circle cx="112.8" cy="139.3" r="3.6" style="--i:8"/><title>I4 AI는 어느 산업까지 들어갔고, 무엇이 밀고 막나</title></a><a href="#sales-marketing" class="dot" data-q="S1"><circle cx="89.3" cy="139.9" r="3.6" style="--i:9"/><title>S1 AI 답변 속 브랜드는 어떻게 보이고, 무엇이 노출을 가르나</title></a><a href="#sales-marketing" class="dot" data-q="S2"><circle cx="84.0" cy="127.7" r="3.6" style="--i:10"/><title>S2 AI는 어디까지 대신 사고, 그 돈은 누구에게 가나</title></a><a href="#sales-marketing" class="dot" data-q="S3"><circle cx="67.5" cy="132.5" r="3.6" style="--i:11"/><title>S3 AI는 마케팅을 어디까지 바꿨고, 무엇이 매출로 이어졌나</title></a><a href="#sales-marketing" class="dot" data-q="S4"><circle cx="60.2" cy="123.0" r="3.6" style="--i:12"/><title>S4 AI는 영업과 고객 응대에서 무엇을 맡고, 사람은 무엇을 하나</title></a><a href="#sales-marketing" class="dot" data-q="S5"><circle cx="69.1" cy="108.3" r="3.6" style="--i:13"/><title>S5 영업·마케팅 AI 예산은 누가 가져가고, 무엇이 도입을 가르나</title></a><a href="#lg-group-ai" class="dot" data-q="L1"><circle cx="27.9" cy="83.5" r="3.6" style="--i:14"/><title>L1 LG는 AI 데이터센터 수요를 어디까지 계약과 매출로 잡았나</title></a><a href="#lg-group-ai" class="dot" data-q="L2"><circle cx="71.2" cy="86.1" r="3.6" style="--i:15"/><title>L2 LG의 피지컬 AI는 현장에서 어디까지 성과를 냈나</title></a><a href="#lg-group-ai" class="dot" data-q="L3"><circle cx="70.3" cy="76.3" r="3.6" style="--i:16"/><title>L3 LG의 차량용 AI는 어느 고객·차종까지 들어갔나</title></a><a href="#lg-group-ai" class="dot" data-q="L4"><circle cx="62.6" cy="53.1" r="3.6" style="--i:17"/><title>L4 LG의 AX는 목표에서 결과로 얼마나 넘어왔나</title></a><a href="#lg-group-ai" class="dot" data-q="L5"><circle cx="80.0" cy="58.6" r="3.6" style="--i:18"/><title>L5 AI가 찾은 소재·신약은 어디까지 제품이 됐나</title></a><a href="#lg-group-ai" class="dot" data-q="L6"><circle cx="91.3" cy="62.0" r="3.6" style="--i:19"/><title>L6 LG의 AI 동맹은 무엇을 바꾸고 있나</title></a><text x="168" y="35" text-anchor="middle" class="ql">01</text><text x="168" y="171" text-anchor="middle" class="ql">02</text><text x="32" y="171" text-anchor="middle" class="ql">03</text><text x="32" y="35" text-anchor="middle" class="ql">04</text></svg><figcaption>점 하나가 질문 하나입니다. 바깥쪽일수록 판정 단계가 많이 진행된 질문입니다.</figcaption></figure>
   </header>
-  <nav class="catnav" aria-label="카테고리"><a href="#customer-lab"><b>01</b> AI Future Customer Lab <span>5/5</span></a><a href="#industry-trend"><b>02</b> AI Industry Trend <span>4/4</span></a><a href="#sales-marketing"><b>03</b> AI Sales &amp; Marketing <span>5/5</span></a><a href="#lg-group-ai"><b>04</b> LG Group AI <span>6/6</span></a></nav>
-  <section class="cat" id="customer-lab"><header class="cathead"><span class="catno">01</span>
-  <div><h2>AI Future Customer Lab</h2><p>고객과 시장이 AI로 어떻게 바뀌는지를 추적한다.</p></div><span class="catcount">아티클 5개 · 질문 5개</span></header><ol class="qlist"><li class="qrow"><div class="qno"><b>C1</b><span>Consumer Decision Making</span></div>
-  <div class="qbody"><h3><a href="customer-lab/c1/r1.html">AI는 고객의 쇼핑을 어디까지 대신하고 있나</a></h3>
-  <p class="qq">소비자는 탐색 → 답변 → 추천 → 결정 → 위임 중 어느 단계까지 AI에 맡기고 있으며, 검색엔진·브랜드 사이트의 역할은 얼마나 줄었는가?</p>
-  <p class="qa">2026년 10월 현재 AI가 대신하는 일은 ‘찾아보고 후보를 추려주는 것’까지다. 무엇을 살지 정하고 결제하는 일은 소비자가 직접 하며, 결제까지 AI에 맡기겠다는 소비자는 9%에 그친다.</p>
-  <p class="qmeta"><span class="pill live">R1</span><time>2026-10-09</time><span>기록 40건</span><span>질문 v1.0</span></p></div></li><li class="qrow"><div class="qno"><b>C2</b><span>Customer Experience &amp; Commerce</span></div>
-  <div class="qbody"><h3><a href="customer-lab/c2/r1.html">AI 시대, 고객 접점의 주인은 누구인가</a></h3>
-  <p class="qq">고객 여정(발견·상담·판매·관계) 중 어느 접점이 AI Agent로 넘어가고 있으며, 그 접점의 주도권은 브랜드·플랫폼·고객 Agent 중 누구에게 있는가?</p>
-  <p class="qa">2026년 10월 현재 AI로 가장 많이 넘어간 접점은 발견과 상담이다. 발견은 플랫폼이 광고로 팔고, 상담은 고객이 직접 쓰는 범용 AI로 옮겨가 두 곳 모두 브랜드 손을 떠나고 있다. 결제는 플랫폼·리테일러·고객 Agent가 다투는 중이고, 재구매·멤버십 같은 관계 접점만 아직 브랜드에 남아 있다.</p>
-  <p class="qmeta"><span class="pill live">R1</span><time>2026-10-09</time><span>기록 38건</span><span>질문 v1.0</span></p></div></li><li class="qrow"><div class="qno"><b>C3</b><span>Content, Information &amp; Trust</span></div>
-  <div class="qbody"><h3><a href="customer-lab/c3/r1.html">AI가 만든 정보, 소비자는 믿는가</a></h3>
-  <p class="qq">소비자가 구매 판단에 쓰는 정보의 원천은 사람이 만든 것에서 AI가 만든 것으로 어디까지 옮겨갔고, 소비자는 그것을 믿는가?</p>
-  <p class="qa">2026년 10월 현재 웹에 새로 올라오는 글의 절반은 AI가 쓰고, 소비자는 그 정보를 원문 대신 AI 요약으로 받아본다. 그러나 믿음은 따라오지 않았다. AI가 전해준 뉴스를 믿는 사람은 5명 중 1명이고, 정작 AI는 브랜드 사이트보다 Reddit·YouTube 같은 사람의 경험담을 가장 많이 인용한다.</p>
-  <p class="qmeta"><span class="pill live">R1</span><time>2026-10-09</time><span>기록 27건</span><span>질문 v1.0</span></p></div></li><li class="qrow"><div class="qno"><b>C4</b><span>Physical AI, Products &amp; Living</span></div>
-  <div class="qbody"><h3><a href="customer-lab/c4/r1.html">집 안의 AI는 어디까지 스스로 하나</a></h3>
-  <p class="qq">집 안에서 AI가 스스로 판단·실행하는 범위는 어디까지 왔으며, 고객은 어느 수준의 자율을 받아들이는가?</p>
-  <p class="qa">2026년 10월 현재 집 안 AI는 ‘정해준 조건대로 알아서 하는 것(L2)’까지 제품이 됐고, 생성형 AI 허브가 상황을 판단해 여러 기기를 엮는 L3로 막 넘어가는 중이다. 고객 수용은 한 칸 뒤에 있다. 한국에서는 AI 가전에 신중한 소비자(45.7%)가 처음으로 긍정 소비자(36.3%)를 넘었다.</p>
-  <p class="qmeta"><span class="pill live">R1</span><time>2026-10-09</time><span>기록 30건</span><span>질문 v1.0</span></p></div></li><li class="qrow"><div class="qno"><b>C5</b><span>Household &amp; Life Events</span></div>
-  <div class="qbody"><h3><a href="customer-lab/c5/r1.html">어떤 삶의 변화가 수요를 만드는가</a></h3>
-  <p class="qq">어떤 가구 변화와 생활 사건이 새로운 수요를 만들고 있는가?</p>
-  <p class="qa">2026년 10월 현재 수요를 가장 빠르게 만드는 변화는 출생·혼인 반등이다(1~7월 출생아 14.7% 증가, 2025년 혼인 7년 만에 최다). 가장 큰 기반은 고령 가구(전체의 28.8%)와 1인 가구(36.6%)다. 반대로 이사와 입주는 각각 51년, 13년 만의 최저여서 가전·가구 교체를 일으키던 계기가 줄고 있다.</p>
-  <p class="qmeta"><span class="pill live">R1</span><time>2026-10-09</time><span>기록 27건</span><span>질문 v1.0</span></p></div></li></ol></section><section class="cat" id="industry-trend"><header class="cathead"><span class="catno">02</span>
-  <div><h2>AI Industry Trend</h2><p>AI 산업 전체의 기술·제품·경쟁·확산 구조를 추적한다.</p></div><span class="catcount">아티클 4개 · 질문 4개</span></header><ol class="qlist"><li class="qrow"><div class="qno"><b>I1</b><span>AI Technology &amp; Research</span></div>
-  <div class="qbody"><h3><a href="industry-trend/i1/r1.html">AI 기술의 경계는 어디까지 넓어졌나</a></h3>
-  <p class="qq">AI가 새롭게 할 수 있게 된 일은 무엇이고, 기술의 경계는 어느 축에서 얼마나 넓어졌는가?</p>
-  <p class="qa">2026년 10월 현재 AI는 사람이 반나절에서 하루 걸리는 소프트웨어 작업을 절반의 확률로 해내고(METR 기준 12~16시간 이상), 이 능력은 몇 시간짜리 업무를 끝까지 수행하는 에이전트로 이미 제품이 됐다. 한계선은 ‘처음 보는 환경에서 스스로 규칙을 배우는 추론’(ARC-AGI-3 최고 30%)과 월드 모델·AI 과학 발견으로 옮겨갔고, 이 영역은 아직 시연 단계다.</p>
-  <p class="qmeta"><span class="pill live">R1</span><time>2026-10-09</time><span>기록 35건</span><span>질문 v1.0</span></p></div></li><li class="qrow"><div class="qno"><b>I2</b><span>AI Products &amp; Applications</span></div>
-  <div class="qbody"><h3><a href="industry-trend/i2/r1.html">AI 제품은 어디까지 실제로 쓰이고 있나</a></h3>
-  <p class="qq">AI 제품은 어느 영역에서 시범을 넘어 실제 운영 단계에 들어섰는가?</p>
-  <p class="qa">2026년 10월 현재 시범을 넘어 ‘대규모 운영’에 들어선 AI 제품은 세 가지다. 대화형 Assistant(ChatGPT 주 9억 명), Coding Agent(Claude Code 연환산 매출 25억 달러 이상), 로보택시(Waymo 주 50만 회)다. 몇 시간짜리 일을 맡기는 업무형 Agent는 정식 출시됐지만 운영 성과가 공개되지 않았고, 휴머노이드는 고객 현장 파일럿 단계다.</p>
-  <p class="qmeta"><span class="pill live">R1</span><time>2026-10-09</time><span>기록 28건</span><span>질문 v1.0</span></p></div></li><li class="qrow"><div class="qno"><b>I3</b><span>AI Industry &amp; Economics</span></div>
-  <div class="qbody"><h3><a href="industry-trend/i3/r1.html">AI에 쏟아진 돈은 어디로 가고, 돌아오고 있나</a></h3>
-  <p class="qq">AI 산업의 돈은 어디로 흐르고, 그 돈은 수익으로 돌아오고 있는가?</p>
-  <p class="qa">2026년 10월 현재 AI에 들어가는 돈(빅테크 설비투자 연 7천억 달러 이상)은 아직 확인되는 AI 매출보다 몇 배 크지만, 매출이 투자보다 빨리 늘면서 간격이 좁혀지기 시작했다. 지금 돈을 가장 확실하게 버는 곳은 칩·메모리(NVIDIA 매출총이익률 75%, SK하이닉스 영업이익률 76%)이고, 모델 층은 Anthropic이 흑자로 돌아선 반면 OpenAI는 큰 손실이 이어진다.</p>
-  <p class="qmeta"><span class="pill live">R1</span><time>2026-10-09</time><span>기록 30건</span><span>질문 v1.0</span></p></div></li><li class="qrow"><div class="qno"><b>I4</b><span>AI Adoption, Governance &amp; Geopolitics</span></div>
-  <div class="qbody"><h3><a href="industry-trend/i4/r1.html">AI는 어느 산업까지 들어갔고, 무엇이 밀고 막나</a></h3>
-  <p class="qq">AI는 어느 산업·업무까지 실제 운영에 들어갔고, 확산을 가장 크게 밀거나 막는 요인은 무엇인가?</p>
-  <p class="qa">2026년 10월 현재 AI가 실제 운영에 들어선 곳은 정보·금융 산업(미국 기업 사용률 34~40%)과 IT·소프트웨어 개발 업무다. 소매·제조는 아직 초기 확산(14~24%)이고, 미국 기업 전체 사용률은 반년째 20% 안팎에 멈췄다. 확산을 가장 크게 막는 것은 규제가 아니라 전력(올해 데이터센터 계획의 30~50% 지연)이고, 가장 크게 미는 것은 규제 완화(EU 고위험 의무 연기, 미국 학습 공정 이용 지지)와 대기업의 전사 확장(44%)이다.</p>
-  <p class="qmeta"><span class="pill live">R1</span><time>2026-10-09</time><span>기록 36건</span><span>질문 v1.0</span></p></div></li></ol></section><section class="cat" id="sales-marketing"><header class="cathead"><span class="catno">03</span>
-  <div><h2>AI Sales &amp; Marketing</h2><p>기업이 영업·마케팅에서 AI로 어떻게 대응하고 실행하는지 추적한다.</p></div><span class="catcount">아티클 5개 · 질문 5개</span></header><ol class="qlist"><li class="qrow"><div class="qno"><b>S1</b><span>AI Search &amp; GEO</span></div>
-  <div class="qbody"><h3><a href="sales-marketing/s1/r1.html">AI 답변 속 브랜드는 어떻게 보이고, 무엇이 노출을 가르나</a></h3>
-  <p class="qq">AI 답변에서 브랜드는 얼마나 노출·인용되고, AI 유입은 검색 유입을 얼마나 대신하고 있으며, 노출을 가르는 신호는 무엇인가?</p>
-  <p class="qa">2026년 10월 현재 AI 유입은 브랜드 사이트 방문의 1% 안팎으로, 검색에서 잃는 클릭(구글 검색의 68%가 클릭 없이 끝남)을 메우지 못한다. 다만 AI 유입의 전환율은 비AI보다 60% 높다. AI 답변 노출을 가르는 1순위 신호는 브랜드가 직접 쓴 글이 아니라 웹·커뮤니티의 제3자 언급이며, 기존 검색 순위가 그 기반이고, 구매 직전 질문에서는 상품 페이지가 인용의 약 40%를 차지한다.</p>
-  <p class="qmeta"><span class="pill live">R1</span><time>2026-10-09</time><span>기록 37건</span><span>질문 v1.0</span></p></div></li><li class="qrow"><div class="qno"><b>S2</b><span>AI Commerce</span></div>
-  <div class="qbody"><h3><a href="sales-marketing/s2/r1.html">AI는 어디까지 대신 사고, 그 돈은 누구에게 가나</a></h3>
-  <p class="qq">에이전트 구매는 어느 단계까지 실제 거래가 됐고, 거래 한 건의 수익(수수료·광고·데이터)은 누구에게 가는가?</p>
-  <p class="qa">2026년 10월 현재 에이전트 구매가 실제 거래로 자리 잡은 단계는 &#x27;탐색·비교&#x27;까지다. 유통사 에이전트가 이를 대규모로 운영하지만(Amazon Rufus 3억 명·증분 매출 120억 달러), ChatGPT 안 결제는 전환율이 사이트의 3분의 1에 그쳐 6개월 만에 접혔다. 그래서 돈은 결제 수수료(4%)보다 에이전트 안 광고로 흐르고, 고객 관계와 데이터는 유통사가 지킨다. 한국은 네이버·카카오가 자기 플랫폼 안에서 결제 단계에 먼저 다가가고 있다.</p>
-  <p class="qmeta"><span class="pill live">R1</span><time>2026-10-09</time><span>기록 38건</span><span>질문 v1.0</span></p></div></li><li class="qrow"><div class="qno"><b>S3</b><span>AI Marketing</span></div>
-  <div class="qbody"><h3><a href="sales-marketing/s3/r1.html">AI는 마케팅을 어디까지 바꿨고, 무엇이 매출로 이어졌나</a></h3>
-  <p class="qq">AI는 고객 이해·타기팅·콘텐츠·광고·CRM의 일하는 방식을 어디까지 바꿨으며, 그중 어떤 방식이 실제 매출과 고객 가치 증가로 이어지고 있는가?</p>
-  <p class="qa">2026년 10월 현재 AI가 일하는 방식을 가장 깊이 바꾼 곳은 광고 집행과 타기팅이다. 플랫폼 AI가 스스로 운영하는 단계(Meta Advantage+ 연환산 750억 달러)에 들어섰다. 콘텐츠는 AI가 만들고 사람이 고르는 방식이 표준이 됐고(마케터 74% 사용), 고객 이해와 CRM은 아직 보조~생성 단계다. 매출 효과는 광고 AI에서 가장 많이 측정됐지만 결과가 엇갈린다. 플랫폼은 전환 15% 증가를 말하지만, 독립 실험에서는 전환당 비용이 16% 오르거나 증분 수익률이 수동 캠페인보다 12% 낮았다.</p>
-  <p class="qmeta"><span class="pill live">R1</span><time>2026-10-09</time><span>기록 32건</span><span>질문 v1.0</span></p></div></li><li class="qrow"><div class="qno"><b>S4</b><span>AI Sales &amp; Customer Service</span></div>
-  <div class="qbody"><h3><a href="sales-marketing/s4/r1.html">AI는 영업과 고객 응대에서 무엇을 맡고, 사람은 무엇을 하나</a></h3>
-  <p class="qq">AI는 리드 발굴·상담·제안·협상·고객 서비스 중 무엇을 수행하며, 사람과의 역할 분담은 어떻게 달라지는가?</p>
-  <p class="qa">2026년 10월 현재 AI는 영업 과정의 양 끝을 맡는다. 앞단의 리드 발굴(셀러 54%가 AI 에이전트 사용)과 뒷단의 고객 서비스(Salesforce 문의 70%를 AI 단독 해결)는 AI가 주도하고, 가운데의 구매 상담·제안·협상은 사람이 주도한다. 사람의 역할은 &#x27;정보 전달&#x27;에서 &#x27;검증과 예외 처리&#x27;로 바뀌고 있다. B2B 구매자의 69%가 AI 정보를 영업 담당자에게 확인받고 싶어 하고, 고객의 87%는 AI 응대에도 사람 연결을 요구한다.</p>
-  <p class="qmeta"><span class="pill live">R1</span><time>2026-10-09</time><span>기록 31건</span><span>질문 v1.0</span></p></div></li><li class="qrow"><div class="qno"><b>S5</b><span>Market, Competition &amp; Economics</span></div>
-  <div class="qbody"><h3><a href="sales-marketing/s5/r1.html">영업·마케팅 AI 예산은 누가 가져가고, 무엇이 도입을 가르나</a></h3>
-  <p class="qq">어떤 기업과 제품이 영업·마케팅 예산과 고객 접점을 확보하고 있으며, 도입 확대와 수익성을 결정하는 조건은 무엇인가?</p>
-  <p class="qa">2026년 10월 현재 영업·마케팅 AI 예산과 고객 접점을 가장 크게 확보한 곳은 광고 플랫폼이다. Meta Advantage+ 하나가 연환산 750억 달러로 Salesforce Agentforce(15억 달러)의 50배다. CRM 기존 강자는 AI 매출을 빠르게 키우지만 아직 전체 매출의 3% 수준이고, 고객 서비스 AI에서는 Sierra 같은 신생 기업이 기업가치 150억 달러로 빠르게 치고 올라온다. 도입 확대를 가르는 조건은 성과 증명이며, 그래서 과금이 좌석에서 해결·성과당으로 옮겨가고 있다.</p>
-  <p class="qmeta"><span class="pill live">R1</span><time>2026-10-09</time><span>기록 34건</span><span>질문 v1.0</span></p></div></li></ol></section><section class="cat" id="lg-group-ai"><header class="cathead"><span class="catno">04</span>
-  <div><h2>LG Group AI</h2><p>LG 그룹의 AI 전략과 실행을 추적한다.</p></div><span class="catcount">아티클 6개 · 질문 6개</span></header><ol class="qlist"><li class="qrow"><div class="qno"><b>L1</b><span>AI Data Center / Infra</span></div>
-  <div class="qbody"><h3><a href="lg-group-ai/l1/r1.html">LG는 AI 데이터센터 수요를 어디까지 계약과 매출로 잡았나</a></h3>
-  <p class="qq">LG는 AI 데이터센터의 냉각·전력·구축·운영 수요를 어떤 제품과 계약으로 확보하고 있으며, 그 수요는 계약·매출로 어디까지 확인되는가?</p>
-  <p class="qa">2026년 10월 현재 LG는 냉각·전력·구축·운영 네 제품군 모두에서 AI 데이터센터 수요를 &#x27;계약&#x27; 단계까지 확보했다. LG전자 북미 5GW 칠러 장기 계약과 냉각 수주 6,000억 원 이상, LG에너지솔루션 ESS 수주 3조 원(하이퍼스케일러 AI 데이터센터 포함), LG CNS DBO 수주 1조 원 이상, 네이버클라우드 6,034억 원 입주 계약이다. 그러나 AI 데이터센터 매출로 따로 확인된 것은 아직 없다. 냉각·ESS 매출은 기존 사업에 섞여 있고, 파주 AIDC는 2027년 가동이다.</p>
-  <p class="qmeta"><span class="pill live">R1</span><time>2026-10-09</time><span>기록 38건</span><span>질문 v1.0</span></p></div></li><li class="qrow"><div class="qno"><b>L2</b><span>Physical AI / Smart Manufacturing</span></div>
-  <div class="qbody"><h3><a href="lg-group-ai/l2/r1.html">LG의 피지컬 AI는 현장에서 어디까지 성과를 냈나</a></h3>
-  <p class="qq">LG는 AI를 공장·물류·로봇·가전의 물리적 작동에 어떻게 적용하며, 실제 성능과 사업 성과는 어디까지 확인되는가?</p>
-  <p class="qa">2026년 10월 현재 LG의 피지컬 AI가 사업 성과로 확인된 곳은 공장이다. LG전자 스마트팩토리 외부 수주가 2년 새 약 5,000억 원이 됐고, LG CNS 공장 운영 AI는 설비 10만 개 이상에 적용돼 한 배터리 공장에서 한 달 만에 합격품 비중 90% 이상을 냈다. 물류 휴머노이드는 컬리·LX판토스와의 외부 실증 단계이고, 가전에서는 홈 허브(씽큐 온)가 출시됐지만 홈 로봇 CLOiD는 아직 실험실 안이다. 공개된 성능 수치의 대부분은 자사 공장 측정이거나 회사가 기대하는 값이다.</p>
-  <p class="qmeta"><span class="pill live">R1</span><time>2026-10-09</time><span>기록 28건</span><span>질문 v1.0</span></p></div></li><li class="qrow"><div class="qno"><b>L3</b><span>AI Mobility / SDV·AIDV</span></div>
-  <div class="qbody"><h3><a href="lg-group-ai/l3/r1.html">LG의 차량용 AI는 어느 고객·차종까지 들어갔나</a></h3>
-  <p class="qq">LG의 차량용 AI·소프트웨어·부품은 어떤 고객과 차종에 적용되며, 공급 범위와 수익 기회는 어떻게 확대되는가?</p>
-  <p class="qa">2026년 10월 현재 고객과 차종을 밝힌 LG의 AI·SDV 수주는 르노 &#x27;New Trafic E-Tech Electric&#x27;(유럽 첫 상용 SDV)의 통합 콕핏 한 건이다. 부품 공급사에서 통합 솔루션 공급사로 넓어지는 첫 공개 사례다. 양산 적용 단계에 있는 것은 텔레매틱스(점유율 23%, 1위)와 차량용 OLED(15.9%, 2위) 같은 기존 강점이고, AI 캐빈·ADAS·라이다는 콘셉트이거나 고객명 없는 수주 단계다. 수익 기회는 이익률에서 먼저 보인다. VS 영업이익률 6~7%는 보쉬 모빌리티의 3배가 넘는다.</p>
-  <p class="qmeta"><span class="pill live">R1</span><time>2026-10-09</time><span>기록 27건</span><span>질문 v1.0</span></p></div></li><li class="qrow"><div class="qno"><b>L4</b><span>Enterprise AX / Agentic Operating Model</span></div>
-  <div class="qbody"><h3><a href="lg-group-ai/l4/r1.html">LG의 AX는 목표에서 결과로 얼마나 넘어왔나</a></h3>
-  <p class="qq">LG는 내부 업무와 외부 고객 사업에서 AI를 어떻게 실행 체계로 전환하며, 사용·품질·생산성·매출 성과는 무엇인가?</p>
-  <p class="qa">2026년 10월 현재 LG의 AX는 계열사마다 단계가 다르다. LG CNS는 외부 사업화(상반기 AI·클라우드 매출 1조 6,714억 원, 전체의 59%)까지 왔고, LG디스플레이·LG에너지솔루션은 업무 단위 성과(설계 한 달→8시간, 리튬 가격 예측 정확도 90%+)를 공개했으며, LG전자는 업무 적용(LGenie 월 3만 명), LG화학은 교육 단계(3,000명)다. 목표는 전사 단위(엔솔 2028년 생산성 50%, LGD 30%)인데 공개된 결과는 업무 단위에 머물고, LG전자가 만든 업무 에이전트는 절반 이상(96개 중 50개)이 사라졌다.</p>
-  <p class="qmeta"><span class="pill live">R1</span><time>2026-10-09</time><span>기록 31건</span><span>질문 v1.0</span></p></div></li><li class="qrow"><div class="qno"><b>L5</b><span>AI for Science / Bio / Materials / Battery</span></div>
-  <div class="qbody"><h3><a href="lg-group-ai/l5/r1.html">AI가 찾은 소재·신약은 어디까지 제품이 됐나</a></h3>
-  <p class="qq">AI가 소재·배터리·신약의 탐색과 개발을 얼마나 개선하며, 연구 결과는 실험·제품·사업화로 어디까지 이어지는가?</p>
-  <p class="qa">2026년 10월 현재 AI는 LG의 탐색 단계를 크게 줄였다. 화장품 소재 4,000만 건 검토가 22개월에서 하루로, 탈모 소재 후보 42만 개 선별이 하루로 줄었다(회사 발표). 그러나 AI로 찾은 물질 가운데 제품·임상까지 간 것은 아직 없다. 가장 앞선 탈모 소재 &#x27;람시딜&#x27;은 학회에서 효과를 발표하고 제품화를 준비 중이고, 신약(펩타이드·항체)은 발견 단계, 배터리는 자동 실험 루프를 만든 단계다.</p>
-  <p class="qmeta"><span class="pill live">R1</span><time>2026-10-09</time><span>기록 28건</span><span>질문 v1.0</span></p></div></li><li class="qrow"><div class="qno"><b>L6</b><span>Global AI Alliance / Open Innovation</span></div>
-  <div class="qbody"><h3><a href="lg-group-ai/l6/r1.html">LG의 AI 동맹은 무엇을 바꾸고 있나</a></h3>
-  <p class="qq">LG는 자체 AI 역량과 외부 파트너를 어떻게 결합하며, 협력이 기술·고객·공급망·시장 접근에 어떤 변화를 만드는가?</p>
-  <p class="qa">2026년 10월 현재 LG의 AI 동맹 가운데 상용 계약까지 간 것은 LG가 &#x27;고객&#x27;인 협력이다. Palantir(그룹 PoC → 본 계약)와 Anthropic(그룹 통합 Claude 계약)이 그렇다. LG가 &#x27;공급자&#x27;가 되는 협력은 공급망 입구에 섰다. NVIDIA와는 세 분야·여섯 계열사가 공동개발 중이고 LG전자 CDU와 엔솔 ESS가 DSX Ready에 들어갔으며, Microsoft와는 9월 냉각·전력·IT 공급 기회를 함께 찾기로 했다. 다만 의사결정(Palantir)·로봇 두뇌(Skild·GR00T)·컴퓨팅(NVIDIA) 같은 핵심층은 외부에 기대고 있다.</p>
-  <p class="qmeta"><span class="pill live">R1</span><time>2026-10-09</time><span>기록 33건</span><span>질문 v1.0</span></p></div></li></ol></section>
+
+  <section class="signals" aria-labelledby="h-signals">
+    <div class="sechead"><h2 id="h-signals">최근 주요 사건</h2><p>중요도 3 사건을 질문마다 하나씩, 최근 순으로 모았습니다. 2회차부터는 판정 단계가 바뀐 질문이 여기에 먼저 올라옵니다.</p></div>
+    <ol class="strip"><li><a href="lg-group-ai/l3/r1.html#L3-E-006"><span class="sm"><time>2026-10-06</time><b>L3</b></span><span class="st">LG전자가 르노그룹의 &#x27;유럽 첫 상용 SDV&#x27; New Trafic E-Tech Electric에 계기판과 인포테인먼트를 하나로 통합 제어하는 콕핏 솔루션을 공급한다고 발표…</span></a></li><li><a href="lg-group-ai/l1/r1.html#L1-E-010"><span class="sm"><time>2026-10-05</time><b>L1</b></span><span class="st">LG전자가 북미 Air Control Concept과 총 5GW 규모의 AI 데이터센터 칠러 장기 공급 계약을 맺었다. 물량이 보장되는 방식이며, CDU로의 품목 확대를…</span></a></li><li><a href="lg-group-ai/l6/r1.html#L6-E-011"><span class="sm"><time>2026-09-21</time><b>L6</b></span><span class="st">LG그룹 사장단이 Microsoft 본사에서 사티아 나델라 CEO와 AI 데이터센터·AX·피지컬 AI 세 분야의 전략적 파트너십을 맺었다. 같은 날 LG전자 CDU와 LG…</span></a></li><li><a href="industry-trend/i4/r1.html#I4-E-010"><span class="sm"><time>2026-09-19</time><b>I4</b></span><span class="st">미국 법무부가 뉴욕타임스 대 OpenAI 소송에서 &#x27;AI 학습은 새롭고 변형적이어서 공정 이용&#x27;이라는 의견서를 냈다. 출력물까지 같은 논리가 적용되지는 않는다고 선을 그었…</span></a></li><li><a href="industry-trend/i3/r1.html#I3-E-006"><span class="sm"><time>2026-09-03</time><b>I3</b></span><span class="st">NVIDIA가 오픈소스 AI 플랫폼 Hugging Face를 약 130억 달러에 인수하기로 했다.</span></a></li><li><a href="industry-trend/i1/r1.html#I1-E-009"><span class="sm"><time>2026-09</time><b>I1</b></span><span class="st">Anthropic이 Claude Opus 5.5를, OpenAI가 GPT-6 Sol·Luna를 9월에 내놓았다. Opus 5.5는 Fable급 성능을 Opus 5보다 40…</span></a></li><li><a href="sales-marketing/s5/r1.html#S5-E-008"><span class="sm"><time>2026-08-26</time><b>S5</b></span><span class="st">Salesforce가 Agentforce 연환산 매출 15억 달러, 분기 유료 운영 고객 2,000곳 추가를 발표하고 연간 매출 전망을 올렸다. 가격은 사용자당·사용량·성…</span></a></li><li><a href="customer-lab/c2/r1.html#C2-E-010"><span class="sm"><time>2026-08-04</time><b>C2</b></span><span class="st">미국 항소법원(제9순회)이 Perplexity 쇼핑 Agent에 대한 가처분을 뒤집었다. Agent는 사용자 지시로 움직이므로 접근 주체는 사용자라고 봤다. 본안 소송은…</span></a></li></ol>
+  </section>
+
+  <section class="boardwrap" aria-labelledby="h-board">
+    <div class="sechead row"><div><h2 id="h-board">신호 보드</h2><p>질문마다 이번 회차의 판정과 진행 게이지입니다. 카드를 가리키면 한 줄 답을 미리 볼 수 있습니다.</p></div>
+      <label class="search"><span class="vh">질문 검색</span><input id="q-search" type="search" placeholder="검색  /" autocomplete="off"><output id="q-count" aria-live="polite"></output></label></div>
+    <div class="tabs" role="tablist" aria-label="카테고리"><button class="tab" role="tab" id="tab-all" aria-controls="board" aria-selected="true" data-cat="all">전체 <span>20</span></button><button class="tab" role="tab" id="tab-customer-lab" aria-controls="board" aria-selected="false" data-cat="customer-lab"><b>01</b> AI Future Customer Lab <span>5</span></button><button class="tab" role="tab" id="tab-industry-trend" aria-controls="board" aria-selected="false" data-cat="industry-trend"><b>02</b> AI Industry Trend <span>4</span></button><button class="tab" role="tab" id="tab-sales-marketing" aria-controls="board" aria-selected="false" data-cat="sales-marketing"><b>03</b> AI Sales &amp; Marketing <span>5</span></button><button class="tab" role="tab" id="tab-lg-group-ai" aria-controls="board" aria-selected="false" data-cat="lg-group-ai"><b>04</b> LG Group AI <span>6</span></button><span class="tab-ink" aria-hidden="true"></span></div>
+    <div class="board" id="board" data-view="all"><section class="col" id="customer-lab" data-cat="customer-lab" aria-labelledby="h-customer-lab">
+  <header class="colhead"><span class="cno">01</span><div><h2 id="h-customer-lab">AI Future Customer Lab</h2><p>고객과 시장이 AI로 어떻게 바뀌는지를 추적한다.</p></div></header>
+  <ol class="tiles"><li class="tile" data-search="c1 consumer decision making ai는 고객의 쇼핑을 어디까지 대신하고 있나 소비자는 탐색 → 답변 → 추천 → 결정 → 위임 중 어느 단계까지 ai에 맡기고 있으며, 검색엔진·브랜드 사이트의 역할은 얼마나 줄었는가? 2026년 10월 현재 ai가 대신하는 일은 ‘찾아보고 후보를 추려주는 것’까지다. 무엇을 살지 정하고 결제하는 일은 소비자가 직접 하며, 결제까지 ai에 맡기겠다는 소비자는 9%에 그친다. 추천까지 확산" data-q="C1">
+  <a class="tlink" href="customer-lab/c1/r1.html" data-preview>
+    <div class="tno"><b>C1</b><span>Consumer Decision Making</span></div>
+    <h3 class="ttl">AI는 고객의 쇼핑을 어디까지 대신하고 있나</h3>
+    <span class="chip">추천까지 확산</span>
+    <div class="gauge" title="구매 여정 5단계 중 확산 이상(글로벌)"><span class="pips" aria-hidden="true"><i class="on" style="--k:0"></i><i class="on" style="--k:1"></i><i class="on" style="--k:2"></i><i class="" style="--k:3"></i><i class="" style="--k:4"></i></span><span class="gnum">3/5</span><span class="glab">구매 여정 5단계 중 확산 이상(글로벌)</span></div>
+  </a>
+  <div class="tmore">
+    <p class="tq">소비자는 탐색 → 답변 → 추천 → 결정 → 위임 중 어느 단계까지 AI에 맡기고 있으며, 검색엔진·브랜드 사이트의 역할은 얼마나 줄었는가?</p>
+    <p class="ta">2026년 10월 현재 AI가 대신하는 일은 ‘찾아보고 후보를 추려주는 것’까지다. 무엇을 살지 정하고 결제하는 일은 소비자가 직접 하며, 결제까지 AI에 맡기겠다는 소비자는 9%에 그친다.</p>
+    <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 40건</span><span>질문 v1.0</span></p>
+  </div>
+</li><li class="tile" data-search="c2 customer experience &amp; commerce ai 시대, 고객 접점의 주인은 누구인가 고객 여정(발견·상담·판매·관계) 중 어느 접점이 ai agent로 넘어가고 있으며, 그 접점의 주도권은 브랜드·플랫폼·고객 agent 중 누구에게 있는가? 2026년 10월 현재 ai로 가장 많이 넘어간 접점은 발견과 상담이다. 발견은 플랫폼이 광고로 팔고, 상담은 고객이 직접 쓰는 범용 ai로 옮겨가 두 곳 모두 브랜드 손을 떠나고 있다. 결제는 플랫폼·리테일러·고객 agent가 다투는 중이고, 재구매·멤버십 같은 관계 접점만 아직 브랜드에 남아 있다. 판매 주도권 경합" data-q="C2">
+  <a class="tlink" href="customer-lab/c2/r1.html" data-preview>
+    <div class="tno"><b>C2</b><span>Customer Experience &amp; Commerce</span></div>
+    <h3 class="ttl">AI 시대, 고객 접점의 주인은 누구인가</h3>
+    <span class="chip">판매 주도권 경합</span>
+    <div class="gauge" title="고객 접점 4곳 중 AI 이전이 확산 이상"><span class="pips" aria-hidden="true"><i class="on" style="--k:0"></i><i class="on" style="--k:1"></i><i class="" style="--k:2"></i><i class="" style="--k:3"></i></span><span class="gnum">2/4</span><span class="glab">고객 접점 4곳 중 AI 이전이 확산 이상</span></div>
+  </a>
+  <div class="tmore">
+    <p class="tq">고객 여정(발견·상담·판매·관계) 중 어느 접점이 AI Agent로 넘어가고 있으며, 그 접점의 주도권은 브랜드·플랫폼·고객 Agent 중 누구에게 있는가?</p>
+    <p class="ta">2026년 10월 현재 AI로 가장 많이 넘어간 접점은 발견과 상담이다. 발견은 플랫폼이 광고로 팔고, 상담은 고객이 직접 쓰는 범용 AI로 옮겨가 두 곳 모두 브랜드 손을 떠나고 있다. 결제는 플랫폼·리테일러·고객 Agent가 다투는 중이고, 재구매·멤버십 같은 관계 접점만 아직 브랜드에 남아 있다.</p>
+    <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 38건</span><span>질문 v1.0</span></p>
+  </div>
+</li><li class="tile" data-search="c3 content, information &amp; trust ai가 만든 정보, 소비자는 믿는가 소비자가 구매 판단에 쓰는 정보의 원천은 사람이 만든 것에서 ai가 만든 것으로 어디까지 옮겨갔고, 소비자는 그것을 믿는가? 2026년 10월 현재 웹에 새로 올라오는 글의 절반은 ai가 쓰고, 소비자는 그 정보를 원문 대신 ai 요약으로 받아본다. 그러나 믿음은 따라오지 않았다. ai가 전해준 뉴스를 믿는 사람은 5명 중 1명이고, 정작 ai는 브랜드 사이트보다 reddit·youtube 같은 사람의 경험담을 가장 많이 인용한다. 생성은 주류, 신뢰는 제자리" data-q="C3">
+  <a class="tlink" href="customer-lab/c3/r1.html" data-preview>
+    <div class="tno"><b>C3</b><span>Content, Information &amp; Trust</span></div>
+    <h3 class="ttl">AI가 만든 정보, 소비자는 믿는가</h3>
+    <span class="chip">생성은 주류, 신뢰는 제자리</span>
+    <div class="gauge" title="정보 유형 5개 중 AI 생성·경유가 주류"><span class="pips" aria-hidden="true"><i class="on" style="--k:0"></i><i class="on" style="--k:1"></i><i class="" style="--k:2"></i><i class="" style="--k:3"></i><i class="" style="--k:4"></i></span><span class="gnum">2/5</span><span class="glab">정보 유형 5개 중 AI 생성·경유가 주류</span></div>
+  </a>
+  <div class="tmore">
+    <p class="tq">소비자가 구매 판단에 쓰는 정보의 원천은 사람이 만든 것에서 AI가 만든 것으로 어디까지 옮겨갔고, 소비자는 그것을 믿는가?</p>
+    <p class="ta">2026년 10월 현재 웹에 새로 올라오는 글의 절반은 AI가 쓰고, 소비자는 그 정보를 원문 대신 AI 요약으로 받아본다. 그러나 믿음은 따라오지 않았다. AI가 전해준 뉴스를 믿는 사람은 5명 중 1명이고, 정작 AI는 브랜드 사이트보다 Reddit·YouTube 같은 사람의 경험담을 가장 많이 인용한다.</p>
+    <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 27건</span><span>질문 v1.0</span></p>
+  </div>
+</li><li class="tile" data-search="c4 physical ai, products &amp; living 집 안의 ai는 어디까지 스스로 하나 집 안에서 ai가 스스로 판단·실행하는 범위는 어디까지 왔으며, 고객은 어느 수준의 자율을 받아들이는가? 2026년 10월 현재 집 안 ai는 ‘정해준 조건대로 알아서 하는 것(l2)’까지 제품이 됐고, 생성형 ai 허브가 상황을 판단해 여러 기기를 엮는 l3로 막 넘어가는 중이다. 고객 수용은 한 칸 뒤에 있다. 한국에서는 ai 가전에 신중한 소비자(45.7%)가 처음으로 긍정 소비자(36.3%)를 넘었다. 기술이 수용보다 한 칸 앞" data-q="C4">
+  <a class="tlink" href="customer-lab/c4/r1.html" data-preview>
+    <div class="tno"><b>C4</b><span>Physical AI, Products &amp; Living</span></div>
+    <h3 class="ttl">집 안의 AI는 어디까지 스스로 하나</h3>
+    <span class="chip">기술이 수용보다 한 칸 앞</span>
+    <div class="gauge" title="생활 영역 4개 중 기술과 고객 수용이 같은 곳"><span class="pips" aria-hidden="true"><i class="on" style="--k:0"></i><i class="" style="--k:1"></i><i class="" style="--k:2"></i><i class="" style="--k:3"></i></span><span class="gnum">1/4</span><span class="glab">생활 영역 4개 중 기술과 고객 수용이 같은 곳</span></div>
+  </a>
+  <div class="tmore">
+    <p class="tq">집 안에서 AI가 스스로 판단·실행하는 범위는 어디까지 왔으며, 고객은 어느 수준의 자율을 받아들이는가?</p>
+    <p class="ta">2026년 10월 현재 집 안 AI는 ‘정해준 조건대로 알아서 하는 것(L2)’까지 제품이 됐고, 생성형 AI 허브가 상황을 판단해 여러 기기를 엮는 L3로 막 넘어가는 중이다. 고객 수용은 한 칸 뒤에 있다. 한국에서는 AI 가전에 신중한 소비자(45.7%)가 처음으로 긍정 소비자(36.3%)를 넘었다.</p>
+    <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 30건</span><span>질문 v1.0</span></p>
+  </div>
+</li><li class="tile" data-search="c5 household &amp; life events 어떤 삶의 변화가 수요를 만드는가 어떤 가구 변화와 생활 사건이 새로운 수요를 만들고 있는가? 2026년 10월 현재 수요를 가장 빠르게 만드는 변화는 출생·혼인 반등이다(1~7월 출생아 14.7% 증가, 2025년 혼인 7년 만에 최다). 가장 큰 기반은 고령 가구(전체의 28.8%)와 1인 가구(36.6%)다. 반대로 이사와 입주는 각각 51년, 13년 만의 최저여서 가전·가구 교체를 일으키던 계기가 줄고 있다. 1위 출생·혼인 반등" data-q="C5">
+  <a class="tlink" href="customer-lab/c5/r1.html" data-preview>
+    <div class="tno"><b>C5</b><span>Household &amp; Life Events</span></div>
+    <h3 class="ttl">어떤 삶의 변화가 수요를 만드는가</h3>
+    <span class="chip">1위 출생·혼인 반등</span>
+    <div class="gauge" title="가구 변화 4개 중 수요를 늘리는 변화"><span class="pips" aria-hidden="true"><i class="on" style="--k:0"></i><i class="on" style="--k:1"></i><i class="on" style="--k:2"></i><i class="" style="--k:3"></i></span><span class="gnum">3/4</span><span class="glab">가구 변화 4개 중 수요를 늘리는 변화</span></div>
+  </a>
+  <div class="tmore">
+    <p class="tq">어떤 가구 변화와 생활 사건이 새로운 수요를 만들고 있는가?</p>
+    <p class="ta">2026년 10월 현재 수요를 가장 빠르게 만드는 변화는 출생·혼인 반등이다(1~7월 출생아 14.7% 증가, 2025년 혼인 7년 만에 최다). 가장 큰 기반은 고령 가구(전체의 28.8%)와 1인 가구(36.6%)다. 반대로 이사와 입주는 각각 51년, 13년 만의 최저여서 가전·가구 교체를 일으키던 계기가 줄고 있다.</p>
+    <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 27건</span><span>질문 v1.0</span></p>
+  </div>
+</li></ol></section><section class="col" id="industry-trend" data-cat="industry-trend" aria-labelledby="h-industry-trend">
+  <header class="colhead"><span class="cno">02</span><div><h2 id="h-industry-trend">AI Industry Trend</h2><p>AI 산업 전체의 기술·제품·경쟁·확산 구조를 추적한다.</p></div></header>
+  <ol class="tiles"><li class="tile" data-search="i1 ai technology &amp; research ai 기술의 경계는 어디까지 넓어졌나 ai가 새롭게 할 수 있게 된 일은 무엇이고, 기술의 경계는 어느 축에서 얼마나 넓어졌는가? 2026년 10월 현재 ai는 사람이 반나절에서 하루 걸리는 소프트웨어 작업을 절반의 확률로 해내고(metr 기준 12~16시간 이상), 이 능력은 몇 시간짜리 업무를 끝까지 수행하는 에이전트로 이미 제품이 됐다. 한계선은 ‘처음 보는 환경에서 스스로 규칙을 배우는 추론’(arc-agi-3 최고 30%)과 월드 모델·ai 과학 발견으로 옮겨갔고, 이 영역은 아직 시연 단계다. 7개 축 중 4개 제품화" data-q="I1">
+  <a class="tlink" href="industry-trend/i1/r1.html" data-preview>
+    <div class="tno"><b>I1</b><span>AI Technology &amp; Research</span></div>
+    <h3 class="ttl">AI 기술의 경계는 어디까지 넓어졌나</h3>
+    <span class="chip">7개 축 중 4개 제품화</span>
+    <div class="gauge" title="기술 축 7개 중 제품 적용 가능"><span class="pips" aria-hidden="true"><i class="on" style="--k:0"></i><i class="on" style="--k:1"></i><i class="on" style="--k:2"></i><i class="on" style="--k:3"></i><i class="" style="--k:4"></i><i class="" style="--k:5"></i><i class="" style="--k:6"></i></span><span class="gnum">4/7</span><span class="glab">기술 축 7개 중 제품 적용 가능</span></div>
+  </a>
+  <div class="tmore">
+    <p class="tq">AI가 새롭게 할 수 있게 된 일은 무엇이고, 기술의 경계는 어느 축에서 얼마나 넓어졌는가?</p>
+    <p class="ta">2026년 10월 현재 AI는 사람이 반나절에서 하루 걸리는 소프트웨어 작업을 절반의 확률로 해내고(METR 기준 12~16시간 이상), 이 능력은 몇 시간짜리 업무를 끝까지 수행하는 에이전트로 이미 제품이 됐다. 한계선은 ‘처음 보는 환경에서 스스로 규칙을 배우는 추론’(ARC-AGI-3 최고 30%)과 월드 모델·AI 과학 발견으로 옮겨갔고, 이 영역은 아직 시연 단계다.</p>
+    <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 35건</span><span>질문 v1.0</span></p>
+  </div>
+</li><li class="tile" data-search="i2 ai products &amp; applications ai 제품은 어디까지 실제로 쓰이고 있나 ai 제품은 어느 영역에서 시범을 넘어 실제 운영 단계에 들어섰는가? 2026년 10월 현재 시범을 넘어 ‘대규모 운영’에 들어선 ai 제품은 세 가지다. 대화형 assistant(chatgpt 주 9억 명), coding agent(claude code 연환산 매출 25억 달러 이상), 로보택시(waymo 주 50만 회)다. 몇 시간짜리 일을 맡기는 업무형 agent는 정식 출시됐지만 운영 성과가 공개되지 않았고, 휴머노이드는 고객 현장 파일럿 단계다. 3개 영역 대규모 운영" data-q="I2">
+  <a class="tlink" href="industry-trend/i2/r1.html" data-preview>
+    <div class="tno"><b>I2</b><span>AI Products &amp; Applications</span></div>
+    <h3 class="ttl">AI 제품은 어디까지 실제로 쓰이고 있나</h3>
+    <span class="chip">3개 영역 대규모 운영</span>
+    <div class="gauge" title="제품 영역 6개 중 대규모 운영(글로벌)"><span class="pips" aria-hidden="true"><i class="on" style="--k:0"></i><i class="on" style="--k:1"></i><i class="on" style="--k:2"></i><i class="" style="--k:3"></i><i class="" style="--k:4"></i><i class="" style="--k:5"></i></span><span class="gnum">3/6</span><span class="glab">제품 영역 6개 중 대규모 운영(글로벌)</span></div>
+  </a>
+  <div class="tmore">
+    <p class="tq">AI 제품은 어느 영역에서 시범을 넘어 실제 운영 단계에 들어섰는가?</p>
+    <p class="ta">2026년 10월 현재 시범을 넘어 ‘대규모 운영’에 들어선 AI 제품은 세 가지다. 대화형 Assistant(ChatGPT 주 9억 명), Coding Agent(Claude Code 연환산 매출 25억 달러 이상), 로보택시(Waymo 주 50만 회)다. 몇 시간짜리 일을 맡기는 업무형 Agent는 정식 출시됐지만 운영 성과가 공개되지 않았고, 휴머노이드는 고객 현장 파일럿 단계다.</p>
+    <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 28건</span><span>질문 v1.0</span></p>
+  </div>
+</li><li class="tile" data-search="i3 ai industry &amp; economics ai에 쏟아진 돈은 어디로 가고, 돌아오고 있나 ai 산업의 돈은 어디로 흐르고, 그 돈은 수익으로 돌아오고 있는가? 2026년 10월 현재 ai에 들어가는 돈(빅테크 설비투자 연 7천억 달러 이상)은 아직 확인되는 ai 매출보다 몇 배 크지만, 매출이 투자보다 빨리 늘면서 간격이 좁혀지기 시작했다. 지금 돈을 가장 확실하게 버는 곳은 칩·메모리(nvidia 매출총이익률 75%, sk하이닉스 영업이익률 76%)이고, 모델 층은 anthropic이 흑자로 돌아선 반면 openai는 큰 손실이 이어진다. 투자 5배, 간격은 좁혀지는 중" data-q="I3">
+  <a class="tlink" href="industry-trend/i3/r1.html" data-preview>
+    <div class="tno"><b>I3</b><span>AI Industry &amp; Economics</span></div>
+    <h3 class="ttl">AI에 쏟아진 돈은 어디로 가고, 돌아오고 있나</h3>
+    <span class="chip">투자 5배, 간격은 좁혀지는 중</span>
+    <div class="gauge" title="가치사슬 6개 층 중 주도권이 굳어진 층"><span class="pips" aria-hidden="true"><i class="on" style="--k:0"></i><i class="on" style="--k:1"></i><i class="" style="--k:2"></i><i class="" style="--k:3"></i><i class="" style="--k:4"></i><i class="" style="--k:5"></i></span><span class="gnum">2/6</span><span class="glab">가치사슬 6개 층 중 주도권이 굳어진 층</span></div>
+  </a>
+  <div class="tmore">
+    <p class="tq">AI 산업의 돈은 어디로 흐르고, 그 돈은 수익으로 돌아오고 있는가?</p>
+    <p class="ta">2026년 10월 현재 AI에 들어가는 돈(빅테크 설비투자 연 7천억 달러 이상)은 아직 확인되는 AI 매출보다 몇 배 크지만, 매출이 투자보다 빨리 늘면서 간격이 좁혀지기 시작했다. 지금 돈을 가장 확실하게 버는 곳은 칩·메모리(NVIDIA 매출총이익률 75%, SK하이닉스 영업이익률 76%)이고, 모델 층은 Anthropic이 흑자로 돌아선 반면 OpenAI는 큰 손실이 이어진다.</p>
+    <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 30건</span><span>질문 v1.0</span></p>
+  </div>
+</li><li class="tile" data-search="i4 ai adoption, governance &amp; geopolitics ai는 어느 산업까지 들어갔고, 무엇이 밀고 막나 ai는 어느 산업·업무까지 실제 운영에 들어갔고, 확산을 가장 크게 밀거나 막는 요인은 무엇인가? 2026년 10월 현재 ai가 실제 운영에 들어선 곳은 정보·금융 산업(미국 기업 사용률 34~40%)과 it·소프트웨어 개발 업무다. 소매·제조는 아직 초기 확산(14~24%)이고, 미국 기업 전체 사용률은 반년째 20% 안팎에 멈췄다. 확산을 가장 크게 막는 것은 규제가 아니라 전력(올해 데이터센터 계획의 30~50% 지연)이고, 가장 크게 미는 것은 규제 완화(eu 고위험 의무 연기, 미국 학습 공정 이용 지지)와 대기업의 전사 확장(44%)이다. 1위 제약 전력·데이터센터" data-q="I4">
+  <a class="tlink" href="industry-trend/i4/r1.html" data-preview>
+    <div class="tno"><b>I4</b><span>AI Adoption, Governance &amp; Geopolitics</span></div>
+    <h3 class="ttl">AI는 어느 산업까지 들어갔고, 무엇이 밀고 막나</h3>
+    <span class="chip">1위 제약 전력·데이터센터</span>
+    <div class="gauge" title="산업·업무 6개 중 확산 이상(글로벌)"><span class="pips" aria-hidden="true"><i class="on" style="--k:0"></i><i class="on" style="--k:1"></i><i class="" style="--k:2"></i><i class="" style="--k:3"></i><i class="" style="--k:4"></i><i class="" style="--k:5"></i></span><span class="gnum">2/6</span><span class="glab">산업·업무 6개 중 확산 이상(글로벌)</span></div>
+  </a>
+  <div class="tmore">
+    <p class="tq">AI는 어느 산업·업무까지 실제 운영에 들어갔고, 확산을 가장 크게 밀거나 막는 요인은 무엇인가?</p>
+    <p class="ta">2026년 10월 현재 AI가 실제 운영에 들어선 곳은 정보·금융 산업(미국 기업 사용률 34~40%)과 IT·소프트웨어 개발 업무다. 소매·제조는 아직 초기 확산(14~24%)이고, 미국 기업 전체 사용률은 반년째 20% 안팎에 멈췄다. 확산을 가장 크게 막는 것은 규제가 아니라 전력(올해 데이터센터 계획의 30~50% 지연)이고, 가장 크게 미는 것은 규제 완화(EU 고위험 의무 연기, 미국 학습 공정 이용 지지)와 대기업의 전사 확장(44%)이다.</p>
+    <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 36건</span><span>질문 v1.0</span></p>
+  </div>
+</li></ol></section><section class="col" id="sales-marketing" data-cat="sales-marketing" aria-labelledby="h-sales-marketing">
+  <header class="colhead"><span class="cno">03</span><div><h2 id="h-sales-marketing">AI Sales &amp; Marketing</h2><p>기업이 영업·마케팅에서 AI로 어떻게 대응하고 실행하는지 추적한다.</p></div></header>
+  <ol class="tiles"><li class="tile" data-search="s1 ai search &amp; geo ai 답변 속 브랜드는 어떻게 보이고, 무엇이 노출을 가르나 ai 답변에서 브랜드는 얼마나 노출·인용되고, ai 유입은 검색 유입을 얼마나 대신하고 있으며, 노출을 가르는 신호는 무엇인가? 2026년 10월 현재 ai 유입은 브랜드 사이트 방문의 1% 안팎으로, 검색에서 잃는 클릭(구글 검색의 68%가 클릭 없이 끝남)을 메우지 못한다. 다만 ai 유입의 전환율은 비ai보다 60% 높다. ai 답변 노출을 가르는 1순위 신호는 브랜드가 직접 쓴 글이 아니라 웹·커뮤니티의 제3자 언급이며, 기존 검색 순위가 그 기반이고, 구매 직전 질문에서는 상품 페이지가 인용의 약 40%를 차지한다. 저울은 손실 쪽" data-q="S1">
+  <a class="tlink" href="sales-marketing/s1/r1.html" data-preview>
+    <div class="tno"><b>S1</b><span>AI Search &amp; GEO</span></div>
+    <h3 class="ttl">AI 답변 속 브랜드는 어떻게 보이고, 무엇이 노출을 가르나</h3>
+    <span class="chip">저울은 손실 쪽</span>
+    <div class="gauge" title="AI 노출 신호 6개 중 근거 강함"><span class="pips" aria-hidden="true"><i class="on" style="--k:0"></i><i class="on" style="--k:1"></i><i class="" style="--k:2"></i><i class="" style="--k:3"></i><i class="" style="--k:4"></i><i class="" style="--k:5"></i></span><span class="gnum">2/6</span><span class="glab">AI 노출 신호 6개 중 근거 강함</span></div>
+  </a>
+  <div class="tmore">
+    <p class="tq">AI 답변에서 브랜드는 얼마나 노출·인용되고, AI 유입은 검색 유입을 얼마나 대신하고 있으며, 노출을 가르는 신호는 무엇인가?</p>
+    <p class="ta">2026년 10월 현재 AI 유입은 브랜드 사이트 방문의 1% 안팎으로, 검색에서 잃는 클릭(구글 검색의 68%가 클릭 없이 끝남)을 메우지 못한다. 다만 AI 유입의 전환율은 비AI보다 60% 높다. AI 답변 노출을 가르는 1순위 신호는 브랜드가 직접 쓴 글이 아니라 웹·커뮤니티의 제3자 언급이며, 기존 검색 순위가 그 기반이고, 구매 직전 질문에서는 상품 페이지가 인용의 약 40%를 차지한다.</p>
+    <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 37건</span><span>질문 v1.0</span></p>
+  </div>
+</li><li class="tile" data-search="s2 ai commerce ai는 어디까지 대신 사고, 그 돈은 누구에게 가나 에이전트 구매는 어느 단계까지 실제 거래가 됐고, 거래 한 건의 수익(수수료·광고·데이터)은 누구에게 가는가? 2026년 10월 현재 에이전트 구매가 실제 거래로 자리 잡은 단계는 &#x27;탐색·비교&#x27;까지다. 유통사 에이전트가 이를 대규모로 운영하지만(amazon rufus 3억 명·증분 매출 120억 달러), chatgpt 안 결제는 전환율이 사이트의 3분의 1에 그쳐 6개월 만에 접혔다. 그래서 돈은 결제 수수료(4%)보다 에이전트 안 광고로 흐르고, 고객 관계와 데이터는 유통사가 지킨다. 한국은 네이버·카카오가 자기 플랫폼 안에서 결제 단계에 먼저 다가가고 있다. 탐색만 대규모, 결제는 시험" data-q="S2">
+  <a class="tlink" href="sales-marketing/s2/r1.html" data-preview>
+    <div class="tno"><b>S2</b><span>AI Commerce</span></div>
+    <h3 class="ttl">AI는 어디까지 대신 사고, 그 돈은 누구에게 가나</h3>
+    <span class="chip">탐색만 대규모, 결제는 시험</span>
+    <div class="gauge" title="커머스 5단계 중 대규모 운영(글로벌)"><span class="pips" aria-hidden="true"><i class="on" style="--k:0"></i><i class="" style="--k:1"></i><i class="" style="--k:2"></i><i class="" style="--k:3"></i><i class="" style="--k:4"></i></span><span class="gnum">1/5</span><span class="glab">커머스 5단계 중 대규모 운영(글로벌)</span></div>
+  </a>
+  <div class="tmore">
+    <p class="tq">에이전트 구매는 어느 단계까지 실제 거래가 됐고, 거래 한 건의 수익(수수료·광고·데이터)은 누구에게 가는가?</p>
+    <p class="ta">2026년 10월 현재 에이전트 구매가 실제 거래로 자리 잡은 단계는 &#x27;탐색·비교&#x27;까지다. 유통사 에이전트가 이를 대규모로 운영하지만(Amazon Rufus 3억 명·증분 매출 120억 달러), ChatGPT 안 결제는 전환율이 사이트의 3분의 1에 그쳐 6개월 만에 접혔다. 그래서 돈은 결제 수수료(4%)보다 에이전트 안 광고로 흐르고, 고객 관계와 데이터는 유통사가 지킨다. 한국은 네이버·카카오가 자기 플랫폼 안에서 결제 단계에 먼저 다가가고 있다.</p>
+    <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 38건</span><span>질문 v1.0</span></p>
+  </div>
+</li><li class="tile" data-search="s3 ai marketing ai는 마케팅을 어디까지 바꿨고, 무엇이 매출로 이어졌나 ai는 고객 이해·타기팅·콘텐츠·광고·crm의 일하는 방식을 어디까지 바꿨으며, 그중 어떤 방식이 실제 매출과 고객 가치 증가로 이어지고 있는가? 2026년 10월 현재 ai가 일하는 방식을 가장 깊이 바꾼 곳은 광고 집행과 타기팅이다. 플랫폼 ai가 스스로 운영하는 단계(meta advantage+ 연환산 750억 달러)에 들어섰다. 콘텐츠는 ai가 만들고 사람이 고르는 방식이 표준이 됐고(마케터 74% 사용), 고객 이해와 crm은 아직 보조~생성 단계다. 매출 효과는 광고 ai에서 가장 많이 측정됐지만 결과가 엇갈린다. 플랫폼은 전환 15% 증가를 말하지만, 독립 실험에서는 전환당 비용이 16% 오르거나 증분 수익률이 수동 캠페인보다 12% 낮았다. 깊은 변화일수록 성과 엇갈림" data-q="S3">
+  <a class="tlink" href="sales-marketing/s3/r1.html" data-preview>
+    <div class="tno"><b>S3</b><span>AI Marketing</span></div>
+    <h3 class="ttl">AI는 마케팅을 어디까지 바꿨고, 무엇이 매출로 이어졌나</h3>
+    <span class="chip">깊은 변화일수록 성과 엇갈림</span>
+    <div class="gauge" title="마케팅 기능 5개 중 AI 운영 단계"><span class="pips" aria-hidden="true"><i class="on" style="--k:0"></i><i class="on" style="--k:1"></i><i class="" style="--k:2"></i><i class="" style="--k:3"></i><i class="" style="--k:4"></i></span><span class="gnum">2/5</span><span class="glab">마케팅 기능 5개 중 AI 운영 단계</span></div>
+  </a>
+  <div class="tmore">
+    <p class="tq">AI는 고객 이해·타기팅·콘텐츠·광고·CRM의 일하는 방식을 어디까지 바꿨으며, 그중 어떤 방식이 실제 매출과 고객 가치 증가로 이어지고 있는가?</p>
+    <p class="ta">2026년 10월 현재 AI가 일하는 방식을 가장 깊이 바꾼 곳은 광고 집행과 타기팅이다. 플랫폼 AI가 스스로 운영하는 단계(Meta Advantage+ 연환산 750억 달러)에 들어섰다. 콘텐츠는 AI가 만들고 사람이 고르는 방식이 표준이 됐고(마케터 74% 사용), 고객 이해와 CRM은 아직 보조~생성 단계다. 매출 효과는 광고 AI에서 가장 많이 측정됐지만 결과가 엇갈린다. 플랫폼은 전환 15% 증가를 말하지만, 독립 실험에서는 전환당 비용이 16% 오르거나 증분 수익률이 수동 캠페인보다 12% 낮았다.</p>
+    <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 32건</span><span>질문 v1.0</span></p>
+  </div>
+</li><li class="tile" data-search="s4 ai sales &amp; customer service ai는 영업과 고객 응대에서 무엇을 맡고, 사람은 무엇을 하나 ai는 리드 발굴·상담·제안·협상·고객 서비스 중 무엇을 수행하며, 사람과의 역할 분담은 어떻게 달라지는가? 2026년 10월 현재 ai는 영업 과정의 양 끝을 맡는다. 앞단의 리드 발굴(셀러 54%가 ai 에이전트 사용)과 뒷단의 고객 서비스(salesforce 문의 70%를 ai 단독 해결)는 ai가 주도하고, 가운데의 구매 상담·제안·협상은 사람이 주도한다. 사람의 역할은 &#x27;정보 전달&#x27;에서 &#x27;검증과 예외 처리&#x27;로 바뀌고 있다. b2b 구매자의 69%가 ai 정보를 영업 담당자에게 확인받고 싶어 하고, 고객의 87%는 ai 응대에도 사람 연결을 요구한다. 양 끝은 ai, 가운데는 사람" data-q="S4">
+  <a class="tlink" href="sales-marketing/s4/r1.html" data-preview>
+    <div class="tno"><b>S4</b><span>AI Sales &amp; Customer Service</span></div>
+    <h3 class="ttl">AI는 영업과 고객 응대에서 무엇을 맡고, 사람은 무엇을 하나</h3>
+    <span class="chip">양 끝은 AI, 가운데는 사람</span>
+    <div class="gauge" title="업무 단계 5개 중 AI 주도(B2B)"><span class="pips" aria-hidden="true"><i class="on" style="--k:0"></i><i class="on" style="--k:1"></i><i class="" style="--k:2"></i><i class="" style="--k:3"></i><i class="" style="--k:4"></i></span><span class="gnum">2/5</span><span class="glab">업무 단계 5개 중 AI 주도(B2B)</span></div>
+  </a>
+  <div class="tmore">
+    <p class="tq">AI는 리드 발굴·상담·제안·협상·고객 서비스 중 무엇을 수행하며, 사람과의 역할 분담은 어떻게 달라지는가?</p>
+    <p class="ta">2026년 10월 현재 AI는 영업 과정의 양 끝을 맡는다. 앞단의 리드 발굴(셀러 54%가 AI 에이전트 사용)과 뒷단의 고객 서비스(Salesforce 문의 70%를 AI 단독 해결)는 AI가 주도하고, 가운데의 구매 상담·제안·협상은 사람이 주도한다. 사람의 역할은 &#x27;정보 전달&#x27;에서 &#x27;검증과 예외 처리&#x27;로 바뀌고 있다. B2B 구매자의 69%가 AI 정보를 영업 담당자에게 확인받고 싶어 하고, 고객의 87%는 AI 응대에도 사람 연결을 요구한다.</p>
+    <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 31건</span><span>질문 v1.0</span></p>
+  </div>
+</li><li class="tile" data-search="s5 market, competition &amp; economics 영업·마케팅 ai 예산은 누가 가져가고, 무엇이 도입을 가르나 어떤 기업과 제품이 영업·마케팅 예산과 고객 접점을 확보하고 있으며, 도입 확대와 수익성을 결정하는 조건은 무엇인가? 2026년 10월 현재 영업·마케팅 ai 예산과 고객 접점을 가장 크게 확보한 곳은 광고 플랫폼이다. meta advantage+ 하나가 연환산 750억 달러로 salesforce agentforce(15억 달러)의 50배다. crm 기존 강자는 ai 매출을 빠르게 키우지만 아직 전체 매출의 3% 수준이고, 고객 서비스 ai에서는 sierra 같은 신생 기업이 기업가치 150억 달러로 빠르게 치고 올라온다. 도입 확대를 가르는 조건은 성과 증명이며, 그래서 과금이 좌석에서 해결·성과당으로 옮겨가고 있다. 광고 플랫폼만 굳어짐" data-q="S5">
+  <a class="tlink" href="sales-marketing/s5/r1.html" data-preview>
+    <div class="tno"><b>S5</b><span>Market, Competition &amp; Economics</span></div>
+    <h3 class="ttl">영업·마케팅 AI 예산은 누가 가져가고, 무엇이 도입을 가르나</h3>
+    <span class="chip">광고 플랫폼만 굳어짐</span>
+    <div class="gauge" title="영역 5개 중 주도 기업이 굳어진 곳"><span class="pips" aria-hidden="true"><i class="on" style="--k:0"></i><i class="" style="--k:1"></i><i class="" style="--k:2"></i><i class="" style="--k:3"></i><i class="" style="--k:4"></i></span><span class="gnum">1/5</span><span class="glab">영역 5개 중 주도 기업이 굳어진 곳</span></div>
+  </a>
+  <div class="tmore">
+    <p class="tq">어떤 기업과 제품이 영업·마케팅 예산과 고객 접점을 확보하고 있으며, 도입 확대와 수익성을 결정하는 조건은 무엇인가?</p>
+    <p class="ta">2026년 10월 현재 영업·마케팅 AI 예산과 고객 접점을 가장 크게 확보한 곳은 광고 플랫폼이다. Meta Advantage+ 하나가 연환산 750억 달러로 Salesforce Agentforce(15억 달러)의 50배다. CRM 기존 강자는 AI 매출을 빠르게 키우지만 아직 전체 매출의 3% 수준이고, 고객 서비스 AI에서는 Sierra 같은 신생 기업이 기업가치 150억 달러로 빠르게 치고 올라온다. 도입 확대를 가르는 조건은 성과 증명이며, 그래서 과금이 좌석에서 해결·성과당으로 옮겨가고 있다.</p>
+    <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 34건</span><span>질문 v1.0</span></p>
+  </div>
+</li></ol></section><section class="col" id="lg-group-ai" data-cat="lg-group-ai" aria-labelledby="h-lg-group-ai">
+  <header class="colhead"><span class="cno">04</span><div><h2 id="h-lg-group-ai">LG Group AI</h2><p>LG 그룹의 AI 전략과 실행을 추적한다.</p></div></header>
+  <ol class="tiles"><li class="tile" data-search="l1 ai data center / infra lg는 ai 데이터센터 수요를 어디까지 계약과 매출로 잡았나 lg는 ai 데이터센터의 냉각·전력·구축·운영 수요를 어떤 제품과 계약으로 확보하고 있으며, 그 수요는 계약·매출로 어디까지 확인되는가? 2026년 10월 현재 lg는 냉각·전력·구축·운영 네 제품군 모두에서 ai 데이터센터 수요를 &#x27;계약&#x27; 단계까지 확보했다. lg전자 북미 5gw 칠러 장기 계약과 냉각 수주 6,000억 원 이상, lg에너지솔루션 ess 수주 3조 원(하이퍼스케일러 ai 데이터센터 포함), lg cns dbo 수주 1조 원 이상, 네이버클라우드 6,034억 원 입주 계약이다. 그러나 ai 데이터센터 매출로 따로 확인된 것은 아직 없다. 냉각·ess 매출은 기존 사업에 섞여 있고, 파주 aidc는 2027년 가동이다. 4개 제품군 계약 단계" data-q="L1">
+  <a class="tlink" href="lg-group-ai/l1/r1.html" data-preview>
+    <div class="tno"><b>L1</b><span>AI Data Center / Infra</span></div>
+    <h3 class="ttl">LG는 AI 데이터센터 수요를 어디까지 계약과 매출로 잡았나</h3>
+    <span class="chip">4개 제품군 계약 단계</span>
+    <div class="gauge" title="제품군 5개 중 계약 이상"><span class="pips" aria-hidden="true"><i class="on" style="--k:0"></i><i class="on" style="--k:1"></i><i class="on" style="--k:2"></i><i class="on" style="--k:3"></i><i class="" style="--k:4"></i></span><span class="gnum">4/5</span><span class="glab">제품군 5개 중 계약 이상</span></div>
+  </a>
+  <div class="tmore">
+    <p class="tq">LG는 AI 데이터센터의 냉각·전력·구축·운영 수요를 어떤 제품과 계약으로 확보하고 있으며, 그 수요는 계약·매출로 어디까지 확인되는가?</p>
+    <p class="ta">2026년 10월 현재 LG는 냉각·전력·구축·운영 네 제품군 모두에서 AI 데이터센터 수요를 &#x27;계약&#x27; 단계까지 확보했다. LG전자 북미 5GW 칠러 장기 계약과 냉각 수주 6,000억 원 이상, LG에너지솔루션 ESS 수주 3조 원(하이퍼스케일러 AI 데이터센터 포함), LG CNS DBO 수주 1조 원 이상, 네이버클라우드 6,034억 원 입주 계약이다. 그러나 AI 데이터센터 매출로 따로 확인된 것은 아직 없다. 냉각·ESS 매출은 기존 사업에 섞여 있고, 파주 AIDC는 2027년 가동이다.</p>
+    <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 38건</span><span>질문 v1.0</span></p>
+  </div>
+</li><li class="tile" data-search="l2 physical ai / smart manufacturing lg의 피지컬 ai는 현장에서 어디까지 성과를 냈나 lg는 ai를 공장·물류·로봇·가전의 물리적 작동에 어떻게 적용하며, 실제 성능과 사업 성과는 어디까지 확인되는가? 2026년 10월 현재 lg의 피지컬 ai가 사업 성과로 확인된 곳은 공장이다. lg전자 스마트팩토리 외부 수주가 2년 새 약 5,000억 원이 됐고, lg cns 공장 운영 ai는 설비 10만 개 이상에 적용돼 한 배터리 공장에서 한 달 만에 합격품 비중 90% 이상을 냈다. 물류 휴머노이드는 컬리·lx판토스와의 외부 실증 단계이고, 가전에서는 홈 허브(씽큐 온)가 출시됐지만 홈 로봇 cloid는 아직 실험실 안이다. 공개된 성능 수치의 대부분은 자사 공장 측정이거나 회사가 기대하는 값이다. 공장만 사업 성과" data-q="L2">
+  <a class="tlink" href="lg-group-ai/l2/r1.html" data-preview>
+    <div class="tno"><b>L2</b><span>Physical AI / Smart Manufacturing</span></div>
+    <h3 class="ttl">LG의 피지컬 AI는 현장에서 어디까지 성과를 냈나</h3>
+    <span class="chip">공장만 사업 성과</span>
+    <div class="gauge" title="적용 영역 5개 중 사업 성과"><span class="pips" aria-hidden="true"><i class="on" style="--k:0"></i><i class="" style="--k:1"></i><i class="" style="--k:2"></i><i class="" style="--k:3"></i><i class="" style="--k:4"></i></span><span class="gnum">1/5</span><span class="glab">적용 영역 5개 중 사업 성과</span></div>
+  </a>
+  <div class="tmore">
+    <p class="tq">LG는 AI를 공장·물류·로봇·가전의 물리적 작동에 어떻게 적용하며, 실제 성능과 사업 성과는 어디까지 확인되는가?</p>
+    <p class="ta">2026년 10월 현재 LG의 피지컬 AI가 사업 성과로 확인된 곳은 공장이다. LG전자 스마트팩토리 외부 수주가 2년 새 약 5,000억 원이 됐고, LG CNS 공장 운영 AI는 설비 10만 개 이상에 적용돼 한 배터리 공장에서 한 달 만에 합격품 비중 90% 이상을 냈다. 물류 휴머노이드는 컬리·LX판토스와의 외부 실증 단계이고, 가전에서는 홈 허브(씽큐 온)가 출시됐지만 홈 로봇 CLOiD는 아직 실험실 안이다. 공개된 성능 수치의 대부분은 자사 공장 측정이거나 회사가 기대하는 값이다.</p>
+    <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 28건</span><span>질문 v1.0</span></p>
+  </div>
+</li><li class="tile" data-search="l3 ai mobility / sdv·aidv lg의 차량용 ai는 어느 고객·차종까지 들어갔나 lg의 차량용 ai·소프트웨어·부품은 어떤 고객과 차종에 적용되며, 공급 범위와 수익 기회는 어떻게 확대되는가? 2026년 10월 현재 고객과 차종을 밝힌 lg의 ai·sdv 수주는 르노 &#x27;new trafic e-tech electric&#x27;(유럽 첫 상용 sdv)의 통합 콕핏 한 건이다. 부품 공급사에서 통합 솔루션 공급사로 넓어지는 첫 공개 사례다. 양산 적용 단계에 있는 것은 텔레매틱스(점유율 23%, 1위)와 차량용 oled(15.9%, 2위) 같은 기존 강점이고, ai 캐빈·adas·라이다는 콘셉트이거나 고객명 없는 수주 단계다. 수익 기회는 이익률에서 먼저 보인다. vs 영업이익률 6~7%는 보쉬 모빌리티의 3배가 넘는다. ai 신영역 공개 수주 1건" data-q="L3">
+  <a class="tlink" href="lg-group-ai/l3/r1.html" data-preview>
+    <div class="tno"><b>L3</b><span>AI Mobility / SDV·AIDV</span></div>
+    <h3 class="ttl">LG의 차량용 AI는 어느 고객·차종까지 들어갔나</h3>
+    <span class="chip">AI 신영역 공개 수주 1건</span>
+    <div class="gauge" title="제품군 7개 중 양산 적용"><span class="pips" aria-hidden="true"><i class="on" style="--k:0"></i><i class="on" style="--k:1"></i><i class="" style="--k:2"></i><i class="" style="--k:3"></i><i class="" style="--k:4"></i><i class="" style="--k:5"></i><i class="" style="--k:6"></i></span><span class="gnum">2/7</span><span class="glab">제품군 7개 중 양산 적용</span></div>
+  </a>
+  <div class="tmore">
+    <p class="tq">LG의 차량용 AI·소프트웨어·부품은 어떤 고객과 차종에 적용되며, 공급 범위와 수익 기회는 어떻게 확대되는가?</p>
+    <p class="ta">2026년 10월 현재 고객과 차종을 밝힌 LG의 AI·SDV 수주는 르노 &#x27;New Trafic E-Tech Electric&#x27;(유럽 첫 상용 SDV)의 통합 콕핏 한 건이다. 부품 공급사에서 통합 솔루션 공급사로 넓어지는 첫 공개 사례다. 양산 적용 단계에 있는 것은 텔레매틱스(점유율 23%, 1위)와 차량용 OLED(15.9%, 2위) 같은 기존 강점이고, AI 캐빈·ADAS·라이다는 콘셉트이거나 고객명 없는 수주 단계다. 수익 기회는 이익률에서 먼저 보인다. VS 영업이익률 6~7%는 보쉬 모빌리티의 3배가 넘는다.</p>
+    <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 27건</span><span>질문 v1.0</span></p>
+  </div>
+</li><li class="tile" data-search="l4 enterprise ax / agentic operating model lg의 ax는 목표에서 결과로 얼마나 넘어왔나 lg는 내부 업무와 외부 고객 사업에서 ai를 어떻게 실행 체계로 전환하며, 사용·품질·생산성·매출 성과는 무엇인가? 2026년 10월 현재 lg의 ax는 계열사마다 단계가 다르다. lg cns는 외부 사업화(상반기 ai·클라우드 매출 1조 6,714억 원, 전체의 59%)까지 왔고, lg디스플레이·lg에너지솔루션은 업무 단위 성과(설계 한 달→8시간, 리튬 가격 예측 정확도 90%+)를 공개했으며, lg전자는 업무 적용(lgenie 월 3만 명), lg화학은 교육 단계(3,000명)다. 목표는 전사 단위(엔솔 2028년 생산성 50%, lgd 30%)인데 공개된 결과는 업무 단위에 머물고, lg전자가 만든 업무 에이전트는 절반 이상(96개 중 50개)이 사라졌다. 성과 공개 3곳, 전사 결과 0" data-q="L4">
+  <a class="tlink" href="lg-group-ai/l4/r1.html" data-preview>
+    <div class="tno"><b>L4</b><span>Enterprise AX / Agentic Operating Model</span></div>
+    <h3 class="ttl">LG의 AX는 목표에서 결과로 얼마나 넘어왔나</h3>
+    <span class="chip">성과 공개 3곳, 전사 결과 0</span>
+    <div class="gauge" title="계열사 5곳 중 성과 공개 이상"><span class="pips" aria-hidden="true"><i class="on" style="--k:0"></i><i class="on" style="--k:1"></i><i class="on" style="--k:2"></i><i class="" style="--k:3"></i><i class="" style="--k:4"></i></span><span class="gnum">3/5</span><span class="glab">계열사 5곳 중 성과 공개 이상</span></div>
+  </a>
+  <div class="tmore">
+    <p class="tq">LG는 내부 업무와 외부 고객 사업에서 AI를 어떻게 실행 체계로 전환하며, 사용·품질·생산성·매출 성과는 무엇인가?</p>
+    <p class="ta">2026년 10월 현재 LG의 AX는 계열사마다 단계가 다르다. LG CNS는 외부 사업화(상반기 AI·클라우드 매출 1조 6,714억 원, 전체의 59%)까지 왔고, LG디스플레이·LG에너지솔루션은 업무 단위 성과(설계 한 달→8시간, 리튬 가격 예측 정확도 90%+)를 공개했으며, LG전자는 업무 적용(LGenie 월 3만 명), LG화학은 교육 단계(3,000명)다. 목표는 전사 단위(엔솔 2028년 생산성 50%, LGD 30%)인데 공개된 결과는 업무 단위에 머물고, LG전자가 만든 업무 에이전트는 절반 이상(96개 중 50개)이 사라졌다.</p>
+    <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 31건</span><span>질문 v1.0</span></p>
+  </div>
+</li><li class="tile" data-search="l5 ai for science / bio / materials / battery ai가 찾은 소재·신약은 어디까지 제품이 됐나 ai가 소재·배터리·신약의 탐색과 개발을 얼마나 개선하며, 연구 결과는 실험·제품·사업화로 어디까지 이어지는가? 2026년 10월 현재 ai는 lg의 탐색 단계를 크게 줄였다. 화장품 소재 4,000만 건 검토가 22개월에서 하루로, 탈모 소재 후보 42만 개 선별이 하루로 줄었다(회사 발표). 그러나 ai로 찾은 물질 가운데 제품·임상까지 간 것은 아직 없다. 가장 앞선 탈모 소재 &#x27;람시딜&#x27;은 학회에서 효과를 발표하고 제품화를 준비 중이고, 신약(펩타이드·항체)은 발견 단계, 배터리는 자동 실험 루프를 만든 단계다. 제품·임상 진입 0건" data-q="L5">
+  <a class="tlink" href="lg-group-ai/l5/r1.html" data-preview>
+    <div class="tno"><b>L5</b><span>AI for Science / Bio / Materials / Battery</span></div>
+    <h3 class="ttl">AI가 찾은 소재·신약은 어디까지 제품이 됐나</h3>
+    <span class="chip">제품·임상 진입 0건</span>
+    <div class="gauge" title="연구 분야 5개 중 실험 검증 이상"><span class="pips" aria-hidden="true"><i class="on" style="--k:0"></i><i class="on" style="--k:1"></i><i class="" style="--k:2"></i><i class="" style="--k:3"></i><i class="" style="--k:4"></i></span><span class="gnum">2/5</span><span class="glab">연구 분야 5개 중 실험 검증 이상</span></div>
+  </a>
+  <div class="tmore">
+    <p class="tq">AI가 소재·배터리·신약의 탐색과 개발을 얼마나 개선하며, 연구 결과는 실험·제품·사업화로 어디까지 이어지는가?</p>
+    <p class="ta">2026년 10월 현재 AI는 LG의 탐색 단계를 크게 줄였다. 화장품 소재 4,000만 건 검토가 22개월에서 하루로, 탈모 소재 후보 42만 개 선별이 하루로 줄었다(회사 발표). 그러나 AI로 찾은 물질 가운데 제품·임상까지 간 것은 아직 없다. 가장 앞선 탈모 소재 &#x27;람시딜&#x27;은 학회에서 효과를 발표하고 제품화를 준비 중이고, 신약(펩타이드·항체)은 발견 단계, 배터리는 자동 실험 루프를 만든 단계다.</p>
+    <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 28건</span><span>질문 v1.0</span></p>
+  </div>
+</li><li class="tile" data-search="l6 global ai alliance / open innovation lg의 ai 동맹은 무엇을 바꾸고 있나 lg는 자체 ai 역량과 외부 파트너를 어떻게 결합하며, 협력이 기술·고객·공급망·시장 접근에 어떤 변화를 만드는가? 2026년 10월 현재 lg의 ai 동맹 가운데 상용 계약까지 간 것은 lg가 &#x27;고객&#x27;인 협력이다. palantir(그룹 poc → 본 계약)와 anthropic(그룹 통합 claude 계약)이 그렇다. lg가 &#x27;공급자&#x27;가 되는 협력은 공급망 입구에 섰다. nvidia와는 세 분야·여섯 계열사가 공동개발 중이고 lg전자 cdu와 엔솔 ess가 dsx ready에 들어갔으며, microsoft와는 9월 냉각·전력·it 공급 기회를 함께 찾기로 했다. 다만 의사결정(palantir)·로봇 두뇌(skild·gr00t)·컴퓨팅(nvidia) 같은 핵심층은 외부에 기대고 있다. 상용 계약 3곳, 모두 lg가 고객" data-q="L6">
+  <a class="tlink" href="lg-group-ai/l6/r1.html" data-preview>
+    <div class="tno"><b>L6</b><span>Global AI Alliance / Open Innovation</span></div>
+    <h3 class="ttl">LG의 AI 동맹은 무엇을 바꾸고 있나</h3>
+    <span class="chip">상용 계약 3곳, 모두 LG가 고객</span>
+    <div class="gauge" title="파트너 10곳 중 상용 계약 이상"><span class="pips" aria-hidden="true"><i class="on" style="--k:0"></i><i class="on" style="--k:1"></i><i class="on" style="--k:2"></i><i class="" style="--k:3"></i><i class="" style="--k:4"></i><i class="" style="--k:5"></i><i class="" style="--k:6"></i><i class="" style="--k:7"></i><i class="" style="--k:8"></i><i class="" style="--k:9"></i></span><span class="gnum">3/10</span><span class="glab">파트너 10곳 중 상용 계약 이상</span></div>
+  </a>
+  <div class="tmore">
+    <p class="tq">LG는 자체 AI 역량과 외부 파트너를 어떻게 결합하며, 협력이 기술·고객·공급망·시장 접근에 어떤 변화를 만드는가?</p>
+    <p class="ta">2026년 10월 현재 LG의 AI 동맹 가운데 상용 계약까지 간 것은 LG가 &#x27;고객&#x27;인 협력이다. Palantir(그룹 PoC → 본 계약)와 Anthropic(그룹 통합 Claude 계약)이 그렇다. LG가 &#x27;공급자&#x27;가 되는 협력은 공급망 입구에 섰다. NVIDIA와는 세 분야·여섯 계열사가 공동개발 중이고 LG전자 CDU와 엔솔 ESS가 DSX Ready에 들어갔으며, Microsoft와는 9월 냉각·전력·IT 공급 기회를 함께 찾기로 했다. 다만 의사결정(Palantir)·로봇 두뇌(Skild·GR00T)·컴퓨팅(NVIDIA) 같은 핵심층은 외부에 기대고 있다.</p>
+    <p class="tmeta"><span class="live">R1</span><time>2026-10-09</time><span>기록 33건</span><span>질문 v1.0</span></p>
+  </div>
+</li></ol></section></div>
+    <p class="noresult" hidden>검색어와 맞는 질문이 없습니다. 다른 단어로 찾아보세요.</p>
+  </section>
+
+  <section class="due" aria-labelledby="h-due">
+    <div class="sechead"><h2 id="h-due">판정 임박 전망</h2><p>앞으로 90일 안에 맞았는지 틀렸는지 판정할 전망 25건입니다. 판정일이 지나면 결과를 기록에 남깁니다.</p></div>
+    <div class="months"><div class="month"><h3><b>10월</b><span>2026 · 2건</span></h3><ol><li><time>10/31</time><b>I3</b><a href="industry-trend/i3/r1.html#I3-F-005">SK하이닉스의 2026년 3분기 영업이익은 2분기(60조 5,426억 원) 이상일 것이다.</a><span class="dl">D-21</span></li><li><time>10/31</time><b>L3</b><a href="lg-group-ai/l3/r1.html#L3-F-001">LG전자 VS사업본부의 2026년 3분기 매출은 전년보다 늘고, 영업이익률은 5% 이상일 것이다.</a><span class="dl">D-21</span></li></ol></div><div class="month"><h3><b>11월</b><span>2026 · 3건</span></h3><ol><li><time>11/15</time><b>S3</b><a href="sales-marketing/s3/r1.html#S3-F-001">Meta의 2026년 3분기 광고 매출은 전년보다 20% 이상 늘 것이다.</a><span class="dl">D-36</span></li><li><time>11/30</time><b>I3</b><a href="industry-trend/i3/r1.html#I3-F-001">NVIDIA의 2026년 8~10월 분기 매출은 가이던스 하단(1,058억 달러) 이상일 것이다.</a><span class="dl">D-51</span></li><li><time>11/30</time><b>I4</b><a href="industry-trend/i4/r1.html#I4-F-001">NVIDIA는 다음 분기(2026년 11월~2027년 1월) 전망에서도 중국 데이터센터 매출을 0으로 잡을 것이다.</a><span class="dl">D-51</span></li></ol></div><div class="month"><h3><b>12월</b><span>2026 · 20건</span></h3><ol><li><time>12/15</time><b>S5</b><a href="sales-marketing/s5/r1.html#S5-F-001">Salesforce는 2026년 10월 분기 실적에서 Agentforce 연환산 매출을 18억 달러 이상이라고 밝힐 것이다.</a><span class="dl">D-66</span></li><li><time>12/31</time><b>C1</b><a href="customer-lab/c1/r1.html#C1-F-003">네이버는 2026년 안에 AI탭에 광고 상품을 도입한다고 발표할 것이다.</a><span class="dl">D-82</span></li><li><time>12/31</time><b>C1</b><a href="customer-lab/c1/r1.html#C1-F-006">네이버 쇼핑 AI 에이전트는 2026년 안에 대화 중 장바구니 담기 기능을 출시할 것이다.</a><span class="dl">D-82</span></li><li><time>12/31</time><b>C2</b><a href="customer-lab/c2/r1.html#C2-F-001">네이버는 2026년 안에 AI탭 광고 상품을 출시할 것이다.</a><span class="dl">D-82</span></li><li><time>12/31</time><b>C2</b><a href="customer-lab/c2/r1.html#C2-F-002">카카오톡 AI 에이전트는 2026년 안에 정식 출시되며, 선물하기 외 외부 커머스 결제 연결을 포함할 것이다.</a><span class="dl">D-82</span></li><li class=extra><time>12/31</time><b>C4</b><a href="customer-lab/c4/r1.html#C4-F-001">1X NEO는 2026년 안에 일반 고객 가정에 배송되기 시작할 것이다.</a><span class="dl">D-82</span></li><li class=extra><time>12/31</time><b>I1</b><a href="industry-trend/i1/r1.html#I1-F-003">Google은 2026년 안에 Gemini 4를 출시할 것이다.</a><span class="dl">D-82</span></li><li class=extra><time>12/31</time><b>I2</b><a href="industry-trend/i2/r1.html#I2-F-003">Tesla는 2026년 말까지 2개 이상 도시에서 안전요원 없는 유료 로보택시 운행을 공식 확인할 것이다.</a><span class="dl">D-82</span></li><li class=extra><time>12/31</time><b>L1</b><a href="lg-group-ai/l1/r1.html#L1-F-001">LG전자는 2026년 말까지 CDU 공급 계약을 고객 또는 규모를 밝혀 발표할 것이다.</a><span class="dl">D-82</span></li><li class=extra><time>12/31</time><b>L2</b><a href="lg-group-ai/l2/r1.html#L2-F-001">LG CNS와 LX판토스는 2026년 말까지 청라 물류센터 휴머노이드 실증 공간 구축을 마쳤다고 발표할 것이다.</a><span class="dl">D-82</span></li><li class=extra><time>12/31</time><b>L4</b><a href="lg-group-ai/l4/r1.html#L4-F-003">2026년 말까지 LG CNS 외 LG 계열사 한 곳 이상이 Claude 전사 도입을 발표할 것이다.</a><span class="dl">D-82</span></li><li class=extra><time>12/31</time><b>L4</b><a href="lg-group-ai/l4/r1.html#L4-F-006">LG화학은 2026년 말까지 사무직 전체의 AX 교육 이수를 발표할 것이다.</a><span class="dl">D-82</span></li><li class=extra><time>12/31</time><b>L6</b><a href="lg-group-ai/l6/r1.html#L6-F-002">LG 계열사는 2026년 말까지 사무직 대상 Microsoft Copilot 도입을 발표할 것이다.</a><span class="dl">D-82</span></li><li class=extra><time>12/31</time><b>S1</b><a href="sales-marketing/s1/r1.html#S1-F-001">Conductor의 다음 벤치마크(2027년판)에서 AI 유입 비중은 2% 이상으로 나올 것이다.</a><span class="dl">D-82</span></li><li class=extra><time>12/31</time><b>S1</b><a href="sales-marketing/s1/r1.html#S1-F-004">2026년 말까지 구글이 AI Mode 또는 AI 요약 안 광고를 미국 광고주 전체로 정식 확대한다고 발표할 것이다.</a><span class="dl">D-82</span></li><li class=extra><time>12/31</time><b>S2</b><a href="sales-marketing/s2/r1.html#S2-F-001">카카오는 2026년 말까지 카카오톡 안에서 쿠팡이츠 주문·결제까지 끝내는 AI 에이전트를 정식 출시할 것이다.</a><span class="dl">D-82</span></li><li class=extra><time>12/31</time><b>S2</b><a href="sales-marketing/s2/r1.html#S2-F-002">네이버는 2026년 말까지 쇼핑 AI 에이전트에 장바구니 담기 또는 결제 연동 기능을 출시할 것이다.</a><span class="dl">D-82</span></li><li class=extra><time>12/31</time><b>S3</b><a href="sales-marketing/s3/r1.html#S3-F-002">네이버는 2026년 말까지 AI 브리핑 광고를 쇼핑 또는 로컬 질의로 넓힐 것이다.</a><span class="dl">D-82</span></li><li class=extra><time>12/31</time><b>S5</b><a href="sales-marketing/s5/r1.html#S5-F-002">Adobe는 2026회계연도 4분기 실적에서도 AI 중심 연환산 매출이 100% 이상 늘었다고 밝힐 것이다.</a><span class="dl">D-82</span></li><li class=extra><time>12/31</time><b>S5</b><a href="sales-marketing/s5/r1.html#S5-F-006">미국 소프트웨어 ETF(IGV)의 2026년 연간 수익률은 마이너스로 끝날 것이다.</a><span class="dl">D-82</span></li></ol><button class="more" type="button" aria-expanded="false">15건 더 보기</button></div></div>
+  </section>
+
   <footer><span>AX Signals · 원본 기록과 생성 스크립트는 GitHub skykelly/AXblog 저장소에 있습니다.</span></footer>
 </main>
+<div class="preview" id="preview" role="dialog" aria-modal="false" aria-labelledby="pv-title" hidden>
+  <div class="pv-grip" aria-hidden="true"></div>
+  <p class="pv-no"></p><h3 id="pv-title"></h3><span class="chip pv-chip"></span>
+  <p class="tq pv-q"></p><p class="ta pv-a"></p><p class="tmeta pv-meta"></p>
+  <div class="pv-act"><a class="pv-go" href="#">아티클 읽기</a><button class="pv-x" type="button">닫기</button></div>
+</div>
+<div class="scrim" hidden></div>
+<script>(function () {
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var canHover = window.matchMedia && matchMedia('(hover: hover) and (pointer: fine)').matches;
+  var store = { get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+                set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
+
+  // ---------- 숫자 올라가기
+  if (!reduce) {
+    document.querySelectorAll('.stats dd[data-count]').forEach(function (el) {
+      var to = +el.getAttribute('data-count'), t0 = null, dur = 900;
+      if (!(to > 0)) return;
+      var step = function (t) {
+        if (!t0) t0 = t;
+        var p = Math.min(1, (t - t0) / dur), v = Math.round(to * (1 - Math.pow(1 - p, 3)));
+        el.textContent = v.toLocaleString('ko-KR');
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    });
+  }
+
+  // ---------- 탭
+  var board = document.getElementById('board');
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
+  var ink = document.querySelector('.tab-ink');
+  var cols = Array.prototype.slice.call(board.querySelectorAll('.col'));
+  function moveInk(tab) {
+    if (!ink || !tab) return;
+    ink.style.setProperty('--x', tab.offsetLeft + 'px');
+    ink.style.setProperty('--w', tab.offsetWidth + 'px');
+  }
+  function select(cat, focus, fromUser) {
+    var tab = tabs.filter(function (t) { return t.dataset.cat === cat; })[0] || tabs[0];
+    tabs.forEach(function (t) { var on = t === tab; t.setAttribute('aria-selected', on); t.tabIndex = on ? 0 : -1; });
+    board.setAttribute('aria-labelledby', tab.id);
+    board.dataset.view = tab.dataset.cat === 'all' ? 'all' : 'cat';
+    cols.forEach(function (c) { c.classList.toggle('on', c.dataset.cat === tab.dataset.cat); });
+    moveInk(tab);
+    if (focus) tab.focus();
+    if (fromUser) {
+      store.set('axs-tab', tab.dataset.cat);
+      if (!reduce) { board.classList.remove('swap'); void board.offsetWidth; board.classList.add('swap'); }
+      var tabsBar = document.querySelector('.tabs');
+      if (tabsBar.getBoundingClientRect().top < 0 || board.getBoundingClientRect().top < 0) {
+        window.scrollTo({ top: board.closest('.boardwrap').offsetTop - 8, behavior: reduce ? 'auto' : 'smooth' });
+      }
+    }
+    applySearch();
+  }
+  tabs.forEach(function (t, i) {
+    t.addEventListener('click', function () { select(t.dataset.cat, false, true); });
+    t.addEventListener('keydown', function (e) {
+      var j = null;
+      if (e.key === 'ArrowRight') j = (i + 1) % tabs.length;
+      if (e.key === 'ArrowLeft') j = (i - 1 + tabs.length) % tabs.length;
+      if (e.key === 'Home') j = 0;
+      if (e.key === 'End') j = tabs.length - 1;
+      if (j !== null) { e.preventDefault(); select(tabs[j].dataset.cat, true, true); }
+    });
+  });
+  // 레이더 점·해시 링크로 카테고리 열기
+  function fromHash() {
+    var h = (location.hash || '').slice(1);
+    if (h && tabs.some(function (t) { return t.dataset.cat === h; })) { select(h, false, false); return true; }
+    return false;
+  }
+  document.querySelectorAll('.radar .dot').forEach(function (d) {
+    d.addEventListener('click', function (e) {
+      e.preventDefault();
+      var cat = d.getAttribute('href').slice(1), q = d.getAttribute('data-q');
+      select(cat, false, true);
+      var tile = board.querySelector('.tile[data-q="' + q + '"] .tlink');
+      if (tile) { tile.scrollIntoView({ block: 'center', behavior: reduce ? 'auto' : 'smooth' }); tile.focus({ preventScroll: true }); }
+    });
+  });
+  window.addEventListener('hashchange', fromHash);
+  window.addEventListener('resize', function () { moveInk(tabs.filter(function (t) { return t.getAttribute('aria-selected') === 'true'; })[0]); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { moveInk(tabs.filter(function (t) { return t.getAttribute('aria-selected') === 'true'; })[0]); });
+
+  // ---------- 검색
+  var input = document.getElementById('q-search'), count = document.getElementById('q-count'), none = document.querySelector('.noresult');
+  var tiles = Array.prototype.slice.call(board.querySelectorAll('.tile[data-search]'));
+  function applySearch() {
+    var words = (input.value || '').toLowerCase().trim().split(/\s+/).filter(Boolean), shown = 0;
+    var view = board.dataset.view, active = board.querySelector('.col.on');
+    tiles.forEach(function (t) {
+      var ok = words.every(function (w) { return t.dataset.search.indexOf(w) >= 0; });
+      t.hidden = !ok;
+      if (ok && (view === 'all' || t.closest('.col') === active)) shown++;
+    });
+    cols.forEach(function (c) { c.classList.toggle('empty', words.length > 0 && !c.querySelector('.tile[data-search]:not([hidden])')); });
+    count.textContent = words.length ? shown + '개' : '';
+    none.hidden = !(words.length && shown === 0);
+  }
+  input.addEventListener('input', applySearch);
+  input.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { input.value = ''; applySearch(); input.blur(); }
+    if (e.key === 'ArrowDown' || e.key === 'Enter') {
+      var first = board.querySelector('.col:not(.empty) .tile:not([hidden]) .tlink');
+      if (first && (board.dataset.view === 'all' || first.closest('.col.on'))) { e.preventDefault(); first.focus(); }
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === '/' && document.activeElement !== input && !/INPUT|TEXTAREA/.test(document.activeElement.tagName)) { e.preventDefault(); input.focus(); }
+  });
+
+  if (!fromHash()) select(store.get('axs-tab') || 'all', false, false);
+
+  // ---------- 보드 안 방향키 이동
+  function visibleLinks() {
+    return Array.prototype.slice.call(board.querySelectorAll('.tile:not([hidden]) .tlink')).filter(function (a) { return a.offsetParent !== null; });
+  }
+  board.addEventListener('keydown', function (e) {
+    var a = e.target.closest && e.target.closest('.tlink');
+    if (!a || ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].indexOf(e.key) < 0) return;
+    var links = visibleLinks(), r = a.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2, best = null, bd = Infinity;
+    links.forEach(function (b) {
+      if (b === a) return;
+      var s = b.getBoundingClientRect(), x = s.left + s.width / 2, y = s.top + s.height / 2, dx = x - cx, dy = y - cy;
+      var ok = (e.key === 'ArrowDown' && dy > 10) || (e.key === 'ArrowUp' && dy < -10) || (e.key === 'ArrowRight' && dx > 10) || (e.key === 'ArrowLeft' && dx < -10);
+      if (!ok) return;
+      var d = (e.key === 'ArrowDown' || e.key === 'ArrowUp') ? Math.abs(dy) + Math.abs(dx) * 3 : Math.abs(dx) + Math.abs(dy) * 3;
+      if (d < bd) { bd = d; best = b; }
+    });
+    if (best) { e.preventDefault(); best.focus(); best.scrollIntoView({ block: 'nearest' }); }
+  });
+
+  // ---------- 미리보기 (가리키면 팝오버, 터치하면 아래 시트)
+  var pv = document.getElementById('preview'), scrim = document.querySelector('.scrim'), timer = null, current = null, opener = null;
+  function fill(tile) {
+    var link = tile.querySelector('.tlink');
+    var tno = tile.querySelector('.tno');
+    pv.querySelector('.pv-no').textContent = tno.querySelector('b').textContent + ' · ' + tno.querySelector('span').textContent;
+    pv.querySelector('#pv-title').textContent = tile.querySelector('.ttl').textContent;
+    var chip = tile.querySelector('.chip'), pc = pv.querySelector('.pv-chip');
+    pc.textContent = chip ? chip.textContent : ''; pc.hidden = !chip;
+    pv.querySelector('.pv-q').textContent = tile.querySelector('.tq').textContent;
+    pv.querySelector('.pv-a').textContent = tile.querySelector('.ta').textContent;
+    pv.querySelector('.pv-meta').innerHTML = tile.querySelector('.tmeta').innerHTML;
+    pv.querySelector('.pv-go').href = link.getAttribute('href');
+  }
+  function place(tile) {
+    if (window.innerWidth <= 760) { pv.style.left = ''; pv.style.top = ''; return; }
+    var r = tile.getBoundingClientRect(), w = pv.offsetWidth, h = pv.offsetHeight, gap = 12;
+    var left = r.right + gap + w <= window.innerWidth - 16 ? r.right + gap : r.left - gap - w;
+    if (left < 16) left = Math.max(16, Math.min(r.left, window.innerWidth - w - 16));
+    var top = Math.max(16, Math.min(r.top, window.innerHeight - h - 16));
+    pv.style.left = left + 'px'; pv.style.top = top + 'px';
+  }
+  function open(tile, mode) {
+    if (board.dataset.view === 'cat' && mode === 'hover') return; // 펼친 보기에서는 이미 한 줄 답이 보인다
+    current = tile; fill(tile);
+    pv.classList.toggle('hover', mode === 'hover');
+    pv.hidden = false; place(tile);
+    if (mode === 'sheet') {
+      scrim.hidden = window.innerWidth > 760;
+      opener = tile.querySelector('.tlink');
+      pv.querySelector('.pv-go').focus({ preventScroll: true });
+    }
+  }
+  function close() {
+    clearTimeout(timer); pv.hidden = true; scrim.hidden = true; current = null;
+    if (opener) { opener.focus({ preventScroll: true }); opener = null; }
+  }
+  if (canHover) {
+    board.addEventListener('mouseover', function (e) {
+      var tile = e.target.closest && e.target.closest('.tile[data-search]');
+      if (!tile || tile === current) return;
+      clearTimeout(timer);
+      timer = setTimeout(function () { open(tile, 'hover'); }, 320);
+    });
+    board.addEventListener('mouseleave', function () { if (pv.classList.contains('hover')) close(); else clearTimeout(timer); });
+    board.addEventListener('mouseout', function (e) {
+      var tile = e.target.closest && e.target.closest('.tile[data-search]');
+      if (tile && !tile.contains(e.relatedTarget)) { clearTimeout(timer); if (pv.classList.contains('hover') && current === tile) close(); }
+    });
+  } else {
+    board.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('.tlink');
+      if (!a || board.dataset.view === 'cat') return;
+      e.preventDefault();
+      open(a.closest('.tile'), 'sheet');
+    });
+  }
+  // 키보드: 카드에서 스페이스로 미리보기
+  board.addEventListener('keydown', function (e) {
+    var a = e.target.closest && e.target.closest('.tlink');
+    if (a && e.key === ' ') { e.preventDefault(); open(a.closest('.tile'), 'sheet'); }
+  });
+  pv.querySelector('.pv-x').addEventListener('click', close);
+  scrim.addEventListener('click', close);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !pv.hidden) close(); });
+  window.addEventListener('scroll', function () { if (!pv.hidden && pv.classList.contains('hover')) close(); }, { passive: true });
+  // 시트를 아래로 끌어 닫기
+  var y0 = null;
+  pv.addEventListener('touchstart', function (e) { y0 = e.touches[0].clientY; }, { passive: true });
+  pv.addEventListener('touchmove', function (e) {
+    if (y0 === null || pv.scrollTop > 0) return;
+    var dy = e.touches[0].clientY - y0;
+    if (dy > 0) pv.style.transform = 'translateY(' + dy + 'px)';
+  }, { passive: true });
+  pv.addEventListener('touchend', function (e) {
+    var dy = y0 === null ? 0 : e.changedTouches[0].clientY - y0;
+    pv.style.transform = ''; y0 = null;
+    if (dy > 80) close();
+  });
+
+  // ---------- 판정 임박 전망 더 보기
+  document.querySelectorAll('.month .more').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var m = b.closest('.month'), on = m.classList.toggle('open');
+      b.setAttribute('aria-expanded', on);
+      b.textContent = on ? '접기' : b.dataset.label || b.textContent;
+      if (!b.dataset.label && on) b.dataset.label = b.textContent;
+    });
+    b.dataset.label = b.textContent;
+  });
+})();
+</script>
+
