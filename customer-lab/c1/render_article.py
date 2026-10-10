@@ -24,12 +24,13 @@ def src_links(r):
 # =====================================================================
 # 1. 한 줄 답
 # =====================================================================
-QUESTION = "소비자는 탐색 → 답변 → 추천 → 결정 → 위임 중 어느 단계까지 AI에 맡기고 있으며, 검색엔진·브랜드 사이트의 역할은 얼마나 줄었는가?"
-ONE_LINE = "2026년 10월 현재 AI가 대신하는 일은 ‘찾아보고 후보를 추려주는 것’까지다. 무엇을 살지 정하고 결제하는 일은 소비자가 직접 하며, 결제까지 AI에 맡기겠다는 소비자는 9%에 그친다."
-ONE_LINE_BASIS = ["C1-I-002", "C1-I-003", "C1-M-011"]
+QUESTION_VERSION = "v1.1"  # v1.1: '답변'을 '정리'로 바꾸고 판정 기준표 도입, R1 판정을 새 기준으로 다시 매김
+QUESTION = "소비자는 탐색 → 정리 → 추천 → 결정 → 위임 중 어느 단계까지 AI에 맡기고 있으며, 검색엔진·브랜드 사이트의 역할은 얼마나 줄었는가?"
+ONE_LINE = "2026년 10월 현재 AI가 가장 많이 대신하는 일은 검색 결과를 읽고 정리해 주는 것이다. 후보를 추려주는 추천은 일부 소비자에게서 시작됐고, 무엇을 살지 정하고 결제하는 일은 소비자가 직접 한다. 결제까지 AI에 맡기겠다는 소비자는 9%에 그친다."
+ONE_LINE_BASIS = ["C1-I-001", "C1-I-002", "C1-I-003", "C1-M-011"]
 ANSWER_ROWS = [
-    ("AI가 대신하는 것", "검색·비교·추천. 미국 구글 검색의 68%가 클릭 없이 끝나고, AI를 거쳐 쇼핑몰에 들어온 방문은 일반 방문보다 60% 더 구매로 이어진다.",
-     ["C1-M-003", "C1-M-006"]),
+    ("AI가 대신하는 것", "정보 정리, 그리고 일부 추천. 구글에서 AI 요약이 뜨면 일반 결과 클릭이 15%에서 8%로 줄고, AI를 거쳐 쇼핑몰에 들어온 방문은 일반 방문보다 60% 더 구매로 이어진다. 다만 찾기 자체를 AI에서 시작하는 비율은 아직 작다(구글 AI Mode 0.34%).",
+     ["C1-M-004", "C1-M-006", "C1-M-005"]),
     ("아직 못 하는 것", "최종 선택과 결제. ChatGPT의 대화 안 결제는 출시 6개월이 안 된 2026년 3월에 철회됐고, 미국·영국 소비자 55%는 AI의 대리 구매가 불편하다고 답했다.",
      ["C1-E-002", "C1-M-012"]),
     ("한국", "AI를 주 쇼핑 수단으로 쓰는 소비자는 7%로 6개국 평균(14%)의 절반이다. 대신 네이버 AI탭·쇼핑 에이전트처럼 기존 플랫폼 안의 AI가 탐색을 흡수하고 있다.",
@@ -44,10 +45,10 @@ answer_rows = "".join(
 # 2. 해석 — 서술형 요약 + 해석 기록
 # =====================================================================
 NARRATIVE = [
-    ("미국에서는 정보를 찾는 단계가 이미 AI로 넘어갔다. 구글 검색 열 번 중 일곱 번(68%)이 클릭 없이 끝나고, AI 요약이 뜨면 일반 결과 클릭이 15%에서 8%로 줄어든다. "
-     "다만 전용 AI 검색인 AI Mode로 넘어간 검색은 0.34%뿐이다. 변화는 별도 AI 서비스보다 기존 검색 화면 안에서 먼저 일어나고 있다.",
+    ("미국에서 가장 먼저 AI로 넘어간 일은 찾은 정보를 읽고 정리하는 일이다. AI 요약이 뜨면 일반 결과 클릭이 15%에서 8%로 줄고, 구글 검색 중 클릭 없이 끝나는 비중은 2년 새 60%에서 68%로 올랐다. "
+     "반면 찾기를 AI에서 시작하는 일은 아직 작다. 전용 AI 검색인 AI Mode로 넘어간 검색은 0.34%뿐이다. 소비자는 여전히 검색창에서 출발하고, 그 화면 안에서 AI가 정리를 맡는다.",
      ["C1-M-003", "C1-M-004", "C1-M-005", "C1-I-001"]),
-    ("추천 단계도 AI가 실질적으로 맡기 시작했다. AI를 거쳐 쇼핑몰에 들어온 방문은 1년 전에는 일반 방문보다 전환율이 38% 낮았지만, 2026년 7월에는 60% 높아졌다. "
+    ("추천은 일부 소비자에게서 AI가 맡기 시작했다. AI를 거쳐 쇼핑몰에 들어온 방문은 1년 전에는 일반 방문보다 전환율이 38% 낮았지만, 2026년 7월에는 60% 높아졌다. "
      "소비자가 AI와 대화하며 후보를 좁힌 뒤 사이트에 들어오기 때문이다. 유입 증가율은 1분기 393%에서 7월 62%로 낮아져, 성장의 무게가 양에서 질로 옮겨가고 있다.",
      ["C1-M-007", "C1-M-006", "C1-I-002", "C1-I-006"]),
     ("결정과 결제는 아직 사람 몫이다. 16개국 소비자 32%는 예산·브랜드 범위 안에서 AI가 고르게 하겠다고 했지만, 결제까지 맡기겠다는 응답은 9%였다. "
@@ -112,19 +113,59 @@ frows = "".join(f"""<tr id="{E(r['id'])}"><td class="stmt">{E(r['statement'])}<s
 # 5. 단계별 판정
 # =====================================================================
 LEVELS = ["실험", "얼리어답터", "확산", "주류"]
-LADDER_LEAD = "탐색·답변은 주류, 추천은 확산, 결정은 얼리어답터, 위임은 실험 단계다. 한국은 답변 단계만 한 칸 뒤에 있다."
+LADDER_LEAD = ("새 판정 기준(v1.1)으로 다시 매겼다. 가장 앞선 단계는 정리로, 미국에서 확산 단계다. 탐색·추천·결정은 얼리어답터, 위임은 실험 단계다. "
+               "한국은 탐색·정리·결정이 한 칸씩 뒤에 있다. R1 처음 판정보다 낮아진 것은 실제 후퇴가 아니라 기준을 강화한 결과다.")
 LADDER = [
-    ("탐색", "Search", "주류", "주류", "미국 구글 검색 68%가 클릭 없이 끝남. 한국은 생성형 AI 경험률 44.5%.", ["C1-M-003", "C1-M-001", "C1-I-001"]),
-    ("답변", "Answer", "주류", "확산", "AI 요약이 뜨면 클릭이 절반으로 줄어듦. 한국은 네이버 AI탭이 6월 전면 적용.", ["C1-M-004", "C1-E-009", "C1-M-014"]),
-    ("추천", "Recommendation", "확산", "확산", "AI 유입 방문의 전환율이 일반 유입을 60% 앞섬. 한국 AI 이용자 절반이 AI 추천 제품 구매.", ["C1-M-006", "C1-M-010", "C1-I-002"]),
-    ("결정", "Decision", "얼리어답터", "얼리어답터", "범위 안에서 AI가 고르게 하겠다 32%. 한국은 AI를 주 쇼핑 수단으로 쓰는 비율 7%.", ["C1-M-011", "C1-M-008", "C1-I-005"]),
-    ("위임", "Delegation", "실험", "실험", "결제까지 맡기겠다 9%. 대표 사례였던 ChatGPT 대화 안 결제는 2026년 3월 철회.", ["C1-M-011", "C1-E-002", "C1-I-003"]),
+    ("탐색", "Search", "얼리어답터", "실험", "AI를 주 쇼핑 수단으로 쓰는 소비자는 6개국 평균 14%, 한국 7%. 구글 검색 중 AI Mode로 넘어간 비율 0.34%.", ["C1-M-008", "C1-M-005", "C1-M-009"]),
+    ("정리", "Synthesis", "확산", "얼리어답터", "AI 요약이 뜨면 일반 결과 클릭이 절반(15% → 8%). 한국 AI탭은 베타 두 달 누적 400만 명, 6월 정식 출시.", ["C1-M-004", "C1-M-003", "C1-M-014", "C1-E-009"]),
+    ("추천", "Recommendation", "얼리어답터", "얼리어답터", "AI 유입 전환율이 일반 유입보다 60% 높지만 유입 양은 작음. 한국 AI 이용자 49.9%가 AI 추천 제품 구매(전체 소비자로 환산하면 약 4분의 1 이하).", ["C1-M-006", "C1-M-010", "C1-M-001"]),
+    ("결정", "Decision", "얼리어답터", "실험", "범위 안에서 AI가 고르게 하겠다 32%(의향, 한 단계 낮춰 적용). 한국은 AI를 주 쇼핑 수단으로 쓰는 비율 7%.", ["C1-M-011", "C1-M-008", "C1-I-005"]),
+    ("위임", "Delegation", "실험", "실험", "결제까지 맡기겠다 9%(의향). 대표 사례였던 ChatGPT 대화 안 결제는 2026년 3월 철회.", ["C1-M-011", "C1-E-002", "C1-I-003"]),
 ]
-def cell(level):
+# 판정 기준표 (v1.1) — 아티클의 '판정 기준' 패널과 툴팁에 쓴다
+STEP_DEF = {
+    "탐색": ("찾기 시작", "정보를 찾을 때 검색창·쇼핑몰·브랜드 사이트 대신 AI에 먼저 묻는다.", "여정의 출발점이 AI인가?", "쇼핑·정보 탐색을 AI에서 시작하는 비율", "검색엔진 쿼리 점유율, 쇼핑몰 검색 유입"),
+    "정리": ("읽고 정리하기", "AI가 여러 출처를 읽고 종합한 답을 주고, 소비자는 원문을 열지 않고 이해를 끝낸다.", "원문(검색 결과·리뷰·브랜드 사이트)을 안 보고 끝나는가?", "AI 답변으로 끝나는(원문 미방문) 검색 비중", "오가닉 클릭률, 퍼블리셔·브랜드 사이트 검색 유입"),
+    "추천": ("후보 좁히기", "AI가 소비자의 조건에 맞춰 살 만한 후보 몇 개로 좁혀 준다.", "비교할 후보 목록을 AI가 만드는가?", "AI 추천 후보를 참고해 구매한 비율", "비교·리뷰 사이트 방문"),
+    "결정": ("하나 고르기", "AI가 최종 하나를 고르고, 소비자는 그 선택을 받아들인다.", "최종 선택을 AI가 하는가?", "AI가 고른 상품을 그대로 산 비율", "브랜드 사이트 비교 단계 체류"),
+    "위임": ("실행하기", "AI가 주문·결제·재구매까지 실행하고, 소비자는 규칙만 정하고 결과를 확인한다.", "사람이 결제 버튼을 누르지 않는가?", "AI가 결제까지 실행한 구매 비율·거래액", "직접 주문 비중"),
+}
+LEVEL_DEF = {
+    "실험": ("AI가 그 일을 하는 기능이 나왔고 일부가 시도한다.", "주 경로로 쓰는 비율 10% 미만, 또는 출시·시범만 있고 이용 데이터 없음", "출시 발표, 시범 운영"),
+    "얼리어답터": ("일부 소비자가 그 일을 기존 방식 대신 AI에 맡긴다.", "10~25%", "이용 설문 (의향 설문만 있으면 이 단계까지)"),
+    "확산": ("상당수가 AI와 기존 방식을 함께 쓴다.", "25~50%", "실제 이용 설문 또는 행동 데이터"),
+    "주류": ("AI가 기본 경로이고 기존 방식은 예외다.", "50% 이상, 그리고 기존 경로 감소가 수치로 확인", "행동 데이터 필수 (트래픽·거래·쿼리 점유)"),
+}
+CRITERIA_RULES = [
+    "분모는 '써 본 적 있다'가 아니라 '그 일을 주로 AI로 한다'는 비율이다.",
+    "의향 설문 수치는 한 단계 낮춰 적용하고, 의향만으로는 얼리어답터를 넘지 않는다.",
+    "주류는 과반 이용과 기존 경로 감소가 함께 확인돼야 한다.",
+    "주류에 오른 뒤에도 대표 지표는 핵심 지표 표에서 계속 추적한다.",
+]
+def tip_level(lv):
+    d, th, ev = LEVEL_DEF[lv]
+    return f"{lv} — {d} 기준: {th}. 근거: {ev}."
+def tip_step(st):
+    hand, d, q, _, _ = STEP_DEF[st]
+    return f"{st}({hand}) — {d} 판별 질문: {q}"
+def cell(level, tip=True):
     i = LEVELS.index(level)
-    return "".join(f'<span class="pip{" on" if k <= i else ""}"></span>' for k in range(4)) + f'<span class="lv">{E(level)}</span>'
-ladder_rows = "".join(f"""<div class="rung" data-frontier="{'y' if ko in ('추천','결정') else 'n'}">
-  <div class="stage"><b>{E(ko)}</b><span>{E(en)}</span></div>
+    lab = f'<span class="lv" tabindex="0" data-tip="{E(tip_level(level))}">{E(level)}</span>' if tip else f'<span class="lv">{E(level)}</span>'
+    return "".join(f'<span class="pip{" on" if k <= i else ""}"></span>' for k in range(4)) + lab
+criteria_html = f"""<details class="criteria"><summary>판정 기준 보기 <small>v1.1</small></summary>
+  <div class="crit-body">
+    <h4>여정 단계: 소비자가 AI에 넘기는 일</h4>
+    <div class="tablewrap"><table class="crit">
+      <thead><tr><th>단계</th><th>넘기는 일</th><th>정의</th><th>판별 질문</th><th>AI 쪽 지표</th><th>기존 경로 감소 지표</th></tr></thead>
+      <tbody>{''.join(f'<tr><td><b>{E(k)}</b></td><td>{E(v[0])}</td><td>{E(v[1])}</td><td>{E(v[2])}</td><td>{E(v[3])}</td><td>{E(v[4])}</td></tr>' for k, v in STEP_DEF.items())}</tbody></table></div>
+    <h4>판정 단계: 모든 여정 단계에 같은 자를 쓴다</h4>
+    <div class="tablewrap"><table class="crit">
+      <thead><tr><th>판정</th><th>상태</th><th>수치 기준</th><th>인정하는 근거</th></tr></thead>
+      <tbody>{''.join(f'<tr><td><span class="pips">{cell(k, tip=False)}</span></td><td>{E(v[0])}</td><td>{E(v[1])}</td><td>{E(v[2])}</td></tr>' for k, v in LEVEL_DEF.items())}</tbody></table></div>
+    <ul class="crit-rules">{''.join(f'<li>{E(x)}</li>' for x in CRITERIA_RULES)}</ul>
+  </div></details>"""
+ladder_rows = "".join(f"""<div class="rung" data-frontier="{'y' if ko in ('정리','추천') else 'n'}">
+  <div class="stage"><b tabindex="0" data-tip="{E(tip_step(ko))}">{E(ko)}</b><span>{E(en)}</span></div>
   <div class="lvcell"><span class="region">글로벌·미국</span><span class="pips">{cell(g)}</span></div>
   <div class="lvcell"><span class="region">한국</span><span class="pips">{cell(k)}</span></div>
   <p class="why">{E(w)} {tags(ids)}</p></div>""" for ko, en, g, k, w, ids in LADDER)
@@ -180,7 +221,7 @@ page = f"""<title>C1 소비자 의사결정 R1</title>
   <header class="narrow">
     <div class="eyebrow"><span>AI Future Customer Lab</span><span>C1 · Consumer Decision Making</span><span>R1 기준 회차 · 2026-10-09</span></div>
     <h1>AI는 고객의 쇼핑을 어디까지 대신하고 있나</h1>
-    <p class="question">고정 질문 v1.0 — {E(QUESTION)}</p>
+    <p class="question">고정 질문 {QUESTION_VERSION} — {E(QUESTION)}</p>
   </header>
 
   <section class="answer-box">
@@ -217,8 +258,9 @@ page = f"""<title>C1 소비자 의사결정 R1</title>
   <section>
     <h2>단계별 판정 <small>실험 · 얼리어답터 · 확산 · 주류 4단계</small></h2>
     <p class="lead">{E(LADDER_LEAD)}</p>
+    {criteria_html}
     <div class="ladder">{ladder_rows}</div>
-    <p class="frontier-note">음영 = 현재 경계선 (추천 → 결정)</p>
+    <p class="frontier-note">음영 = 현재 경계선 (정리 → 추천) · 단계 이름과 판정에 마우스를 올리거나 누르면 기준이 보입니다</p>
   </section>
 
   <section>
@@ -249,9 +291,9 @@ bad = sorted({i for i in re.findall(r'href="#(C1-[A-Z]-\d{3})"', page) if i not 
 order = [page.index(f"<h2>{h}") for h in ("한 줄 답", "해석", "주요 사건", "전망", "단계별 판정", "핵심 지표")]
 print("article_r1.html 생성,", len(page), "bytes; 깨진 근거 링크:", bad or "없음", "; 섹션 순서 정상:", order == sorted(order))
 # ---------- 포털 신호: 판정 칩과 게이지를 판정 데이터에서 계산해 내보낸다
-SIGNAL_CHIP = '추천까지 확산'
+SIGNAL_CHIP = '정리만 확산, 나머지는 초기'
 SIGNAL_GAUGE = '구매 여정 5단계 중 확산 이상(글로벌)'
-SIGNAL_FRONTIER = '추천 → 결정'
+SIGNAL_FRONTIER = '정리 → 추천'
 signal = {"question": 'C1', "round": 1, "chip": SIGNAL_CHIP, "gauge": SIGNAL_GAUGE, "frontier": SIGNAL_FRONTIER,
           "on": sum(1 for r in LADDER if r[2] in ("확산", "주류")), "of": len(LADDER)}
 (ROOT / "signal_r1.json").write_text(json.dumps(signal, ensure_ascii=False, indent=1), encoding="utf-8")

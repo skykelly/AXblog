@@ -190,6 +190,30 @@ table.levels { min-width: 520px; }
 .balance h4 { margin: 0 0 8px; font: 600 14px var(--body); }
 .balance ul { margin: 0; padding-left: 18px; font-size: 14px; line-height: 1.7; }
 @media (max-width: 720px) { .balance { grid-template-columns: 1fr; } }
+
+/* 판정 기준 패널과 툴팁 */
+.criteria { border: 1px solid var(--rule); border-radius: 3px; background: var(--panel); }
+.criteria summary { cursor: pointer; padding: 10px 14px; font: 600 14px var(--body); list-style: none; display: flex; align-items: center; gap: 8px; }
+.criteria summary::-webkit-details-marker { display: none; }
+.criteria summary::before { content: "+"; font: 600 15px/1 var(--mono); color: var(--signal-ink); width: 12px; }
+.criteria[open] summary::before { content: "−"; }
+.criteria summary small { font: 500 11px var(--mono); color: var(--muted); }
+.criteria summary:focus-visible { outline: 2px solid var(--border-focus); outline-offset: -2px; }
+.crit-body { padding: 4px 14px 16px; display: grid; gap: 12px; }
+.crit-body h4 { margin: 6px 0 0; font: 600 13px var(--body); }
+table.crit { min-width: 640px; font-size: 13px; }
+table.crit td { padding: 9px 8px; }
+table.crit th, table.crit td:nth-child(-n+2) { white-space: nowrap; }
+table.crit .pips { white-space: nowrap; }
+.crit-rules { margin: 0; padding-left: 18px; font-size: 13px; color: var(--muted); display: grid; gap: 4px; }
+[data-tip] { position: relative; cursor: help; text-decoration: underline dotted var(--muted); text-underline-offset: 4px; text-decoration-thickness: 1px; }
+[data-tip]:focus-visible { outline: 2px solid var(--border-focus); outline-offset: 2px; }
+[data-tip]:hover::after, [data-tip]:focus::after {
+  content: attr(data-tip); position: absolute; left: 0; top: calc(100% + 8px); z-index: 25; width: max-content; max-width: min(300px, 78vw);
+  white-space: normal; padding: 10px 12px; border-radius: 4px; background: var(--bg-inverse); color: var(--bg-base);
+  font: 400 13px/1.55 var(--body); letter-spacing: 0; text-transform: none; box-shadow: var(--shadow); pointer-events: none; }
+.lvcell [data-tip]:hover::after, .lvcell [data-tip]:focus::after { left: auto; right: 0; }
+@media (max-width: 760px) { .lvcell [data-tip]:hover::after, .lvcell [data-tip]:focus::after { right: auto; left: -60px; } }
 </style>
 </head><body><div class="readbar" aria-hidden="true"><span></span></div><nav class="sitebar" aria-label="사이트"><a class="home" href="../../index.html">AX Signals</a><span class="crumb">/ AI Industry Trend / I4</span><span class="rounds"><a href="r1.html" aria-current=page>R1</a></span></nav><main>
   <header class="narrow">

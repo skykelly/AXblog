@@ -7,7 +7,7 @@
 - 이전 아티클: 넣지 않음 (백지 조사)
 
 ## 고정 질문
-소비자는 탐색(Search) → 답변(Answer) → 추천(Recommendation) → 결정(Decision) → 위임(Delegation) 중 어느 단계까지 AI에 맡기고 있으며, 검색엔진·브랜드 사이트의 역할은 얼마나 줄었는가?
+소비자는 탐색(Search) → 정리(Synthesis) → 추천(Recommendation) → 결정(Decision) → 위임(Delegation) 중 어느 단계까지 AI에 맡기고 있으며, 검색엔진·브랜드 사이트의 역할은 얼마나 줄었는가?
 
 ## 한 줄 답 형식
 5단계 각각을 "주류(Mainstream) / 확산(Early majority) / 얼리어답터(Early adopter) / 실험(Experimental)"으로 판정하고, 현재 프런티어 단계를 명시.
@@ -31,3 +31,6 @@ AI Search, GEO, Zero-click, AI Shopping, Personal AI, Customer Memory, 구매 Ag
 - 우선: 정부·공공 통계, 1차 조사기관(Pew, Adobe, Reuters Institute), 기업 공식 발표
 - 허용(등급 B): 주요 언론, 컨설팅 보고서
 - 제외: 출처 불명 수치, SEO 블로그의 2차 인용
+
+## 변경 이력
+- v1.1 (2026-10-10): 여정 단계 '답변(Answer)'을 '정리(Synthesis)'로 바꿨다. 다섯 여정 단계(소비자가 AI에 넘기는 일)와 네 판정 단계(수치 기준·인정 근거)의 판정 기준표를 도입하고, R1 판정을 새 기준으로 다시 매겼다. 판정이 낮아진 것은 기준 강화의 결과이며 실제 후퇴가 아니다. 기준표는 아티클 '단계별 판정'의 '판정 기준 보기'에 있다.
