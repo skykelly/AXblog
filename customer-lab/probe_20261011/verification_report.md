@@ -1,0 +1,786 @@
+# 고객 5개 질문 검증 결과 (2026-10-11)
+
+백지 재조사 → 기록 대조 → 단정 반박 → 전망 점검. records.jsonl은 변경하지 않음. 판정 영향 → 문장 수정 → 참고 순.
+
+
+## C1 소비자 의사결정 (36건)
+
+- **[판정 영향] 상충 · C1-M-012** — 미국 탐색 단계 판정 근거가 서로 어긋난다. 기록은 '주 쇼핑 수단' 14%(Criteo 6개국)·AI Mode 0.34%로 탐색을 얼리어답터로 매겼지만, 같은 기록의 M-012(미·영 61.5%가 상품 탐색에 AI 사용)와 NIQ(미국 42%가 최근 1개월 내 AI 도구로 쇼핑, 2026 초)는 '이용 경험' 기준으로 25~50% 이상이다.
+  - 비고: 판정 영향: 탐색(미국)이 판정 기준표의 '시작점 비율'(14%, 얼리어답터)이냐 '이용 설문'(42~61.5%, 확산 이상 후보)이냐에 따라 얼리어답터→확산으로 바뀔 수 있고, 그러면 칩 '정리만 확산'과 게이지 1/5도 달라진다. 기준표가 '이용'과 '시작'을 구분하지 않아 확정 못 함(확신 낮음). Riskified는 미·영 합산, NIQ는 월 약 500명·'AI tool' 미정의라 단독 근거로는 약함.
+  - 출처(A): [Riskified IR](https://ir.riskified.com/node/8896/pdf) 2026-04-27
+  - 출처(A): [NielsenIQ](https://nielseniq.com/global/en/news-center/2026/42-of-consumers-now-use-ai-tools-to-shop-niq-data-shows/) 2026-05-05
+- **[판정 영향] 누락정정 · C1-M-011** — 위임 판정(미국 실험)이 의향 9%에만 기대고 있다. 실제 경험 수치는 Menlo(2026-07 조사, 미국 성인 5,067명): 쇼핑에 AI를 쓰는 사람 중 26%가 AI에 구매 완료를 맡겼고 AI 이용자 중 32%가 최종 승인 없이 AI가 행동한 적 있음(이메일 등 포함). NMI(미국 성인 1,000명, B): 11%가 AI로 거래 완료. NIQ(2026 초): 5%가 완전 자율 에이전트로 주문.
+  - 비고: 판정 영향: 위임(미국)이 전체 성인 기준 5~11%(NIQ 5%, NMI 11%, Menlo 26%×AI 쇼핑 이용 비율로 환산 시 약 10%대)로 기준표 '10% 미만=실험' 경계에 걸려 실험→얼리어답터가 될 수 있음. 분모가 '쇼핑 AI 이용자'(Menlo)·미정의(NMI)라 환산 불확실, 'AI가 구매 완료'가 완전 자율인지 불명(확신 낮음). 기존 문장 '결제까지 맡기겠다 9%(의향)'는 의향 수치임을 유지하되 경험 수치를 병기해야 함.
+  - 출처(A): [Menlo Ventures State of Consumer AI 2026](https://menlovc.com/perspective/2026-the-state-of-consumer-ai/) 2026-09-16
+  - 출처(B): [NMI](https://www.nmi.com/about-us/news/nmi-research-consumers-want-ai-to-help-them-shop-not-control-their-spending/) 2026-08-26
+  - 출처(A): [NielsenIQ](https://nielseniq.com/global/en/news-center/2026/42-of-consumers-now-use-ai-tools-to-shop-niq-data-shows/) 2026-05-05
+- **[문장 수정] 신규 · C1-I-003** — Amazon이 2026-05-13 Rufus를 Alexa for Shopping으로 바꾸고 'Buy for Me'로 Amazon 밖 쇼핑몰 구매를 대행하게 했다(미국 출시). 기록 I-003의 '위임은 리테일러가 결제를 쥔 채 AI 창구에 연결되는 형태로 수렴'과 어긋나는 사례다.
+  - 비고: Resultsense(B) 기사만 읽음, Amazon 원문·TechCrunch 5-13 미확인(출시 일자는 기사 인용). 위임 판정은 '출시만 있고 이용 데이터 없음'이라 실험 유지 가능하나 서술은 고쳐야 함.
+  - 출처(B): [Resultsense (Alexa for Shopping, TechCrunch 5/13 인용)](https://www.resultsense.com/news/2026-05-14-amazon-alexa-for-shopping-launch/) 2026-05-14
+- **[문장 수정] 신규 · C1-I-004** — 2026-07 한국 모바일 앱 MAU에서 구글(47.02M)이 네이버(46.85M)를 Mobile Index 집계(2021-03~) 이래 처음 앞질렀다. 같은 기사에서 ChatGPT 앱 MAU는 Mobile Index 16.46M, Wiseapp·Retail 23.67M(측정 방식 상이), Gemini 9.47M, Claude 3.44M(Wiseapp).
+  - 비고: I-004의 '범용 AI 챗봇보다 네이버 같은 기존 플랫폼 안의 AI가 탐색을 흡수'를 약화시키는 정황(단, 앱 MAU는 검색 점유율이 아님). 기사 원문 직접 확인(B). 두 업체 ChatGPT 수치는 합산·혼용 금지.
+  - 출처(B): [데이터이코노미 (Mobile Index·Wiseapp)](https://www.dataeconomy.co.kr/news/articleView.html?idxno=41880) 2026-08-20
+- **[문장 수정] 단정반증 · C1-I-003** — '대표 사례인 인챗 결제도 철회됐다 / 위임은 리테일러가 결제를 쥔 채 수렴'은 반증된다. OpenAI는 Instant Checkout 단독 기능만 후순위로 돌렸고(2026-03-24) 앱을 통한 ChatGPT 내 결제와 판매자 자체 체크아웃을 병행하며, Shopify는 ChatGPT에서 앱 내 브라우저 구매가 된다고 밝혔다. Copilot Checkout은 미국 라이브, Amazon 'Buy for Me'는 타 쇼핑몰 구매 대행.
+  - 비고: TechCrunch·ForkLog(B), Shopify·Google(A), Axios(B) 직접 확인. 위임 단계 판정 자체(실험)는 유지 가능하나 '철회'·'수렴' 단정은 '단독 인챗 결제는 후퇴, 앱·판매자 연동 방식이 병행'으로 완화 필요.
+  - 출처(B): [TechCrunch (OpenAI Instant Checkout 후퇴)](https://techcrunch.com/2026/03/24/openais-plans-to-make-chatgpt-more-like-amazon-arent-going-so-well) 2026-03-24
+  - 출처(B): [ForkLog (The Information 인용)](https://forklog.com/en/openai-abandons-instant-checkout-feature-in-chatgpt/amp) 2026-03-23
+  - 출처(A): [Shopify 뉴스](https://shopify.com/news/agentic-commerce-momentum) 2026-03-24
+- **[문장 수정] 전망판정 · C1-F-002** — F-002('2027-03 말까지 ChatGPT 대화 안 결제 재출시 없음')는 판정 방법이 모호하다. 2026-03-24 이후에도 ChatGPT 안 앱·앱 내 브라우저 구매는 가능하다고 OpenAI·Shopify가 밝혔기 때문에 '대화 안 결제'가 이미 부분 충족인지 '재출시'가 무엇인지 정의돼 있지 않다. 'Instant Checkout 복귀'로 한정해야 맞았다/틀렸다를 가릴 수 있다.
+  - 비고: TechCrunch·Shopify 직접 확인. 현재 ChatGPT에서 Walmart 등 판매자 결제 방식이 정확히 어떤지는 미확인.
+  - 출처(B): [TechCrunch (OpenAI Instant Checkout 후퇴)](https://techcrunch.com/2026/03/24/openais-plans-to-make-chatgpt-more-like-amazon-arent-going-so-well) 2026-03-24
+  - 출처(A): [Shopify 뉴스](https://shopify.com/news/agentic-commerce-momentum) 2026-03-24
+- **[문장 수정] 전망판정 · C1-F-101** — F-101의 판정 방법과 마일스톤이 서로 다르다. (1) 마일스톤은 'ChatGPT·Gemini 중 하나'인데 방법은 '미국 주요 AI 서비스'라 이미 미국 라이브인 Copilot Checkout(2026-01)이 해당하는지 불명. (2) '결제 위임 의향 15%'가 어느 조사(Accenture 9%, 경험 수치 Menlo 26%, NMI 11% 등)인지 정의 없음. (3) 마일스톤은 네이버 '장바구니 담기', 방법은 '장바구니·결제 연결'.
+  - 비고: 한 항목은 이미 충족됐을 가능성(Copilot) 또는 어떤 조사든 15%를 넘을 수 있어 적중 조건이 사전에 열려 있음. 확신 보통.
+  - 출처(B): [Axios (Copilot Checkout)](https://www.axios.com/2026/01/08/microsoft-ai-copilot-checkout) 2026-01-08
+  - 출처(A): [Menlo Ventures State of Consumer AI 2026](https://menlovc.com/perspective/2026-the-state-of-consumer-ai/) 2026-09-16
+  - 출처(A): [Accenture Consumer Pulse 2026](https://www.accenture.com/gb-en/insights/consulting/talk-my-ai-agent) 2026
+- **[문장 수정] 갱신 · C1-M-014** — 네이버 AI탭 이용자가 2026-07-15 1000만 명을 돌파했다고 네이버가 발표(누적 기준으로 보이나 기사에 정의 없음). 기록의 400만(2026-06-26, 베타 약 2개월)은 낡은 값이다. 일평균 질문 수 베타 대비 7배, 1인당 질문 수 1.7배.
+  - 비고: MTN 기사만 직접 읽음(B), 네이버 원문 미확인. 누적 여부·집계 기간 불명이라 '1000만 명 돌파(발표, 정의 불명)'로 쓰고 400만과 직접 비교는 피할 것. 한국 정리 판정(얼리어답터)은 누적 이용자 수만으로 바뀌지 않음.
+  - 출처(B): [MTN (네이버 AI탭 1000만 돌파)](https://news.mtn.co.kr/news-detail/2026071511381270436) 2026-07-15
+  - 출처(A): [네이버 보도자료 AI탭 정식 출시](https://www.navercorp.com/media/pressReleasesDetail?seq=10034429) 2026-06-26
+- **[문장 수정] 상충 · C1-M-003** — M-003의 '2024년 60.45%'는 비교 대상이 아니다. 2026 수치(68.01%)는 Similarweb 패널(구글 브라우저 검색만, 앱 제외, 약 2/3 모바일)이고 2024 수치는 Datos 패널이라 SparkToro 필자도 '같은 사용자·기기가 아니라 비교가 불완전하다'고 적었다. 발행일은 2026-06-08.
+  - 비고: SparkToro 원문 직접 확인(A). 백지 조사는 이 원문을 못 읽었고, 기록의 A등급 출처는 올바름. prev_value를 '참고용·방법 상이'로 표시하거나 증가폭(+7.6%p) 문장을 쓰지 말 것.
+  - 출처(A): [SparkToro](https://sparktoro.com/blog/in-2026-less-than-one-third-of-google-searches-still-send-a-click/) 2026-06-08
+- **[문장 수정] 단정반증 · C1-I-001** — '미국에서도 전용 AI 검색(AI Mode) 이용은 아직 작다'는 단정은 조건부다. 0.34%는 미국 Similarweb 브라우저 패널(앱 제외)에서 구글 검색 중 비중이고, Google은 I/O 2026(5-19)에서 AI Mode가 출시 1년 만에 월 활성 10억 명을 넘었다고 밝혔다(범위·정의 다름, 미조정).
+  - 비고: Google 기조연설 원문 직접 확인(A). 두 수치는 모순이라기보다 측정 대상이 달라 한쪽만으로 '작다/크다' 단정 불가. 서술에 두 수치 병기 필요.
+  - 출처(A): [SparkToro](https://sparktoro.com/blog/in-2026-less-than-one-third-of-google-searches-still-send-a-click/) 2026-06-08
+  - 출처(A): [Google 블로그 I/O 2026 Pichai 기조연설](https://blog.google/innovation-and-ai/sundar-pichai-io-2026/) 2026-05-19
+- **[문장 수정] 누락정정 · C1-E-010** — AI Mode 월 10억 명 돌파는 Google 기조연설(2026-05-19)에서 직접 확인됐다(출처를 SparkToro 재인용에서 Google 원문으로 교체 가능). 그러나 기록의 '질의량이 분기마다 2배 이상 늘고 있다'는 이 기조연설 페이지에 없다(페이지는 토큰 처리량 7배만 언급). 같은 기조연설에서 Gemini 앱은 월 9억 명 돌파.
+  - 비고: 질의량 2배 문구는 SparkToro가 Google 블로그를 인용했다고 적은 것이며 이 페이지에서는 확인 못 함 → 확인 필요(다른 Google 게시물일 수 있음). 8-11 Pichai 발언은 Gemini 앱 10억(B 보도, 미확인).
+  - 출처(A): [Google 블로그 I/O 2026 Pichai 기조연설](https://blog.google/innovation-and-ai/sundar-pichai-io-2026/) 2026-05-19
+  - 출처(A): [SparkToro](https://sparktoro.com/blog/in-2026-less-than-one-third-of-google-searches-still-send-a-click/) 2026-06-08
+- **[문장 수정] 상충 · C1-M-009** — M-009의 '마켓플레이스 59%, 검색엔진 20% 순'은 Criteo 보도자료 문장(탐색 시작점으로 마켓플레이스 59%, 검색 엔진 20% 이용 비중이 높게 나타났다)을 순위·단일 선택으로 읽은 것이다. 질문 문구와 복수응답 여부가 문서에 없다. 같은 59%가 다른 문항에도 쓰이므로 이 문항으로 한정해 써야 한다.
+  - 비고: Criteo 영문·한국어 보도자료 직접 확인(A). I-004(한국 탐색은 마켓플레이스·포털에서 시작)의 근거라 표현 완화 필요: '높은 이용 비중'.
+  - 출처(A): [Criteo 한국 보도자료](https://www.criteo.com/kr/wp-content/uploads/sites/7/2026/06/보도자료_크리테오-2026-커머스와-AI-트렌드-리포트-공개-for-Web.pdf) 2026-06-10
+- **[문장 수정] 누락정정 · C1-M-011** — M-011은 Accenture 원문과 두 곳이 다르다. (1) 32%는 '예산·선호 등 경계 안에서 에이전트가 고르게 하되, 소비자가 선택을 확인하고 결제는 직접 하는' 응답이다(기록은 '예산·브랜드 범위'). (2) extra의 trust_more_than_friend 74%는 원문에서 두 가지로 쓰임(헤드라인은 '친한 친구보다 AI 에이전트를 더 신뢰', Figure 1은 '반복 업무 실행 허용'). 백지 조사는 후자로 적었다.
+  - 비고: Accenture 원문 직접 확인(A). 74%는 원문 자체가 모호하니 쓰지 않거나 '정의 불명'으로 표기. 9%(자율 구매 완료 허용), 표본 16개국 25,590명, 조사 2026-01-07~22는 일치. 원문에 발표일 없음(기록의 2026-06-03은 확인 필요).
+  - 출처(A): [Accenture Consumer Pulse 2026](https://www.accenture.com/gb-en/insights/consulting/talk-my-ai-agent) 2026
+- **[문장 수정] 누락정정 · C1-E-003** — E-003 '결제를 지원하는 UCP 발표'는 과장이다. Google 원문은 UCP가 발표일(2026-01-11)부터 사용 가능하고, AI Mode·Gemini의 구매 버튼(Google Pay 결제)은 '곧' 열린다고 적었다. 출처를 C(Everything PR)에서 A(Google 블로그)로 교체 가능.
+  - 비고: 원문 직접 확인(A). 이후 실제 공개 시점은 미확인(Universal Cart는 2026-05-19 '올여름 미국' 예고, 이후 공개 확인 못 함).
+  - 출처(A): [Google 블로그 NRF 2026 Pichai 발언](https://blog.google/company-news/inside-google/message-ceo/nrf-2026-remarks/) 2026-01-11
+  - 출처(A): [Google 블로그 Universal Cart](https://blog.google/products-and-platforms/products/shopping/google-shopping-cart/) 2026-05-19
+  - 출처(B): [eMarketer (Google AI Mode 체크아웃)](https://www.emarketer.com/content/google-brings-checkout-ai-mode-races-rivals-agentic-commerce) 2026-01-12
+- **[문장 수정] 누락정정 · C1-E-006** — E-006 Salesforce Agentforce Commerce 날짜가 다르다. Salesforce 원문은 2026-06-24 발표·주요 에이전트 GA, ChatGPT 연동은 2026년 7월 GA(판매자가 merchant of record), Google·Gemini 연동은 여름 중 예정. 기록의 2026-07-06 정식 출시는 C등급 블로그 값.
+  - 비고: Salesforce 원문 직접 확인(A). 7월 ChatGPT 연동의 정확한 일자는 미확인.
+  - 출처(A): [Salesforce 뉴스룸](https://www.salesforce.com/news/?p=94098) 2026-06-24
+- **[문장 수정] 단정반증 · C1-I-004** — '네이버 같은 기존 플랫폼 안의 AI가 탐색을 흡수'는 부분 반증. 2026-07 구글 앱 MAU가 네이버를 처음 앞섰고 ChatGPT 앱도 1,646만~2,367만 MAU다. 반면 네이버 AI탭은 1000만 명 돌파(7-15)로 흡수 징후도 있어 한쪽으로 단정 불가.
+  - 비고: 앱 MAU는 검색 사용량이 아니며 두 업체 수치가 다름. 확신 보통.
+  - 출처(B): [데이터이코노미 (Mobile Index·Wiseapp)](https://www.dataeconomy.co.kr/news/articleView.html?idxno=41880) 2026-08-20
+  - 출처(B): [MTN (네이버 AI탭 1000만 돌파)](https://news.mtn.co.kr/news-detail/2026071511381270436) 2026-07-15
+- **[문장 수정] 단정반증 · C1-I-006** — I-006의 '증가율 둔화는 기저가 커진 영향'은 원인 단정이다. Adobe는 홀리데이 2026 AI 유입을 +130% YoY로 예측해(2026-09-28, 11/1~12/31) 7월 +62%보다 높고, 증가율 경로(Q1 393%→3월 269%→7월 62%→시즌 예측 130%)는 단조 감소가 아니다.
+  - 비고: 7월 62%·전환 +60%·RPV +53%는 Adobe PDF·DC360에서 직접 확인(A·B). 홀리데이 예측은 Relevant Audience(B, 재인용)만 읽음, Adobe 원문 미확인. 'AI-referred' 정의는 Adobe 보고서에 없고 기사에 '링크 클릭 유입'으로 적힌 정도.
+  - 출처(A): [Adobe Digital Insights AI Traffic Trends Report](https://business.adobe.com/assets/pdfs/resources/sdk/ai-traffic-trends-report-august-2026/ai-traffic-trends-report-2026-08-19.pdf) 2026-08-19
+  - 출처(B): [Digital Commerce 360 (Adobe)](https://www.digitalcommerce360.com/?p=1362047) 2026-08-19
+  - 출처(B): [Relevant Audience (Adobe 홀리데이 2026 예측 재인용)](https://www.relevantaudience.com/ecommerce-marketing/adobe-2026-holiday-forecast-275-billion-ai-traffic-130-percent/) 2026-10-03
+- **[문장 수정] 전망판정 · C1-F-001** — F-001('Adobe 연말 집계에서 AI 유입 증가율 100% 미만')의 근거가 달라졌다. Adobe가 2026-09-28 홀리데이 예측으로 AI 유입 +130% YoY를 냈다. 기록 시점(10-09)에 이미 공개된 상반 정보를 R1이 반영하지 않았다. 판정 방법은 'recap의 YoY'라 확인은 가능.
+  - 비고: 예측(+130%)은 실적이 아니며 2025년 예측과 실적이 크게 달랐는지는 미확인. Relevant Audience(B, 재인용) 직접 확인, Adobe 원문 미확인. 이 전망은 비관 시나리오 신호이므로 F-102 해석 영향(참고).
+  - 출처(B): [Relevant Audience (Adobe 홀리데이 2026 예측 재인용)](https://www.relevantaudience.com/ecommerce-marketing/adobe-2026-holiday-forecast-275-billion-ai-traffic-130-percent/) 2026-10-03
+- **[문장 수정] 전망판정 · C1-F-003** — F-003('네이버가 연내 AI탭 광고 도입을 발표')은 판정 방법이 모호하다. 2026-05-04·07-03 보도는 네이버가 4분기 중 AI탭 광고 적용을 '검토'한다고 전하지만 네이버 직접 발언 인용은 없다. 또 AI브리핑 광고는 2026-07-21부터 적용(AI탭 광고와 다른 상품). '검토 보도'와 '공식 발표'를 구분해야 한다.
+  - 비고: 더팩트(B) 두 건 직접 확인. 3분기 실적 발표(11월 초 예상, 날짜 미확인)가 첫 판정 기회.
+  - 출처(B): [더팩트 (네이버 AI탭 광고 4분기 검토)](https://news.tf.co.kr/read/economy/2339037.htm) 2026-07-03
+  - 출처(B): [더팩트 (네이버 연내 수익모델)](https://news.tf.co.kr/read/economy/2319426.htm) 2026-05-04
+- **[문장 수정] 누락정정 · C1-M-002** — M-002의 기준 시점은 2026-05(보도)가 아니라 조사 2026-03-17~27, 발표 2026-05-27이다. 표본은 15~59세 서울·경기·5대 광역시 1,000명 온라인 조사라 region을 'KR 전체'로 두면 과대하다.
+  - 비고: 뉴시스 직접 확인(B). 값 88%/43%는 일치.
+  - 출처(B): [뉴시스 (CJ메조미디어)](https://www.newsis.com/view/NISX20260526_0003644106) 2026-05-27
+- **[문장 수정] 누락정정 · C1-M-001** — M-001 '국민' 표현의 모집단이 기사에 명시되지 않았다(표본: 22,671가구, 만 3세 이상 가구원 50,750명 규모, 조사 기간 기사에 없음). 44.5%·33.3%·+11.2%p는 일치.
+  - 비고: 경기일보(B)만 직접 확인, 1차(과기정통부)는 백지 조사에서도 접근 불가(robots) → 확인 필요. 인터넷이용실태조사는 '경험률'이지 월 이용률이 아님(T1 정의와 다름).
+  - 출처(B): [경기일보 (과기정통부 2025 인터넷이용실태조사)](https://www.kyeonggi.com/article/20260331580533) 2026-03-31
+- **[문장 수정] 누락정정 · C1-E-004** — E-004 Copilot Checkout은 2026-01-08 NRF 발표 당시 미국에서 이미 '라이브'였다(Axios, Shopify·PayPal·Stripe·Etsy 연동, 리테일러가 판매자, 채택 증거는 약함). C등급 블로그를 B로 교체 가능.
+  - 비고: Axios 직접 확인(B). 이후 이용 실적은 확인 못 함.
+  - 출처(B): [Axios (Copilot Checkout)](https://www.axios.com/2026/01/08/microsoft-ai-copilot-checkout) 2026-01-08
+- **[문장 수정] 누락정정 · C1-E-005** — E-005 Agentic Storefronts는 Shopify 원문(2026-03-24)에서 ChatGPT에서는 기본 노출, Copilot은 수천 판매자가 판매 중, Google AI Mode·Gemini는 '일부 브랜드'만 시작한 상태다. 기록의 '4곳 기본 노출'은 과장. 또 ChatGPT에서는 앱 내 브라우저로 대화 이탈 없이 구매를 마칠 수 있다고 적혀 있다.
+  - 비고: Shopify 원문 직접 확인(A). '미국 판매자 한정' 여부는 페이지에 없음.
+  - 출처(A): [Shopify 뉴스](https://shopify.com/news/agentic-commerce-momentum) 2026-03-24
+- **[문장 수정] 누락정정 · C1-E-011** — E-011 Anthropic은 2026-09-02 에이전틱 커머스용 'blueprint'(쇼퍼 에이전트·머천트 에이전트 참조 구현, Claude Code 플러그인)를 공개했다. 쇼퍼 에이전트는 장바구니를 만들고 결제는 기존 판매자 체크아웃에 넘긴다. 'Claude Commerce Agents'는 한 기사의 메타 설명에만 나오는 이름이다.
+  - 비고: Digital Commerce 360(B)·MPost(B) 직접 확인(MPost는 9-03 게재). 사건 자체는 실재, C→B 상향 가능. 소비자용 결제 서비스 아님.
+  - 출처(B): [Digital Commerce 360 (Anthropic)](https://www.digitalcommerce360.com/2026/09/02/anthropic-debuts-claude-features-focused-on-agentic-commerce/amp/) 2026-09-02
+  - 출처(B): [MPost (Anthropic 블루프린트)](https://mpost.io/anthropic-unveils-open-source-shopping-and-merchant-agent-toolkit-with-enterprise-reference-implementations/) 2026-09-03
+- **[참고] 신규 · C1-T2** — T2(미국/글로벌 이용률)에 해당하는 기록이 없다. Pew(2026-02-17~23 조사, 성인 5,119명, 6-17 발표): 미국 성인 49%가 AI 챗봇 이용(2024년 33%, 단 2024는 챗봇을 들어본 사람만 대상이라 직접 비교 제한), ChatGPT 44%, 매일 24%, 정보 검색 용도 42%. Menlo(2026-07, 9-16 발표): 미국 성인 64%가 AI 이용(전년 61%), 매일 25%. 두 수치는 정의가 달라 섞으면 안 된다.
+  - 비고: Pew는 원문 직접 확인(A). Pew 페이지에 쇼핑 용도 수치는 없음. Menlo는 VC 자체 조사(A로 분류했으나 표본 설계는 Morning Consult 패널). T2 기록 추가를 권고.
+  - 출처(A): [Pew Research Center](https://www.pewresearch.org/internet/2026/06/17/americans-and-ai-2026-chatbots-smart-devices-and-views-on-impact/) 2026-06-17
+  - 출처(A): [Menlo Ventures State of Consumer AI 2026](https://menlovc.com/perspective/2026-the-state-of-consumer-ai/) 2026-09-16
+- **[참고] 신규 · C1-T5** — NIQ(2026 초 미국 월 약 500명, 5-05 발표): 42%가 지난 1개월 내 AI 도구로 쇼핑, 17% 상품 추천, 10% AI 쇼핑 어시스턴트, 5% 완전 자율 에이전트 주문. Menlo: 쇼핑에 AI를 쓰는 사람 중 가격 비교 50%, 후보 압축 43%, AI 추천으로 최종 결정 37%, AI가 구매 완료 26%(분모는 '쇼핑 AI 이용자').
+  - 비고: 둘 다 원문 직접 확인. 분모가 다르므로 전체 성인 비율로 읽지 말 것. 판정 영향 줄(탐색·위임) 근거로 쓰임.
+  - 출처(A): [NielsenIQ](https://nielseniq.com/global/en/news-center/2026/42-of-consumers-now-use-ai-tools-to-shop-niq-data-shows/) 2026-05-05
+  - 출처(A): [Menlo Ventures State of Consumer AI 2026](https://menlovc.com/perspective/2026-the-state-of-consumer-ai/) 2026-09-16
+- **[참고] 신규 · C1-I-003** — 2026-08-04경 미 제9순회항소법원이 Amazon의 Perplexity Comet 쇼핑 에이전트 접근 금지 가처분을 파기했다(CFAA 위반 가능성 입증 부족, 사용자가 지시할 때만 작동). 본안은 계속, Amazon은 다음 대응 검토 중.
+  - 비고: Engadget(B)만 읽음, 판결문 미확인. 판결 일자는 기사 게재일(8-04)로만 확인.
+  - 출처(B): [Engadget (제9순회항소법원 Perplexity v. Amazon)](https://www.engadget.com/2230471/perplexity-has-successfully-overturned-amazon-injunction-on-its-ai-shopping-bot/) 2026-08-04
+- **[참고] 신규 · C1-I-003** — 카카오가 2026-08-06 2분기 실적 콜에서 카카오톡 AI 에이전트의 첫 외부 파트너로 쿠팡이츠를 밝혔다(채팅방 안에서 메뉴 추천·주문·결제 예정, 출시는 '가까운 시일', 파트너십 최종 체결 전).
+  - 비고: 디지털투데이(B) 직접 확인. 한국 위임 단계가 아직 실험(미출시)이라는 근거. 같은 8-07 쿠팡 보도자료(A, 직접 확인)는 요약·비교 기능만 있고 대리 구매 언급 없음.
+  - 출처(B): [디지털투데이 (카카오·쿠팡이츠)](https://www.digitaltoday.co.kr/en/view/89887/kakao-to-team-up-with-coupang-eats-on-ai-agent-to-enable-food-orders-in-kakaotalk) 2026-08-06
+  - 출처(A): [쿠팡 뉴스룸](https://news.coupang.com/archives/65494/) 2026-08-07
+- **[참고] 단정반증 · C1-I-002** — 'AI 경유 방문은 양은 작지만'은 확인 불가다. Adobe 7월·Q1 보고서에 AI 유입의 전체 대비 비중 수치가 없다(증가율만 있음). '전환율이 비AI 유입을 앞질렀다'는 7월까지 11개월 연속 우위(DC360)로 유지.
+  - 비고: Adobe PDF·DC360 직접 확인. '작다'는 Prime Day 에이전트 트래픽 1% 미만(B, 미확인) 등 다른 근거로만 가능.
+  - 출처(A): [Adobe Digital Insights AI Traffic Trends Report](https://business.adobe.com/assets/pdfs/resources/sdk/ai-traffic-trends-report-august-2026/ai-traffic-trends-report-2026-08-19.pdf) 2026-08-19
+  - 출처(B): [Digital Commerce 360 (Adobe)](https://www.digitalcommerce360.com/?p=1362047) 2026-08-19
+- **[참고] 신규 · C1-M-009** · 원문 미열람 — CJ메조미디어(2026-10-01 보도): 최근 3개월 패션 구매자(서울·경기·5대 광역시 약 1,000명) 중 39%가 패션 상품을 AI로 탐색(10대 57%), 그 이용자의 59%가 구매. 하위 집단 분모.
+  - 비고: 백지 조사 결과에서만 확인, 직접 열어 보지 못함(확인 필요). 전체 소비자 비율 아님.
+  - 출처(B): [파이낸셜뉴스 (CJ메조미디어 패션 AI)](https://www.fnnews.com/news/202610011112457473) 2026-10-01
+- **[참고] 상충 · C1-M-007** — M-007의 '1년 전 38% 낮음'은 Decrypt(B, Adobe 인용)와 일치하지만 Adobe 원문 PDF는 '1년 전에는 비AI의 거의 절반 수준으로 전환'이라고만 쓰고 -38%를 직접 적지 않는다. 또 as_of '2026-C1'(M-007, M-012)은 'Q1' 오기로 보인다.
+  - 비고: Adobe PDF·Decrypt 모두 직접 확인. 393%(Q1), 3월 전환 +42%, RPV +37%는 일치. -38%는 B 근거로만 유지.
+  - 출처(A): [Adobe Digital Insights Q1 2026](https://business.adobe.com/resources/sdk/.2026-q2-ai-traffic-report/q2-2026-adi-ai-sourced-traffic-insights.pdf) 2026-04
+  - 출처(B): [Decrypt (Adobe)](https://decrypt.co/364733/ai-traffic-us-retailers-jumps-q1-agentic-shoppers-outspend-humans) 2026-04-19
+- **[참고] 전망판정 · C1-F-006** — F-006('대화 중 장바구니 담기')의 근거 문장이 약하다. 네이버 베타 보도자료(2026-02-26)는 장바구니 담기를 향후 고도화로 언급, 7-01 보도는 하반기에 '장바구니·배송 정보 관련 기능' 추가라고만 적어 '담기'(행동)인지 '조회·강화'인지 불명. 10-11 현재 출시 확인 못 함.
+  - 비고: 네이버 보도자료(A)·바이라인(B)·뉴스토마토(B) 직접 확인. 판정 시 기준(담기 버튼 제공 여부)을 명시할 것.
+  - 출처(A): [네이버 보도자료 쇼핑 AI 에이전트 베타](https://navercorp.com/media/pressReleasesDetail?seq=34353) 2026-02-26
+  - 출처(B): [바이라인네트워크 (네이버 쇼핑 에이전트 정식 출시)](https://byline.network/2026/07/0701-2/) 2026-07-01
+  - 출처(B): [뉴스토마토 (네이버 하반기 AI 커머스)](https://newstomato.com/ReadNews.aspx?no=1305843) 2026-07-01
+- **[참고] 신규 · C1-T2** — DNR 2026(Reuters Institute, 2026-06-16): 뉴스 목적 AI 챗봇 주간 이용 10%(전년 7%, 45개 시장). AI 답변에서 원출처를 '자주·항상' 클릭하는 응답 4%(27개 시장, 검색 19%, SNS 17%), 한국 8%로 비교 시장 중 최고. 표본·조사일은 페이지에 없음.
+  - 비고: 원문 직접 확인(A). 뉴스 맥락이라 쇼핑 판정에는 참고용. GIJN의 '48개국'·'이용자 42%' 표기는 분모가 달라 쓰지 말 것.
+  - 출처(A): [Reuters Institute Digital News Report 2026](https://reutersinstitute.politics.ox.ac.uk/digital-news-report/2026/emerging-uses-ai-chatbots-news-and-what-it-means-journalism) 2026-06-16
+- **[없음] 유지 · 신규** — 값이 원문과 일치: M-003(68.01%, 2026-01~04, 브라우저 검색만)·M-005(0.34%), M-006(7월 +62%, 전환 +60%, RPV +53%), M-007(Q1 +393%, 3월 전환 +42%, RPV +37%), M-008·M-013(Criteo 7%/14%, 64%/52%, 53%/46%, 조사 2026-01-01~02-28, 한국 1,107명), M-010(49.9%, 포털 54.2%, 생성형 AI 14.0%), M-012(61.5%, 55.0%, 미·영 2,000명).
+  - 비고: SparkToro·Adobe·Criteo·Riskified·디지털인사이트 원문 직접 확인. M-010·M-012는 조사 기간이 원문에 없음.
+  - 출처(A): [SparkToro](https://sparktoro.com/blog/in-2026-less-than-one-third-of-google-searches-still-send-a-click/) 2026-06-08
+  - 출처(A): [Adobe Digital Insights AI Traffic Trends Report](https://business.adobe.com/assets/pdfs/resources/sdk/ai-traffic-trends-report-august-2026/ai-traffic-trends-report-2026-08-19.pdf) 2026-08-19
+  - 출처(A): [Criteo 한국 보도자료](https://www.criteo.com/kr/wp-content/uploads/sites/7/2026/06/보도자료_크리테오-2026-커머스와-AI-트렌드-리포트-공개-for-Web.pdf) 2026-06-10
+- **[없음] 유지 · 신규** — 사건이 원문과 일치: E-001/E-002(Instant Checkout 2025-09 출시, 2026-03 후순위·판매자 체크아웃 전환), E-007(네이버 쇼핑 에이전트 베타 2026-02-26), E-008(정식 출시 2026-06-25, 약 4개월 베타, 7-01 발표, 하반기 장바구니·배송 정보 기능), E-009(AI탭 2026-06-25 전체 공개·06-26 발표, 베타 4월 약 2개월 400만, 그린닷 재편). 백지 조사의 '쇼핑 에이전트 베타 약 3월·정식 7-01'은 틀림(발표일·기사 문구를 일자로 오인).
+  - 비고: 네이버 보도자료(A)·바이라인(B)·TechCrunch(B) 직접 확인. E-008의 '4개월'은 2-26 베타 기준 맞음, 바이라인 '3월 시작' 표현은 비교 기준월.
+  - 출처(A): [네이버 보도자료 쇼핑 AI 에이전트 베타](https://navercorp.com/media/pressReleasesDetail?seq=34353) 2026-02-26
+  - 출처(B): [바이라인네트워크 (네이버 쇼핑 에이전트 정식 출시)](https://byline.network/2026/07/0701-2/) 2026-07-01
+  - 출처(B): [바이라인네트워크 (AI탭 정식 출시)](https://byline.network/2026/06/26_12083847/) 2026-06-26
+- **[없음] 유지 · 신규** · 원문 미열람 — 단정 중 유지: M-004(8% vs 15%, 절반 수준; 2025-03 Pew, 최신 대체 지표 Ahrefs 1위 CTR 약 -58%는 백지 조사 값을 이번에 열지 않음), M-008('절반'), M-011(9%), I-002(전환율 우위), I-005(AI 이용률 높고 주 수단 낮음). 전망 F-004(55% 이상: 2025 증가폭 +11.2%p라 가능하나 불확실), F-005(<15%), F-102는 오늘 기준 상반 증거 없음.
+  - 비고: M-004·Ahrefs·I-005 일부는 이번에 원문을 다시 열지 않음(백지 조사에서만 확인) → 확신 보통. F-004는 과기정통부 2026 조사가 판정원.
+  - 출처(A): [Pew Research Center](https://www.pewresearch.org/internet/2026/06/17/americans-and-ai-2026-chatbots-smart-devices-and-views-on-impact/) 2026-06-17
+
+## C2 고객 경험·커머스 (48건)
+
+- **[판정 영향] 누락정정 · C2-E-007** — 네이버는 AI 브리핑(검색 상단 AI 요약, 출시 약 1년에 MAU 3,000만 보도)에 광고를 이미 붙였다. 5월 7일~7월 2일 광고주 베타 후 7월 21일부터 노출을 시작했고, 네이버는 '7월 말 정식 출시, 기존 검색광고 대비 클릭 전환율 30% 이상·구매 전환율 3배 이상(회사 주장)'이라 밝혔다. AI탭 광고는 4분기 도입 '추진·검토' 단계다.
+  - 비고: R1의 발견 접점 서술은 한국을 'AI탭 광고 추진'으로만 적어 AI 답변 광고가 이미 운영 중인 사실이 빠졌다. 한국 발견 접점의 '플랫폼(잠정)' 판정에서 잠정 표시를 풀 수 있다(광고 운영+MAU 3,000만이 규모 근거. 확신 중간). 네이버 광고 매출 +7.5% YoY(2Q), 1Q +9.3%(다음 기사). 노출 시작일은 기사(7/21)와 공식(7월 말)이 다르다.
+  - 출처(A): [네이버 2분기 실적 보도자료](https://www.navercorp.com/media/pressReleasesDetail?seq=10034577) 2026-08-07
+  - 출처(B): [다음 뉴스 (AI 수익전쟁① 네이버 AI 광고)](https://v.daum.net/v/20260703000247237) 2026-07-03
+- **[판정 영향] 신규 · C2-E-002** — ChatGPT 광고는 미국 밖으로 이미 확대됐다. OpenAI는 3월 26일 캐나다·호주·뉴질랜드 시범을, 5월 7일 영국·멕시코·브라질·일본·한국 확대를 예고했고 8월 11일 그 5개 시장 출시를 밝혔다. 8월 31일에는 연환산 매출 약 10억 달러, 40개국 이상, 인도·EMEA 셀프서브 개방이 보도됐다.
+  - 비고: R1의 'ChatGPT 광고=미국' 서술이 낡았다. 발견 접점의 글로벌 '플랫폼(잠정)' 판정에서 잠정 표시를 풀 근거가 늘었다(Amazon 스폰서 프롬프트 CPC 과금, Google AI Mode 광고 테스트와 함께; 확신 중간). 10억 달러·40개국은 Yahoo Finance 경유 2차이며 CNBC 원문은 못 읽음. 노출 비율(%)은 공식 수치 없음. 한국 시점은 JoongAng(6월 19일 파일럿)과 OpenAI(8월 11일 출시)가 달라 파일럿/출시 구분 가능성(확정 못 함).
+  - 출처(A): [OpenAI 'Testing ads in ChatGPT'](https://openai.com/index/testing-ads-in-chatgpt/) 2026-08-11
+  - 출처(B): [Yahoo Finance (OpenAI 광고 $1B 보도)](https://finance.yahoo.com/media-advertising/articles/openai-chatgpt-ads-hit-1-132117654.html) 2026-08-31
+- **[판정 영향] 상충 · C2-M-007** — M-007의 '기업 챗봇보다 서드파티 AI를 약 3배 더 많이 썼다'는 Gartner 원문상 '약 3배 더 이용할 가능성(approximately three times more likely to use)'이며, 가장 최근 서비스 상호작용 기준이고 절대 이용률은 공개되지 않았다. 서드파티 GenAI 이용은 1년간 거의 2배, 기업 챗봇 이용은 2022년 이후 통계적으로 변화 없다. 조사 지역은 명시되지 않았다.
+  - 비고: (1) 지역: 기록은 region=GLOBAL이나 릴리스에 지역 없음. (2) 3배 비율의 출처는 07-08 릴리스이며 기록이 인용한 08-04 릴리스(gcom.pdo.aws.gartner.com 미러 주소)는 이를 링크로 언급하는 후속 글이므로 7월 8일 릴리스를 1차로 달아야 함. (3) 상담 접점 '고객 Agent 주도(비잠정)' 판정은 상대 비율만 근거라 규모 근거(이용 비중)로 보기에 약함 → 잠정 표시 또는 '경합' 검토 필요(확신 중간-낮음, 판정 기준표는 열람 안 함). 58%·74%·87%는 원문에서 확인: 87%는 전체 응답자, 58%는 GenAI 이용자 분모(항목별 분모가 달라 혼용 금지).
+  - 출처(A): [Gartner 보도자료 (서드파티 GenAI 3배)](https://www.gartner.com/en/newsroom/press-releases/2026-07-08-gartner-survey-finds-customers-are-three-times-more-likely-to-use-third-party-genai-than-company-provided-chatbots-for-customer-service) 2026-07-08
+  - 출처(A): [Gartner 보도자료 (87%)](https://www.gartner.com/en/newsroom/press-releases/2026-08-04-gartner-survey-finds-87-percent-of-customers-say-companies-using-genai-for-customer-service-must-provide-access-to-a-human-agent0) 2026-08-04
+- **[문장 수정] 갱신 · C2-M-001** — Amazon은 2026-05-13 Rufus와 Alexa+를 'Alexa for Shopping'으로 통합했고(Rufus 단독 지표는 Q1이 마지막), Q2(2026-07-30 발표) 기준 '최근 12개월 이용 고객 3.5억 명 이상', 활성 이용자 약 2배(YoY)·상호작용 5배 이상, 미국 이용 고객의 주문당 지출은 비이용자보다 40% 이상 많다고 발표했다.
+  - 비고: 기록의 3억 명은 '2025년' 값이고 3.5억은 '최근 12개월' 값이라 기간이 다르다(같은 선에 놓고 증가율을 계산하지 말 것). 60%(구매 완료 가능성)와 40%(주문당 지출)도 서로 다른 지표. 40%는 이용자-비이용자 비교(인과 아님, 표본 미공개). 3.5억 명 수치는 aboutamazon 본문에서 확인, 실적 PDF에는 고객 수 없음. Q4'25 원문(3억·약 120억 달러)은 열람 시도했으나 권한 응답이 없어 못 읽음 → Modern Retail(B)로만 확인.
+  - 출처(A): [Amazon (aboutamazon.com Q2 2026)](https://www.aboutamazon.com/news/company-news/amazon-ceo-andy-jassy-stores-growth-ai-shopping-q2-2026-earnings) 2026-07-30
+  - 출처(A): [Amazon Q2 2026 실적 릴리스](https://s2.q4cdn.com/299287126/files/doc_earnings/2026/q2/earnings-result/AMZN-Q2-2026-Earnings-Release.pdf) 2026-07-30
+  - 출처(B): [ppc.land (Rufus·Alexa+ 통합)](https://ppc.land/amazon-merges-rufus-and-alexa-into-one-shopping-assistant/) 2026-05-13
+- **[문장 수정] 갱신 · C2-M-013** — 네이버 쇼핑 AI 에이전트는 출시 초기(3월) 대비 8월 기준 월간 이용자·일평균 대화 수가 약 5배, 에이전트 일평균 거래액이 약 4배로 늘었다(2026-09-27 보도). 에이전트 내 결제는 연내 일부 상품군 시범 적용 계획 단계다.
+  - 비고: 기록은 6월 시점 '거래액 2.7배 이상'(원문도 '이상', 일·월 구분 없음). 6월 지표(일간 이용자 +50% 이상, 재방문 약 3배)와 8월 지표(MAU 5배, 일평균 거래액 4배)는 지표 정의가 달라 섞지 말 것. 절대 이용자 수·거래액은 미공개. 기준 시점 '지난달'은 보도일 기준 8월 추정(확신 중간).
+  - 출처(B): [파이낸셜뉴스](https://www.fnnews.com/news/202609270633124595) 2026-09-27
+  - 출처(B): [바이라인네트워크](https://byline.network/2026/07/0701-2/) 2026-07-01
+- **[문장 수정] 전망판정 · C2-F-102** — (가) 비관 시나리오 이정표 '2026-12 ChatGPT 광고 미국 밖으로 확대'는 R1 기록 시점(2026-10-09)에 이미 달성돼 있었다(2026-08-11 5개 시장, 08-31 40개국 이상 보도).
+  - 비고: 이정표를 '미국 밖 확대'에서 구체 기준(예: 광고주 셀프서브 개방 국가 수, 한국 포함 여부)으로 바꾸거나 이미 달성한 이정표로 표기해야 판정 변별력이 생긴다. 판정 방법은 '낙관 조건 세 가지 중 하나 이하'로 명확하다.
+  - 출처(A): [OpenAI 'Testing ads in ChatGPT'](https://openai.com/index/testing-ads-in-chatgpt/) 2026-08-11
+  - 출처(B): [Yahoo Finance (OpenAI 광고 $1B 보도)](https://finance.yahoo.com/media-advertising/articles/openai-chatgpt-ads-hit-1-132117654.html) 2026-08-31
+- **[문장 수정] 신규 · C2-E-010** — 제9순회는 2026-09-10 재심리(rehearing) 요청을 받아들이지 않아(판사 누구도 표결 요청 안 함) 8월 4일 판결이 유지됐다(MediaPost). 8월 판결은 CFAA·CDAFA 청구만 다뤘고 약관·계약·불법행위 청구는 열려 있으며, 자율성이 높거나 서버와 직접 통신하는 Agent는 달리 볼 수 있다(Cooley). Amazon은 9월 21일 캘리포니아 법과 불법 간섭을 근거로 수정 소장을 냈다는 보도가 있다.
+  - 비고: 수정 소장(9/21)은 AI Weekly(등급 C) 단일 출처라 '확인 필요'. 재심리 거부는 MediaPost(B) 확인. 판결 원문은 못 읽음(Cooley·eWeek·Engadget 해설 기준).
+  - 출처(B): [MediaPost](https://www.mediapost.com/publications/article/417793/appeals-court-again-rejects-amazon-bid-to-block-pe.html) 2026-09-10
+  - 출처(B): [Cooley (로펌 해설)](https://www.cooley.com/news/insight/2026/2026-08-06-ninth-circuit-rules-on-ai-agent-access-to-third-party-websites-under-cfaa) 2026-08-06
+  - 출처(B): [eWeek](https://www.eweek.com/news/perplexity-ai-shopping-agent-returns-amazon/) 2026-08-05
+- **[문장 수정] 전망판정 · C2-F-003** — (다) 근거가 달라진 전망: F-003 '2027-06-30까지 Perplexity 쇼핑 Agent의 Amazon 이용이 다시 법원 명령으로 막히지 않을 것'은, 연방 컴퓨터범죄법 쟁점이 8월 판결·9월 재심리 거부로 정리된 반면 Amazon이 주(州)법·불법 간섭·약관 청구로 소송을 이어가고 있어(수정 소장 보도) 판정 변수가 바뀌었다.
+  - 비고: (나) 겸함: '법원 명령'이 가처분·임시명령·합의 중 어디까지인지 방법에 없음. 'Perplexity가 5월 11일 iOS Comet의 Amazon 기능을 자발 중단'(AI Weekly, C)한 사실이 있어 '막히지 않음'의 의미가 모호. '본안 판결·가처분·합의로 접근이 제한된 경우를 모두 포함'처럼 명시 제안.
+  - 출처(B): [MediaPost](https://www.mediapost.com/publications/article/417793/appeals-court-again-rejects-amazon-bid-to-block-pe.html) 2026-09-10
+  - 출처(C): [AI Weekly (알림 기사)](https://aiweekly.co/alerts/amazon-alleges-perplexity-misled-ninth-circuit-on-comet-traffic) 2026-09-22
+  - 출처(B): [Cooley (로펌 해설)](https://www.cooley.com/news/insight/2026/2026-08-06-ninth-circuit-rules-on-ai-agent-access-to-third-party-websites-under-cfaa) 2026-08-06
+- **[문장 수정] 신규 · C2-E-003** — Amazon은 2026-09-20 Meta의 개인 에이전트 Muse(9월 8일 출시, Stripe Link 결제)가 Amazon.com에서 주문하는 것을 막았다('무허가 AI 에이전트의 접근은 이용약관 위반'). 법적 조치 여부는 답하지 않았고 Meta와 직접 협의 중이다.
+  - 비고: Perplexity 외 두 번째 대형 차단 사례. Walmart는 Muse 체크아웃 실패가 의도가 아니며 Muse와 제휴 관계라고 밝혀(TechCrunch) 리테일러별 상반. ppc.land 기사에는 Walmart 언급이 없고 TechCrunch에만 있음.
+  - 출처(B): [ppc.land (Amazon의 Meta Muse 차단)](https://ppc.land/amazon-blocks-metas-muse-ai-agent-from-shopping-on-its-site/) 2026-09-20
+  - 출처(B): [TechCrunch](https://techcrunch.com/2026/10/06/the-next-hurdle-for-ai-agents-getting-websites-to-let-them-in) 2026-10-06
+- **[문장 수정] 전망판정 · C2-F-101** — (가·다) 낙관 시나리오의 전제 '대형 플랫폼이 외부 Agent 차단을 기술적으로 강화하지 않을 경우'는, Amazon이 2026-09-20 Meta Muse를 팝업으로 차단한 사실이 이미 있어 기록 시점에 사실상 흔들렸다. 판정 방법 (1) '고객 Agent의 마켓플레이스 접근이 법원 명령으로 막히지 않음'만으로는 이 차단(법원 명령 없는 자체 차단)을 못 잡는다.
+  - 비고: (나) '세 가지 중 두 가지 이상'은 명확하나 (2) '브랜드 자체 Agent가 둘 이상 AI 플랫폼에서 일반 이용자에게 제공'은 Walmart(Sparky를 ChatGPT·Gemini에 임베드, 2026-03 보도, 원문 미확인)처럼 이미 충족돼 보이는 사례가 있어 변별력이 약함. 전제 문구에 '법원 명령 없이 약관·기술로 차단' 포함 여부를 명시 제안.
+  - 출처(B): [ppc.land (Amazon의 Meta Muse 차단)](https://ppc.land/amazon-blocks-metas-muse-ai-agent-from-shopping-on-its-site/) 2026-09-20
+  - 출처(B): [TechCrunch](https://techcrunch.com/2026/10/06/the-next-hurdle-for-ai-agents-getting-websites-to-let-them-in) 2026-10-06
+  - 출처(B): [Digital Commerce 360 (OpenAI 3/24 업데이트)](https://www.digitalcommerce360.com/2026/03/24/openai-agentic-commerce-updates-chatgpt-walmart/amp/) 2026-03-24
+- **[문장 수정] 신규 · C2-E-006** — 카카오는 2026-08-06 2분기 콜에서 카톡 에이전트의 첫 외부 버티컬로 쿠팡이츠 연동(추천→주문→결제를 카톡 안에서)을 밝혔으나 뉴시스는 출시일 없이 '구현되면' 단계라고 전했다. 에이전트 커머스 수수료·AI 구독 수익화는 2027년부터, AI 광고는 2028년이 목표다. 3,100만 목표는 언급되지 않았다.
+  - 비고: 1분기 콜은 '다음 분기 실적 발표 전까지 초기 모습'을 약속했는데 2분기에 쿠팡이츠 계획 공개로 대응. 결제 연동 '실제 동작'은 확인되지 않음.
+  - 출처(B): [뉴시스 (카카오·쿠팡이츠)](https://www.newsis.com/view/NISX20260806_0003738743) 2026-08-06
+  - 출처(B): [디지털데일리 (카카오 2분기 콜)](https://www.ddaily.co.kr/page/view/2026080610225305601) 2026-08-06
+  - 출처(B): [ZDNet Korea (카카오 2분기 콜)](https://zdnet.co.kr/view/?no=20260806111654) 2026-08-06
+- **[문장 수정] 전망판정 · C2-F-002** — (나) 판정 방법이 모호하다: F-002는 '정식 출시 + 선물하기 외 외부 커머스(자사 외 쇼핑몰) 결제 연결'인데, 카카오가 2분기에 밝힌 외부 연동은 배달 서비스 쿠팡이츠이고 아직 출시 전이다. 쿠팡이츠(배달)가 '외부 쇼핑몰'에 들어가는지, '정식 출시'를 어떤 공지로 볼지 방법에 없다.
+  - 비고: '카카오 공식 발표로 카톡 안 주문·결제가 일반 이용자에게 열린 외부 사업자 1곳 이상'처럼 고쳐 쓰는 것을 제안. 카나나 독립 앱은 10-15 종료되고 카톡 중심으로 전환(9/15 공지)돼 '카카오톡 AI 에이전트'의 서비스명이 바뀔 수 있음. F-101 이정표('카톡 정식 출시, 외부 커머스 결제')도 같은 모호함.
+  - 출처(B): [뉴시스 (카카오·쿠팡이츠)](https://www.newsis.com/view/NISX20260806_0003738743) 2026-08-06
+  - 출처(B): [파이낸셜뉴스 (카나나 종료)](https://www.fnnews.com/news/202609151803363368) 2026-09-15
+- **[문장 수정] 신규 · C2-I-006** — Mastercard는 2026-03-17 한국 최초의 '라이브 인증 에이전틱 거래'(AI 에이전트가 인천공항→광화문 호텔 차량 예약·결제, Agent Pay 사용; 가맹점 hoppa, 에이전트 CardInfoLink)를 발표했다. 발급 카드사·은행은 이름이 나오지 않는다.
+  - 비고: R1이 3월 한국 항목을 놓친 사례. 시범성 1건이라 '일반 소비자 상용'은 아니지만 I-006의 '거래 없음' 서술과 충돌. 다음 기사(다음 뉴스 7/27)는 한국 포함 12개국이 기존 카드망으로 결제까지 완료, 나머지는 통제 환경 시험이라 전함.
+  - 출처(A): [Mastercard Asia Pacific 보도자료](https://www.mastercard.com/news/ap/en/newsroom/press-releases/en/2026/mastercard-completes-korea-s-first-live-agentic-transactions-unlocking-trusted-ai-powered-commerce/) 2026-03-17
+  - 출처(B): [다음 뉴스 (에이전트 결제 30여개국)](https://v.daum.net/v/20260727174227017) 2026-07-27
+- **[문장 수정] 갱신 · C2-M-004** — Amazon 광고 매출은 2026년 2분기 198.09억 달러(+26%, 환율 영향 없음)이고, 1분기 172.43억 달러의 +24%는 환율 제외 시 +22%다.
+  - 비고: 기록(M-004)은 1분기 24%만 적었고 환율 조건 없음. 2분기는 Prime Day가 대부분 국가에서 2분기로 이동해 전년 동기 대비가 부풀려질 수 있다(Olsavsky 발언, ppc.land 인용 B). 분기끼리 성장률 비교 금지.
+  - 출처(A): [Amazon Q2 2026 실적 릴리스](https://s2.q4cdn.com/299287126/files/doc_earnings/2026/q2/earnings-result/AMZN-Q2-2026-Earnings-Release.pdf) 2026-07-30
+  - 출처(A): [Amazon Q1 2026 실적 릴리스(SEC 8-K Ex.99.1)](https://www.sec.gov/Archives/edgar/data/1018724/000101872426000012/amzn-20260331xex991.htm) 2026-04-29
+  - 출처(B): [ppc.land (Amazon Q2 콜 정리)](https://ppc.land/amazon-advertising-gains-26-to-19-8-billion-as-sports-inventory-sells-out/) 2026-07-30
+- **[문장 수정] 상충 · C2-M-012** — 카카오 1분기 콜의 3,100만 명은 '카나나 인 카카오톡 서비스를 내려받을 수 있는 이용자(연말 전망)'이지 '에이전트를 쓰는 이용자'가 아니다. 2분기 콜(2026-08-06)에는 3,100만이 나오지 않고, 연말 목표는 '카톡 안에서 AI를 접하는 월간 활성 이용자 1,000만 명'이며 챗GPT 포 카카오 누적 이용자는 1,300만 명이다.
+  - 비고: 분모가 다른 세 숫자(다운로드 가능 3,100만·MAU 목표 1,000만·누적 1,300만)를 같은 '규모'로 읽으면 안 됨. 1분기 MAU 4,957.5만(기록 4,958만은 반올림, 62%는 맞음). 원문 두 편 모두 직접 읽음(기사 기준; 카카오 IR 원문은 미열람).
+  - 출처(B): [다음 뉴스 (카카오 1분기 실적)](https://v.daum.net/v/20260507121150759) 2026-05-07
+  - 출처(B): [ZDNet Korea (카카오 2분기 콜)](https://zdnet.co.kr/view/?no=20260806111654) 2026-08-06
+  - 출처(B): [디지털데일리 (카카오 2분기 콜)](https://www.ddaily.co.kr/page/view/2026080610225305601) 2026-08-06
+- **[문장 수정] 누락정정 · C2-E-002** — OpenAI가 미국 Free·Go에서 ChatGPT 광고 시험을 실제로 시작한 날은 2026-02-09이고, 2026-01-16은 '곧 광고를 보이겠다'는 계획 발표다(SiliconANGLE: 'in the coming weeks').
+  - 비고: R1은 1월 16일을 시험 시작 발표로 적음. 1차(OpenAI 페이지)에는 'Today, we're beginning to test ads in ChatGPT in the U.S.'(02-09). 광고는 '스폰서' 라벨로 유기적 답변과 구분되는 지면(OpenAI 페이지는 '답변 아래'라고 명시하진 않음).
+  - 출처(A): [OpenAI 'Testing ads in ChatGPT'](https://openai.com/index/testing-ads-in-chatgpt/) 2026-08-11
+  - 출처(B): [SiliconANGLE](https://siliconangle.com/2026/01/16/openai-start-testing-chatgpt-ads-across-free-go-tiers/) 2026-01-16
+- **[문장 수정] 상충 · C2-M-005** — Amazon 1분기 실적 릴리스 원문은 '프롬프트(prompt)와 상호작용한 쇼핑객의 거의 20%가 그 브랜드 대화를 이어간다'이며 '스폰서'라는 한정이 없다. Modern Retail은 Jassy 발언을 '브랜드 프롬프트'로 옮겼다. 스폰서 프롬프트는 2025-11-11 무료 베타 후 2026-03-25 클릭당 과금(CPC)으로 전환됐고, Jassy는 2분기 콜에서 클릭 고객의 구매 전환 +48%·지출 +21%를 제시했다(Amazon 자체 수치).
+  - 비고: R1 진술('스폰서 질문을 누른 쇼핑객의 약 20%')은 원문보다 좁게 한정함. 2분기 수치는 ppc.land 인용(B)이라 실적 원문에서 확인 못 함.
+  - 출처(A): [Amazon Q1 2026 실적 릴리스(SEC 8-K Ex.99.1)](https://www.sec.gov/Archives/edgar/data/1018724/000101872426000012/amzn-20260331xex991.htm) 2026-04-29
+  - 출처(B): [Modern Retail](https://www.modernretail.co/technology/amazon-says-its-ai-shopping-assistant-is-gaining-traction-with-rufus-users-up-115/) 2026-04-30
+  - 출처(B): [ppc.land (Amazon Q2 콜 정리)](https://ppc.land/amazon-advertising-gains-26-to-19-8-billion-as-sports-inventory-sells-out/) 2026-07-30
+- **[문장 수정] 신규 · C2-I-003** — Microsoft는 2026-01-08(NRF) Copilot Checkout을 발표했다. 미국에서 Copilot 대화 안에서 결제까지 끝내며(Shopify·PayPal·Stripe 연동), 리테일러가 판매자 지위를 유지한다.
+  - 비고: R1의 판매 접점 서술(Google·OpenAI·Amazon)에 Microsoft가 빠졌다. 'AI 화면 안 결제' 주체가 둘 이상임을 보여 '경합' 근거를 보강하나 판정 단계는 안 바뀜. 이용 규모 미공개.
+  - 출처(B): [Axios](https://www.axios.com/2026/01/08/microsoft-ai-copilot-checkout) 2026-01-08
+- **[문장 수정] 갱신 · C2-E-004** — OpenAI는 2026-03-24 블로그에서 'Instant Checkout 초기 버전은 유연성이 부족했다'며 판매자가 자체 체크아웃을 쓰게 하고 상품 발견에 집중하겠다고 밝혔다. Target·Sephora·Nordstrom·Lowe's·Best Buy·Home Depot·Wayfair가 ACP로 상품 발견에 연동했고, Walmart는 계정 연결·자사 결제를 쓰는 앱을 ChatGPT 안에 냈다. Walmart 임원은 챗봇 안 결제의 전환율이 외부 클릭 대비 약 3배 낮았다고 했다.
+  - 비고: R1의 E-004는 date가 '2026-03'이고 출처가 ForkLog(The Information 인용). 정확한 날짜는 03-24(OpenAI 블로그를 인용한 B 기사 2건으로 확인, OpenAI 원문은 못 읽음). 완전 폐지가 아니라 '이동'이라는 표현이 정확(앱 방식은 유지). ACP 참여사 공식 총수는 확인 못 함(T3).
+  - 출처(B): [Modern Retail (Instant Checkout)](https://www.modernretail.co/technology/what-went-wrong-with-chatgpts-instant-checkout/) 2026-03-27
+  - 출처(B): [Digital Commerce 360 (OpenAI 3/24 업데이트)](https://www.digitalcommerce360.com/2026/03/24/openai-agentic-commerce-updates-chatgpt-walmart/amp/) 2026-03-24
+- **[문장 수정] 누락정정 · C2-E-003** — 2026-03-09 가처분은 시행 직전인 03-16 제9순회 항소법원의 행정정지로 일시 효력이 멈췄다(Comet은 계속 접근 가능). 판사는 Perplexity에 Comet이 얻은 데이터 파기도 명했고, 효력 범위는 Amazon의 비밀번호 보호 영역으로 한정됐다.
+  - 비고: R1은 '막는 가처분을 내렸다'고만 적어, 실제로는 거의 효력이 없었던 점이 빠졌다. 정지가 정식 '항소 중 집행정지'인지는 MediaPost가 불명확하다고 적음.
+  - 출처(B): [GeekWire](https://www.geekwire.com/2026/judge-blocks-perplexitys-ai-bot-from-shopping-on-amazon-in-early-test-of-agentic-commerce/) 2026-03-10
+  - 출처(B): [Digital Commerce 360 (9th Cir. 행정정지)](https://digitalcommerce360.com/2026/03/18/court-grants-perplexity-access-amazon-agentic-ai/) 2026-03-18
+  - 출처(B): [MediaPost](https://www.mediapost.com/publications/article/417793/appeals-court-again-rejects-amazon-bid-to-block-pe.html) 2026-09-10
+- **[문장 수정] 신규 · C2-I-001** — Amazon은 2026-09-29 'Branded Conversations'를 발표했다. 브랜드가 자사 제품 지식을 제공하면 Alexa for Shopping이 '스폰서' 표시로 더 깊은 상담을 하는 광고 상품이며 2027년 1월 미국 출시다. Review Requests는 2026년 11월이다.
+  - 비고: 발견·상담 접점의 광고화가 브랜드 지식 공급까지 확장됨(브랜드 AI가 플랫폼 Agent 안으로 들어가는 형태). I-001·F-102 근거 보강. 판정 단계는 안 바뀜.
+  - 출처(A): [Amazon Ads (Branded Conversations)](https://advertising.amazon.com/library/news/branded-conversations-review-requests) 2026-09-29
+- **[문장 수정] 전망판정 · C2-F-001** — (나) 판정 방법이 모호하다: F-001 '네이버는 2026년 안에 AI탭 광고 상품을 출시한다'에서 AI 브리핑 광고(7월 말 이미 출시)가 'AI탭 광고'로 인정되는지 방법에 없다. 네이버 공식 문서(2분기 보도자료)에는 AI탭 광고 언급이 없고 AI탭 광고는 6월 보도에서 '4분기 도입 추진'이다.
+  - 비고: 방법을 'AI탭 화면에 별도 광고 지면이 열린 것을 네이버 공지로 확인'처럼 지면 단위로 명시하길 제안. 이미 달성된 것은 아님(AI탭 광고는 미출시, 확신 높음).
+  - 출처(A): [네이버 2분기 실적 보도자료](https://www.navercorp.com/media/pressReleasesDetail?seq=10034577) 2026-08-07
+  - 출처(B): [세계일보](https://www.segye.com/newsView/20260626507402) 2026-06-26
+  - 출처(B): [다음 뉴스 (AI 수익전쟁① 네이버 AI 광고)](https://v.daum.net/v/20260703000247237) 2026-07-03
+- **[문장 수정] 전망판정 · C2-F-005** — (나) F-005 '다음 Gartner 조사에서도 고객은 기업 챗봇보다 서드파티 AI를 더 많이 쓸 것이다'는 이번 지표가 '이용할 가능성의 배수'라는 점과 절대 이용률 미공개 때문에, 다음 조사가 같은 방식·같은 문구로 공개될지가 전제다. 조건 '같은 문항이 반복될 경우'는 있으나 비교 지표(배수 >1인지, 이용률인지)가 방법에 없다.
+  - 비고: 'Gartner가 2027년 조사에서 서드파티 GenAI 이용 가능성이 기업 챗봇보다 높다고 발표(배수 1 초과)'처럼 지표를 고정하고, 공개 안 되면 '판정 불가'로 두는 규칙을 제안.
+  - 출처(A): [Gartner 보도자료 (서드파티 GenAI 3배)](https://www.gartner.com/en/newsroom/press-releases/2026-07-08-gartner-survey-finds-customers-are-three-times-more-likely-to-use-third-party-genai-than-company-provided-chatbots-for-customer-service) 2026-07-08
+- **[문장 수정] 전망판정 · C2-F-006** — (나) F-006 '한국 카드사 1곳 이상이 일반 소비자 대상 AI Agent 결제를 상용 출시'에서 '상용 출시'의 경계가 모호하다. Mastercard 한국 라이브 거래(3/17, 발급사 비공개), Visa Agentic Ready('live and available'이지만 통제된 시험)가 이미 있어 어느 선부터 '상용'인지 방법에 없다.
+  - 비고: '한국 카드사가 자사 이름으로 일반 회원이 실결제할 수 있는 AI Agent 결제를 공지'처럼 주체·대상을 명시하길 제안. 기록 시점에 달성되지는 않았음(확신 중간).
+  - 출처(A): [Mastercard Asia Pacific 보도자료](https://www.mastercard.com/news/ap/en/newsroom/press-releases/en/2026/mastercard-completes-korea-s-first-live-agentic-transactions-unlocking-trusted-ai-powered-commerce/) 2026-03-17
+  - 출처(A): [Visa 보도자료 (Agentic Ready)](https://www.visa.com.sg/about-visa/newsroom/press-releases/visa-launches-agentic-ready-program-in-asia-pacific-with-over-50-partners-advancing-agentic-commerce.html) 2026-04-30
+  - 출처(B): [다음 뉴스 (에이전트 결제 30여개국)](https://v.daum.net/v/20260727174227017) 2026-07-27
+- **[문장 수정] 전망판정 · C2-F-004** — (다) F-004 '2026년 Rufus 기여 매출이 2025년(연환산 약 120억 달러)보다 클 것'은 Rufus 명칭이 2026-05-13 사라졌고, Amazon 2분기 릴리스는 증분 매출 금액 없이 활성 이용자·주문당 지출만 제시해 같은 지표를 계속 공개할지 불확실하다. 기록의 2025년 값은 '연환산 증분', 2026년 값은 어떤 기준일지 방법에 없다.
+  - 비고: 조건 '같은 지표를 공개할 경우'가 충족되지 않으면 '판정 불가'가 될 가능성이 높다(확신 중간). 지표를 'Alexa for Shopping 관련 증분 매출 또는 이용 고객 수(최근 12개월)'로 넓히는 대안 제안.
+  - 출처(A): [Amazon Q2 2026 실적 릴리스](https://s2.q4cdn.com/299287126/files/doc_earnings/2026/q2/earnings-result/AMZN-Q2-2026-Earnings-Release.pdf) 2026-07-30
+  - 출처(A): [Amazon (aboutamazon.com Q2 2026)](https://www.aboutamazon.com/news/company-news/amazon-ceo-andy-jassy-stores-growth-ai-shopping-q2-2026-earnings) 2026-07-30
+- **[문장 수정] 단정반증 · C2-I-006** — I-006 '일반 소비자 상용 거래는 아직 없다' → 부분 반증/확인 불가: 한국에서 Mastercard가 2026-03-17 라이브 에이전틱 결제 1건을 완료했고(시범), 한국 카드사 발급 상용 서비스 존재를 부정하는 1차 근거는 없다. 또 '한국 카드사 6곳'은 Visa 명단이 하나·현대·KB국민·삼성·신한 5곳+카카오뱅크(은행)라 '카드사 5곳과 카카오뱅크'가 정확하다.
+  - 비고: 결과: 반증됨(‘거래 자체가 없다’ 취지라면)/유지(‘일반 소비자 대상 상용 출시 없음’). 판정 근거는 Mastercard 원문(A)·Visa 원문(A). 검색 결과 제목(아시아경제 영문, 미열람)도 'Six Korean Partners'로 적어 6곳 자체는 일치할 가능성이 높음(확인 필요).
+  - 출처(A): [Mastercard Asia Pacific 보도자료](https://www.mastercard.com/news/ap/en/newsroom/press-releases/en/2026/mastercard-completes-korea-s-first-live-agentic-transactions-unlocking-trusted-ai-powered-commerce/) 2026-03-17
+  - 출처(A): [Visa 보도자료 (Agentic Ready)](https://www.visa.com.sg/about-visa/newsroom/press-releases/visa-launches-agentic-ready-program-in-asia-pacific-with-over-50-partners-advancing-agentic-commerce.html) 2026-04-30
+  - 출처(B): [다음 뉴스 (에이전트 결제 30여개국)](https://v.daum.net/v/20260727174227017) 2026-07-27
+- **[문장 수정] 단정반증 · C2-I-001** — I-001 '그 지면은 플랫폼이 광고로 팔기 시작했다' → 부분 반증: Perplexity는 2025-10 신규 광고주를 중단하고 2026-02 인챗 광고에서 철수했다(FT 인용). Anthropic은 Claude 광고 없음을 공언했고 Google은 Gemini 앱 안 광고를 부인했다(AI Mode 광고는 테스트). '플랫폼 일반'이 아니라 'OpenAI·Amazon·Google(AI Mode)·네이버 등 일부'로 한정해야 한다.
+  - 비고: eMarketer(B) 열람. Gemini 앱 광고 도입을 확인하는 1차 출처 없음(Google Marketing Live 글에 Gemini 앱 광고 언급 없음). 반례가 있어도 광고 도입 추세 자체는 유지.
+  - 출처(B): [eMarketer](https://www.emarketer.com/content/perplexity-retreat-ads-marks-split-on-ai-monetization-models) 2026-02-18
+  - 출처(A): [Google Ads 블로그 (Marketing Live)](https://blog.google/products/ads-commerce/google-marketing-live-search-ads/) 2026-05-20
+  - 출처(A): [OpenAI 'Testing ads in ChatGPT'](https://openai.com/index/testing-ads-in-chatgpt/) 2026-08-11
+- **[문장 수정] 단정반증 · C2-I-004** · 원문 미열람 — I-004 '지금 가장 앞선 쇼핑 Agent는 ... Amazon Rufus 같은 플랫폼 자체 Agent' → 확인 불가: 외부 범용 AI(ChatGPT·Gemini 등)의 쇼핑 이용 규모를 A·B 등급 1차 수치로 확인하지 못해 '가장 앞선'을 비교할 근거가 없다. Rufus는 5월 Alexa for Shopping으로 통합돼 '이용자·매출·전환 모두 숫자로 확인' 표현도 이름·기간을 고쳐야 한다.
+  - 비고: '공개 수치가 가장 많은'처럼 표현을 낮추는 것을 제안. 확신 중간. 월마트·Microsoft 등 다른 플랫폼·리테일러 자체 Agent의 비교 가능한 수치는 없음.
+  - 출처(A): [Amazon (aboutamazon.com Q2 2026)](https://www.aboutamazon.com/news/company-news/amazon-ceo-andy-jassy-stores-growth-ai-shopping-q2-2026-earnings) 2026-07-30
+  - 출처(B): [ppc.land (Rufus·Alexa+ 통합)](https://ppc.land/amazon-merges-rufus-and-alexa-into-one-shopping-assistant/) 2026-05-13
+- **[문장 수정] 단정반증 · C2-I-005** — I-005 '네이버·카카오가 발견부터 결제까지 자사 안에 묶는다' → 부분 반증: 네이버 에이전트 안 결제는 9월 27일 보도 기준 연내 일부 상품군 시범 계획 단계로 미출시다. 카카오는 선물하기 연동 베타(4월)와 쿠팡이츠 계획(8월)이 있으나 외부 연동은 출시 전이다.
+  - 비고: 방향('자사 안에 묶는 쪽')은 유지, 서술은 '묶으려는 단계'로 낮춰야 한다. 판매 접점 한국 '플랫폼(잠정)' 잠정 표시는 유지가 맞다.
+  - 출처(B): [파이낸셜뉴스](https://www.fnnews.com/news/202609270633124595) 2026-09-27
+  - 출처(B): [뉴시스 (카카오·쿠팡이츠)](https://www.newsis.com/view/NISX20260806_0003738743) 2026-08-06
+  - 출처(B): [다음 뉴스 (카카오 1분기 실적)](https://v.daum.net/v/20260507121150759) 2026-05-07
+- **[문장 수정] 단정반증 · C2-E-010** — 한 줄 답 '8월 항소심은 Agent 쪽 손을 들었다' → 유지(한정 필요): 가처분 단계에서 CFAA·CDAFA 청구 성립 가능성이 낮다고 본 것이며 약관·계약 청구는 열려 있고 본안은 미판단이다.
+  - 비고: 반례 없음(Cooley·eWeek·MediaPost·Engadget 일치). 표현만 '손을 들었다'→'연방 해킹법 청구에 한해 가처분을 뒤집었다'로.
+  - 출처(B): [Cooley (로펌 해설)](https://www.cooley.com/news/insight/2026/2026-08-06-ninth-circuit-rules-on-ai-agent-access-to-third-party-websites-under-cfaa) 2026-08-06
+  - 출처(B): [eWeek](https://www.eweek.com/news/perplexity-ai-shopping-agent-returns-amazon/) 2026-08-05
+  - 출처(B): [MediaPost](https://www.mediapost.com/publications/article/417793/appeals-court-again-rejects-amazon-bid-to-block-pe.html) 2026-09-10
+- **[문장 수정] 누락정정 · C2-E-007** — 네이버 AI탭 정식 출시 발표일은 2026-06-26(세계일보 '26일 밝혔다')이다. 기록의 06-25는 쇼핑 AI 에이전트 정식 출시일(바이라인)과 같은 날로 적힌 것으로 보인다. 광고 도입은 원문상 '4분기 추진 중'으로 확정 일정이 아니다.
+  - 비고: AI탭은 4월 네이버플러스 멤버십 대상 베타 후 약 두 달 만의 전체 이용자 전환. 모바일 앱은 심사·업데이트에 따라 적용 시점이 다를 수 있다고 네이버가 설명.
+  - 출처(B): [세계일보](https://www.segye.com/newsView/20260626507402) 2026-06-26
+  - 출처(B): [바이라인네트워크](https://byline.network/2026/07/0701-2/) 2026-07-01
+- **[문장 수정] 상충 · C2-M-010** — Google UCP는 Shopify·Etsy·Wayfair·Target·Walmart 5곳이 공동 개발했고 Adyen·Amex·Best Buy·Stripe·Visa 등 20곳 이상이 지지(endorse)했다. 출시 시점 체크아웃·Business Agent는 미국 리테일러 한정이었다.
+  - 비고: R1의 '20곳 이상이 참여했고 ... 공동 개발'은 공동개발 5곳과 지지 20곳 이상을 구분하지 않음. 9to5google은 공동개발 4곳(Walmart 제외)이라 하나 Google 1차 글이 5곳(Walmart 포함)이라 1차를 채택(9to5google 기사는 직접 열지 않음).
+  - 출처(A): [Google 블로그 (UCP 발표)](https://blog.google/products/ads-commerce/agentic-commerce-ai-tools-protocol-retailers-platforms/) 2026-01-11
+- **[참고] 신규 · C2-E-001** — Google은 I/O(2026-05-19)에서 Search·Gemini·YouTube·Gmail을 가로지르는 Universal Cart를 발표했다(미국 Search·Gemini에 올여름 출시, UCP 체크아웃은 캐나다·호주에 '몇 달 내', 영국은 이후, AP2 에이전트 결제 예고). 5월 20일 Marketing Live 글은 AI Mode의 Direct Offers 광고에 UCP 판매자용 네이티브 체크아웃이 이미 추가됐다고 적었다.
+  - 비고: R1 E-001의 'AI 화면 안 결제로 들어왔다'는 1월 발표('곧 가능') 기준이었는데, 5월 글이 일부 실현을 뒷받침한다. Universal Cart 실제 출시 여부는 확인 못 함(확인 필요).
+  - 출처(A): [Google 블로그 (Universal Cart, I/O)](https://blog.google/products-and-platforms/products/shopping/google-shopping-cart/) 2026-05-19
+  - 출처(A): [Google Ads 블로그 (Marketing Live)](https://blog.google/products/ads-commerce/google-marketing-live-search-ads/) 2026-05-20
+- **[참고] 신규 · C2-M-004** — Walmart 2026 회계 2분기(7월 31일 종료, 8월 20일 발표): 미국 Walmart Connect +43%(VIZIO 제외), 월마트 글로벌 광고 +38%, 월마트 인터내셔널 광고 +20%(Flipkart 주도). 실적 릴리스에는 Sparky 언급이 없다.
+  - 비고: 분모가 달라 Amazon +26%와 직접 비교 금지(글로벌 +38%는 VIZIO 포함, 43%는 미국·VIZIO 제외). Sparky 이용 고객 +70%·주문당 +40%(ppc.land 경유)는 못 읽어 확인 필요. 2월 eWeek: Sparky 이용자 평균 주문액 +35%, 월마트 앱 이용자 절반이 써 봄(CFO 발언 2차).
+  - 출처(A): [Walmart Q2 FY27 실적 릴리스](https://corporate.walmart.com/news/2026/08/20/walmart-releases-q2-fy27-earnings) 2026-08-20
+  - 출처(B): [eWeek (Sparky)](https://www.eweek.com/news/walmart-ai-chatbot-sparky-boosts-sales/) 2026-02-23
+- **[참고] 신규 · 신규** — T3 보강: Mastercard는 2026-09-30 Agent Pay에 '에이전트 개시 확률 점수'(미국 테스트)와 Cloudflare·Skyfire 협력을 추가했고 참여사·거래 건수는 공개하지 않았다. Visa Intelligent Commerce Connect는 4월 8일 파일럿 7곳(Aldar·AWS·Diddo·Highnote·Mesh·Payabli·Sumvin)을 명시했고 전체 수는 미공개다.
+  - 비고: Visa 날짜 '04/08/2026'은 미국 표기상 4월 8일로 읽힘(페이지가 풀어쓰지는 않음; 확신 중간-높음). T3의 UCP 외 항목은 수치 비교가 어려움: UCP 지지 20곳+, Visa Agentic Ready APAC 57곳 명시, Visa ICC 7곳 이상은 서로 정의가 다르다.
+  - 출처(A): [Mastercard 보도자료 (신뢰·인텔리전스 서비스)](https://www.mastercard.com/us/en/news-and-trends/press/2026/september/new-trust-and-intelligence-services.html) 2026-09-30
+  - 출처(A): [Visa Intelligent Commerce Connect](https://corporate.visa.com/en/sites/visa-perspectives/newsroom/visa-intelligent-commerce-connect-ai-shopping-for-businesses.html) 2026-04-08
+  - 출처(A): [Visa 보도자료 (Agentic Ready)](https://www.visa.com.sg/about-visa/newsroom/press-releases/visa-launches-agentic-ready-program-in-asia-pacific-with-over-50-partners-advancing-agentic-commerce.html) 2026-04-30
+- **[참고] 신규 · 신규** — TechCrunch(2026-10-06): Meta·Walmart·Stripe·Sierra·Genesys·Rocket·NiCE·Decagon 8곳이 에이전트-기업 소통 개방 표준을 개발 중이다. Yelp(유료 라이선스 외 비인간 트래픽 불허), eBay(무허가 에이전트만 제한), Delta·United(약관 금지)가 차단·제한 사례로 거론됐다.
+  - 비고: 집계 수치 없음, 일부는 이용자 주장(Adidas·Pizza Hut는 회사 확인 없음). T6를 건수 대신 사건으로 추적하는 R1 방식에 사례 보강.
+  - 출처(B): [TechCrunch](https://techcrunch.com/2026/10/06/the-next-hurdle-for-ai-agents-getting-websites-to-let-them-in) 2026-10-06
+- **[참고] 신규 · 신규** — 재정경제부 이형일 1차관은 2026-07-21 포럼에서 'AI 에이전트 커머스' 실증을 위해 규제 샌드박스 등 제도 개선 방안을 마련하겠다고 밝혔다(결제 신뢰성·책임 소재 리스크, 표준 필요 언급).
+  - 비고: 정부 계획 단계, 일정·참여 기업 없음. F-006(카드사 상용 출시) 판단 시 규제 환경 참고.
+  - 출처(B): [한국경제TV](https://www.wowtv.co.kr/NewsCenter/News/Read?articleId=A202607210338) 2026-07-21
+- **[참고] 신규 · 신규** — 쿠팡은 2026-08-07 보도자료에서 상품 페이지 AI 기능(상품 한눈에 보기·하이라이트·인포그래픽·리뷰 요약, 올해 초 도입한 AI 상품 비교)을 밝혔다. 별도 챗봇·에이전트는 아니며 결제 연동·정량 지표는 없다.
+  - 비고: T5(브랜드·리테일러 자체 Agent)에서 쿠팡은 '대화형 Agent 아님'으로 구분해야 한다. 한국 리테일러 자체 Agent 도입 건수는 R1에 비어 있음.
+  - 출처(A): [쿠팡 뉴스룸](https://news.coupang.com/archives/65494/) 2026-08-07
+- **[참고] 신규 · 신규** — TikTok은 2026-10-05 UCP 연동 'Buy Direct'와 'Shopping Assistant'를 광고주 대상 자격 기반 테스트로 공개했다.
+  - 비고: 일반 이용자 대상 출시 아님. 참고 사항.
+  - 출처(B): [PYMNTS (TikTok)](https://pymnts.com/commerce/social-commerce/2026/tiktok-kicks-off-agentic-commerce-push-with-ai-shopping-assistant) 2026-10-05
+- **[참고] 신규 · 신규** — 카카오는 2026-09-15 카나나 독립 앱·PC를 10월 15일 종료하고 카카오톡 중심으로 옮기며, 구매까지 잇는 에이전틱 AI를 파트너와 구현하겠다고 밝혔다. 카카오툴즈(챗GPT 포 카카오 연동) 서비스는 신한카드·다이소몰·LF몰 등 2차 파트너 7곳이 추가돼 28개가 됐다(9월 11일, 결제 포함 여부는 기사에 없음).
+  - 비고: 카나나 인 카카오톡은 3월 정식 출시(fnnews). 운영 기간 1년 4개월(fnnews) vs 5개월(newdaily)는 사소한 차이.
+  - 출처(B): [파이낸셜뉴스 (카나나 종료)](https://www.fnnews.com/news/202609151803363368) 2026-09-15
+  - 출처(B): [아시아경제 (카카오툴즈)](https://view.asiae.co.kr/article/2026091110363804383) 2026-09-11
+- **[참고] 단정반증 · 신규** · 원문 미열람 — 한 줄 답·접점 지도의 '관계 접점만 아직 브랜드에 남아 있다'(만) → 확인 불가/부분 반증: 반복 구매·Auto-Buy·가격 알림은 Alexa for Shopping이 이미 하고 있고(R1 E-011 자신), 네이버·카카오도 멤버십 혜택 추천·선물하기를 하고 있다. 관계 접점 AI 이전 규모 수치는 없어 '브랜드가 주도'도 근거 약함.
+  - 비고: R1 자체가 '이용 규모 공개되지 않음'을 인정. 브랜드 정의에 리테일러 자체 채널이 포함돼 Amazon이 '브랜드'인지 '플랫폼'인지가 갈림(정의 중복). 판정 단계는 '실험'이라 영향 낮음.
+  - 출처(A): [Amazon (aboutamazon.com Q2 2026)](https://www.aboutamazon.com/news/company-news/amazon-ceo-andy-jassy-stores-growth-ai-shopping-q2-2026-earnings) 2026-07-30
+- **[참고] 상충 · C2-M-006** — M-006 'ChatGPT 응답의 약 51%에 광고(2026-07 초)'는 C등급 단일 모니터링 업체(cloro) 값이라 계속 판단 근거에서 제외한다. OpenAI 1차 페이지는 노출 비율을 공개하지 않는다.
+  - 비고: cloro 글 날짜(2026-09-15)와 as_of(2026-07)가 달라 기준 시점 불일치. 원문 미열람 → 확인 필요.
+  - 출처(A): [OpenAI 'Testing ads in ChatGPT'](https://openai.com/index/testing-ads-in-chatgpt/) 2026-08-11
+- **[없음] 유지 · C2-M-002** — M-002(Rufus MAU +115%·참여도 +400%, 2026-04-29 콜)와 M-003(구매 완료 가능성 +60%), M-001의 2025년 값(3억 명·약 120억 달러): Modern Retail(B)로 재확인, 값 변화 없음.
+  - 비고: Q4 2025 Amazon 원문은 열람 권한이 응답되지 않아 못 읽었고 Q1 릴리스는 MAU 수치를 담고 있지 않음(콜 발언). 1차 확인은 미완.
+  - 출처(B): [Modern Retail](https://www.modernretail.co/technology/amazon-says-its-ai-shopping-assistant-is-gaining-traction-with-rufus-users-up-115/) 2026-04-30
+  - 출처(A): [Amazon Q1 2026 실적 릴리스(SEC 8-K Ex.99.1)](https://www.sec.gov/Archives/edgar/data/1018724/000101872426000012/amzn-20260331xex991.htm) 2026-04-29
+- **[없음] 유지 · C2-M-008** — M-008(87%)·M-009(58%, B2B 74%): Gartner 08-04 릴리스 원문과 일치, 표본 3,566명, 조사 2026-02~03.
+  - 비고: 87% 분모는 전체 응답자, 58%·74%는 GenAI 이용 고객. 지역 미명시(M-007과 동일 문제).
+  - 출처(A): [Gartner 보도자료 (87%)](https://www.gartner.com/en/newsroom/press-releases/2026-08-04-gartner-survey-finds-87-percent-of-customers-say-companies-using-genai-for-customer-service-must-provide-access-to-a-human-agent0) 2026-08-04
+- **[없음] 유지 · C2-M-011** — M-011·E-005(Visa Agentic Ready 2026-04-30, 한국 5개 카드사+카카오뱅크, 아태 10개 시장): Visa 원문 일치. 원문은 57곳 명시, 1단계는 발급사 준비·통제된 환경 시험.
+  - 비고: 'live and available'이나 상용 소비자 거래 주장은 없음.
+  - 출처(A): [Visa 보도자료 (Agentic Ready)](https://www.visa.com.sg/about-visa/newsroom/press-releases/visa-launches-agentic-ready-program-in-asia-pacific-with-over-50-partners-advancing-agentic-commerce.html) 2026-04-30
+- **[없음] 유지 · C2-E-001** — E-001(UCP·Business Agent 2026-01-11), E-005, E-008(네이버 에이전트 정식 출시 06-25와 하반기 계획), E-006의 카카오 1분기 내용(4월 선물하기 베타·하반기 출시): 원문 일치.
+  - 비고: E-006의 '검색·추천·결제까지' 계획은 맞으나 출시 전.
+  - 출처(A): [Google 블로그 (UCP 발표)](https://blog.google/products/ads-commerce/agentic-commerce-ai-tools-protocol-retailers-platforms/) 2026-01-11
+  - 출처(B): [바이라인네트워크](https://byline.network/2026/07/0701-2/) 2026-07-01
+  - 출처(B): [다음 뉴스 (카카오 1분기 실적)](https://v.daum.net/v/20260507121150759) 2026-05-07
+- **[없음] 유지 · C2-E-011** — E-011(Rufus 반복 쇼핑 작업 설정, Auto Buy는 전년 도입): Modern Retail 확인. 4월 말 발표라 date '2026-04' 적합.
+  - 비고: Rufus 명칭은 5월 통합 이후 Alexa for Shopping. 가격 도달 시 자동 구매 기능이 이미 있음도 일치.
+  - 출처(B): [Modern Retail](https://www.modernretail.co/technology/amazon-says-its-ai-shopping-assistant-is-gaining-traction-with-rufus-users-up-115/) 2026-04-30
+  - 출처(A): [Amazon (aboutamazon.com Q2 2026)](https://www.aboutamazon.com/news/company-news/amazon-ceo-andy-jassy-stores-growth-ai-shopping-q2-2026-earnings) 2026-07-30
+- **[없음] 유지 · C2-E-009** · 원문 미열람 — E-009(LG유플러스 에이전틱 AI 상담봇 2026-07-14): 이번 점검에서 열지 않음.
+  - 비고: 확인 불가(미열람). 중요도 1, 판정 영향 없음.
+
+## C3 콘텐츠·정보·신뢰 (37건)
+
+- **[판정 영향] 갱신 · C3-M-001** — Graphite 갱신 연구(2026-05-15)에서 신규 영문 글의 AI 생성 비중은 2026년 1분기 49.9%다(2025년 1분기 49.6%, 2025년 4분기 50.9%). 50%를 넘은 분기는 2025년 4분기 하나뿐이고, 최신 분기는 다시 50% 아래다. 기록의 '2025년 말 50.9%'는 최신값이 아니며, 같은 연구가 탐지기 3종 평균(기존 연구 1종 대비 평균 3.3%p 낮음)으로 방법을 바꿨다.
+  - 비고: 판정 영향: '정보 글' 항목의 '주류' 판정(생성 항목 주류는 50% 이상이면서 사람 콘텐츠 비중 감소 확인이라는 추가 규칙)과 판정 칩 '정보 글만 주류, 신뢰는 낮음'·'5개 중 확산 이상 N개'가 '확산'으로 내려가면 바뀔 수 있다. 값은 두 쪽 모두 원문(Graphite·Axios·GPTZero) 확인, Axios 본문에는 49.9%가 없고 Graphite 본문에 있음. 단계 사다리 수치 기준은 lib/judge를 열 수 없어 직접 대조 못 함.
+  - 출처(B): [Graphite (AI Now Writes as Many Online Articles as Humans Do)](https://graphite.io/five-percent/research/ai-now-writes-as-many-online-articles-as-humans-do) 2026-05-15
+  - 출처(B): [Axios (Graphite 연구)](https://axios.com/2026/05/15/human-vs-ai-written-articles) 2026-05-15
+  - 출처(B): [GPTZero (Graphite 공동연구 요약)](https://gptzero.me/news/ai-written-web/) 2026-05-19
+- **[판정 영향] 단정반증 · C3-M-007** — 'AI 답변의 인용 원천 … 측정되지 않음'(지도 문구)은 사실과 다르다. Graphite(2025-10-14)는 ChatGPT·Perplexity가 인용한 영문 기사·리스티클의 약 18%가 AI 생성이라고 측정했다(Google 순위권 약 14%, Surfer 탐지기, 위양성 4.2%, 키워드 카테고리별 100개 질문).
+  - 비고: 판정 영향: '인용 원천(순환)' 항목의 근거가 '측정 없음'이 아니라 약 18%로 바뀌어 '실험' 단계와 잠정 표시를 다시 적용해야 한다(수치만 보면 '실험'~'얼리어답터' 사이, 기준표 미열람이라 확신 낮음). 표본·탐지기·시점(2025-06)이 지표 정의와 다를 수 있어 참고 수준으로 본문 반영 여부 판단 필요.
+  - 출처(B): [Graphite (AI 콘텐츠의 검색·LLM 인용 성과)](https://graphite.io/five-percent/ai-content-in-search-and-llms) 2025-10-14
+- **[판정 영향] 갱신 · C3-M-008** — IAB 반복 조사(2024-08~10 대 2025-10~2026-01)에서 AI 광고에 부정적인 비율이 12%p 올랐고 긍정은 '소폭 하락'했다. Gen Z 부정 39%(2024년 21%), 밀레니얼 20%(15%). 2024년 긍정 수치는 원문에 없어 3%p 이상 하락인지 확인할 수 없다.
+  - 비고: 판정 영향: 지도에서 광고 신뢰가 '보통'(반복 측정이 없을 때 쓰는 구간)인데 같은 기관의 반복 측정이 있으므로 기준표대로면 '약화'(3%p 이상 하락) 또는 '유지'로 바꿔야 한다. 해석 C3-I-003은 이미 '약화'라 내부 불일치. 2024 긍정 수치는 확인 필요(IAB 2024년 12월 보고서 원문 미열람).
+  - 출처(A): [IAB·Sonata Insights (The AI Ad Gap Widens)](https://www.iab.com/insights/the-ai-gap-widens/) 2026-01-15
+- **[문장 수정] 상충 · C3-M-005** — 'AI 챗봇에서 원문을 자주 누른다 4%(검색 19%·소셜 17%)'는 분모가 다른 수치를 섞은 것이다. DNR 원문 요약은 '챗봇 뉴스 이용자의 42%가 항상·자주 클릭(한국 56% 최고, 덴마크 26%)', 비교로 검색 이용자 44%·소셜 이용자 36%라고 적는다. Decoder의 4·19·17%는 '27개 시장 전체 응답자' 기준으로, 이용률 10%×42%≈4%와 일치하므로 이용자 기준값이 아니다.
+  - 비고: 두 쪽 모두 원문 확인. 어느 쪽도 틀리진 않았고 기준이 다르다. 'AI 챗봇 이용자는 원문을 거의 누르지 않는다'는 서술은 이용자 기준(42%)과 맞지 않는다. Edelman 요약은 '검색 이용자보다 훨씬 덜 누른다'고 적어 DNR 본문 챕터(미열람)로 최종 확인 필요. 지표 정의에 '전체 응답자 기준'을 명시하든가 42%로 교체 권장.
+  - 출처(A): [Reuters Institute DNR 2026 Executive Summary](https://reutersinstitute.politics.ox.ac.uk/digital-news-report/2026/dnr-executive-summary) 2026-06-16
+  - 출처(B): [The Decoder (DNR 2026 인용)](https://the-decoder.com/more-people-get-news-from-ai-chatbots-but-trust-remains-low/) 2026-06
+  - 출처(B): [Edelman 6AM 블로그 (DNR 2026 요약)](https://www.edelman.com/newsroom/richard-edelmans-6am-blog/reuters-institute-digital-news-report-2026) 2026-06
+- **[문장 수정] 단정반증 · C3-I-002** — 'AI 요약으로 정보를 받는 소비자는 원문으로 거의 넘어가지 않는다 … 그 결과 원천 유입이 빠르게 준다'는 두 곳이 단정이다. 챗봇 뉴스 이용자의 42%(한국 56%)가 원문을 자주 클릭한다고 답했고, Chartbeat 기준 AI 챗봇 유입은 0.01%(Axios 3월 보도는 1% 미만)로 Google 검색 유입 -40.2%의 원인이 AI 요약이라는 직접 증거는 기록에 없다.
+  - 비고: 반증됨(부분): 클릭 행태는 M-005 항목 참조, 인과 부분은 확인 불가. 판정 칩 영향은 없음(경로 항목 단계는 이용률 10%·신뢰 20%에 기반). 문장은 '이용자 중 절반 가까이는 원문을 여전히 누르지만, 이용자가 전체의 10%이고 검색 유입은 크게 줄었다' 식으로 정리 제안. 확신: 높음.
+  - 출처(A): [Reuters Institute DNR 2026 Executive Summary](https://reutersinstitute.politics.ox.ac.uk/digital-news-report/2026/dnr-executive-summary) 2026-06-16
+  - 출처(B): [Search Engine Journal (Chartbeat)](https://www.searchenginejournal.com/google-search-decline-publishers-chartbeat/590681/) 2026-09-24
+  - 출처(B): [Relevant Audience (Chartbeat)](https://www.relevantaudience.com/seo/chartbeat-google-search-publisher-traffic-down-40-percent/) 2026-09-25
+- **[문장 수정] 상충 · C3-M-006** — Chartbeat 40.2%는 '2025년 7월~2026년 7월 Google 검색' 연간 변화이고, SEJ는 이 수치가 페이지뷰 수의 변화인지 채널 비중의 변화인지 보고서가 밝히지 않는다고 지적한다. AI 유입 0.01%도 분모 미정의이며 Axios 3월 보도(챗봇 1% 미만)와 비교 불가라고 SEJ가 적었다. 기록은 '유입이 40.2% 줄었다'로 단정했다.
+  - 비고: SEJ·Relevant Audience 원문 확인, Chartbeat 원문(다운로드 폼 뒤)은 미확인. 문장에 '(Chartbeat 보고서 표기, 페이지뷰/비중 구분 불명)' 단서 필요. 전체 퍼블리셔 페이지뷰는 월 약 311억(전년 약 320억)으로 -3% 안팎이라는 점도 맥락으로 유용(Relevant Audience).
+  - 출처(B): [Search Engine Journal (Chartbeat)](https://www.searchenginejournal.com/google-search-decline-publishers-chartbeat/590681/) 2026-09-24
+  - 출처(B): [Relevant Audience (Chartbeat)](https://www.relevantaudience.com/seo/chartbeat-google-search-publisher-traffic-down-40-percent/) 2026-09-25
+- **[문장 수정] 신규 · C3-M-002** — Pangram(2026-05-04)은 Amazon 베스트셀러 500개 상품의 첫 페이지 리뷰 30,000건 중 3%(909건)를 고신뢰 AI 생성으로 판정했다. AI 리뷰의 5점 비율 74%(사람 59%), 1점 비율 10%(사람 22%).
+  - 비고: 원문 확인(탐지 업체 자체 연구, 베스트셀러 첫 페이지라 전체 리뷰 대표성 없음). 지도 문구 '전체 리뷰 중 비율은 공개되지 않음'은 이제 틀린 서술이므로 수정 필요. 3%는 낮은 수준이라 '실험' 단계 유지가 가능해 보이나 기준표 미열람이라 판정 영향으로는 올리지 않음(확신 중간).
+  - 출처(B): [Pangram Amazon 리뷰 연구](https://www.pangram.com/blog/ai-amazon-reviews) 2026-05-04
+- **[문장 수정] 단정반증 · C3-I-004** — 'AI 답변은 브랜드 자체 콘텐츠보다 Reddit·YouTube를 가장 많이 인용한다'는 엔진·시점별로 다르다. Peec(2026-03, 미국 5개 플랫폼 합산)은 Reddit·YouTube·LinkedIn·Wikipedia 순이나, Ahrefs(2025-06 데이터)는 ChatGPT 1위 Wikipedia 16.3%, Perplexity·AI Overviews 1위 YouTube(16.1%·9.5%)이고, Ahrefs AI Mode(2026-09 갱신)는 Reddit 17.9%·YouTube 17.8%로 사실상 동률에 Google 자체 도메인이 12.5%로 3위, Amazon 3.0%·Walmart 1.5%다.
+  - 비고: 반증됨(부분): '합산 1위 Reddit'은 Peec 기준 유지, '브랜드 자체 콘텐츠보다'는 근거 비교 자료가 없어 확인 불가(Ahrefs는 상위 소스 합계 대비 점유율이고 표본 수 미기재, 페이지 메타 설명과 표가 불일치). 지표 M-007에 '미국·5개 플랫폼 합산, 점유율 미공개' 조건 명시 권장. 점유율 숫자는 B 등급 방법 불투명.
+  - 출처(B): [Peec AI 3천만 소스 분석](https://peec.ai/blog/top-domains-cited-by-ai-search-analysis-based-on-30m-sources) 2026-03-31
+  - 출처(B): [Ahrefs Brand Radar (AI Mode 인용 도메인)](https://ahrefs.com/blog/most-cited-domains-ai-mode/) 2026-09-02
+  - 출처(B): [Ahrefs (ChatGPT·Perplexity·AI Overviews 언급 도메인, 2025-06 데이터)](https://ahrefs.com/blog/top-10-most-cited-domains-ai-assistants) 2025-06-11
+- **[문장 수정] 상충 · C3-E-002** — 기록의 사건은 서로 다른 두 시행을 한 날짜(2026-07-21)로 묶었다. (1) 가상인물 표시: 공정위 추천·보증 심사지침 개정안은 2026-04-08 행정예고(4월 28일까지 의견), 2026년 6월 1일부터 적용됐다는 보도·법무법인 뉴스레터가 있다. (2) 사용후기 정보공개(작성 자격·게시 기간·등급평가·삭제 기준·이의 절차)는 전자상거래법 시행령 제27조의3으로 2026-07-21 시행이다. 뉴시스(6/30)는 가상인물 규정 시작일을 적지 않았다.
+  - 비고: (2)는 뉴스서울(2026-07-14, B)과 뉴시스에서 확인. (1)의 6월 1일은 Shin & Kim 뉴스레터(6/29)·디지털마케터·디투데이 3곳이 일치하나 공정위 보도자료 원문은 못 열어 확신 중상. 한 줄 답·해석 문구의 '7월에는 … 가상인물 표시 도입'도 같이 수정. 사건을 둘로 나누고 (2)는 '지침'이 아니라 '시행령'으로 표기.
+  - 출처(B): [Shin & Kim 법률 뉴스레터 3350 (공정위 가상인물 지침)](https://shinkim.com/kor/media/newsletter/3350) 2026-06-29
+  - 출처(B): [BKL Legal Update (추천·보증 심사지침 개정안)](https://www.bkl.co.kr/law/insight/newsletter/6557) 2026-04-23
+  - 출처(B): [헤럴드경제 (AI광고 가상인물 표시 의무화 행정예고)](https://www.heraldk.com/article/2026040718380145675) 2026-04-07
+- **[문장 수정] 갱신 · C3-E-001** — AI기본법 시행령·하위 고시가 2026-07-21 시행됐고(경향신문 7/21), 정부는 '최소 1년 이상 계도기간'을 유지한다고 했다. 계도기간 시작일은 보도가 밝히지 않아 1월 22일부터인지 7월 21일부터인지 불명이다. 표시 방법은 이후 가이드라인으로 구체화될 예정이고 네이버·카카오·SKT는 생성물 표시를 자율 확대 중이다. 과태료 최대 3천만 원·이용자 비대상은 1월 보도(뉴시스)와 일치한다.
+  - 비고: 기록 문구('과태료 최소 1년 유예')는 원문과 맞다. 다만 계도기간 종료일을 단정할 수 없다는 점이 F-003 판정에 영향(전망 점검 참조). 계도기간 2026-12 종료라는 블로그 주장은 C등급이라 채택하지 않음.
+  - 출처(B): [뉴시스 (AI기본법 시행)](https://www.newsis.com/view/NISX20260121_0003484769) 2026-01-21
+  - 출처(B): [경향신문 (AI기본법 시행령·고시 시행)](https://www.khan.co.kr/article/202607210908001/) 2026-07-21
+- **[문장 수정] 신규 · C3-I-006** — 방송미디어통신위원회(방미통위)가 2026-09-30 전원회의에서 정보통신망법을 개정해 AI 생성 이미지·영상을 올리는 이용자에게 표시 의무를 지우고 표시 위·변조를 금지하며, 포털·플랫폼이 이용자의 표시 준수를 관리하게 하는 방안을 올해 12월까지 추진하기로 했다(입법 전 단계, 시행일 없음). 7월 16일 업무보고에서도 'AI 생성물 표시제'를 예고했다.
+  - 비고: I-006('대상이 AI 사업자·광고주에 한정, 이용자 리뷰 AI 사용은 플랫폼 자율')의 전제를 흔드는 진행 중 사건. 아직 법이 아니므로 현재 서술은 유지 가능하나 '예정' 단서 추가 필요. F-004·F-101에도 연결(근거가 달라진 전망). MTN 원문 확인, 업무보고 건은 kbmaeil만 근거(B, 세부 미기재).
+  - 출처(B): [MTN (방미통위 AI 생성물 표시 의무화 추진)](https://news.mtn.co.kr/news-detail/2026093017122478426) 2026-09-30
+  - 출처(B): [kbmaeil (방미통위 AI 생성물 표시제 업무보고)](https://kbmaeil.com/article/20260716500191) 2026-07-17
+- **[문장 수정] 누락정정 · C3-E-003** — 플랫폼 대응 사건에 네이버가 빠졌다. 네이버는 5월 블로그·카페·클립에 자율 'AI 활용' 표시를 도입했고, 7월 10일 스마트스토어 쇼핑 광고 이미지·영상의 AI 사용 표시를 의무화해 위반 시 쇼핑 검색 제외 등 제재를 둔다. 의료기기·건강기능식품·유아식품 등 일부 상품군은 AI 생성물 사용을 제한한다. 기사는 리뷰는 대상이라고 적지 않았다.
+  - 비고: MTN 두 기사(7/22, 7/25) 원문 확인. 해석 I-005의 '금지(무신사) 대 허용(쿠팡)' 이분법은 네이버(판매자 콘텐츠 의무·이용자 콘텐츠 자율)를 넣으면 세 갈래가 된다. 쿠팡은 8월 7일 'AI 리뷰 요약' 등 자체 AI 기능을 출시(ket.kr 경제타임스 기사, 표시·검증 방식 미기재)해 쿠팡의 '허용' 서술과 병기할 만하다.
+  - 출처(B): [MTN (네이버 AI 활용 표시 기준 강화)](https://news.mtn.co.kr/news-detail/2026072115515062394) 2026-07-22
+  - 출처(B): [MTN (네이버 AI 생성물 표기 이중 기준)](https://news.mtn.co.kr/news-detail/2026072417015682342) 2026-07-25
+  - 출처(B): [경제타임스 (쿠팡 AI 쇼핑 기능; ket.kr 게재)](https://ket.kr/news/article.html?no=39929) 2026-08-07
+- **[문장 수정] 전망판정 · C3-F-001** — 기준값은 20%(DNR 2026). 판정 시 (나) 문항 문구가 요약 페이지('챗봇 답변 신뢰')와 Edelman('AI 챗봇 뉴스 신뢰')에서 다르고 시장 수가 해마다 달라진다. 또 F-001은 '25%를 넘지 못한다'(25.0%면 적중)인데 F-101 마일스톤은 '25% 이상'(25.0%면 적중)이라 정확히 25%일 때 두 전망이 모두 적중해 신호등 방향이 충돌한다.
+  - 비고: (가)·(다)는 해당 없음(2027 보고서 전). 정수 반올림이라 25가 나올 확률이 낮지 않다. F-001을 '26% 이상이면 빗나감'처럼 경계 통일 제안. 확신: 높음.
+  - 출처(A): [Reuters Institute DNR 2026 Executive Summary](https://reutersinstitute.politics.ox.ac.uk/digital-news-report/2026/dnr-executive-summary) 2026-06-16
+  - 출처(B): [Edelman 6AM 블로그 (DNR 2026 요약)](https://www.edelman.com/newsroom/richard-edelmans-6am-blog/reuters-institute-digital-news-report-2026) 2026-06
+- **[문장 수정] 전망판정 · C3-F-002** — 최신 Chartbeat 값은 -40.2%(전년 -21.9%). (나) SEJ가 지적했듯 이 수치가 페이지뷰 수 변화인지 채널 비중 변화인지 공개 자료로 가를 수 없고, 보고서는 다운로드 폼 뒤라 수치 확인 경로가 불안정하다. 2026 공개일이 9월 24일이라 due(2027-09-30)와 공개 시점이 거의 겹친다.
+  - 비고: (가)는 아니다(미래 시점 비교). 판정 방법에 '비중이 아니라 Chartbeat가 같은 정의로 공표한 연간 변화율만 사용'을 명시하고 공표가 없으면 '판정 불가'로 정할 것. 현재 추세(-21.9→-40.2)로는 20% 이상 감소 유지 가능성이 높아 정보량이 작은 전망(임계가 현재의 절반).
+  - 출처(B): [Search Engine Journal (Chartbeat)](https://www.searchenginejournal.com/google-search-decline-publishers-chartbeat/590681/) 2026-09-24
+  - 출처(B): [Relevant Audience (Chartbeat)](https://www.relevantaudience.com/seo/chartbeat-google-search-publisher-traffic-down-40-percent/) 2026-09-25
+- **[문장 수정] 전망판정 · C3-F-101** · 원문 미열람 — (가) 판정 조건 (2) '국내 주요 쇼핑 플랫폼의 AI 리뷰 표시·제한 정책 도입'은 문자 그대로 읽으면 기록 시점에 이미 충족됐다(무신사 AI 이미지 후기 금지, C3-E-003). 같은 시나리오의 세부 전망 F-004는 쿠팡·네이버로 한정해 범위가 다르다. 2/3 충족 규칙이므로 (1) AI 뉴스 신뢰 25% 이상 또는 (3) 과태료 집행 중 하나만 더 나오면 적중이 된다.
+  - 비고: (2)를 F-004와 같게 '쿠팡·네이버 중 1곳'으로 맞추거나 무신사를 제외한다고 명시 필요. 시나리오 문구 '4명 중 1명을 넘는다'와 마일스톤 '25% 이상'도 경계가 다르다. F-102는 '하나 이하 충족'이라 (2)가 이미 충족이면 비관 적중 문턱이 높아진다.
+- **[문장 수정] 갱신 · C3-M-003** — DNR 2026은 48개 시장(응답 97,520명)이며 기록의 '45개 시장'은 Decoder가 쓴 용도별 문항 기준이다. 요약 페이지에는 35세 미만 16%(18~24세 17%는 Decoder·Edelman 인용), 한국은 14%로 1년 새 두 배(ChatGPT 7%·Gemini 5%), 영국 4%로 최저다. 한국 14%는 브라질 13%·그리스 12%보다 높지만 전체 1위인지는 순위표 미확인.
+  - 비고: 한국 항목은 R1에 없는 값이라 지표 C3-T3에 한국 행 추가 후보. 97,520명·48개 시장은 쿠키뉴스(B)와 Edelman(B) 기준, 요약 페이지에는 시장 수가 없어 확인 필요 표기.
+  - 출처(A): [Reuters Institute DNR 2026 Executive Summary](https://reutersinstitute.politics.ox.ac.uk/digital-news-report/2026/dnr-executive-summary) 2026-06-16
+  - 출처(B): [쿠키뉴스 (DNR 2026 한국)](https://v.daum.net/v/20260626060325750) 2026-06-26
+  - 출처(B): [뉴시스 (언론진흥재단 DNR 2026 한국 분석)](https://www.newsis.com/view/NISX20260616_0003671612) 2026-06-16
+- **[문장 수정] 갱신 · C3-M-004** — 신뢰 20%는 DNR 요약 페이지에서 직접 확인된다('챗봇 답변 신뢰 20%', 뉴스 전반 37%, 영국 6%). Edelman 요약에 따르면 검색엔진 32%·소셜 22%보다 낮은 최저 수준이다. 이용자 44%·비이용자 17%는 Decoder(2차)만 근거라 B등급 단독이다.
+  - 비고: 수치 유지, 비교 대상(검색 32%·소셜 22%)을 넣으면 '낮음' 판정 근거가 강해진다. 이용자/비이용자 분해는 DNR 원문 표 확인 필요.
+  - 출처(A): [Reuters Institute DNR 2026 Executive Summary](https://reutersinstitute.politics.ox.ac.uk/digital-news-report/2026/dnr-executive-summary) 2026-06-16
+  - 출처(B): [Edelman 6AM 블로그 (DNR 2026 요약)](https://www.edelman.com/newsroom/richard-edelmans-6am-blog/reuters-institute-digital-news-report-2026) 2026-06
+  - 출처(B): [The Decoder (DNR 2026 인용)](https://the-decoder.com/more-people-get-news-from-ai-chatbots-but-trust-remains-low/) 2026-06
+- **[문장 수정] 상충 · C3-M-002** — Originality.ai 연구에는 지역 표기가 없어 기록의 'US'는 근거가 없다. 400%는 '2022년 연평균 0.02에서의 증가'이고 단위(비율인지)가 불분명하며(0.02×5=0.10) 지표 대상은 'AI 50% 이상 포함 리뷰'다. 1.3배는 1·5점(극단) 대 2~4점 비교이지 1점·5점 각각이 아니다.
+  - 비고: 원문 확인. '2022년 대비 400% 증가' 서술 자체는 맞지만 비중 수준은 확정 불가. 지역을 'Amazon(마켓플레이스 미표기)'로 수정 권장.
+  - 출처(B): [Originality.ai Amazon 리뷰 연구](https://originality.ai/blog/amazon-ai-generated-reviews) 2025-11-17
+- **[문장 수정] 단정반증 · C3-I-005** — 'AI가 쓴 리뷰는 특히 극단적인 별점에 몰린다'는 절반만 맞다. Originality는 극단(1·5점)이 중간 평점보다 약 1.3배 AI로 탐지된다고 했지만, Pangram은 AI 리뷰가 5점에 쏠리고(74% 대 59%) 1점은 오히려 적다(10% 대 22%)고 했다.
+  - 비고: 반증됨(부분): '5점 쪽으로 쏠린다'로 좁혀야 함. 두 조사는 탐지기·표본이 달라 직접 비교 불가. 확신: 중간.
+  - 출처(B): [Originality.ai Amazon 리뷰 연구](https://originality.ai/blog/amazon-ai-generated-reviews) 2025-11-17
+  - 출처(B): [Pangram Amazon 리뷰 연구](https://www.pangram.com/blog/ai-amazon-reviews) 2026-05-04
+- **[문장 수정] 상충 · C3-M-010** — Criteo의 52%는 6개국(미국·영국·프랑스·독일·일본·한국, 6,379명) 평균이므로 '글로벌 평균'이 아니다. 한국 64%·6개국 52%, 한국 응답 1,107명, 필드워크 2026-01-01~02-28은 보도자료에서 확인된다.
+  - 비고: 수치 유지, 한 줄 답과 한국 행의 '글로벌(52%)'을 '6개국 평균(52%)'으로 고칠 것. 같은 보도자료의 '한국 AI 쇼핑 어시스턴트 주 도구 7%(6개국 14%)'도 한국 행 보강 후보.
+  - 출처(A): [Criteo 2026 Commerce & AI Trends 보도자료](https://www.criteo.com/kr/news/press-releases/2026/06/criteo-releases-2026-commerce-and-ai-trends-report/) 2026-06-10
+- **[문장 수정] 전망판정 · C3-F-003** — (다) 근거가 달라졌다. 정부의 '최소 1년 이상 계도기간'은 시행령·고시가 시행된 2026-07-21에 다시 언급됐고 시작일이 불명이라, 계도기간이 7월 21일 기준으로 계산되면 2027-01-22 이후까지 이미 이어지는 셈이다. 또 '유예'는 법정 기한이 아니라 계도 방침이라 '연장' 여부를 공식 발표로만 판정할 수 있다.
+  - 비고: (나) 판정 방법에 '계도기간 종료를 공식 발표한 날짜가 2027-01-22 이후인지'로 구체화 필요. 뉴시스·경향신문 원문 확인, 시행령 본문·과기정통부 공식 발표 원문은 열지 못해 미확인.
+  - 출처(B): [뉴시스 (AI기본법 시행)](https://www.newsis.com/view/NISX20260121_0003484769) 2026-01-21
+  - 출처(B): [경향신문 (AI기본법 시행령·고시 시행)](https://www.khan.co.kr/article/202607210908001/) 2026-07-21
+- **[문장 수정] 전망판정 · C3-F-004** — (나)(다) 'AI 생성 리뷰 표시·제한'의 범위가 모호하다. 네이버는 이미 5월에 블로그 자율 표시, 7월 10일 쇼핑 광고 이미지 의무 표시를 도입했고(리뷰는 아님), 쿠팡은 8월에 AI 리뷰 요약을 출시했다. 이용자 리뷰 한정인지, 플랫폼 AI 생성물까지 포함하는지에 따라 이미 달성(가)과 미달성이 갈린다. 방미통위 법안(12월 목표)이 통과되면 플랫폼 관리 의무가 생겨 근거가 바뀐다.
+  - 비고: 판정 방법을 '쿠팡 또는 네이버가 이용자 작성 리뷰의 AI 사용을 표시하거나 제한하는 약관·공지를 게시'로 좁힐 것. 현 시점 판정: 진행 중(리뷰 직접 적용은 확인 못 함, 확신 중간).
+  - 출처(B): [MTN (네이버 AI 활용 표시 기준 강화)](https://news.mtn.co.kr/news-detail/2026072115515062394) 2026-07-22
+  - 출처(B): [MTN (네이버 AI 생성물 표기 이중 기준)](https://news.mtn.co.kr/news-detail/2026072417015682342) 2026-07-25
+  - 출처(B): [경제타임스 (쿠팡 AI 쇼핑 기능; ket.kr 게재)](https://ket.kr/news/article.html?no=39929) 2026-08-07
+- **[문장 수정] 전망판정 · C3-F-005** — (나) 기준이 현재값과 같은 45%이고 표본이 505명이라 오차범위(약 ±4%p) 안의 하락도 '적중'이 된다. IAB 조사 주기(2024-12 보고서, 2026-01 보고서)가 약 13개월이라 due(2027-03-31)까지 새 조사가 나오지 않을 수 있다.
+  - 비고: '조사가 나오지 않으면 판정 불가'와 '3%p 이상 하락일 때만 적중' 같은 단서 필요. 확신: 중간(IAB 차기 일정 미확인).
+  - 출처(A): [IAB·Sonata Insights (The AI Ad Gap Widens)](https://www.iab.com/insights/the-ai-gap-widens/) 2026-01-15
+- **[문장 수정] 전망판정 · C3-F-006** — (가) 현재값이 이미 조건에 가깝다. 최신 49.9%에서 60% 미만 유지는 10.1%p 여유라 거의 확정에 가깝고, 정보량이 작다. (나) '같은 방법으로 측정'은 Graphite가 2025-10(탐지기 1종)과 2026-05(3종)에 방법을 바꿨기 때문에 후속 연구가 또 방법을 바꾸면 판정할 수 없다.
+  - 비고: 기준을 '55% 이상이면 빗나감' 등으로 현재값 가까이 조정하거나 방법 변경 시 '판정 불가' 규칙 추가 제안.
+  - 출처(B): [Graphite (AI Now Writes as Many Online Articles as Humans Do)](https://graphite.io/five-percent/research/ai-now-writes-as-many-online-articles-as-humans-do) 2026-05-15
+- **[참고] 신규 · 신규** — EU AI Act 제50조(딥페이크·공익 목적 AI 텍스트 표시)가 2026-08-02 적용을 시작했다. 집행위는 2026-07-20 가이드라인·실천 규약을 확정했고, 기존 시장 생성형 시스템의 워터마킹은 2026-12-02, 탐지 상호운용은 2027-02-02로 유예됐다. 상품 설명·사용자에게만 보이는 챗봇 답변은 텍스트 표시 대상이 아니라고 가이드라인이 정했다.
+  - 비고: 지표 C3-T7이 기록에 값 없이 한국 사건으로만 대체된 상태. 비교 지역 값으로 추가 후보. Paul Weiss 메모 원문 확인(B). Digital Omnibus 발효일은 단독 2차 출처 모순이라 채택 안 함.
+  - 출처(B): [Paul Weiss (EU AI 생성물 투명성 규정 확정)](https://www.paulweiss.com/insights/client-memos/eu-finalises-transparency-rules-for-ai-generated-content) 2026-08-04
+- **[참고] 신규 · C3-M-003** — 한국 DNR 2026(언론진흥재단 발표 분석): 검색엔진·뉴스 모음이 주요 뉴스 경로 61%(48개국 중 2위, 2019년 76%), 소셜 21%, 지난 주 뉴스를 YouTube로 본 사람 49%(48개국 평균 31%). 챗봇 뉴스 이용 14% 중 ChatGPT 7%·Gemini 5%. 네이버는 6월 25일 AI탭을 전체 공개했고 AI 브리핑 월 3천만 이용자라는 보도가 있다.
+  - 비고: 뉴시스·쿠키뉴스 원문 확인(2차, DNR 본문 챕터 미열람). R1에서 비어 있던 한국 언론조사·한국 경로 항목 보강용.
+  - 출처(B): [뉴시스 (언론진흥재단 DNR 2026 한국 분석)](https://www.newsis.com/view/NISX20260616_0003671612) 2026-06-16
+  - 출처(B): [쿠키뉴스 (DNR 2026 한국)](https://v.daum.net/v/20260626060325750) 2026-06-26
+- **[참고] 신규 · C3-M-010** — 서울시 온라인쇼핑 소비자 인식조사(1,000명, 필드워크 2025-10-02~14, 2026-02 공개): AI 추천 단점으로 '필요하지 않은 상품 구매 유도' 31.2%, 광고 상품과 AI 추천 상품 구분이 어렵다 24.0%, 리뷰가 구매에 도움 69.7%.
+  - 비고: 공공기관 조사의 언론 보도(원문 보고서 미열람)라 B로 표시. 필드워크가 조사 기간(2025-10 이후)에 걸치나 2월 공백을 메우는 한국 값. Criteo와 문항이 달라 직접 비교 불가.
+  - 출처(B): [헤럴드경제 (서울시 온라인쇼핑 소비자 인식조사)](https://www.heraldk.com/article/2026022615043425586) 2026-02-26
+- **[참고] 신규 · 신규** — Pew(필드워크 2026-02-17~23, 미국 성인 5,119명)는 AI 챗봇을 한 번이라도 쓴다 49%(2024년 33%), 뉴스에 쓴다 13%로 보고했다. DNR의 미국 챗봇 뉴스 이용은 재조사 기준 16%라 조사 간 값이 다르다.
+  - 비고: 원문 확인(Pew 페이지, DNR 각주). 분모·기간 정의가 다른 값이라 한 표에 섞지 말 것.
+  - 출처(A): [Pew Research Center (Americans and AI 2026)](https://www.pewresearch.org/internet/2026/06/17/americans-and-ai-2026-chatbots-smart-devices-and-views-on-impact/) 2026-06-17
+  - 출처(A): [Reuters Institute DNR 2026 Executive Summary](https://reutersinstitute.politics.ox.ac.uk/digital-news-report/2026/dnr-executive-summary) 2026-06-16
+- **[참고] 신규 · 신규** — Google은 2026-08-20 퍼블리셔 사이트에 '선호 출처' 버튼을 달 수 있게 하고 AI Mode·AI Overviews까지 확대한다고 발표했다(선호 출처를 고른 이용자는 클릭 가능성이 2배라는 Google 주장).
+  - 비고: TechCrunch 원문 확인. 효과는 Google 자체 주장이라 판단 근거로 쓰지 않음.
+  - 출처(B): [TechCrunch (Google Preferred Sources 확대)](https://techcrunch.com/2026/08/20/google-gives-publishers-a-new-way-to-fight-ai-driven-traffic-losses/) 2026-08-20
+- **[참고] 신규 · C3-E-002** — 칼럼(한국경제, 2026-05-16)은 공정위 추천·보증 지침이 직원 동원·AI 생성 리뷰를 명확히 다루지 않고 AI기본법도 AI 사업자만 대상이라고 지적했다. 이용자 리뷰의 AI 사용을 직접 규율하는 한국 규정은 이 시점에 없었다는 보조 증거.
+  - 비고: 의견 칼럼이라 사실 근거로는 약함. I-006 유지 근거 참고용.
+  - 출처(B): [한국경제 Law&Biz 칼럼 (가짜 리뷰)](https://www.hankyung.com/amp/202605160997i) 2026-05-16
+- **[없음] 유지 · C3-M-001** — M-001의 '2025년 초부터 50% 안팎에서 정체'는 Graphite·Axios·GPTZero 모두 같은 표현('약 50%에서 정체', '1년 넘게 50% 근처')이라 유지. 1·2년차 값 35.9%·48%도 일치.
+  - 비고: 단, 값은 최신 49.9%로 갱신(위 항목).
+  - 출처(B): [Graphite (AI Now Writes as Many Online Articles as Humans Do)](https://graphite.io/five-percent/research/ai-now-writes-as-many-online-articles-as-humans-do) 2026-05-15
+  - 출처(B): [Axios (Graphite 연구)](https://axios.com/2026/05/15/human-vs-ai-written-articles) 2026-05-15
+  - 출처(B): [GPTZero (Graphite 공동연구 요약)](https://gptzero.me/news/ai-written-web/) 2026-05-19
+- **[없음] 유지 · C3-M-003** — M-003의 7%→10%, M-004의 20%, M-008·M-009의 IAB 수치(45%·82%·37%p·32%p·83%·60%·71%·54%·505명·104명)는 원문과 일치.
+  - 비고: DNR 요약·IAB 원문 직접 대조. '격차가 벌어졌다'(37%p 대 32%p) 단정도 원문 확인되어 유지.
+  - 출처(A): [Reuters Institute DNR 2026 Executive Summary](https://reutersinstitute.politics.ox.ac.uk/digital-news-report/2026/dnr-executive-summary) 2026-06-16
+  - 출처(A): [IAB·Sonata Insights (The AI Ad Gap Widens)](https://www.iab.com/insights/the-ai-gap-widens/) 2026-01-15
+- **[없음] 유지 · C3-M-007** — M-007의 Peec 순위(Reddit·YouTube·LinkedIn·Wikipedia, 3천만 건, 미국, 5개 플랫폼)는 원문과 일치. 'Reddit 1위' 단정은 Peec 합산에서만 유지된다(I-004 항목 참조).
+  - 비고: Peec 원문 두 페이지 모두 확인. 기간 미표기·점유율 미공개.
+  - 출처(B): [Peec AI 3천만 소스 분석](https://peec.ai/blog/top-domains-cited-by-ai-search-analysis-based-on-30m-sources) 2026-03-31
+- **[없음] 유지 · C3-M-010** — M-010의 한국 64%·1,107명·6개국 52%·필드워크 2026-01~02, E-001의 시행일 2026-01-22·이용자 비대상·최대 3천만 원·최소 1년 계도, E-003의 무신사 AI 이미지 금지·적립금 회수·쿠팡 AI 후기 비차단은 원문과 일치.
+  - 비고: 무신사 약관 개정일은 기사에 '최근'으로만 나와 date '2026-07'은 보도월 기준(문장에 '7월 보도' 단서 권장).
+  - 출처(A): [Criteo 2026 Commerce & AI Trends 보도자료](https://www.criteo.com/kr/news/press-releases/2026/06/criteo-releases-2026-commerce-and-ai-trends-report/) 2026-06-10
+  - 출처(B): [뉴시스 (AI기본법 시행)](https://www.newsis.com/view/NISX20260121_0003484769) 2026-01-21
+  - 출처(B): [MTN ('5초면 뚝딱' AI 후기)](https://news.mtn.co.kr/news-detail/2026073016430716651) 2026-07-30
+- **[없음] 유지 · C3-I-001** — I-001 '정보 글의 절반이 AI이고 그 수준에서 멈췄다'는 유지. 다만 '사람의 실제 경험이 담긴 글이 상대적으로 귀해진다'는 기록의 근거(M-001, M-007)에 직접 측정이 없어 확인 불가(추론). Graphite는 AI 글이 검색에서 성과가 낮아 정체한 것으로 추정했다.
+  - 비고: 단정 점검 결과: 앞 문장 유지, 뒤 문장 확인 불가.
+  - 출처(B): [Graphite (AI Now Writes as Many Online Articles as Humans Do)](https://graphite.io/five-percent/research/ai-now-writes-as-many-online-articles-as-humans-do) 2026-05-15
+- **[없음] 유지 · C3-I-003** — I-003의 '이용자 안에서 44%, 전체 20%'와 'AI 광고 젊은 층 호감은 떨어졌다'는 유지(IAB: 긍정 소폭 하락, 부정 +12%p). 낙폭은 확인 못 해 '소폭'으로 쓰는 것이 안전.
+  - 비고: 반례 탐색: AI 광고 호감 상승 보도는 찾지 못함.
+  - 출처(A): [IAB·Sonata Insights (The AI Ad Gap Widens)](https://www.iab.com/insights/the-ai-gap-widens/) 2026-01-15
+  - 출처(A): [Reuters Institute DNR 2026 Executive Summary](https://reutersinstitute.politics.ox.ac.uk/digital-news-report/2026/dnr-executive-summary) 2026-06-16
+- **[없음] 유지 · C3-I-006** — I-006의 '한국은 표시 규제를 먼저 만들었다'는 한국 시행 2026-01-22이 EU 제50조 적용(2026-08-02)보다 앞서므로 유지하나, EU AI Act 자체는 2024년 발효이므로 '세계 최초'로 확대하지 않을 것. 기록에 그 표현은 없음.
+  - 비고: 한국 보도가 '세계 첫 시행'이라 쓰는 점은 단정 위험.
+  - 출처(B): [Paul Weiss (EU AI 생성물 투명성 규정 확정)](https://www.paulweiss.com/insights/client-memos/eu-finalises-transparency-rules-for-ai-generated-content) 2026-08-04
+  - 출처(B): [뉴시스 (AI기본법 시행)](https://www.newsis.com/view/NISX20260121_0003484769) 2026-01-21
+
+## C4 피지컬 AI·리빙 (38건)
+
+- **[판정 영향] 단정반증 · C4-I-001** — I-001이 '환경 제어 L3의 입구'를 보인 핵심 근거 E-001(씽큐 온이 센서로 습도가 높으면 제습기를 켠다)은 요청서 정의표에서 L2의 예시('습도가 높으면 제습기 작동')와 같은 기능이다. LG 원문도 사용자가 베란다·드레스룸에 온습도 센서를 설치하면 작동한다는 '예시'로 적었다. E-005(Alexa+ 미국 전체 출시)는 자율 판단 사례 없이 출시 사실만 있어, 기록 안에서 L3 출하 근거가 비어 있다.
+  - 비고: 판정 항목 '환경 제어 · 출시된 기술 L3'가 근거 보강 없이는 L2(잠정)로 내려갈 수 있다. L3 근거 후보: Google Home 5/27 카메라 이벤트 기반 자동화 시작(Gemini for Home은 9/30 현재도 Early Access, 한국 미지원), LG 씽큐 온 소개문의 '루틴 학습·예측'(기능 홍보문, 사용 비율 없음). 확신: 중간. 판정 기준은 '출하·배송된 제품'이라 얼리액세스·시연은 제외해야 한다.
+  - 출처(A): [LG전자 보도자료 (씽큐 온 출시)](https://www.lg.co.kr/media/release/29491) 2025-10-22
+  - 출처(A): [Google Home 도움말 'What's new'](https://support.google.com/googlehome/answer/15962877) 2026-09-30
+  - 출처(B): [Android Authority](https://www.androidauthority.com/amazon-alexa-plus-available-to-everyone-3637981) 2026-02-04
+- **[문장 수정] 단정반증 · C4-I-004** — '자율을 막는 것은 기술보다 데이터와 통제감이다'는 단정은 R1 자체 수치와 맞지 않는다. 오픈서베이 2026에서 가장 큰 우려는 가격(58.3%)이고 개인정보 유출(58.2%)은 같은 수준일 뿐이며, 'AI가 알아서 판단하는 게 불편'은 15.8%로 소수다. 가사 물리 작업(L4)은 기술 한계가 직접 병목이다(NEO는 '대부분의 일에 원격 사람 운영자 필요', Agility 공동창업자 '가정에서 쓸모 있어지기까지 약 10년').
+  - 비고: 반증됨(부분). '통제감이 기술보다 큰 걸림돌'을 '가격·체감 가치와 개인정보가 한국 수용의 주된 걸림돌, L4는 기술 한계가 병목'으로 고치기를 제안. 판정 칩 '수용은 L2, L3에는 거부 신호'는 15.8%(+5.1%p) 증가와 Prosper 2026-06 '스마트홈을 AI에 맡기겠다' 10.0%가 같은 방향이라 유지 가능. 오픈서베이 문구: '가격 프리미엄을 납득하기엔 AI 기능의 체감 가치가 아직 부족하다'.
+  - 출처(B): [한국경제 (오픈서베이 리포트 인용)](https://www.hankyung.com/article/202604012347g) 2026-04-01
+  - 출처(A): [오픈서베이 블로그 (AI 가전 2026 분석)](https://blog.opensurvey.co.kr/article/ai-home-appliance-2026-2/) 2026-03-30
+  - 출처(B): [MIT Technology Review](https://technologyreview.com/2026/10/08/1145923/ai-breakthroughs-in-robotics-wont-change-your-life-any-time-soon) 2026-10-08
+- **[문장 수정] 상충 · C4-M-004** — 'AI 기능을 써 본 한국 소비자는 생활가전 51%, 주방가전 39.1%'는 일반 인구 비율이 아니라 AI 가전 구매 의향자 중 비율이다. 값은 원문과 일치(주방 39.1% +6.6%p, 생활 '절반 이상인 51%', 생활 +5.9%p는 한경). 1위 품목은 냉장고 49.5%(주방), TV 40.1%(생활).
+  - 비고: '한국 소비자'→'AI 가전 구매 의향자'로 정의 정정 제안(C4-T4 기준 수치의 모집단 문제). 2025 조사(실제 이용 약 10%, 20~59세, 정의 상이)와 직접 비교 금지. 단계 판정 근거에는 쓰이지 않아 판정 영향 없음.
+  - 출처(A): [오픈서베이 블로그 (AI 가전 2026 분석)](https://blog.opensurvey.co.kr/article/ai-home-appliance-2026-2/) 2026-03-30
+  - 출처(A): [오픈서베이 AI 가전 트렌드 리포트 2026](https://blog.opensurvey.co.kr/trendreport/ai-home-appliance-2026/) 2026-03-23
+  - 출처(B): [한국경제 (오픈서베이 리포트 인용)](https://www.hankyung.com/article/202604012347g) 2026-04-01
+- **[문장 수정] 갱신 · C4-M-006** — NEO '첫해 생산분 1만 대 이상이 예약 5일 만에 팔렸다'는 1X의 자체 주장이고 시점은 2025-10-28 출시 직후다(사전 구매, 보증금 $200은 AOL 보도). 독립 검증된 주문 수는 없다. 2026-10-08 MIT TR 기준 배송은 '올해 후반 예정'이고 '대부분의 일에 원격 운영자가 필요'하다. 별도로 1X는 사모펀드 EQT와 포트폴리오사에 최대 1만 대를 5년간 공급하는 계약을 발표했다(2026 미국 파일럿).
+  - 비고: 문장에 '회사 주장·사전 주문·배송 전'을 넣고, EQT 1만 대(기업용, 5년)와 개인 예약 1만 대를 혼동하지 않게 구분 제안. 가격 $20,000 또는 월 $499 일치(1X 보도자료 A). 1X 1차 페이지는 가격·원격 운영 정책을 담지 않음.
+  - 출처(A): [1X 보도자료 (GlobeNewswire)](https://www.globenewswire.com/news-release/2026/04/30/3285118/0/en/1X-Opens-NEO-Factory-in-Hayward-CA) 2026-04-30
+  - 출처(A): [1X NEO Factory 페이지](https://www.1x.tech/discover/neo-factory) 2026-04-30
+  - 출처(B): [MIT Technology Review](https://technologyreview.com/2026/10/08/1145923/ai-breakthroughs-in-robotics-wont-change-your-life-any-time-soon) 2026-10-08
+- **[문장 수정] 갱신 · C4-E-002** — Gemini for Home 발표는 2025-10-01(이달 중 스피커·디스플레이부터 얼리액세스)이고, R1의 '2025-11'은 TechRadar 기사일이다. 이후 확대: 캐나다 3/17, 멕시코 3/31, 16개국 4/7(오스트리아·벨기에·덴마크·핀란드·프랑스·아일랜드·이탈리아·네덜란드·노르웨이·스페인·스웨덴·스위스·영국·호주·일본·뉴질랜드), 5/27 '19개 국가·언어' 기존 사용자 옵트인, 독일 6/2, 8/5 자동화 로케일 러시아·태국·튀르키예·베트남, 9/16 Google Home MCP 얼리액세스. 한국은 어느 확인 구간에도 없다. 9/30 현재도 Early Access 표기.
+  - 비고: E-002 날짜를 2025-10로 정정, '다른 시장 2026 1분기'는 캐나다·멕시코(3월)에서만 지켜졌고 4/7 확대에도 한국 제외라고 보강 제안. 구글 도움말은 앞 100,000자만 읽음(2026-03 이전 항목과 마지막 18,401자 미확인). '19개 국가'의 정확한 국가 목록은 확인 필요. 한국 미지원은 '확인한 목록에 없음'이지 공식 부인이 아님.
+  - 출처(B): [Droid Life](https://www.droid-life.com/2025/10/01/gemini-just-replaced-google-assistant-on-your-home-and-nest-devices/) 2025-10-01
+  - 출처(A): [Google Home 도움말 'What's new'](https://support.google.com/googlehome/answer/15962877) 2026-09-30
+  - 출처(B): [9to5Google](https://9to5google.com/2026/04/08/google-home-expands-gemini-access-globally-as-the-assistant-replacement-improves/) 2026-04-08
+- **[문장 수정] 갱신 · C4-E-005** — Alexa+는 미국 전체 출시(2026-02-04, 프라임 무료·비회원 월 $19.99, 비회원 무료 Alexa+ Chat 별도) 이후 12개국으로 넓어졌다: 캐나다(얼리액세스 2025-11-20, 6/11 전면 제공), 멕시코 1/22, 영국 3/19(£19.99), 이탈리아 4/15, 스페인 4/23, 독일·오스트리아 5/7, 프랑스 5/26, 브라질 6/18, 호주 8/6(연도 미기재, 2026로 추정), 인도 9/16(얼리액세스, 기간 중 무료). Amazon은 2027년에 10개국 이상 추가를 예고했다. 한국은 목록에 없다.
+  - 비고: '미국 전체'는 유지하되 '미국·캐나다 전체, 12개국 얼리액세스 이상'으로 보강 제안. 같은 aboutamazon 페이지의 소개부와 'Where else' 목록이 서로 달라(인도·오스트리아 누락) 국가 수는 소개부 기준. 호주 상충(8/6 vs 슬러그 '2027')은 EFTM 본문이 '2026에 제공'이라 적어 Amazon 페이지(A) 채택. 미국 개방일 2/4는 Android Authority 기준 확인, 블로그의 '9/1 종료' 주장은 C라 기각.
+  - 출처(B): [Android Authority](https://www.androidauthority.com/amazon-alexa-plus-available-to-everyone-3637981) 2026-02-04
+  - 출처(A): [Amazon aboutamazon (Alexa+ 국제 출시)](https://www.aboutamazon.com/news/devices/alexa-plus-international-launch) 2026-09-16
+  - 출처(B): [EFTM](https://eftm.com/2026/06/alexa-rolls-out-to-more-countries-but-australia-has-to-wait-till-2027-276635) 2026-06-04
+- **[문장 수정] 전망판정 · C4-F-001** — 10/11 현재 1X NEO 일반 고객 배송은 확인되지 않는다(MIT TR 10/8: 올해 후반 예정; 1X 4/30 페이지: 현재 생산분은 직원 가정 테스트 우선, 일부 고객은 올해·나머지는 이후). 기록 시점에 이미 달성·실패한 상태는 아님.
+  - 비고: (나) 모호: '일반 고객' 인정 범위(원격 운영자 지원 포함 여부, 사전 구매자·기업 파일럿 구분)가 정의돼 있지 않다. 제안: '원격 운영 지원 여부와 무관하게 개인 구매자 가정 설치를 1X 또는 주요 언론이 확인하면 적중, 기업 파일럿(EQT)은 제외'.
+  - 출처(B): [MIT Technology Review](https://technologyreview.com/2026/10/08/1145923/ai-breakthroughs-in-robotics-wont-change-your-life-any-time-soon) 2026-10-08
+  - 출처(A): [1X NEO Factory 페이지](https://www.1x.tech/discover/neo-factory) 2026-04-30
+  - 출처(B): [AOL/Yahoo (1X-EQT 계약 보도)](https://www.aol.com/articles/maker-20k-neo-robot-deal-215900133.html) 미기재
+- **[문장 수정] 전망판정 · C4-F-002** — CLOiD 가격·출시일은 10/11까지 발표되지 않았다(LG 8/31·9/3 IFA 자료는 전시만). 그러나 LG CFO(4/29)는 '2028년 홈로봇 상용화 기반 마련'과 실증 상반기 시작을 말했고, CEO 발언을 전한 1월 보도는 '출시 시기는 실증 결과에 달렸고 내년 실증'이라 해 두 발언의 시기가 다르다.
+  - 비고: (나) 모호: '출시 일정 발표'에 '2028 상용화 기반'(연도 언급)이 이미 해당하는지 불명. 4/29 기사에는 CFO가 CLOiD를 직접 언급하지 않았다. 제안: '출시일 또는 판매 개시 시점을 연도 이하 단위로 명시, 가격 포함'. 1월 보도(Let's Data Science)는 2차 요약이라 시기 상충은 확인 필요.
+  - 출처(B): [비즈워치](https://news.bizwatch.co.kr/article/industry/2026/04/29/0044) 2026-04-29
+  - 출처(B): [Let's Data Science (LG CEO 발언 보도)](https://letsdatascience.com/news/lg-plans-cloid-feasibility-demonstration-next-year-35ac3ffd) 2026-01-08
+  - 출처(A): [LG전자 글로벌 뉴스룸 (IFA 2026)](https://www.lg.com/global/newsroom/news/home-appliance-solution/lg-electronics-unveils-the-next-evolution-of-ai-home-at-ifa-2026/) 2026-08-31
+- **[문장 수정] 전망판정 · C4-F-101** — 시나리오 전제 '대형 개인정보 사고가 없을 경우'는 기록 시점에 이미 흔들린다. 2026-02 DJI Romo 로봇청소기 해킹(연구자가 약 7,000대 접근, 도면·라이브 카메라·마이크 노출, 패치 후 판매 중단 보도), 2026-03 OECD.AI가 같은 계열 사고(약 7,000대 카메라·위치 노출)를 AI 사고로 기록했다.
+  - 비고: (가)·(나): '대형'의 기준과 '홈 AI 기기' 범위가 정의돼 있지 않아 전제 충족 여부를 못 가린다. 판정 방법 (2)는 '국내 대형 가전사의 홈 로봇 판매 일정'인데 서술의 L3 허브 기본 기능화와 마일스톤의 Gemini 한국 출시는 판정에 들어가지 않는다. 제안: 전제를 '피해 기기 수 또는 사업자 기준 수치로 정의'하고 방법에 L3 허브 항목 추가. 사고는 한국 사업자 사고가 아님. 개인정보위 9/14 점검은 한국 판매 5개 브랜드에 '특별한 침해 위험 없음'으로 결론(미흡 사례는 시정 권고).
+  - 출처(B): [AOL (DJI Romo 해킹 보도)](https://www.aol.com/articles/hacker-says-accidentally-breached-7-224926567.html) 2026-02
+  - 출처(B): [OECD.AI 사고 기록](https://oecd.ai/en/incidents/2026-03-10-00b4) 2026-03-10
+  - 출처(B): [SBS Biz (개인정보위 로봇청소기 점검)](https://biz.sbs.co.kr/amp/article/20000334411) 2026-09-14
+- **[문장 수정] 단정반증 · C4-I-005** — 'AI가 하고 사람이 확인하는 기능이 가전사의 주력 메시지가 됐다'는 부분만 맞다. 삼성 SmartThings Now(10/6)는 제안 카드뿐이고 자율 실행은 없다고 적혀 있어 부합한다. 반면 LG는 IFA 직전(8/31)에 텍스트 대화형 에이전트 'ThinQ Claw'(가전·캘린더 연동, 선호 기억)를 공개했고, 삼성은 CES 2026에서 가전이 '스스로 상황을 판단하고 작동'한다며 '집안일 제로화'를 내세웠다.
+  - 비고: 반증됨(부분, 확신 중간). 주력 메시지가 한쪽(확인형)으로 단정되지 않고 '제안형(삼성 SmartThings Now)과 위임형 메시지(LG Claw, 삼성 홈 컴패니언)가 함께 간다'가 더 정확. E-007 한 건(머니투데이)이 근거의 전부라 얇다. ThinQ Claw는 출시일·지역·가격 미공개 시연이라 단계 판정은 바뀌지 않음.
+  - 출처(A): [삼성전자 글로벌 뉴스룸 (SmartThings Now)](https://news.samsung.com/global/samsung-introduces-smartthings-now-in-new-platform-update-that-brings-more-intuitive-user-experiences) 2026-10-06
+  - 출처(A): [LG전자 글로벌 뉴스룸 (IFA 2026)](https://www.lg.com/global/newsroom/news/home-appliance-solution/lg-electronics-unveils-the-next-evolution-of-ai-home-at-ifa-2026/) 2026-08-31
+  - 출처(B): [파이낸셜뉴스 (IFA 2026)](https://www.fnnews.com/news/202609031811400701) 2026-09-03
+- **[문장 수정] 단정반증 · C4-I-006** — '가전사 허브는 설치 기반을 별도로 쌓아야 한다'는 삼성에는 맞지 않는다. 삼성전자 보도자료(10/6)는 SmartThings 등록 이용자 4.7억 명, 지원 인증 브랜드 430곳 이상이라고 밝혔다. 5월 기준 4.6억 명, 등록 가전 3,300만 대(2025-11), 한국 등록 기기 2,000만 대 초과(2025-12)는 언론 인용이다. 단위가 계정과 기기로 다르다.
+  - 비고: 반증됨(부분). '갈린다'는 단정도 약하다: Amazon 6억 대는 Alexa 전체(Alexa+ 전용 아님), Alexa+ 사용 수는 미공개. 제안: '허브 경쟁은 설치 기반이 크게 좌우한다. Amazon 6억 대 이상, 삼성 SmartThings 등록 이용자 4.7억 명(단위 상이)'로 완화. 4.6억→4.7억은 시점 차이(5월→10월)이지 상충이 아님.
+  - 출처(A): [삼성전자 글로벌 뉴스룸 (SmartThings Now)](https://news.samsung.com/global/samsung-introduces-smartthings-now-in-new-platform-update-that-brings-more-intuitive-user-experiences) 2026-10-06
+  - 출처(B): [아시아투데이 (SmartThings 수치)](https://www.asiatoday.co.kr/kn/view.php?key=20260902010000527) 2026-09-01
+  - 출처(A): [Amazon aboutamazon (Alexa+ 소개)](https://www.aboutamazon.com/news/devices/new-alexa-generative-artificial-intelligence) 2026-07-21
+- **[문장 수정] 단정반증 · C4-I-002** — '대형 가전사는 시연(LG)이나 보류(삼성)에 머물러 있다'는 R1 시점에서 반례를 찾지 못했다(LG CLOiD 가격·출시일 없음, IFA 2026에서도 전시만). 다만 삼성은 Ballie 중단을 공식 발표하지 않았고 '활성 혁신 플랫폼'이라 밝혔다는 점이 '보류'와 다르다. 또 NEO는 선판매 단계에서도 '대부분의 일에 원격 운영자 필요'(MIT TR 10/8)라 L4(목표만 주면 스스로 수행) 정의에 못 미친다.
+  - 비고: 유지(확인 불가: 중국 대형 가전사·로봇 업체는 조사하지 못함). 제안: '시연에서 선판매로' 문장에 '현재 선판매 제품은 원격 사람 운영 의존' 단서 추가. Ballie 삼성 공식 문구는 직접 확인 못 함(Bloomberg 인용 보도 기반).
+  - 출처(B): [MIT Technology Review](https://technologyreview.com/2026/10/08/1145923/ai-breakthroughs-in-robotics-wont-change-your-life-any-time-soon) 2026-10-08
+  - 출처(B): [Let's Data Science (Bloomberg 인용)](https://letsdatascience.com/news/samsung-shelves-ballie-spherical-home-robot-878b052a) 2026-01-07
+  - 출처(A): [LG전자 글로벌 뉴스룸 (IFA 2026)](https://www.lg.com/global/newsroom/news/home-appliance-solution/lg-electronics-unveils-the-next-evolution-of-ai-home-at-ifa-2026/) 2026-08-31
+- **[문장 수정] 상충 · C4-M-001** — M-001~M-005의 표본 설명 '약 1,500명'은 오픈서베이 원문과 다르다. 원문은 전국 20~64세 1,500명 중 본 조사 1,000명이 '가전 구매 결정권자이자 AI 가전 구매 의향자'라고 적었다(한국경제는 1,500명 소비자로 표기). 따라서 45.7%·36.3% 등은 '한국 소비자 전체'가 아니라 구매 의향자 1,000명 기준일 가능성이 높다.
+  - 비고: 상충: 오픈서베이 원문(A) 1,000명 구매의향자 vs 한경(B) 1,500명. A 채택, 확신 중간(두 오픈서베이 페이지의 설명이 일치하나 절대 비율은 한경에만 있음). 정의를 '구매 의향자 1,000명'으로 고치고 '한국 소비자'라는 서술 완화 제안. 20~59세→20~64세 변경 flag는 유지.
+  - 출처(A): [오픈서베이 AI 가전 트렌드 리포트 2026](https://blog.opensurvey.co.kr/trendreport/ai-home-appliance-2026/) 2026-03-23
+  - 출처(A): [오픈서베이 블로그 (AI 가전 2026 분석)](https://blog.opensurvey.co.kr/article/ai-home-appliance-2026-2/) 2026-03-30
+  - 출처(B): [한국경제 (오픈서베이 리포트 인용)](https://www.hankyung.com/article/202604012347g) 2026-04-01
+- **[문장 수정] 상충 · C4-M-008** — 'Alexa 기기 6억 대 이상 중 97%가 Alexa+ 가능'은 서로 다른 두 진술을 합친 것이다. Amazon 공식 페이지는 'Alexa 기기 6억 대 이상'만 적고 97%는 없다. 97%는 CES 때 Amazon 부사장 발언을 전한 Storyboard18의 '회사가 출하한 기기 중 97%가 Alexa+를 지원할 수 있다'(회사가 판 기기 6억 대 이상)이다.
+  - 비고: 분모 불일치 가능: 6억 대(공식, 서드파티 포함 여부 불명) vs 97%(Amazon 출하 기기, B 단일 출처). 'Amazon 발언 기준, 지원 가능(실제 사용 아님)'으로 단서를 달고 I-006의 '97%를 Alexa+로 바꿀 수 있다'도 같은 방식으로 완화 제안. 공식 1차 출처는 못 찾음.
+  - 출처(B): [Storyboard18](https://www.storyboard18.com/digital/97-amazon-devices-compatible-with-alexa-as-company-pushes-ai-assistant-adoption-87493.htm) 2026-01-13
+  - 출처(A): [Amazon aboutamazon (Alexa+ 소개)](https://www.aboutamazon.com/news/devices/new-alexa-generative-artificial-intelligence) 2026-07-21
+- **[문장 수정] 갱신 · C4-E-001** — LG 원문(2025-10-22, 출하가 246,000원, Matter 인증, 씽큐 플레이 앱 서비스 약 800개)에서 제습기 자동 작동은 '예를 들어 베란다·드레스룸에 온습도 센서를 설치하면 습도가 높을 때 자동으로 제습기나 에어컨을 작동'하는 사용자 설치 조건의 예시다. 복합 명령은 '기억해 순차 실행'이다. 최초 주장 표현은 없다.
+  - 비고: '스스로 켠다'를 '사용자가 센서를 설치하면 습도 조건에 따라 자동 작동'으로 고치고 LG 공식 보도자료(A)를 1차 출처로 추가 제안. 소개문의 '루틴 학습·예측'은 홍보 문구이며 검증 자료 없음.
+  - 출처(A): [LG전자 보도자료 (씽큐 온 출시)](https://www.lg.co.kr/media/release/29491) 2025-10-22
+  - 출처(B): [헤럴드경제](https://www.heraldk.com/article/2025102118250730033) 2025-10-21
+- **[문장 수정] 전망판정 · C4-F-003** — 오픈서베이 원문 페이지는 신중 수용자의 '+6.0%p, 긍정 수용자를 처음 역전'만 적고 절대 비율(45.7%·36.3%)은 싣지 않는다. 절대값은 한국경제(B)에만 있다.
+  - 비고: (나) 부분 모호: 2027 리포트가 절대값 없이 '가장 큰 세그먼트' 서술만 내면 판정 가능하나 같은 모집단(구매의향자, 20~64세)이 아니면 비교 불가. 제안: 판정 방법에 '같은 정의의 구매의향자 모집단일 때만, 절대값 또는 가장 큰 세그먼트 서술로 판정'을 명시.
+  - 출처(A): [오픈서베이 AI 가전 트렌드 리포트 2026](https://blog.opensurvey.co.kr/trendreport/ai-home-appliance-2026/) 2026-03-23
+  - 출처(B): [한국경제 (오픈서베이 리포트 인용)](https://www.hankyung.com/article/202604012347g) 2026-04-01
+- **[문장 수정] 전망판정 · C4-F-004** — '개인정보 유출 우려 55% 이상'의 기준값 58.2%는 한국경제(B)에만 있고, 오픈서베이 원문은 '개인정보 유출 6.9% 증가'(%p 여부 불명)만 적는다. 임계값 55%는 기준과 3.2%p 차이다.
+  - 비고: (나) 모호: 2027 리포트가 절대 비율을 공개하지 않으면 판정 불가. 같은 값이 경험자 우려 55.4%(다른 문항)와 혼동될 위험. 제안: '개인정보 유출 우려 문항의 절대 비율이 공개될 때만 판정, 미공개 시 판정 보류'.
+  - 출처(A): [오픈서베이 블로그 (AI 가전 2026 분석)](https://blog.opensurvey.co.kr/article/ai-home-appliance-2026-2/) 2026-03-30
+  - 출처(A): [오픈서베이 AI 가전 트렌드 리포트 2026](https://blog.opensurvey.co.kr/trendreport/ai-home-appliance-2026/) 2026-03-23
+  - 출처(B): [한국경제 (오픈서베이 리포트 인용)](https://www.hankyung.com/article/202604012347g) 2026-04-01
+- **[문장 수정] 전망판정 · C4-F-005** — Gemini for Home은 9/30 현재도 전 지역 Early Access이고 한국은 3/17·4/7 확대 목록에도 없다. Google의 'other markets 2026 1분기' 계획(근거 E-002)은 한국에 지켜지지 않았다.
+  - 비고: (나) 모호·(다) 근거 변화: '출시'가 얼리액세스를 포함하는지 불명. 제안: '한국어 지원 또는 한국 지역 Early Access 시작 기준 또는 정식 출시 기준 중 하나로 명시, 도움말 지원 국가 목록에 한국이 오르는 날을 기준일로'. 10/11 현재 미달성, 기한 2027-06-30까지 진행 중.
+  - 출처(A): [Google Home 도움말 'What's new'](https://support.google.com/googlehome/answer/15962877) 2026-09-30
+  - 출처(B): [9to5Google](https://9to5google.com/2026/04/08/google-home-expands-gemini-access-globally-as-the-assistant-replacement-improves/) 2026-04-08
+  - 출처(B): [Droid Life](https://www.droid-life.com/2025/10/01/gemini-just-replaced-google-assistant-on-your-home-and-nest-devices/) 2025-10-01
+- **[문장 수정] 전망판정 · C4-F-102** · 원문 미열람 — 비관 시나리오는 방법상 낙관의 '세 조건 중 하나 이하' 충족이면 적중이라 낙관과 정확히 여집합이 된다. 서술의 '홈 로봇은 시연과 소량 판매에 그친다'는 별도 판정 기준이 없다.
+  - 비고: (나) 모호: 낙관 조건 (1)(2)(3)이 모두 미충족이어도 비관의 서술(소량 판매 등)과 어긋날 수 있고, 두 시나리오가 모두 부분 적중하는 경우 구분이 안 된다. 제안: 비관 서술의 '소량'을 수치(예: 기한 내 일반 배송 대수)로 정의하거나 서술을 방법에 맞춰 단순화.
+  - 출처(B): [MIT Technology Review](https://technologyreview.com/2026/10/08/1145923/ai-breakthroughs-in-robotics-wont-change-your-life-any-time-soon) 2026-10-08
+- **[문장 수정] 갱신 · C4-M-011** — M-011(40% 루틴 설정, 60% 개별 사용, 대부분 직접·예약 시작 선호)과 M-012(53%)의 as_of '2024'는 Security Business 기사일(2024-10-21)이며, 기사에는 조사 시점·표본·방법이 적혀 있지 않다(Parks Associates 연구 인용). 값 자체는 기사와 일치.
+  - 비고: 판정 근거로 쓰이는 '고객 수용 L2' 두 항목(환경 제어, 보안·돌봄)이 한국 자료 없이 2년 된 미국 B 등급 단일 기사에 기대고 있다. 단계 변경을 요구할 새 반증은 못 찾았으나 갱신값도 못 찾음(Parks 2026-04 보도에는 루틴·자동화 수치 없음). as_of를 '기사일, 조사 시점 미상'으로 정정하고 R2에서 최신 Parks 자료나 한국 사용 비율을 찾기를 제안. 확신 중간.
+  - 출처(B): [Security Business (Parks 인용)](https://www.securityinfowatch.com/residential-technologies/article/55141640/the-smart-money-smart-video-automation-and-ecosystems) 2024-10-21
+  - 출처(A): [Parks Associates (PR Newswire)](https://www.prnewswire.com/news-releases/industry-leaders-at-30th-annual-connections-the-connected-home-conference-address-ai-data-security-and-trusted-smart-home-experiences-302758267.html) 2026-04-30
+- **[문장 수정] 단정반증 · C4-I-001** — 'Alexa+·Gemini for Home·씽큐 온이 모두 지난 1년 안에 나왔다'에서 Alexa+는 2025-03-31 미국 얼리액세스가 시작됐고(2025-06 기준 100만 명 이상 테스터), 일반 출시(2026-02-04)만 조사 기간 안이다. Gemini for Home도 2025-10-01 발표 후 지금까지 Early Access다.
+  - 비고: 반증됨(부분). '지난 1년 안에 일반 이용자에게 넓게 풀렸다'로 고치기를 제안. 날짜 근거는 Thurrott(2025-06-25 기사)이며 Amazon 원문은 열지 못함(확신 중간).
+  - 출처(B): [Thurrott](https://www.thurrott.com/?p=322573) 2025-06-25
+  - 출처(B): [Droid Life](https://www.droid-life.com/2025/10/01/gemini-just-replaced-google-assistant-on-your-home-and-nest-devices/) 2025-10-01
+  - 출처(B): [Android Authority](https://www.androidauthority.com/amazon-alexa-plus-available-to-everyone-3637981) 2026-02-04
+- **[문장 수정] 누락정정 · C4-M-010** — 삼성 AI 가전 판매 비중 기준선: 토요경제는 '삼성전자 발표'가 아니라 '업계에 따르면 삼성전자가 집계'(2025-06-11, 올해 상반기 기준)라고 적었고, 지역 표기가 없다. 무풍에어컨 85% 이상, 냉장고·세탁기 각각 절반 이상(정확한 비율 없음).
+  - 비고: 정의란의 '삼성전자 발표', 지역 KR을 '업계 집계(삼성 자료 인용), 지역 불명'으로 정정 제안. 2026 신규값은 못 찾음: LG는 AI 에어컨 판매 증가만 언급(비율 없음, 2026-05-20 LG 보도자료), 한경 CES(2026-01)·파이낸셜뉴스·뉴스토마토 IFA 기사에도 비율 없음. 청년일보 2024-08: 삼성스토어 최근 3개월 가전 3대 중 2대가 AI 가전(기간 밖).
+  - 출처(B): [토요경제](https://sateconomy.co.kr/news/view/1065619612051680) 2025-06-12
+  - 출처(B): [청년일보 (삼성 AI 가전 판매 비중, 2024)](https://www.youthdaily.co.kr/news/article.html?no=162457) 2024-08-15
+- **[참고] 신규 · 신규** — 한국 AI 기본법(인공지능 발전과 신뢰 기반 조성 등에 관한 기본법)이 2026-01-22 시행됐다. 투명성·안전성·고영향 AI 3개 규제 축이 있고, 생성물 표시 의무는 이용자에게 서비스를 제공하는 사업자에게 부과된다. 과기정통부는 규제 조항에 최소 1년 이상 계도기간을 두겠다고 했고, 고영향 AI는 현재 레벨 4 이상 자율주행차 정도라고 설명했다.
+  - 비고: 홈 AI 기기 직접 규제는 확인하지 못함(고영향 AI 해당 없음 설명 기준). 계도기간은 2027-01 이후까지로 해석되나 과태료 유예 여부는 이 기사에 없음. 과기정통부 원문 미확인, B 등급(파이낸셜뉴스 1/21)만 열람. 확신 중간.
+  - 출처(B): [파이낸셜뉴스 (AI 기본법 시행, 과기정통부 설명)](https://www.fnnews.com/news/202601211129417179) 2026-01-21
+- **[참고] 신규 · 신규** — 개인정보보호위원회가 2026-09-14 국내 판매 로봇청소기 5개 브랜드(로보락·삼성전자·LG전자·에코백스·샤오미)의 최신 모델(2025-03 기준)을 점검해 '영상·음성·사진·지도정보 수집·전송·저장 과정에서 특별한 침해 위험 없음'으로 발표했다. 다만 수집·이용·국외 이전 안내, 선택권, 접근통제·전송 암호화 일부는 미흡해 9일 전체회의에서 시정 권고를 의결했고, 2026 하반기에 신기능 추가 점검, 연말까지 기술분석센터를 마련한다.
+  - 비고: C4-T6의 한국 규제 측면 신규 근거(수치형 우려와 실제 점검 결과의 대비). 점검은 2025-03 기준 모델이라 최신 AI 기능(카메라 알림, 에이전트)은 대상 밖. 접근권한 기록 보관 200일→3년, 접속기록 90일→2년 이상으로 개선. 단계 판정에는 영향 없음.
+  - 출처(B): [SBS Biz (개인정보위 로봇청소기 점검)](https://biz.sbs.co.kr/amp/article/20000334411) 2026-09-14
+  - 출처(B): [바이라인네트워크 (개인정보위 점검)](https://byline.network/2026/09/14-623/) 2026-09-14
+- **[참고] 신규 · 신규** — 2026-08-31 LG전자가 텍스트 채팅형 AI 에이전트 'ThinQ Claw'(OpenClaw 개념 기반, 조리가전 관리, 실내 공기질·온도 모니터링, 캘린더·서비스 연동, 선호 기억)를 IFA 2026 AI Home Zone에서 시연한다고 공개했다. 출시일·지역·가격은 미공개다. 9/3 LG는 ThinQ ON 허브에 Claw를 탑재하고 CLOiD를 전시했다.
+  - 비고: L3(상황 판단 실행) 방향의 시연 근거이나 판정 기준상 '시연'은 다음 수준 신호로만 기록. 단계 판정은 바뀌지 않음.
+  - 출처(A): [LG전자 글로벌 뉴스룸 (IFA 2026)](https://www.lg.com/global/newsroom/news/home-appliance-solution/lg-electronics-unveils-the-next-evolution-of-ai-home-at-ifa-2026/) 2026-08-31
+  - 출처(B): [넥스트데일리 (LG IFA)](https://www.nextdaily.co.kr/news/articleView.html?idxno=252750) 2026-09-03
+  - 출처(B): [파이낸셜뉴스 (IFA 2026)](https://www.fnnews.com/news/202609031811400701) 2026-09-03
+- **[참고] 신규 · 신규** — Apple: 2026-06-08 WWDC에서 homeOS를 개발자 프리뷰로 공개하고 Gemini 기반 Siri로 재구성했으나 허브 하드웨어는 미공개였다. Apple은 2026-10-13 'Welcome home' 이벤트를 공식 확정했고, 홈 허브(HomePad)·HomePod mini 2·Apple TV·LG 협업 액세서리(도어벨·도어락·온도조절기)는 Bloomberg 기반 루머다. 10/11 현재 허브는 출시되지 않았다.
+  - 비고: 이벤트가 10/13이라 R2에서 갱신 필요. 이벤트 발표 사실은 Notebookcheck 본문에서 직접 확인했고, WWDC 내용은 백지 조사가 열람한 Tech Times 기사 기준(이번에 열지 않음). 루머는 기록에 넣지 않기를 권장.
+  - 출처(B): [Notebookcheck](https://www.notebookcheck.net/Welcome-home-Apple-event-on-October-13-2026.1419459.0.html) 2026-10-09
+  - 출처(B): [Tech Times (WWDC 2026)](https://www.techtimes.com/articles/317985/20260608/apple-wwdc-2026-siri-rebuilt-gemini-homeos-previewed-cook-farewell-keynote.htm) 2026-06-08
+- **[참고] 신규 · 신규** — 삼성전자가 2026-10-06 'SmartThings Now'를 발표했다. 홈 탭 상단 카드로 정보와 즉시 실행 동작을 묶어 보여준다(가족 돌봄 장기 무활동 알림, 귀가 접근 시 조명·공기청정기 켜기 제안, 실행 후 루틴 생성 제안). 자율 실행은 없고 사용자가 결정한다. 등록 이용자 4.7억 명, WWST 인증 브랜드 430곳 이상, 로컬 제어로 응답 약 30% 개선(통제된 테스트).
+  - 비고: L1(제안) 중심 사례로 I-005을 뒷받침. 국가별 출시 범위는 원문에 없음. 'Korea'는 보도자료 발신지일 뿐.
+  - 출처(A): [삼성전자 글로벌 뉴스룸 (SmartThings Now)](https://news.samsung.com/global/samsung-introduces-smartthings-now-in-new-platform-update-that-brings-more-intuitive-user-experiences) 2026-10-06
+- **[참고] 신규 · 신규** — C4-T2 SmartThings: 등록 이용자 4.6억 명 초과(2026-05 기준), 등록 가전 3,300만 대(2025-11, 2025-01 대비 약 +30%), 한국 가전 포함 전체 등록 기기 2,000만 대 초과(2025-12, 일평균 약 13,200대 증가), WWST 파트너 390곳·기기 4,700종 이상(시점 미기재). 삼성 10/6 보도자료는 4.7억 명·430곳 이상으로 더 새롭다.
+  - 비고: 아시아투데이(B) 보도는 발언자·시점이 명시되지 않은 수치가 섞여 있고 계정과 기기 단위가 다르다. R1의 T2는 Alexa 한 곳뿐이어서 추가 권장. 삼성 최신값은 10/6 보도자료를 우선.
+  - 출처(B): [아시아투데이 (SmartThings 수치)](https://www.asiatoday.co.kr/kn/view.php?key=20260902010000527) 2026-09-01
+  - 출처(A): [삼성전자 글로벌 뉴스룸 (SmartThings Now)](https://news.samsung.com/global/samsung-introduces-smartthings-now-in-new-platform-update-that-brings-more-intuitive-user-experiences) 2026-10-06
+- **[참고] 신규 · 신규** — 미국 수용 태도(C4-T5·T6) 최신값: Prosper Insights 2026-06, 미국 성인 7,675명 — AI에 '스마트홈 관리'를 맡기겠다 10.0%, '식료품 구매' 11.0%, 일상 업무 하나라도 맡기겠다 40.1%, AI 에이전트가 좋은 생각 17.6%, 프라이버시 침해를 매우·극도로 우려 60.5%. Parks Associates 2026-04-30(8,000 가구) — AI 데이터 보안·프라이버시 우려 72%, 사회가 AI를 책임 있게 쓸 능력 의심 71%, 생성형 AI 이용 58%(2024년 40%).
+  - 비고: Prosper는 의향 설문이라 R1 근거 등급 규칙상 C(한 단계 낮춰 적용)에 해당. 환경 제어 L3 수용이 낮다는 방향(칩 '수용은 L2, L3에는 거부 신호')과 장보기 수용 L1을 뒷받침. Prosper 문항이 '의향'인지 '현재 이용'인지 보도자료에 명시되지 않음.
+  - 출처(A): [Business Wire (Channel V Media / Prosper Insights)](https://www.businesswire.com/news/home/20261008533804/en/AI-Is-the-First-Channel-to-Act-on-Consumers-Behalf-40-of-Americans-Would-Let-It-But-Only-18-Think-Its-a-Good-Idea) 2026-10-08
+  - 출처(A): [Parks Associates (PR Newswire)](https://www.prnewswire.com/news-releases/industry-leaders-at-30th-annual-connections-the-connected-home-conference-address-ai-data-security-and-trusted-smart-home-experiences-302758267.html) 2026-04-30
+- **[참고] 신규 · 신규** — C4-T3 범위 보강: 2025년 휴머노이드 출하 약 15,000대 중 중국 기업이 약 90%(Omdia·Unitree 인용, MIT TR 2026-10-08), Unitree 일부 모델 $6,000 미만이나 주문은 주로 기업·학술 연구소·국영기업. Roborock Saros Z70(로봇팔)은 2025-05 미국 출하 시작($1,900)했으나 TechRadar 리뷰(2025-05)는 팔 기능이 기본 꺼짐이고 자율 집기 성공 사례가 없었다고 평가했다.
+  - 비고: 휴머노이드 출하는 가정용 한정이 아님. 팔 달린 로봇청소기는 '가사 물리 작업 · 출하 기술 L2(조건·사용자 지정)' 판정과 일치하며 반례 아님. 로봇팔 리뷰는 2025-05 시점이라 최신 펌웨어 평가는 확인 필요.
+  - 출처(B): [MIT Technology Review](https://technologyreview.com/2026/10/08/1145923/ai-breakthroughs-in-robotics-wont-change-your-life-any-time-soon) 2026-10-08
+  - 출처(B): [T3 (Roborock Saros Z70 판매 개시)](https://t3.com/home-living/vacuum-cleaners/the-ces-famous-robot-vacuum-with-robotic-arm-is-now-available-to-buy) 2025-03-21
+  - 출처(B): [TechRadar (Saros Z70 리뷰)](https://www.techradar.com/home/robot-vacuums/roborock-saros-z70-review) 2025-05-20
+- **[참고] 신규 · 신규** — IFA 2026(9/4~8, 베를린): LG는 메세 베를린 3,745㎡에 150여 개 제품과 AI 홈(ThinQ ON·ThinQ Claw)·CLOiD를 전시하고 B2B 상담 공간을 약 46%로 늘렸다. 삼성은 35년 만에 공식 전시장을 벗어나 시내 Humboldt Carré에서 'AI 리빙'을 선보였다. 중국 참가사는 900여 곳으로 전체의 절반에 육박할 것으로 전망됐다. 글로벌 가전 수요는 2025년 5.7억 대(+1.4%, Euromonitor).
+  - 비고: 참고. 시장 수요 둔화·중국 경쟁은 해석 맥락. 블라인드 조사의 '1,900여 브랜드·932곳' 수치는 이번에 열지 못한 서울신문·코리아헤럴드 기사 기준이라 확인 필요.
+  - 출처(B): [파이낸셜뉴스 (IFA 2026)](https://www.fnnews.com/news/202609031811400701) 2026-09-03
+  - 출처(B): [뉴스토마토 (IFA)](https://newstomato.com/ReadNews.aspx?no=1312753) 2026-09-07
+- **[참고] 신규 · 신규** — 12개국 11,000명 Talker Research 조사(Ping Identity, 2026-10-06 발표): 승인 하에 AI가 행동해도 편안하다 5%, 승인 없는 일상 거래 3%, 낮은 위험 지원·추천은 56%. 스마트홈 한정이 아니고 조사 시점·문항 원문 미공개, 벤더 의뢰 조사.
+  - 비고: 참고 수준. 일반 AI 행동 수용이라 가전 자율 수용의 직접 근거로 쓰지 말 것.
+  - 출처(A): [Ping Identity 보도자료](https://press.pingidentity.com/2026-10-06-Ping-Identity-Survey-Finds-AI-Trust-Changes-When-Assistance-Turns-to-Action) 2026-10-06
+- **[참고] 신규 · 신규** — C4-T7 Matter: CSA 공식 인증 제품 총수는 찾지 못했다. 규격은 1.5(2025-11-20), 1.5.1(2026-03-31), 1.6(2026-06 중순 공개, Privacy Guides 6/19 기사: NFC 설정, Joint Fabric, Thermostat Suggestions)로 이어졌다. 씽큐 온은 Matter 인증을 받았다(LG 2025-10).
+  - 비고: 총수는 '확인 필요'로 두기를 권장(mattercatalog 1,071개는 미국 판매분 C등급이라 기록 근거 부적합). 1.5·1.5.1 날짜는 백지 조사의 위키 표 기준이라 이번에 열지 않음.
+  - 출처(B): [Privacy Guides (Matter 1.6)](https://www.privacyguides.org/news/2026/06/19/connectivity-standards-alliance-releases-matter-1-6-and-product-security-1-1-specifications/) 2026-06-19
+  - 출처(A): [LG전자 보도자료 (씽큐 온 출시)](https://www.lg.co.kr/media/release/29491) 2025-10-22
+- **[참고] 신규 · 신규** · 원문 미열람 — C4-T4·T5 한국 보강: Criteo(2026-10-08 발표) 한국 가전 구매자 53%가 구매 과정에서 AI 챗봇·어시스턴트를 이용(글로벌 48%), 이용자의 58%가 구매에 영향받았다. AI 가전 기능 경험률과는 다른 지표다.
+  - 비고: 참고. 이번에 직접 열지 않았고 백지 조사가 열람한 tech42 보도 기준(표본 한국분 미공개). 지표 정의가 다르므로 C4-T4에 넣지 말 것.
+  - 출처(B): [tech42 (Criteo 조사 보도)](https://www.tech42.co.kr/%EA%B0%80%EC%A0%84-%EA%B5%AC%EB%A7%A4%EC%97%90%EB%8F%84-ai-%ED%99%9C%EC%9A%A9-%ED%99%95%EC%82%B0-%ED%95%9C%EA%B5%AD-%EC%86%8C%EB%B9%84%EC%9E%90-53-ai-%EC%9D%B4%EC%9A%A9%ED%95%98%EC%A7%80/) 2026-10-08
+- **[없음] 유지 · 신규** — 오픈서베이 값은 원문·한경과 일치: 신중 45.7%·긍정 36.3%(전년 39.7%·41.1%), 개인정보 유출 58.2%(+6.9%p)·가격 58.3%(-1.4%p)·음성·영상 수집 30.4%(+4.2%p), 'AI가 알아서 판단하는 게 오히려 불편' 15.8%(+5.1%p), 경험률 생활 51%·주방 39.1%, 경험자 기대 88%(82.7%)·우려 55.4%(47.5%). '신중 수용자가 긍정 수용자를 처음 넘었다'는 오픈서베이 원문의 '처음으로 역전' 표현과 일치(이 시리즈 안의 비교).
+  - 비고: 표본 서술은 M-001 건 참조. 절대 비율은 한국경제 단일 출처(원문 페이지에는 변화폭만 일부). 1년 전 조사는 20~59세라 기존 check_flag 유지. 개인정보 '+6.9'가 %p인지 원문에 불명(한경은 %p, 51.3→58.2는 일치).
+  - 출처(B): [한국경제 (오픈서베이 리포트 인용)](https://www.hankyung.com/article/202604012347g) 2026-04-01
+  - 출처(A): [오픈서베이 AI 가전 트렌드 리포트 2026](https://blog.opensurvey.co.kr/trendreport/ai-home-appliance-2026/) 2026-03-23
+  - 출처(A): [오픈서베이 블로그 (AI 가전 2026 분석)](https://blog.opensurvey.co.kr/article/ai-home-appliance-2026-2/) 2026-03-30
+- **[없음] 유지 · 신규** — 1X 공장·생산능력(연 1만 대, 2027 말 10만 대 이상 목표, 첫 고객 배송 2026 예정, NEO 가격 $20,000 또는 월 $499) 일치. LG CLOiD CES 2026(1/4) 시연(냉장고에서 우유, 빨래 개기)과 '가격·출시일 미언급'도 일치하며 10/11까지 새 발표를 못 찾았다. 삼성 Ballie '내부 혁신 플랫폼', 신청 페이지 삭제는 보도와 일치하나 삼성 공식 원문은 못 열었고 공식 단종 발표는 없다(R1 flag 유지).
+  - 비고: 근거: 1X 보도자료(A), LG 보도자료(A), SamMobile·Let's Data Science(B). '단종 미발표' 표기는 적절. E-003 CLOiD URL(lg.com/us/press-release/...)은 열림, 본문 날짜 1/4, 메타 1/6.
+  - 출처(A): [1X 보도자료 (GlobeNewswire)](https://www.globenewswire.com/news-release/2026/04/30/3285118/0/en/1X-Opens-NEO-Factory-in-Hayward-CA) 2026-04-30
+  - 출처(A): [LG전자 보도자료 (CLOiD)](https://www.lg.com/us/press-release/lg-cloid-home-robot) 2026-01-04
+  - 출처(B): [SamMobile](https://www.sammobile.com/news/gone-for-good-samsung-ballies-final-lifeline-has-vanished/) 2026-02-12
+- **[없음] 유지 · 신규** — E-005 '미국 전체 출시, 프라임 무료, 비회원 월 $19.99', 날짜 2026-02-04, 얼리액세스 종료 문구 일치. E-007(머니투데이 9/25) LG 코드제로 R9 홈가드 '움직임 감지 시 1초 간격 사진 5장', 삼성 '조건별 자동화 루틴' 일치(삼성 조건 상세는 기사에 없음). M-009 Parks 2025-08-14(15%, 75%, 8,000가구) 일치(조사 시점 미기재).
+  - 비고: 블라인드의 미국 개방 2/5 표기는 T3 기사일 차이로 보이며 R1(2/4) 유지. 블로그의 '9/1 종료'는 C 등급이라 기각.
+  - 출처(B): [Android Authority](https://www.androidauthority.com/amazon-alexa-plus-available-to-everyone-3637981) 2026-02-04
+  - 출처(B): [머니투데이](https://www.mt.co.kr/article/2026092311013653639) 2026-09-25
+  - 출처(A): [Parks Associates 보도자료](https://www.parksassociates.com/blogs/press-releases/fifteen-percent-of-us-internet-households-use-a-paid-ai-application-and-75-of-those-paying-for-generative-ai-apps-today-are-willing-to-pay-for-a-smart-home-ai-service) 2025-08-14
+- **[없음] 유지 · 신규** — T8 AI 가전 판매 비중은 2026년 신규 공개값을 찾지 못했다(삼성·LG 보도자료와 IFA·CES 기사 모두 비율 없음). M-010 기준선(2025-H1) 외 대체값 없음. 한국 AI 기본법·개인정보위 건은 신규 항목 참조.
+  - 비고: WebSearch는 이번 조사에서 한도에 걸리지 않고 동작했다. 대표적으로 '확인 불가'로 둠.
+  - 출처(B): [토요경제](https://sateconomy.co.kr/news/view/1065619612051680) 2025-06-12
+
+## C5 가구·생활 사건 (27건)
+
+- **[판정 영향] 누락정정 · C5-M-010** — 2026년 2분기 가계동향(8월 27일 발표)에서 가구당 월평균 소비지출은 293만 2천 원으로 3.4% 늘었지만 실질은 0.4%였다. 가정용품·가사서비스는 13만 5천 원으로 17.9% 늘어 2020년 3분기(19.5%) 이후 가장 높았다. 같은 분기 교통·운송은 0.5% 줄어(자동차 구입 감소) 1분기의 '자동차가 이끈 소비'와 양상이 달라졌다.
+  - 비고: R1은 1분기까지만 담았고 '가구·가전 지출로 번졌는지 확인되지 않았다'고 썼는데, 2분기 발표(R1보다 6주 앞선 8/27)가 빠졌다. 단 데이터처 관계자는 증가 원인을 고유가 피해지원금(생필품)과 삼성전자 환급 행사(가전)로 설명했고 기사에 가전·가구 개별 증감률은 없다. 즉 '생활 사건이 만든 수요'로 읽을 근거는 약하고, 한 줄 답의 '아직 확인할 것' 칸과 I-006 문장이 달라진다. 판정 영향 사유: 수요를 늘리는 변화로 셀지(가정용품 지출 증가) 일회성으로 볼지에 따라 집계가 바뀔 수 있다. 확신: 수치 높음(3개 매체+KDI 수록본 일치), 해석 중간.
+  - 출처(B): [KDI 경제정보센터 수록본 (2026 2분기 가계동향조사 보도자료)](https://eiec.kdi.re.kr/policy/materialView.do?num=285882) 2026-08-27
+  - 출처(B): [중앙이코노미뉴스 (2026 2분기 가계동향)](https://www.joongangenews.com/news/articleView.html?idxno=543315) 2026-08-27
+  - 출처(B): [SBS Biz (2026 2분기 가계동향)](https://biz.sbs.co.kr/amp/article/20000331131) 2026-08-27
+- **[판정 영향] 누락정정 · C5-I-005** — 2026년 7월 국내 이동자는 46만 8천 명으로 15.5% 줄었고(7월 기준 2022년 이후 최소), 8월은 47만 1천 명으로 4.5% 줄어 8월 기준 1973년 이후 가장 적었다(이동률 10.9%, 2000년 통계 작성 이래 8월 최저). 1~8월 이동자는 약 418만 명으로 전년 같은 기간(약 423만 명)보다 약 1% 적다(월별 값에서 역산한 추정).
+  - 비고: R1은 6월(+0.6%, 5년 만에 최대)까지만 담아 '반등 신호'로 썼다. 7·8월 발표(8/26, 9/23)가 R1 이전인데 빠졌다. 데이터처는 장기 인구 감소·고령화에 주택경기 부진(5~6월 주택 매매 -0.9%, 아파트 준공 -60.5%)이 겹쳤다고 설명했고 작년 7월 +8.1%의 기저효과도 일부라고 했다. 판정 영향 사유: '이사·입주 감소' 항목이 반등 중립(I-005)이 아니라 더 약화 쪽으로 읽히고 F-003이 불리해질 수 있다. 1~8월 누계는 기사 값 역산이라 확신 중간.
+  - 출처(B): [데일리안 (2026년 7월 국내인구이동)](https://www.dailian.co.kr/news/view/1682746/%EC%9D%B8%EA%B5%AC%EC%9D%B4%EB%8F%99-4%EB%85%84-%EB%A7%8C%EC%97%90-%EC%B5%9C%EC%A0%80%EC%A3%BC%ED%83%9D%EA%B2%BD%EA%B8%B0-%EB%B6%80%EC%A7%84-2026) 2026-08-26
+  - 출처(B): [파이낸셜뉴스 (2026년 8월 국내인구이동)](https://www.fnnews.com/news/202609231239181330) 2026-09-23
+- **[판정 영향] 단정반증 · C5-I-002** — '규모로 가장 큰 수요 기반은 고령 가구'는 R1 자료 안에서 반증된다. 1인 가구는 824만 가구(일반가구의 36.6%)로 고령자 가구 650만 7천(28.8%)보다 크고, 고령자가 포함된 가구도 750만(일반가구의 33%)이다.
+  - 비고: 1인 가구와 고령자 가구는 겹치는 범주이고(고령자 1인 가구 245.6만, 10.9%) 분모가 일부 다를 수 있으나, 어느 쪽 분모로도 1인 가구가 크다. 한 줄 답의 '가장 큰 기반은 고령 가구와 1인 가구'는 두 개를 나란히 썼으므로 괜찮지만, 순위표는 2위 고령 가구·3위 1인 가구 순서가 '규모'로는 뒤집힌다. 판정 영향 사유: 순위 2·3위 순서가 바뀔 수 있다(증가 속도는 1인 가구 +2.5%로 확인했으나 고령자 가구의 증가율은 확인하지 못함). 원문(노컷뉴스·파이낸셜뉴스·중앙이코노미) 직접 확인, 확신 높음.
+  - 출처(B): [파이낸셜뉴스](https://www.fnnews.com/news/202607281833107805) 2026-07-28
+  - 출처(B): [CBS노컷뉴스](https://nocutnews.co.kr/news/6554377) 2026-07-28
+  - 출처(B): [중앙이코노미뉴스](https://www.joongangenews.com/news/articleView.html?idxno=552056) 2026-10-01
+- **[판정 영향] 단정반증 · C5-I-001** — 순위 1위 '출생·혼인 반등'에 붙은 속도 '가속'은 근거가 약하다. 출생 누계 증가율은 1~4월 15.5%에서 1~7월 14.7%로 내려왔고, 월별 7월(11.1%)은 올해 가장 낮은 증가율에 가깝다. 혼인 누계도 1~4월 +6.8%에서 1~7월 +6.1%로 낮아졌다. 수준(출생 수)은 늘지만 증가 속도는 정점(3~4월)을 지났다.
+  - 비고: '가속·지속·둔화·축소' 중 어느 라벨이 맞는지는 판정 기준(월별 증가율 추세인지 누계 수준인지)에 달려 있다. 판정 영향 사유: 1위의 속도가 '가속'에서 '지속'(또는 둔화 조짐)으로 바뀔 수 있고, 규모 대비 속도 비교로 1위 근거가 약해질 수 있다. 근거는 4·5·6·7월 인구동향 기사 직접 확인. 확신 중간(월별 변동이 큼, 6월은 반등).
+  - 출처(B): [뉴스핌 (2026년 4월 인구동향)](https://www.newspim.com/news/view/20260624000244) 2026-06-24
+  - 출처(B): [파이낸셜뉴스 (2026년 5월 인구동향)](https://www.fnnews.com/news/202607290947079421) 2026-07-29
+  - 출처(B): [이투데이 (2026년 6월 인구동향)](https://www.etoday.co.kr/news/view/2618257) 2026-08-26
+- **[판정 영향] 전망판정 · C5-F-003** — 연간 이동자 '2025년(611만 8천 명) 이상' 전망은 불리해졌다. 1~8월 약 418만 명으로 전년 약 423만 명보다 약 4만 3천 명 적고, 9~12월에 약 2.3% 늘어야 달성된다(2025년 9~12월 약 189만 명 역산). 7월 -15.5%, 8월 -4.5%.
+  - 비고: (다) 근거 변화: R1 근거는 6월 반등(E-003)이었으나 7·8월에 꺾였다. 9월 이동은 10월 말 발표 예정. 판정 영향 사유: 낙관 시나리오 (3) 조건이 충족되지 않을 가능성이 커져 F-101/F-102 판정 구도(2/3 충족)가 달라질 수 있다. 월별 값 역산이라 확신 중간.
+  - 출처(B): [데일리안 (2026년 7월 국내인구이동)](https://www.dailian.co.kr/news/view/1682746/%EC%9D%B8%EA%B5%AC%EC%9D%B4%EB%8F%99-4%EB%85%84-%EB%A7%8C%EC%97%90-%EC%B5%9C%EC%A0%80%EC%A3%BC%ED%83%9D%EA%B2%BD%EA%B8%B0-%EB%B6%80%EC%A7%84-2026) 2026-08-26
+  - 출처(B): [파이낸셜뉴스 (2026년 8월 국내인구이동)](https://www.fnnews.com/news/202609231239181330) 2026-09-23
+  - 출처(B): [뉴시스 (2026년 6월 국내인구이동)](https://www.newsis.com/view/NISX20260729_0003727662) 2026-07-29
+- **[판정 영향] 전망판정 · C5-F-101** — 낙관 시나리오(F-101)는 판정 방법이 서술과 어긋난다. 방법은 '(1) 2026 출생 +10%, (2) 혼인 24만 건 이상, (3) 이동자 2025 이상 중 2개 이상 충족'인데 (1)(2)는 이미 거의 확정이라 (3)과 무관하게 낙관이 적중한다. 서술의 '가전·가구 지출로 번진다·교체 수요 회복'은 방법에 들어 있지 않고 '주택 시장이 급격히 냉각되지 않을 경우'도 정의가 없다.
+  - 비고: (나) 맞았다/틀렸다를 가릴 수 없는 전망 + (가). F-102(비관)는 '낙관 조건 1개 이하 충족'이라 서로 배타적이지만, 비관 서술('출생·혼인 반등이 꺾인다')은 (1)(2)가 충족되면 사실과 모순된다. F-004(2027 상반기 5% 미만)는 비관 이정표인데 방법에는 쓰이지 않아 신호가 어긋날 수 있다. 판정 영향 사유: 기록 시점에 이미 갈린 시나리오가 되어 '수요를 늘릴까 줄일까'의 연말 답이 방법 기준으로 낙관 고정이다. 확신 높음(논리 점검).
+  - 출처(B): [KDI 경제정보센터 수록본 (국가데이터처 2025 출생통계 확정)](https://eiec.kdi.re.kr/policy/materialView.do?num=285815&pg=&pp=&topic=O) 2026-08-26
+  - 출처(B): [KDI 경제정보센터 수록본 (국가데이터처 2025 혼인·이혼 통계)](https://eiec.kdi.re.kr/policy/materialView.do?num=278151) 2026-03-19
+  - 출처(B): [쿠키뉴스 (국가데이터처 2026년 7월 인구동향)](https://www.kukinews.com/article/view/kuk202609230114) 2026-09-23
+- **[판정 영향] 단정반증 · C5-I-006** — '생활 사건 증가가 가구·가전 지출로 번졌는지 아직 통계로 확인되지 않았다'는 2분기 가계동향이 나온 지금은 '부분 확인'이다. 가정용품·가사서비스가 17.9% 늘었지만 데이터처는 고유가 피해지원금과 삼성전자 환급 행사를 원인으로 들었다. 신혼·육아와의 연결은 여전히 확인되지 않았다.
+  - 비고: '아직 ~없다' 단정의 시점이 바뀌었다(누락정정 C5-M-010과 연동). 반증이 아니라 '지출 증가는 확인, 생활 사건 연결은 미확인'으로 쪼개 써야 한다. 확신 중간.
+  - 출처(B): [중앙이코노미뉴스 (2026 2분기 가계동향)](https://www.joongangenews.com/news/articleView.html?idxno=543315) 2026-08-27
+  - 출처(B): [SBS Biz (2026 2분기 가계동향)](https://biz.sbs.co.kr/amp/article/20000331131) 2026-08-27
+  - 출처(B): [KDI 경제정보센터 수록본 (2026 2분기 가계동향조사 보도자료)](https://eiec.kdi.re.kr/policy/materialView.do?num=285882) 2026-08-27
+- **[문장 수정] 상충 · C5-M-001** — 1인 가구 36.6%는 일반가구(약 2,250만 가구) 대비 비중이다. 총가구 2,324만 6천 가구(일반가구+집단·외국인 등)로 나누면 824만÷2,325만≈35.4%이므로, '전체 2,324만 6천 가구의 36.6%'는 분모가 틀렸다. 4인 이상 가구 340만 8천 가구(15.2%)도 일반가구 기준이다.
+  - 비고: 파이낸셜뉴스: 일반가구 2,250만으로 총가구 2,325만의 96.8%, 1인 824만(36.6%). 노컷뉴스·뉴스1도 일반가구 기준. 36.6%라는 값 자체는 맞다. 총가구 36.6%로 쓰면 추후 다른 연도와 비교가 어긋난다. 확신 높음.
+  - 출처(B): [파이낸셜뉴스](https://www.fnnews.com/news/202607281833107805) 2026-07-28
+  - 출처(B): [CBS노컷뉴스](https://nocutnews.co.kr/news/6554377) 2026-07-28
+  - 출처(B): [연합뉴스 그래픽 (다음)](https://v.daum.net/v/20260728120315528) 2026-07-28
+- **[문장 수정] 상충 · C5-M-011** — M-011의 근거 URL(뉴스토마토 no=1305346)은 10월 11일 현재 독자 AI 파운데이션 모델 기사를 보여 주어, 신세계 신생아 +28.6%·현대 유아 +25.2%·롯데마트 기저귀 +79.5%(1~5월)를 원문으로 재확인하지 못했다.
+  - 비고: 검색 색인에는 해당 URL의 제목이 '22개월째 이어진 출생아 증가…유통가는 베이비 소비에 웃었다'로 나오므로 R1 시점에는 맞았을 수 있으나 지금은 확인 불가. 같은 주제의 다른 기사(신세계 키즈 +21.9%, 현대 유아 +25.3%)와 수치가 다르다. 한 줄 답이 '신생아 상품 매출 28.6%'를 직접 인용하므로 원문 재확인 전에는 '확인 필요'로 표기. 확신: 수치 정오 판단 불가.
+  - 출처(B): [뉴스토마토 (R1 인용 URL)](https://newstomato.com/ReadNews.aspx?no=1305346) 2026-06-26
+  - 출처(B): [ER 이코노믹리뷰](https://www.econovill.com/news/articleView.html?idxno=752184) 2026-09-29
+- **[문장 수정] 갱신 · C5-M-010** — 1분기 가계동향(2026-05-28)의 가정용품·가사서비스는 12만 7천 원으로 7.3% 늘었다는 보도자료 전재가 있다(확인 필요). 품목별로 가전 -8.2%, 가구·조명 +36.6%라는 보도도 있으나 전문지 단독 수치다.
+  - 비고: R1 M-010은 '가구·가전 증감은 발표 기사에서 확인되지 않았다'고만 썼다. 뉴시스·머니투데이 1분기 기사 본문에는 해당 항목이 없음을 직접 확인했다. 7.3%(다자비)와 가전 -8.2%·가구 +36.6%(섬유경제신문)는 모두 C급이라 정정 근거로 쓰지 말고 원자료(국가통계포털 가계동향 품목표)로 확인할 것. 확인 필요, 확신 낮음.
+  - 출처(C): [다자비 보험매거진 (1분기 가계동향 보도자료 전재)](https://dazabi.com/insurance_magazine/article.php?id=22897) 2026-05
+  - 출처(C): [한국섬유경제신문 (스마트텍스크루 전재)](https://www.smarttexcrew.com/post/2026%EB%85%84-1%EB%B6%84%EA%B8%B0-%EA%B0%80%EA%B3%84-%EC%86%8C%EB%B9%84-%ED%8C%A8%EC%85%98-%ED%99%88%ED%8C%A8%EB%B8%8C%EB%A6%AD-%EC%A7%80%EC%B6%9C-%EB%9A%9C%EB%A0%B7%ED%95%9C-%EC%A6%9D%EA%B0%80%EC%84%B8) 2026-06-01
+  - 출처(B): [뉴시스 (2026 1분기 가계동향)](https://mobile.newsis.com/view/NISX20260528_0003646801) 2026-05-28
+- **[문장 수정] 갱신 · C5-M-004** — 출생아 월별 증가율은 1월 11.7%, 2월 13.6%, 3월 19.4%, 4월 18.0%, 5월 13.6%, 6월 15.6%, 7월 11.1%이고, 1~7월 누계는 14.7%(1~4월 15.5%, 1~5월 15.2%, 1~6월 15.4%)다. 상반기 출생아는 14만 5,804명(+15.4%)으로 역대 최대 증가 폭이다. 2025년 출생아는 확정 25만 4,300명(+6.7%), 합계출산율 0.80이다.
+  - 비고: 누계 증가율이 4월 이후 정점(15.5%)에서 내려오는 중이다. 월별은 3월 이후 가장 낮은 값이 7월이다. 1~4월·5월·6월 값은 직접 읽었고, 3월(19.4)·1·2월은 블라인드 표 인용이라 이번에 직접 읽지 않음.
+  - 출처(B): [뉴스핌 (2026년 4월 인구동향)](https://www.newspim.com/news/view/20260624000244) 2026-06-24
+  - 출처(B): [파이낸셜뉴스 (2026년 5월 인구동향)](https://www.fnnews.com/news/202607290947079421) 2026-07-29
+  - 출처(B): [이투데이 (2026년 6월 인구동향)](https://www.etoday.co.kr/news/view/2618257) 2026-08-26
+- **[문장 수정] 신규 · C5-M-011** — 롯데백화점 키즈 +15%·가전 +25%(1~7월), 신세계백화점 키즈 +21.9%·현대백화점 유아 +25.3%·아동 +20.2%(상반기)다(9월 29일 보도). 기간·품목 정의가 업체마다 달라 R1의 신세계 신생아 +28.6%·현대 유아 +25.2%(1~5월)와 직접 비교할 수 없다.
+  - 비고: M-011의 'T8 생활 사건 연계 소비'를 최신 기간으로 보강. 같은 기사에 삼성 환급 행사 문구는 없었다(블라인드 표의 환급 행사 +100%는 다른 기사라 이번에 읽지 않음).
+  - 출처(B): [ER 이코노믹리뷰](https://www.econovill.com/news/articleView.html?idxno=752184) 2026-09-29
+- **[문장 수정] 상충 · C5-M-003** — 가구주 65세 이상 고령자 가구는 올해 650만 7천 가구로 전체 가구의 28.8%이고 2038년 1천만 가구를 넘을 것으로 추산된다(2026 고령자통계, 10월 1일). 고령자 가구 중 1인 가구는 38.0%, 부부 가구 35.1%다. 다만 기사는 '올해'라고만 쓰고 기준 시점·분모(일반가구인지 총가구인지)를 밝히지 않아, 2025 등록센서스 실측(2025-11-01)인지 추계인지 확인 필요하다.
+  - 비고: 블라인드가 못 찾은 C5-T2(가구주 65세+ 비중)는 R1 값이 맞다: 중앙이코노미·청년일보가 '가구주가 65세 이상인 고령자 가구 650만 7천, 전체 28.8%'를 그대로 적었다. 반면 C5-T1의 36.6%는 일반가구 기준이라 두 비중의 분모가 다를 수 있다(650.7만÷28.8%≈2,259만으로 일반가구 2,250만과 근사). 2038년 1천만은 통계청 장래가구추계(2024 발표)의 1,003만과 같은 계열이므로 실측이 아니라 추계다. 국가데이터처 원문은 못 읽음. 확신 중간.
+  - 출처(B): [중앙이코노미뉴스](https://www.joongangenews.com/news/articleView.html?idxno=552056) 2026-10-01
+  - 출처(B): [청년일보](https://www.youthdaily.co.kr/news/article.html?no=227817) 2026-10-01
+  - 출처(B): [YTN](https://www.ytn.co.kr/_ln/0102_202610012326386165) 2026-10-01
+- **[문장 수정] 상충 · C5-M-009** — 2026년 아파트 입주 물량은 집계처마다 다르다: 부동산R114 단독 18만 3,124가구(-22.5%, 2013년 이후 최저), 한국부동산원·부동산R114 공동 전망 19만 8,583가구(서울 2만 7,158가구), 직방 17만 2,270가구(-28%, 서울 1만 6,412가구). R1의 '서울은 전년의 절반 수준'은 R114 기준 56.5%이며 '반토막'은 직방(-48%)에 가깝다.
+  - 비고: 세 집계 모두 전년보다 감소하므로 방향은 같다. 다만 '13년 만에 최저'는 R114 단독 표현이고 부동산원 공동 전망(198,583)에서는 확인하지 못했다. 서울 2026년 물량도 R114 18,475 대 공동 전망 27,158로 크게 다르다. 모두 2025년 12월 기준 예정 물량이지 입주 실적이 아니다. 문장에 집계처와 '예정' 기준을 붙일 것.
+  - 출처(B): [KB부동산 (부동산R114 REPS 2026 입주)](https://v.daum.net/v/GCidIvCEQs) 2025-12-29
+  - 출처(B): [이투데이 (한국부동산원·부동산R114 2026~27 입주 전망)](https://www.etoday.co.kr/news/view/2560379) 2026-02-27
+  - 출처(B): [머니투데이 (직방 2026 입주 전망)](https://www.mt.co.kr/estate/2025/12/22/2025122210314834743) 2025-12-22
+- **[문장 수정] 상충 · C5-I-004** — '입주 물량은 2027년에도 비슷하다'는 집계처에 따라 다르다. R114는 2027년 19만 1,827가구로 2026년과 비슷하다고 봤지만, 한국부동산원·R114 공동 전망은 2027년 21만 6,323가구로 2026년(19만 8,583가구)보다 약 9% 많다(서울은 27,158에서 17,197로 감소).
+  - 비고: 해석 문장의 근거(E-001)는 R114 단독뿐. 2027년 회복 여부는 방향이 갈리므로 '비슷하다'를 단정하지 말고 병기. 확신 높음(두 원문 직접 확인).
+  - 출처(B): [KB부동산 (부동산R114 REPS 2026 입주)](https://v.daum.net/v/GCidIvCEQs) 2025-12-29
+  - 출처(B): [이투데이 (한국부동산원·부동산R114 2026~27 입주 전망)](https://www.etoday.co.kr/news/view/2560379) 2026-02-27
+- **[문장 수정] 단정반증 · C5-M-004** — '증가율은 통계 작성 이래 최대'는 1~7월 누계 기준으로만 맞다. 위키트리는 '관련 통계 작성 이후 가장 높은 수준'이라고 썼지만 같은 해 1~4월 누계(+15.5%)와 상반기(+15.4%)가 1~7월(+14.7%)보다 높아, 연중 최고 증가율이 아니다.
+  - 비고: '가장 많았다(2019년 이후)'는 1~7월 누계 17만 79명이 2019년 18만 3,647명보다 적다는 뜻으로 사실과 일치한다. 증가율 최대 문구에는 기간(1~7월 동기 비교)을 붙일 것.
+  - 출처(B): [위키트리 (국가데이터처 2026년 7월 인구동향)](https://www.wikitree.co.kr/articles/1161660) 2026-09-23
+  - 출처(B): [뉴스핌 (2026년 4월 인구동향)](https://www.newspim.com/news/view/20260624000244) 2026-06-24
+  - 출처(B): [이투데이 (2026년 6월 인구동향)](https://www.etoday.co.kr/news/view/2618257) 2026-08-26
+- **[문장 수정] 전망판정 · C5-F-001** — 기록 시점에 이미 1~7월 누계가 +14.7%(17만 79명)라 연간 +10% 이상은 8~12월이 전년보다 약 3.4%만 늘면 달성된다(2025 확정 25만 4,300명 기준 목표 약 27만 9,700명, 1~7월 제외 필요 8~12월 약 10만 9,700명 대 전년 약 10만 6,000명). 올해 월별이 모두 +11% 이상이라 거의 달성된 전망이다.
+  - 비고: (가) 기록 시점에 사실상 달성 수순인 전망. 기준 연도 모호: 2025 잠정 약 25만 4,500명(+6.8%), 확정 25만 4,300명(+6.7%), 6월 기사 25만 4,341명이 모두 쓰여 10% 경계가 아닌 한 영향은 작지만 '확정 기준 25만 4,300명'을 명시할 것. 계산은 내가 한 역산이며 확신 중간.
+  - 출처(B): [KDI 경제정보센터 수록본 (국가데이터처 2025 출생통계 확정)](https://eiec.kdi.re.kr/policy/materialView.do?num=285815&pg=&pp=&topic=O) 2026-08-26
+  - 출처(B): [쿠키뉴스 (국가데이터처 2026년 7월 인구동향)](https://www.kukinews.com/article/view/kuk202609230114) 2026-09-23
+  - 출처(B): [이투데이 (2026년 6월 인구동향)](https://www.etoday.co.kr/news/view/2618257) 2026-08-26
+- **[문장 수정] 전망판정 · C5-F-002** — 혼인 '2025년(24만 건) 이상'은 1~7월 14만 6,656건(+6.1%)로 연말 달성 가능성이 높다. 2025년 8~12월(약 10만 2천 건)이 연간 24만 326건에서 1~7월(약 13만 8천 건 역산)을 뺀 값이므로, 올해 8~12월이 약 -8% 이내로만 줄면 달성된다.
+  - 비고: (나) 기준이 '24만 건'(반올림)인지 정확히 24만 326건인지 불명확. 24만 326건 이상으로 못 박을 것. 역산 값이라 확신 중간. 월별 감소가 2월·5월에 있었던 점은 변수.
+  - 출처(B): [KDI 경제정보센터 수록본 (국가데이터처 2025 혼인·이혼 통계)](https://eiec.kdi.re.kr/policy/materialView.do?num=278151) 2026-03-19
+  - 출처(B): [쿠키뉴스 (국가데이터처 2026년 7월 인구동향)](https://www.kukinews.com/article/view/kuk202609230114) 2026-09-23
+  - 출처(B): [위키트리 (국가데이터처 2026년 7월 인구동향)](https://www.wikitree.co.kr/articles/1161660) 2026-09-23
+- **[문장 수정] 전망판정 · C5-F-005** — 가정용품·가사서비스 '4분기 전년 대비 증가' 전망은 2분기 +17.9%(삼성 환급·고유가 지원금 효과)와 1분기 +7.3%(C급 확인 필요)를 보면 이미 연속 증가 중이라 변별력이 낮다. 4분기 비교 기저(2025년 4분기 가정용품 값)는 확인하지 못했다.
+  - 비고: (다) 근거가 달라짐: R1은 1분기 자동차 중심 소비만 알았으나 2분기에는 일회성 요인이 가정용품 증가를 만들었다. 낙관 시나리오 이정표 '가정용품 지출 증가 확인'이 '신혼·육아 수요가 번진 증거'가 되려면 환급·지원금 요인을 분리해야 한다. 확신 중간.
+  - 출처(B): [중앙이코노미뉴스 (2026 2분기 가계동향)](https://www.joongangenews.com/news/articleView.html?idxno=543315) 2026-08-27
+  - 출처(B): [SBS Biz (2026 2분기 가계동향)](https://biz.sbs.co.kr/amp/article/20000331131) 2026-08-27
+  - 출처(C): [다자비 보험매거진 (1분기 가계동향 보도자료 전재)](https://dazabi.com/insurance_magazine/article.php?id=22897) 2026-05
+- **[문장 수정] 갱신 · C5-M-005** — 출생아는 2024년 7월부터 25개월 연속(2026년 7월 기준) 전년 같은 달보다 늘었다. 올해는 1~7월 모두 두 자릿수 증가율이다.
+  - 비고: R1 M-005는 5월 기준 23개월. 7월 인구동향(9/23)에서 25개월로 갱신됨. I-001의 '2년 가까이'도 '2년 넘게'로.
+  - 출처(B): [쿠키뉴스 (국가데이터처 2026년 7월 인구동향)](https://www.kukinews.com/article/view/kuk202609230114) 2026-09-23
+  - 출처(B): [위키트리 (국가데이터처 2026년 7월 인구동향)](https://www.wikitree.co.kr/articles/1161660) 2026-09-23
+- **[문장 수정] 갱신 · C5-M-007** — 혼인은 7월 22,282건(+9.3%, 7월 기준 2015년 이후 최다), 1~7월 14만 6,656건(+6.1%)이다. 월별 감소는 2월(-4.2%)과 5월(-6.4%) 두 번이었고, 1~4월 누계는 +6.8%였다.
+  - 비고: R1 표기와 일치하며 최신 월(7월) 값만 보강. 일부 기사의 '28개월(쿠키뉴스)·27개월(이투데이) 연속 증가'는 2·5월 감소와 상충하므로 쓰지 말 것(5월 기사 '올들어 두번째 하락세 전환'은 직접 확인).
+  - 출처(B): [쿠키뉴스 (국가데이터처 2026년 7월 인구동향)](https://www.kukinews.com/article/view/kuk202609230114) 2026-09-23
+  - 출처(B): [위키트리 (국가데이터처 2026년 7월 인구동향)](https://www.wikitree.co.kr/articles/1161660) 2026-09-23
+  - 출처(B): [파이낸셜뉴스 (2026년 5월 인구동향)](https://www.fnnews.com/news/202607290947079421) 2026-07-29
+- **[참고] 신규 · 신규** — 한샘 2026년 매출 전망은 1조 6,700억 원(-4.27%), 현대리바트는 1조 5,041억 원(-2.72%)이다(10월 6일 보도). 증권가는 건설 경기 부진·주택 공급 감소·B2B 회복 지연을 이유로 들었고, 두 회사는 이사·신혼 수요 판촉(쌈페스타 등)을 벌이는 중이다.
+  - 비고: 이사·입주 계기 감소(I-004)를 가구 매출에서 보여주는 간접 신호. 증권가 전망치이며 실적이 아님. 한 줄 답을 바꾸지는 않음.
+  - 출처(B): [뉴스핌 (한샘·현대리바트 전망)](https://www.newspim.com/news/view/20261006000680) 2026-10-06
+- **[참고] 신규 · 신규** — 2026년 8월 소매판매는 전년 동월 대비 -0.3%, 내구재 -5.6%(전월 대비 -4.5%, 승용차 등)다(9월 30일 발표). 상반기 유통 매출은 +7.3%, 백화점 +20.1%, 가전·문화 +9.7%, 생활·가정 +6.3%였다(물류신문, 출처가 '산업통산부'로 표기).
+  - 비고: 가전·가구 내구재 수요의 최신 방향을 보여 주지만 승용차가 주원인이라 가구·가전 직접 증거는 아님. 유통 상반기 수치는 부처 표기가 오기로 보이므로 B급 보조로만.
+  - 출처(B): [뉴스핌 (2026년 8월 산업활동동향)](https://www.newspim.com/news/view/20260930000075) 2026-09-30
+  - 출처(B): [물류신문](https://www.klnews.co.kr/news/articleView.html?idxno=322105) 2026-07-29
+- **[참고] 신규 · C5-E-002** — 농림축산식품부는 6월 11일 강원 화천, 충북 보은, 전북 진안·무주, 전남 구례·보성, 경북 청송 7개 군을 농어촌 기본소득 시범 대상에 추가했고, 8월 28일부터 월 15만 원(지역사랑상품권)을 처음 지급했다. 신규 전입자는 90일 실거주 확인 뒤 소급 지급받는다.
+  - 비고: R1 E-002는 선정만 담았다. 전입 효과는 지급 개시(8/28) 이전의 선정 효과이므로, 데이터처 '일부 영향' 문구는 정량 효과가 아니다(6월 이동 기사 직접 확인). 지급 이후 전입 변화는 9월 이후 통계에서 볼 일.
+  - 출처(B): [데일리안 (농어촌 기본소득 7곳 추가)](https://www.dailian.co.kr/news/view/1655098/%EB%86%8D%EC%96%B4%EC%B4%8C-%EA%B8%B0%EB%B3%B8%EC%86%8C%EB%93%9D-%ED%99%94%EC%B2%9C%EB%B3%B4-%EB%93%B1-7%EA%B3%B3-%EC%B6%94%EA%B0%80-2026) 2026-06-11
+  - 출처(B): [KDI 경제정보센터 수록본 (농림축산식품부 농어촌 기본소득 추가 7개 군 첫 지급)](https://eiec.kdi.re.kr/policy/materialView.do?num=285757) 2026-08-25
+  - 출처(B): [뉴시스 (2026년 6월 국내인구이동)](https://www.newsis.com/view/NISX20260729_0003727662) 2026-07-29
+- **[참고] 전망판정 · C5-F-004** — '2027년 1~6월 출생아 증가율 5% 미만'은 판정 방법이 명확하고 아직 미결이다(2026년 상반기 증가율 +15.4%). 단 근거인 기저효과(2025년 상반기 12만 6천 명대) 자체는 이미 반영돼 증가율이 15%대로 유지 중이라는 점은 비관 시나리오에 불리한 신호.
+  - 비고: 비교 대상 전년 같은 기간 값이 2026 상반기 확정 값(14만 5,804명)이라 모호하지 않다. 변경 필요 없음. 확신 높음.
+  - 출처(B): [이투데이 (2026년 6월 인구동향)](https://www.etoday.co.kr/news/view/2618257) 2026-08-26
+- **[없음] 유지 · 신규** — 지표값 확인 유지: 2025 이동자 611만 8천 명(-2.6%, 1974년 이후 최소, 주택 사유 206만 5천 명·-10만 5천 명으로 감소 폭 최대), 2025 혼인 24만 326건, 2026년 1~7월 출생 17만 79명·혼인 14만 6,656건, 7월 합계출산율 0.89, 4인 이상 가구 340만 8천 가구(-4.6%), 6월 이동 48만 1천 명(+0.6%, 6월 기준 5년 만에 최대, 4~5월 주택 매매 +6.3%), 2026 입주 R114 18만 3,124가구·2025 23만 6,263가구 대비 -22.5%, 1분기 소비지출 310만 5천 원(+5.3%, 실질 +3.1%, 자동차 +29.6%).
+  - 비고: 각 수치를 기사·KDI 수록본에서 직접 읽어 R1과 일치함을 확인. 국가데이터처·부처 1차 원문(korea.kr, mods.go.kr, mafra.go.kr)은 접근 차단, KOSIS는 허가 미응답으로 못 읽음. 정정 근거는 모두 B급.
+  - 출처(B): [헤럴드경제 (2025 국내인구이동통계)](https://www.heraldk.com/article/2026012818471712823) 2026-01-29
+  - 출처(B): [KDI 경제정보센터 수록본 (국가데이터처 2025 혼인·이혼 통계)](https://eiec.kdi.re.kr/policy/materialView.do?num=278151) 2026-03-19
+  - 출처(B): [위키트리 (국가데이터처 2026년 7월 인구동향)](https://www.wikitree.co.kr/articles/1161660) 2026-09-23
+- **[없음] 유지 · 신규** — 단정 진술 중 유지: '1~7월 혼인 2018년 이후 최다(2018년 15만 2,458건 이후)', '6월 이동 5년 만 최대(2021년 54만 4천 명 이후)', '이사 1974년 이후 최소', '1~7월 출생 2019년 이후 최다(2019년 18만 3,647명 이후)'. 반례를 찾지 못했다.
+  - 비고: 월 단위·동기 비교 한정 표현이라는 조건을 문장에 붙이면 안전. 비교 연도 값은 기사 본문에 적힌 것을 직접 확인했다(2018·2019년 1~7월 값은 위키트리 7월 기사). 연간 '2025 혼인 2018년 이후 최다(7년 만)'는 KDI 수록본에 해당 문구가 없고 이투데이 원문을 다시 열지 않아 이번에 확인하지 못했다(반례도 찾지 못함, 확인 불가).
+  - 출처(B): [위키트리 (국가데이터처 2026년 7월 인구동향)](https://www.wikitree.co.kr/articles/1161660) 2026-09-23
+  - 출처(B): [뉴시스 (2026년 6월 국내인구이동)](https://www.newsis.com/view/NISX20260729_0003727662) 2026-07-29
+  - 출처(B): [헤럴드경제 (2025 국내인구이동통계)](https://www.heraldk.com/article/2026012818471712823) 2026-01-29
