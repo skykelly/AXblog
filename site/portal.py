@@ -1,7 +1,6 @@
 # build_site.py 안에서 실행되는 포털 조립부. cat, sections, latest, E, ROOT, SITE, DIST 를 그대로 쓴다.
 import datetime as _dt
 
-SIG = json.loads((SITE / "signals.json").read_text(encoding="utf-8"))
 TODAY = _dt.date.today()
 
 # ---------- 기록에서 '이번 달 신호'와 '판정 임박 전망' 뽑기
@@ -59,12 +58,12 @@ for ci, (c, items) in enumerate(sections):
     a0 = -90 + ci * 90
     quad_names.append((a0 + 45, c))
     for k, it in enumerate(live):
-        sg = SIG.get(it["q"]["id"], {})
+        sg = it["cur"].get("signal", {})
         ratio = (sg.get("on", 0) / sg.get("of", 1)) if sg.get("of") else 0.3
         ang = _m.radians(a0 + 90 * (k + 1) / (len(live) + 1))
         rad = 18 + ratio * 70
         radar_dots.append((round(100 + rad * _m.cos(ang), 1), round(100 + rad * _m.sin(ang), 1), it["q"]["no"], it["cur"]["title"], c["id"]))
-radar_svg = ['<svg class="radar" viewBox="0 0 200 200" role="img" aria-label="20개 질문의 신호 위치. 사분면은 카테고리, 바깥쪽일수록 판정 게이지가 많이 찬 질문">']
+radar_svg = ['<svg class="radar" viewBox="-14 -14 228 228" role="img" aria-label="20개 질문의 신호 위치. 사분면은 카테고리, 바깥쪽일수록 판정 게이지가 많이 찬 질문">']
 for rr in (30, 55, 80):
     radar_svg.append(f'<circle cx="100" cy="100" r="{rr}" class="ring"/>')
 radar_svg.append('<line x1="100" y1="12" x2="100" y2="188" class="axis"/><line x1="12" y1="100" x2="188" y2="100" class="axis"/>')
@@ -72,8 +71,8 @@ radar_svg.append('<g class="sweep"><path d="M100 100 L100 12 A88 88 0 0 1 162.2 
 for i, (x, y, no, title, cid) in enumerate(radar_dots):
     radar_svg.append(f'<a href="#{E(cid)}" class="dot" data-q="{E(no)}"><circle cx="{x}" cy="{y}" r="3.6" style="--i:{i}"/><title>{E(no)} {E(title)}</title></a>')
 for ang, c in quad_names:
-    x = 100 + 96 * _m.cos(_m.radians(ang)); y = 100 + 96 * _m.sin(_m.radians(ang))
-    radar_svg.append(f'<text x="{x:.0f}" y="{y + 3:.0f}" text-anchor="middle" class="ql">{c["no"]:02d}</text>')
+    x = 100 + 100 * _m.cos(_m.radians(ang)); y = 100 + 100 * _m.sin(_m.radians(ang))
+    radar_svg.append(f'<text x="{x:.0f}" y="{y + 4:.0f}" text-anchor="middle" class="ql">{E(c.get("short", c["name"]))}</text>')
 radar_svg.append("</svg>")
 radar_svg = "".join(radar_svg)
 
@@ -86,7 +85,7 @@ def tile(c, it):
     if it["status"] != "live":
         return f'<li class="tile planned"><div class="tno"><b>{E(q["no"])}</b><span>{E(q.get("area", ""))}</span></div><p class="ttl">{E(q.get("question", "고정 질문 설계 예정"))}</p><span class="chip muted">준비 중</span></li>'
     a = it["cur"]
-    sg = SIG.get(q["id"], {})
+    sg = it["cur"].get("signal", {})
     search = " ".join([q["no"], q.get("area", ""), a["title"], a["question"], a["answer"], sg.get("chip", "")]).lower()
     gauge = ""
     if sg.get("of"):
@@ -160,10 +159,8 @@ portal = f"""<!doctype html>
 <body><main class="portal">
   <header class="masthead">
     <div class="mh-text">
-      <p class="kicker"><span class="live-dot" aria-hidden="true"></span>매달 다시 묻는 AI 전환 질문 {total_q}개</p>
       <h1>{E(cat['site']['title'])}</h1>
       <p class="tag">{E(cat['site']['tagline'])}</p>
-      <p class="method">같은 질문을 매달 다시 묻고, 무엇이 달라졌는지 근거와 함께 기록합니다.</p>
       <dl class="stats">
         <div><dt>카테고리</dt><dd data-count="{len(sections)}">{len(sections)}</dd></div>
         <div><dt>발행 아티클</dt><dd data-count="{total_live}">{total_live}</dd></div>
@@ -172,7 +169,7 @@ portal = f"""<!doctype html>
         <div><dt>최근 업데이트</dt><dd>{E(last_date)}</dd></div>
       </dl>
     </div>
-    <figure class="mh-radar">{radar_svg}<figcaption>점 하나가 질문 하나입니다. 바깥쪽일수록 판정 단계가 많이 진행된 질문입니다.</figcaption></figure>
+    <div class="mh-radar">{radar_svg}</div>
   </header>
 
   <section class="signals" aria-labelledby="h-signals">

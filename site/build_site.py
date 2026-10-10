@@ -81,6 +81,8 @@ for c in cat["categories"]:
         arts = []
         for n, p in rs:
             a = parse_article(p); a["n"] = n
+            sp = p.with_name(f"signal_r{n}.json")  # render_article.py가 판정 데이터에서 계산해 내보낸 칩·게이지
+            a["signal"] = json.loads(sp.read_text(encoding="utf-8")) if sp.exists() else {}
             a["path"] = f'{c["id"]}/{q["id"]}/r{n}.html'
             arts.append(a)
         for a in arts:

@@ -10,27 +10,24 @@ body { background: var(--paper); }
 .sechead p { margin: 0; color: var(--muted); font-size: 14px; max-width: 70ch; }
 
 /* 머리 */
-.masthead { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 32px; align-items: center; padding-bottom: 32px; border-bottom: 2px solid var(--border-strong); }
-.mh-text { display: grid; gap: 14px; min-width: 0; }
-.kicker { margin: 0; display: inline-flex; align-items: center; gap: 10px; font: 500 12px var(--mono); letter-spacing: .06em; color: var(--signal-ink); }
-.live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--signal); box-shadow: 0 0 0 0 var(--signal); }
+.masthead { position: relative; isolation: isolate; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0; align-items: center; padding-bottom: 32px; border-bottom: 2px solid var(--border-strong); }
+.mh-text { position: relative; z-index: 1; display: grid; gap: 14px; min-width: 0; padding-top: 12px; }
 .masthead h1 { font: 800 clamp(44px, 8vw, 84px)/0.95 var(--display); letter-spacing: -0.02em; }
 .masthead .tag { font-size: 18px; max-width: 46ch; margin: 0; text-wrap: balance; }
-.method { font-size: 14px; color: var(--muted); margin: 0; }
 .stats { display: flex; flex-wrap: wrap; gap: 10px 28px; margin: 6px 0 0; }
 .stats div { display: grid; gap: 2px; }
 .stats dt { font: 500 11px var(--mono); letter-spacing: .05em; color: var(--muted); }
 .stats dd { margin: 0; font: 600 22px/1.1 var(--mono); font-variant-numeric: tabular-nums; }
-.mh-radar { margin: 0; display: grid; gap: 8px; justify-items: center; }
-.mh-radar figcaption { font-size: 12px; color: var(--muted); text-align: center; max-width: 30ch; }
-.radar { width: 100%; max-width: 260px; height: auto; overflow: visible; }
+/* 레이더는 제목 오른쪽에 반쯤 겹친 배경 층으로 놓는다 */
+.mh-radar { position: relative; z-index: 0; justify-self: start; width: 340px; max-width: 100%; margin-left: -16px; }
+.radar { display: block; width: 100%; height: auto; overflow: visible; }
 .radar .ring { fill: none; stroke: var(--rule); stroke-width: 1; }
 .radar .axis { stroke: var(--border-subtle); stroke-width: 1; }
 .radar .beam { fill: var(--signal); opacity: .10; }
 .radar .sweep { transform-origin: 100px 100px; }
 .radar .dot circle { fill: var(--signal); stroke: var(--paper); stroke-width: 1.5; transition: r .15s; }
 .radar .dot:hover circle, .radar .dot:focus-visible circle { r: 5.5; }
-.radar .ql { font: 600 9px var(--mono); fill: var(--muted); }
+.radar .ql { font: 600 11px var(--body); fill: var(--muted); }
 
 /* 최근 사건 띠 */
 .signals { display: grid; gap: 14px; }
@@ -146,9 +143,9 @@ body { background: var(--paper); }
   .board { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 760px) {
-  .masthead { grid-template-columns: 1fr; gap: 20px; }
-  .mh-radar { grid-template-columns: 120px 1fr; justify-items: start; align-items: center; }
-  .mh-radar figcaption { text-align: left; }
+  .masthead { grid-template-columns: 1fr; }
+  .mh-radar { position: absolute; top: 0; right: -10px; width: 190px; margin: 0; }
+  .mh-text { padding-top: 64px; }
   .stats dd { font-size: 18px; }
   .sechead.row { grid-template-columns: 1fr; }
   .search input { width: 100%; }
@@ -176,7 +173,6 @@ body { background: var(--paper); }
   @keyframes sweep { to { transform: rotate(360deg); } }
   .radar .dot circle { animation: blip 6s ease-out infinite; animation-delay: calc(var(--i) * 0.3s); }
   @keyframes blip { 0%, 100% { opacity: 1; } 8% { opacity: .35; } }
-  .live-dot { animation: pulse 2.4s ease-out infinite; }
   @keyframes pulse { 0% { box-shadow: 0 0 0 0 var(--signal); } 70%, 100% { box-shadow: 0 0 0 8px transparent; } }
   .pips i.on { animation: fill .5s ease-out both; animation-delay: calc(.25s + var(--k) * 70ms); transform-origin: 0 50%; }
   @keyframes fill { from { transform: scaleX(0); } }

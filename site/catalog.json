@@ -1,161 +1,165 @@
 {
-  "site": {
-    "title": "AX Signals",
-    "tagline": "고객·산업·영업·LG의 AI 변화를 의견이 아닌 기록으로 쓰는 AI 전환 리포트"
-  },
-  "categories": [
+ "site": {
+  "title": "AX Signals",
+  "tagline": "고객·산업·영업·LG의 AI 변화를 의견이 아닌 기록으로 쓰는 AI 전환 리포트"
+ },
+ "categories": [
+  {
+   "id": "customer-lab",
+   "no": 1,
+   "name": "AI Future Customer Lab",
+   "desc": "고객과 시장이 AI로 어떻게 바뀌는지를 추적한다.",
+   "questions": [
     {
-      "id": "customer-lab",
-      "no": 1,
-      "name": "AI Future Customer Lab",
-      "desc": "고객과 시장이 AI로 어떻게 바뀌는지를 추적한다.",
-      "questions": [
-        {
-          "id": "c1",
-          "no": "C1",
-          "area": "Consumer Decision Making"
-        },
-        {
-          "id": "c2",
-          "no": "C2",
-          "area": "Customer Experience & Commerce"
-        },
-        {
-          "id": "c3",
-          "no": "C3",
-          "area": "Content, Information & Trust"
-        },
-        {
-          "id": "c4",
-          "no": "C4",
-          "area": "Physical AI, Products & Living",
-          "question": "집 안에서 AI가 스스로 판단·실행하는 범위는 어디까지 왔으며, 고객은 어느 수준의 자율을 받아들이는가?"
-        },
-        {
-          "id": "c5",
-          "no": "C5",
-          "area": "Household & Life Events",
-          "question": "어떤 가구 변화와 생활 사건이 새로운 수요를 만들고 있는가?"
-        }
-      ],
-      "prefix": "C"
+     "id": "c1",
+     "no": "C1",
+     "area": "Consumer Decision Making"
     },
     {
-      "id": "industry-trend",
-      "no": 2,
-      "name": "AI Industry Trend",
-      "desc": "AI 산업 전체의 기술·제품·경쟁·확산 구조를 추적한다.",
-      "questions": [
-        {
-          "id": "i1",
-          "no": "I1",
-          "area": "AI Technology & Research",
-          "question": "AI가 새롭게 할 수 있게 된 일은 무엇이고, 기술의 경계는 어느 축에서 얼마나 넓어졌는가?"
-        },
-        {
-          "id": "i2",
-          "no": "I2",
-          "area": "AI Products & Applications",
-          "question": "AI 제품은 어느 영역에서 시범을 넘어 실제 운영 단계에 들어섰는가?"
-        },
-        {
-          "id": "i3",
-          "no": "I3",
-          "area": "AI Industry & Economics",
-          "question": "AI 산업의 돈은 어디로 흐르고, 그 돈은 수익으로 돌아오고 있는가?"
-        },
-        {
-          "id": "i4",
-          "no": "I4",
-          "area": "AI Adoption, Governance & Geopolitics",
-          "question": "AI는 어느 산업·업무까지 실제 운영에 들어갔고, 확산을 가장 크게 밀거나 막는 요인은 무엇인가?"
-        }
-      ],
-      "prefix": "I"
+     "id": "c2",
+     "no": "C2",
+     "area": "Customer Experience & Commerce"
     },
     {
-      "id": "sales-marketing",
-      "no": 3,
-      "name": "AI Sales & Marketing",
-      "desc": "기업이 영업·마케팅에서 AI로 어떻게 대응하고 실행하는지 추적한다.",
-      "questions": [
-        {
-          "id": "s1",
-          "no": "S1",
-          "area": "AI Search & GEO",
-          "question": "AI 답변에서 브랜드는 얼마나 노출·인용되고, AI 유입은 검색 유입을 얼마나 대신하고 있으며, 노출을 가르는 신호는 무엇인가?"
-        },
-        {
-          "id": "s2",
-          "no": "S2",
-          "area": "AI Commerce",
-          "question": "에이전트 구매는 어느 단계까지 실제 거래가 됐고, 거래 한 건의 수익(수수료·광고·데이터)은 누구에게 가는가?"
-        },
-        {
-          "id": "s3",
-          "no": "S3",
-          "area": "AI Marketing",
-          "question": "AI는 고객 이해·타기팅·콘텐츠·광고·CRM의 일하는 방식을 어디까지 바꿨으며, 그중 어떤 방식이 실제 매출과 고객 가치 증가로 이어지고 있는가?"
-        },
-        {
-          "id": "s4",
-          "no": "S4",
-          "area": "AI Sales & Customer Service",
-          "question": "AI는 리드 발굴·상담·제안·협상·고객 서비스 중 무엇을 수행하며, 사람과의 역할 분담은 어떻게 달라지는가?"
-        },
-        {
-          "id": "s5",
-          "no": "S5",
-          "area": "Market, Competition & Economics",
-          "question": "어떤 기업과 제품이 영업·마케팅 예산과 고객 접점을 확보하고 있으며, 도입 확대와 수익성을 결정하는 조건은 무엇인가?"
-        }
-      ],
-      "prefix": "S"
+     "id": "c3",
+     "no": "C3",
+     "area": "Content, Information & Trust"
     },
     {
-      "id": "lg-group-ai",
-      "no": 4,
-      "name": "LG Group AI",
-      "desc": "LG 그룹의 AI 전략과 실행을 추적한다.",
-      "questions": [
-        {
-          "id": "l1",
-          "no": "L1",
-          "area": "AI Data Center / Infra",
-          "question": "LG는 AI 데이터센터의 냉각·전력·구축·운영 수요를 어떤 제품과 계약으로 확보하고 있으며, 그 수요는 계약·매출로 어디까지 확인되는가?"
-        },
-        {
-          "id": "l2",
-          "no": "L2",
-          "area": "Physical AI / Smart Manufacturing",
-          "question": "LG는 AI를 공장·물류·로봇·가전의 물리적 작동에 어떻게 적용하며, 실제 성능과 사업 성과는 어디까지 확인되는가?"
-        },
-        {
-          "id": "l3",
-          "no": "L3",
-          "area": "AI Mobility / SDV·AIDV",
-          "question": "LG의 차량용 AI·소프트웨어·부품은 어떤 고객과 차종에 적용되며, 공급 범위와 수익 기회는 어떻게 확대되는가?"
-        },
-        {
-          "id": "l4",
-          "no": "L4",
-          "area": "Enterprise AX / Agentic Operating Model",
-          "question": "LG는 내부 업무와 외부 고객 사업에서 AI를 어떻게 실행 체계로 전환하며, 사용·품질·생산성·매출 성과는 무엇인가?"
-        },
-        {
-          "id": "l5",
-          "no": "L5",
-          "area": "AI for Science / Bio / Materials / Battery",
-          "question": "AI가 소재·배터리·신약의 탐색과 개발을 얼마나 개선하며, 연구 결과는 실험·제품·사업화로 어디까지 이어지는가?"
-        },
-        {
-          "id": "l6",
-          "no": "L6",
-          "area": "Global AI Alliance / Open Innovation",
-          "question": "LG는 자체 AI 역량과 외부 파트너를 어떻게 결합하며, 협력이 기술·고객·공급망·시장 접근에 어떤 변화를 만드는가?"
-        }
-      ],
-      "prefix": "L"
+     "id": "c4",
+     "no": "C4",
+     "area": "Physical AI, Products & Living",
+     "question": "집 안에서 AI가 스스로 판단·실행하는 범위는 어디까지 왔으며, 고객은 어느 수준의 자율을 받아들이는가?"
+    },
+    {
+     "id": "c5",
+     "no": "C5",
+     "area": "Household & Life Events",
+     "question": "어떤 가구 변화와 생활 사건이 새로운 수요를 만들고 있는가?"
     }
-  ]
+   ],
+   "prefix": "C",
+   "short": "고객"
+  },
+  {
+   "id": "industry-trend",
+   "no": 2,
+   "name": "AI Industry Trend",
+   "desc": "AI 산업 전체의 기술·제품·경쟁·확산 구조를 추적한다.",
+   "questions": [
+    {
+     "id": "i1",
+     "no": "I1",
+     "area": "AI Technology & Research",
+     "question": "AI가 새롭게 할 수 있게 된 일은 무엇이고, 기술의 경계는 어느 축에서 얼마나 넓어졌는가?"
+    },
+    {
+     "id": "i2",
+     "no": "I2",
+     "area": "AI Products & Applications",
+     "question": "AI 제품은 어느 영역에서 시범을 넘어 실제 운영 단계에 들어섰는가?"
+    },
+    {
+     "id": "i3",
+     "no": "I3",
+     "area": "AI Industry & Economics",
+     "question": "AI 산업의 돈은 어디로 흐르고, 그 돈은 수익으로 돌아오고 있는가?"
+    },
+    {
+     "id": "i4",
+     "no": "I4",
+     "area": "AI Adoption, Governance & Geopolitics",
+     "question": "AI는 어느 산업·업무까지 실제 운영에 들어갔고, 확산을 가장 크게 밀거나 막는 요인은 무엇인가?"
+    }
+   ],
+   "prefix": "I",
+   "short": "산업"
+  },
+  {
+   "id": "sales-marketing",
+   "no": 3,
+   "name": "AI Sales & Marketing",
+   "desc": "기업이 영업·마케팅에서 AI로 어떻게 대응하고 실행하는지 추적한다.",
+   "questions": [
+    {
+     "id": "s1",
+     "no": "S1",
+     "area": "AI Search & GEO",
+     "question": "AI 답변에서 브랜드는 얼마나 노출·인용되고, AI 유입은 검색 유입을 얼마나 대신하고 있으며, 노출을 가르는 신호는 무엇인가?"
+    },
+    {
+     "id": "s2",
+     "no": "S2",
+     "area": "AI Commerce",
+     "question": "에이전트 구매는 어느 단계까지 실제 거래가 됐고, 거래 한 건의 수익(수수료·광고·데이터)은 누구에게 가는가?"
+    },
+    {
+     "id": "s3",
+     "no": "S3",
+     "area": "AI Marketing",
+     "question": "AI는 고객 이해·타기팅·콘텐츠·광고·CRM의 일하는 방식을 어디까지 바꿨으며, 그중 어떤 방식이 실제 매출과 고객 가치 증가로 이어지고 있는가?"
+    },
+    {
+     "id": "s4",
+     "no": "S4",
+     "area": "AI Sales & Customer Service",
+     "question": "AI는 리드 발굴·상담·제안·협상·고객 서비스 중 무엇을 수행하며, 사람과의 역할 분담은 어떻게 달라지는가?"
+    },
+    {
+     "id": "s5",
+     "no": "S5",
+     "area": "Market, Competition & Economics",
+     "question": "어떤 기업과 제품이 영업·마케팅 예산과 고객 접점을 확보하고 있으며, 도입 확대와 수익성을 결정하는 조건은 무엇인가?"
+    }
+   ],
+   "prefix": "S",
+   "short": "영업"
+  },
+  {
+   "id": "lg-group-ai",
+   "no": 4,
+   "name": "LG Group AI",
+   "desc": "LG 그룹의 AI 전략과 실행을 추적한다.",
+   "questions": [
+    {
+     "id": "l1",
+     "no": "L1",
+     "area": "AI Data Center / Infra",
+     "question": "LG는 AI 데이터센터의 냉각·전력·구축·운영 수요를 어떤 제품과 계약으로 확보하고 있으며, 그 수요는 계약·매출로 어디까지 확인되는가?"
+    },
+    {
+     "id": "l2",
+     "no": "L2",
+     "area": "Physical AI / Smart Manufacturing",
+     "question": "LG는 AI를 공장·물류·로봇·가전의 물리적 작동에 어떻게 적용하며, 실제 성능과 사업 성과는 어디까지 확인되는가?"
+    },
+    {
+     "id": "l3",
+     "no": "L3",
+     "area": "AI Mobility / SDV·AIDV",
+     "question": "LG의 차량용 AI·소프트웨어·부품은 어떤 고객과 차종에 적용되며, 공급 범위와 수익 기회는 어떻게 확대되는가?"
+    },
+    {
+     "id": "l4",
+     "no": "L4",
+     "area": "Enterprise AX / Agentic Operating Model",
+     "question": "LG는 내부 업무와 외부 고객 사업에서 AI를 어떻게 실행 체계로 전환하며, 사용·품질·생산성·매출 성과는 무엇인가?"
+    },
+    {
+     "id": "l5",
+     "no": "L5",
+     "area": "AI for Science / Bio / Materials / Battery",
+     "question": "AI가 소재·배터리·신약의 탐색과 개발을 얼마나 개선하며, 연구 결과는 실험·제품·사업화로 어디까지 이어지는가?"
+    },
+    {
+     "id": "l6",
+     "no": "L6",
+     "area": "Global AI Alliance / Open Innovation",
+     "question": "LG는 자체 AI 역량과 외부 파트너를 어떻게 결합하며, 협력이 기술·고객·공급망·시장 접근에 어떤 변화를 만드는가?"
+    }
+   ],
+   "prefix": "L",
+   "short": "LG"
+  }
+ ]
 }

@@ -169,4 +169,12 @@ anchors = set(re.findall(r'id="(C2-[A-Z]-\d{3})"', page))
 bad = sorted({i for i in re.findall(r'href="#(C2-[A-Z]-\d{3})"', page) if i not in anchors})
 order = [page.index(f"<h2>{h}") for h in ("한 줄 답", "해석", "주요 사건", "전망", "접점별 주도권 지도", "핵심 지표")]
 print("article_r1.html 생성,", len(page), "bytes; 앵커 없는 근거 링크:", bad or "없음", "; 섹션 순서 정상:", order == sorted(order))
+# ---------- 포털 신호: 판정 칩과 게이지를 판정 데이터에서 계산해 내보낸다
+SIGNAL_CHIP = '판매 주도권 경합'
+SIGNAL_GAUGE = '고객 접점 4곳 중 AI 이전이 확산 이상'
+SIGNAL_FRONTIER = '판매'
+signal = {"question": 'C2', "round": 1, "chip": SIGNAL_CHIP, "gauge": SIGNAL_GAUGE, "frontier": SIGNAL_FRONTIER,
+          "on": sum(1 for r in MAP if r[2] in ("확산", "주류")), "of": len(MAP)}
+(ROOT / "signal_r1.json").write_text(json.dumps(signal, ensure_ascii=False, indent=1), encoding="utf-8")
+print("signal_r1.json:", signal["chip"], f'{signal["on"]}/{signal["of"]}')
 sys.exit(1 if bad or order != sorted(order) else 0)

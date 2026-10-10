@@ -89,27 +89,24 @@ body { background: var(--paper); }
 .sechead p { margin: 0; color: var(--muted); font-size: 14px; max-width: 70ch; }
 
 /* 머리 */
-.masthead { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 32px; align-items: center; padding-bottom: 32px; border-bottom: 2px solid var(--border-strong); }
-.mh-text { display: grid; gap: 14px; min-width: 0; }
-.kicker { margin: 0; display: inline-flex; align-items: center; gap: 10px; font: 500 12px var(--mono); letter-spacing: .06em; color: var(--signal-ink); }
-.live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--signal); box-shadow: 0 0 0 0 var(--signal); }
+.masthead { position: relative; isolation: isolate; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0; align-items: center; padding-bottom: 32px; border-bottom: 2px solid var(--border-strong); }
+.mh-text { position: relative; z-index: 1; display: grid; gap: 14px; min-width: 0; padding-top: 12px; }
 .masthead h1 { font: 800 clamp(44px, 8vw, 84px)/0.95 var(--display); letter-spacing: -0.02em; }
 .masthead .tag { font-size: 18px; max-width: 46ch; margin: 0; text-wrap: balance; }
-.method { font-size: 14px; color: var(--muted); margin: 0; }
 .stats { display: flex; flex-wrap: wrap; gap: 10px 28px; margin: 6px 0 0; }
 .stats div { display: grid; gap: 2px; }
 .stats dt { font: 500 11px var(--mono); letter-spacing: .05em; color: var(--muted); }
 .stats dd { margin: 0; font: 600 22px/1.1 var(--mono); font-variant-numeric: tabular-nums; }
-.mh-radar { margin: 0; display: grid; gap: 8px; justify-items: center; }
-.mh-radar figcaption { font-size: 12px; color: var(--muted); text-align: center; max-width: 30ch; }
-.radar { width: 100%; max-width: 260px; height: auto; overflow: visible; }
+/* 레이더는 제목 오른쪽에 반쯤 겹친 배경 층으로 놓는다 */
+.mh-radar { position: relative; z-index: 0; justify-self: start; width: 340px; max-width: 100%; margin-left: -16px; }
+.radar { display: block; width: 100%; height: auto; overflow: visible; }
 .radar .ring { fill: none; stroke: var(--rule); stroke-width: 1; }
 .radar .axis { stroke: var(--border-subtle); stroke-width: 1; }
 .radar .beam { fill: var(--signal); opacity: .10; }
 .radar .sweep { transform-origin: 100px 100px; }
 .radar .dot circle { fill: var(--signal); stroke: var(--paper); stroke-width: 1.5; transition: r .15s; }
 .radar .dot:hover circle, .radar .dot:focus-visible circle { r: 5.5; }
-.radar .ql { font: 600 9px var(--mono); fill: var(--muted); }
+.radar .ql { font: 600 11px var(--body); fill: var(--muted); }
 
 /* 최근 사건 띠 */
 .signals { display: grid; gap: 14px; }
@@ -225,9 +222,9 @@ body { background: var(--paper); }
   .board { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 760px) {
-  .masthead { grid-template-columns: 1fr; gap: 20px; }
-  .mh-radar { grid-template-columns: 120px 1fr; justify-items: start; align-items: center; }
-  .mh-radar figcaption { text-align: left; }
+  .masthead { grid-template-columns: 1fr; }
+  .mh-radar { position: absolute; top: 0; right: -10px; width: 190px; margin: 0; }
+  .mh-text { padding-top: 64px; }
   .stats dd { font-size: 18px; }
   .sechead.row { grid-template-columns: 1fr; }
   .search input { width: 100%; }
@@ -255,7 +252,6 @@ body { background: var(--paper); }
   @keyframes sweep { to { transform: rotate(360deg); } }
   .radar .dot circle { animation: blip 6s ease-out infinite; animation-delay: calc(var(--i) * 0.3s); }
   @keyframes blip { 0%, 100% { opacity: 1; } 8% { opacity: .35; } }
-  .live-dot { animation: pulse 2.4s ease-out infinite; }
   @keyframes pulse { 0% { box-shadow: 0 0 0 0 var(--signal); } 70%, 100% { box-shadow: 0 0 0 8px transparent; } }
   .pips i.on { animation: fill .5s ease-out both; animation-delay: calc(.25s + var(--k) * 70ms); transform-origin: 0 50%; }
   @keyframes fill { from { transform: scaleX(0); } }
@@ -271,10 +267,8 @@ body { background: var(--paper); }
 <body><main class="portal">
   <header class="masthead">
     <div class="mh-text">
-      <p class="kicker"><span class="live-dot" aria-hidden="true"></span>매달 다시 묻는 AI 전환 질문 20개</p>
       <h1>AX Signals</h1>
       <p class="tag">고객·산업·영업·LG의 AI 변화를 의견이 아닌 기록으로 쓰는 AI 전환 리포트</p>
-      <p class="method">같은 질문을 매달 다시 묻고, 무엇이 달라졌는지 근거와 함께 기록합니다.</p>
       <dl class="stats">
         <div><dt>카테고리</dt><dd data-count="4">4</dd></div>
         <div><dt>발행 아티클</dt><dd data-count="20">20</dd></div>
@@ -283,7 +277,7 @@ body { background: var(--paper); }
         <div><dt>최근 업데이트</dt><dd>2026-10-09</dd></div>
       </dl>
     </div>
-    <figure class="mh-radar"><svg class="radar" viewBox="0 0 200 200" role="img" aria-label="20개 질문의 신호 위치. 사분면은 카테고리, 바깥쪽일수록 판정 게이지가 많이 찬 질문"><circle cx="100" cy="100" r="30" class="ring"/><circle cx="100" cy="100" r="55" class="ring"/><circle cx="100" cy="100" r="80" class="ring"/><line x1="100" y1="12" x2="100" y2="188" class="axis"/><line x1="12" y1="100" x2="188" y2="100" class="axis"/><g class="sweep"><path d="M100 100 L100 12 A88 88 0 0 1 162.2 37.8 Z" class="beam"/></g><a href="#customer-lab" class="dot" data-q="C1"><circle cx="115.5" cy="42.0" r="3.6" style="--i:0"/><title>C1 AI는 고객의 쇼핑을 어디까지 대신하고 있나</title></a><a href="#customer-lab" class="dot" data-q="C2"><circle cx="126.5" cy="54.1" r="3.6" style="--i:1"/><title>C2 AI 시대, 고객 접점의 주인은 누구인가</title></a><a href="#customer-lab" class="dot" data-q="C3"><circle cx="132.5" cy="67.5" r="3.6" style="--i:2"/><title>C3 AI가 만든 정보, 소비자는 믿는가</title></a><a href="#customer-lab" class="dot" data-q="C4"><circle cx="130.7" cy="82.2" r="3.6" style="--i:3"/><title>C4 집 안의 AI는 어디까지 스스로 하나</title></a><a href="#customer-lab" class="dot" data-q="C5"><circle cx="168.1" cy="81.8" r="3.6" style="--i:4"/><title>C5 어떤 삶의 변화가 수요를 만드는가</title></a><a href="#industry-trend" class="dot" data-q="I1"><circle cx="155.2" cy="117.9" r="3.6" style="--i:5"/><title>I1 AI 기술의 경계는 어디까지 넓어졌나</title></a><a href="#industry-trend" class="dot" data-q="I2"><circle cx="142.9" cy="131.2" r="3.6" style="--i:6"/><title>I2 AI 제품은 어디까지 실제로 쓰이고 있나</title></a><a href="#industry-trend" class="dot" data-q="I3"><circle cx="124.3" cy="133.4" r="3.6" style="--i:7"/><title>I3 AI에 쏟아진 돈은 어디로 가고, 돌아오고 있나</title></a><a href="#industry-trend" class="dot" data-q="I4"><circle cx="112.8" cy="139.3" r="3.6" style="--i:8"/><title>I4 AI는 어느 산업까지 들어갔고, 무엇이 밀고 막나</title></a><a href="#sales-marketing" class="dot" data-q="S1"><circle cx="89.3" cy="139.9" r="3.6" style="--i:9"/><title>S1 AI 답변 속 브랜드는 어떻게 보이고, 무엇이 노출을 가르나</title></a><a href="#sales-marketing" class="dot" data-q="S2"><circle cx="84.0" cy="127.7" r="3.6" style="--i:10"/><title>S2 AI는 어디까지 대신 사고, 그 돈은 누구에게 가나</title></a><a href="#sales-marketing" class="dot" data-q="S3"><circle cx="67.5" cy="132.5" r="3.6" style="--i:11"/><title>S3 AI는 마케팅을 어디까지 바꿨고, 무엇이 매출로 이어졌나</title></a><a href="#sales-marketing" class="dot" data-q="S4"><circle cx="60.2" cy="123.0" r="3.6" style="--i:12"/><title>S4 AI는 영업과 고객 응대에서 무엇을 맡고, 사람은 무엇을 하나</title></a><a href="#sales-marketing" class="dot" data-q="S5"><circle cx="69.1" cy="108.3" r="3.6" style="--i:13"/><title>S5 영업·마케팅 AI 예산은 누가 가져가고, 무엇이 도입을 가르나</title></a><a href="#lg-group-ai" class="dot" data-q="L1"><circle cx="27.9" cy="83.5" r="3.6" style="--i:14"/><title>L1 LG는 AI 데이터센터 수요를 어디까지 계약과 매출로 잡았나</title></a><a href="#lg-group-ai" class="dot" data-q="L2"><circle cx="71.2" cy="86.1" r="3.6" style="--i:15"/><title>L2 LG의 피지컬 AI는 현장에서 어디까지 성과를 냈나</title></a><a href="#lg-group-ai" class="dot" data-q="L3"><circle cx="70.3" cy="76.3" r="3.6" style="--i:16"/><title>L3 LG의 차량용 AI는 어느 고객·차종까지 들어갔나</title></a><a href="#lg-group-ai" class="dot" data-q="L4"><circle cx="62.6" cy="53.1" r="3.6" style="--i:17"/><title>L4 LG의 AX는 목표에서 결과로 얼마나 넘어왔나</title></a><a href="#lg-group-ai" class="dot" data-q="L5"><circle cx="80.0" cy="58.6" r="3.6" style="--i:18"/><title>L5 AI가 찾은 소재·신약은 어디까지 제품이 됐나</title></a><a href="#lg-group-ai" class="dot" data-q="L6"><circle cx="91.3" cy="62.0" r="3.6" style="--i:19"/><title>L6 LG의 AI 동맹은 무엇을 바꾸고 있나</title></a><text x="168" y="35" text-anchor="middle" class="ql">01</text><text x="168" y="171" text-anchor="middle" class="ql">02</text><text x="32" y="171" text-anchor="middle" class="ql">03</text><text x="32" y="35" text-anchor="middle" class="ql">04</text></svg><figcaption>점 하나가 질문 하나입니다. 바깥쪽일수록 판정 단계가 많이 진행된 질문입니다.</figcaption></figure>
+    <div class="mh-radar"><svg class="radar" viewBox="-14 -14 228 228" role="img" aria-label="20개 질문의 신호 위치. 사분면은 카테고리, 바깥쪽일수록 판정 게이지가 많이 찬 질문"><circle cx="100" cy="100" r="30" class="ring"/><circle cx="100" cy="100" r="55" class="ring"/><circle cx="100" cy="100" r="80" class="ring"/><line x1="100" y1="12" x2="100" y2="188" class="axis"/><line x1="12" y1="100" x2="188" y2="100" class="axis"/><g class="sweep"><path d="M100 100 L100 12 A88 88 0 0 1 162.2 37.8 Z" class="beam"/></g><a href="#customer-lab" class="dot" data-q="C1"><circle cx="115.5" cy="42.0" r="3.6" style="--i:0"/><title>C1 AI는 고객의 쇼핑을 어디까지 대신하고 있나</title></a><a href="#customer-lab" class="dot" data-q="C2"><circle cx="126.5" cy="54.1" r="3.6" style="--i:1"/><title>C2 AI 시대, 고객 접점의 주인은 누구인가</title></a><a href="#customer-lab" class="dot" data-q="C3"><circle cx="132.5" cy="67.5" r="3.6" style="--i:2"/><title>C3 AI가 만든 정보, 소비자는 믿는가</title></a><a href="#customer-lab" class="dot" data-q="C4"><circle cx="130.7" cy="82.2" r="3.6" style="--i:3"/><title>C4 집 안의 AI는 어디까지 스스로 하나</title></a><a href="#customer-lab" class="dot" data-q="C5"><circle cx="168.1" cy="81.8" r="3.6" style="--i:4"/><title>C5 어떤 삶의 변화가 수요를 만드는가</title></a><a href="#industry-trend" class="dot" data-q="I1"><circle cx="155.2" cy="117.9" r="3.6" style="--i:5"/><title>I1 AI 기술의 경계는 어디까지 넓어졌나</title></a><a href="#industry-trend" class="dot" data-q="I2"><circle cx="142.9" cy="131.2" r="3.6" style="--i:6"/><title>I2 AI 제품은 어디까지 실제로 쓰이고 있나</title></a><a href="#industry-trend" class="dot" data-q="I3"><circle cx="124.3" cy="133.4" r="3.6" style="--i:7"/><title>I3 AI에 쏟아진 돈은 어디로 가고, 돌아오고 있나</title></a><a href="#industry-trend" class="dot" data-q="I4"><circle cx="112.8" cy="139.3" r="3.6" style="--i:8"/><title>I4 AI는 어느 산업까지 들어갔고, 무엇이 밀고 막나</title></a><a href="#sales-marketing" class="dot" data-q="S1"><circle cx="89.3" cy="139.9" r="3.6" style="--i:9"/><title>S1 AI 답변 속 브랜드는 어떻게 보이고, 무엇이 노출을 가르나</title></a><a href="#sales-marketing" class="dot" data-q="S2"><circle cx="84.0" cy="127.7" r="3.6" style="--i:10"/><title>S2 AI는 어디까지 대신 사고, 그 돈은 누구에게 가나</title></a><a href="#sales-marketing" class="dot" data-q="S3"><circle cx="67.5" cy="132.5" r="3.6" style="--i:11"/><title>S3 AI는 마케팅을 어디까지 바꿨고, 무엇이 매출로 이어졌나</title></a><a href="#sales-marketing" class="dot" data-q="S4"><circle cx="60.2" cy="123.0" r="3.6" style="--i:12"/><title>S4 AI는 영업과 고객 응대에서 무엇을 맡고, 사람은 무엇을 하나</title></a><a href="#sales-marketing" class="dot" data-q="S5"><circle cx="69.1" cy="108.3" r="3.6" style="--i:13"/><title>S5 영업·마케팅 AI 예산은 누가 가져가고, 무엇이 도입을 가르나</title></a><a href="#lg-group-ai" class="dot" data-q="L1"><circle cx="27.9" cy="83.5" r="3.6" style="--i:14"/><title>L1 LG는 AI 데이터센터 수요를 어디까지 계약과 매출로 잡았나</title></a><a href="#lg-group-ai" class="dot" data-q="L2"><circle cx="71.2" cy="86.1" r="3.6" style="--i:15"/><title>L2 LG의 피지컬 AI는 현장에서 어디까지 성과를 냈나</title></a><a href="#lg-group-ai" class="dot" data-q="L3"><circle cx="70.3" cy="76.3" r="3.6" style="--i:16"/><title>L3 LG의 차량용 AI는 어느 고객·차종까지 들어갔나</title></a><a href="#lg-group-ai" class="dot" data-q="L4"><circle cx="62.6" cy="53.1" r="3.6" style="--i:17"/><title>L4 LG의 AX는 목표에서 결과로 얼마나 넘어왔나</title></a><a href="#lg-group-ai" class="dot" data-q="L5"><circle cx="80.0" cy="58.6" r="3.6" style="--i:18"/><title>L5 AI가 찾은 소재·신약은 어디까지 제품이 됐나</title></a><a href="#lg-group-ai" class="dot" data-q="L6"><circle cx="91.3" cy="62.0" r="3.6" style="--i:19"/><title>L6 LG의 AI 동맹은 무엇을 바꾸고 있나</title></a><text x="171" y="33" text-anchor="middle" class="ql">고객</text><text x="171" y="175" text-anchor="middle" class="ql">산업</text><text x="29" y="175" text-anchor="middle" class="ql">영업</text><text x="29" y="33" text-anchor="middle" class="ql">LG</text></svg></div>
   </header>
 
   <section class="signals" aria-labelledby="h-signals">
