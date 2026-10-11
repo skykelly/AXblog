@@ -8,7 +8,7 @@ R = "R1"
 SRC = {
  "msit": {"url": "https://www.kyeonggi.com/article/20260331580533", "publisher": "경기일보 (과기정통부 2025 인터넷 이용 실태조사 보도)", "date": "2026-03-31", "grade": "B"},
  "cjmezzo": {"url": "https://www.newsis.com/view/NISX20260526_0003644106", "publisher": "뉴시스 (CJ메조미디어 2026 디지털 라이프스타일 리포트)", "date": "2026-05-27", "grade": "B"},
- "sparktoro": {"url": "https://sparktoro.com/blog/in-2026-less-than-one-third-of-google-searches-still-send-a-click/", "publisher": "SparkToro (Similarweb 패널)", "date": "2026-06", "grade": "A"},
+ "sparktoro": {"url": "https://sparktoro.com/blog/in-2026-less-than-one-third-of-google-searches-still-send-a-click/", "publisher": "SparkToro (Similarweb 패널)", "date": "2026-06-08", "grade": "A"},
  "sel": {"url": "https://searchengineland.com/google-zero-click-searches-2026-study-479717", "publisher": "Search Engine Land", "date": "2026-06", "grade": "B"},
  "pew": {"url": "https://www.pewresearch.org/short-reads/2025/07/22/google-users-are-less-likely-to-click-on-links-when-an-ai-summary-appears-in-the-results/", "publisher": "Pew Research Center", "date": "2025-07-22", "grade": "A"},
  "adobe_jul": {"url": "https://www.digitalcommerce360.com/2026/08/19/adobe-ai-referral-traffic-data-july-2026/", "publisher": "Digital Commerce 360 (Adobe Analytics)", "date": "2026-08-19", "grade": "B"},
@@ -16,7 +16,7 @@ SRC = {
  "adobe_q1": {"url": "https://decrypt.co/364733/ai-traffic-us-retailers-jumps-q1-agentic-shoppers-outspend-humans", "publisher": "Decrypt (Adobe Analytics)", "date": "2026-04", "grade": "B"},
  "criteo_kr": {"url": "https://www.criteo.com/kr/wp-content/uploads/sites/7/2026/06/보도자료_크리테오-2026-커머스와-AI-트렌드-리포트-공개-for-Web.pdf", "publisher": "Criteo 보도자료", "date": "2026-06-10", "grade": "A"},
  "prain": {"url": "https://ditoday.com/?p=150713", "publisher": "디지털인사이트 (프레인글로벌·한국PR학회 조사)", "date": "2026", "grade": "B"},
- "accenture": {"url": "https://www.accenture.com/gb-en/insights/consulting/talk-my-ai-agent", "publisher": "Accenture Consumer Pulse 2026", "date": "2026-06-03", "grade": "A"},
+ "accenture": {"url": "https://www.accenture.com/gb-en/insights/consulting/talk-my-ai-agent", "publisher": "Accenture Consumer Pulse 2026", "date": "2026", "grade": "A"},
  "riskified": {"url": "https://ir.riskified.com/node/8896/pdf", "publisher": "Riskified IR", "date": "2026-04-27", "grade": "A"},
  "naver_ai_tab": {"url": "https://byline.network/2026/06/26_12083847/", "publisher": "바이라인네트워크", "date": "2026-06-26", "grade": "B"},
  "segye_ai_tab": {"url": "https://www.segye.com/newsView/20260626507402", "publisher": "세계일보", "date": "2026-06-26", "grade": "B"},
@@ -167,6 +167,155 @@ add(id="C1-F-102", type="전망", importance=3, status="유효", forecast_status
     basis=["C1-E-002", "C1-M-011", "C1-M-012", "C1-M-008", "C1-M-013"],
     signposts=[{"id": "C1-F-001", "on_hit": "비관"}, {"id": "C1-F-002", "on_hit": "비관"}, {"id": "C1-F-005", "on_hit": "비관"},
                {"id": "C1-F-006", "on_miss": "비관"}], result=None)
+
+
+# ---------- 정정·추가 (2026-10-11 재조사 시험 1회, probe_20261011/verification_report.md) ----------
+# 원본 기록은 ID를 유지한 채 고치고, 고치기 전 진술과 이유를 revisions에 남긴다. 새 기록은 added_on으로 구분한다.
+CHG = "2026-10-11"
+SRC.update({
+ "pew_ai26": {"url": "https://www.pewresearch.org/internet/2026/06/17/americans-and-ai-2026-chatbots-smart-devices-and-views-on-impact/", "publisher": "Pew Research Center (Americans and AI 2026)", "date": "2026-06-17", "grade": "A"},
+ "menlo": {"url": "https://menlovc.com/perspective/2026-the-state-of-consumer-ai/", "publisher": "Menlo Ventures (State of Consumer AI 2026)", "date": "2026-09-16", "grade": "A"},
+ "niq": {"url": "https://nielseniq.com/global/en/news-center/2026/42-of-consumers-now-use-ai-tools-to-shop-niq-data-shows/", "publisher": "NielsenIQ", "date": "2026-05-05", "grade": "A"},
+ "nmi": {"url": "https://www.nmi.com/about-us/news/nmi-research-consumers-want-ai-to-help-them-shop-not-control-their-spending/", "publisher": "NMI", "date": "2026-08-26", "grade": "B"},
+ "mtn_ai_tab": {"url": "https://news.mtn.co.kr/news-detail/2026071511381270436", "publisher": "MTN (네이버 AI탭 1000만 돌파)", "date": "2026-07-15", "grade": "B"},
+ "naver_ai_tab_pr": {"url": "https://www.navercorp.com/media/pressReleasesDetail?seq=10034429", "publisher": "네이버 보도자료 (AI탭 정식 출시)", "date": "2026-06-26", "grade": "A"},
+ "dataeconomy": {"url": "https://www.dataeconomy.co.kr/news/articleView.html?idxno=41880", "publisher": "데이터이코노미 (Mobile Index·Wiseapp)", "date": "2026-08-20", "grade": "B"},
+ "google_io": {"url": "https://blog.google/innovation-and-ai/sundar-pichai-io-2026/", "publisher": "Google 블로그 (I/O 2026 Pichai 기조연설)", "date": "2026-05-19", "grade": "A"},
+ "google_nrf": {"url": "https://blog.google/company-news/inside-google/message-ceo/nrf-2026-remarks/", "publisher": "Google 블로그 (NRF 2026 Pichai 발언)", "date": "2026-01-11", "grade": "A"},
+ "emarketer": {"url": "https://www.emarketer.com/content/google-brings-checkout-ai-mode-races-rivals-agentic-commerce", "publisher": "eMarketer (Google AI Mode 체크아웃)", "date": "2026-01-12", "grade": "B"},
+ "shopify": {"url": "https://shopify.com/news/agentic-commerce-momentum", "publisher": "Shopify 뉴스", "date": "2026-03-24", "grade": "A"},
+ "techcrunch_oai": {"url": "https://techcrunch.com/2026/03/24/openais-plans-to-make-chatgpt-more-like-amazon-arent-going-so-well", "publisher": "TechCrunch (OpenAI Instant Checkout 후퇴)", "date": "2026-03-24", "grade": "B"},
+ "resultsense": {"url": "https://www.resultsense.com/news/2026-05-14-amazon-alexa-for-shopping-launch/", "publisher": "Resultsense (Alexa for Shopping, TechCrunch 5/13 인용)", "date": "2026-05-14", "grade": "B"},
+ "engadget": {"url": "https://www.engadget.com/2230471/perplexity-has-successfully-overturned-amazon-injunction-on-its-ai-shopping-bot/", "publisher": "Engadget (제9순회항소법원 Perplexity v. Amazon)", "date": "2026-08-04", "grade": "B"},
+ "digitaltoday": {"url": "https://www.digitaltoday.co.kr/en/view/89887/kakao-to-team-up-with-coupang-eats-on-ai-agent-to-enable-food-orders-in-kakaotalk", "publisher": "디지털투데이 (카카오·쿠팡이츠)", "date": "2026-08-06", "grade": "B"},
+ "coupang_news": {"url": "https://news.coupang.com/archives/65494/", "publisher": "쿠팡 뉴스룸", "date": "2026-08-07", "grade": "A"},
+ "relevant_audience": {"url": "https://www.relevantaudience.com/ecommerce-marketing/adobe-2026-holiday-forecast-275-billion-ai-traffic-130-percent/", "publisher": "Relevant Audience (Adobe 홀리데이 2026 예측 재인용)", "date": "2026-10-03", "grade": "B"},
+})
+def _get(i): return next(r for r in records if r["id"] == i)
+def revise(i, kind, why, **ch):
+    r = _get(i)
+    r.setdefault("revisions", []).append({"on": CHG, "kind": kind, "before": r.get("statement") if "statement" in ch else None, "why": why})
+    r.update(ch)
+
+# --- 지표 ---
+revise("C1-M-003", "상충", "2024년 값(60.45%)은 Datos 패널, 2026년 값은 Similarweb 패널이라 같은 사용자·기기가 아니어서 직접 비교할 수 없다.",
+    statement="2026년 1~4월 미국 구글 검색(브라우저 검색만, 앱 제외)의 68.01%가 클릭 없이 끝났다. 2024년 Datos 패널의 60.45%와는 패널이 달라 직접 비교하지 않는다.",
+    prev_value=None, extra={"2024_datos_panel": "60.45% (패널이 달라 비교 불가)"},
+    definition="SparkToro, Similarweb 웹 패널 기준 zero-click 비율(구글 브라우저 검색만, 앱 제외, 약 2/3 모바일)",
+    check_flags=["2024년 60.45%는 Datos 패널이라 증가폭으로 쓰지 않음"])
+revise("C1-M-007", "누락정정", "기준 시점이 '2026-C1'로 잘못 표기돼 있었다.", as_of="2026-Q1",
+    check_flags=["'1년 전 38% 낮음'은 Decrypt(B)만 직접 적었고 Adobe 원문 PDF에는 없음"])
+revise("C1-M-009", "상충", "Criteo 보도자료는 마켓플레이스 59%, 검색 엔진 20%의 '이용 비중이 높게 나타났다'고만 적어, 순위·단일 선택으로 읽을 수 없다.",
+    statement="한국 소비자의 제품 탐색 시작점으로 마켓플레이스(59%)와 검색 엔진(20%)의 이용 비중이 높게 나타났다(질문 문구·복수응답 여부는 보도자료에 없음).",
+    check_flags=["질문 문구와 복수응답 여부가 문서에 없음 — 같은 59%가 다른 문항에도 쓰이므로 이 문항으로 한정해 인용"])
+revise("C1-M-011", "누락정정", "32%는 선택을 소비자가 확인하고 결제는 직접 하는 응답이며, 74%는 원문에서 두 가지 뜻으로 쓰여 정의가 불명확하다.",
+    statement="16개국 소비자 중 32%는 예산·선호 등 경계 안에서 AI 에이전트가 고르게 하되 선택 확인과 결제는 직접 하겠다고 했고, 구매 완료까지 자율로 허용하겠다는 응답은 9%였다(의향 설문).",
+    extra={"conditional_choice": "32%", "trust_more_than_friend": "74% (원문에서 '친구보다 신뢰'와 '반복 업무 실행 허용' 두 뜻으로 쓰여 정의 불명, 사용하지 않음)"},
+    check_flags=["발행일이 원문에 없음", "위임 판정 확인 필요: 9%는 의향 수치이고, 경험 수치(C1-M-019)는 5~26%로 분모가 달라 직접 비교할 수 없음"])
+revise("C1-M-012", "상충", "미국 탐색 판정에 쓰인 '주 쇼핑 수단' 14%·AI Mode 0.34%와 이용 설문(61.5%, NIQ 42%)은 측정 기준이 달라 서로 어긋난다.",
+    statement="미국·영국 소비자 2,000명(합산)의 61.5%가 상품 탐색에 AI를 썼지만 55.0%는 AI 에이전트의 대리 구매가 불편하다고 답했다.",
+    as_of="2026-Q1",
+    check_flags=["탐색 판정 확인 필요: 이용 경험 설문(61.5%, C1-M-018 NIQ 42%)과 '주 쇼핑 수단' 기준(14%)이 달라 미국 탐색 단계가 확정되지 않음", "미국·영국 합산 표본, 조사 기간이 원문에 없음"])
+revise("C1-M-014", "갱신", "네이버가 2026-07-15 AI탭 이용자 1000만 명 돌파를 발표해 400만 명(6월 26일)은 지난 값이 됐다.",
+    statement="네이버 AI탭은 베타 2개월 동안 누적 사용자 400만 명, 상품·장소 카드 클릭률 각각 20% 이상을 기록했고(2026-06-26 발표), 7월 15일에는 이용자 1000만 명 돌파를 발표했다(집계 기준·기간은 기사에 정의 없음).",
+    value=1000, unit="만 명(발표, 정의 불명)", as_of="2026-07", extra={"june_26_cumulative_beta": "400만 명(베타 약 2개월)", "daily_questions_vs_beta": "7배", "questions_per_user_vs_beta": "1.7배"},
+    sources=src("mtn_ai_tab", "naver_ai_tab_pr", "naver_ai_tab"),
+    check_flags=["네이버 원문 미확인(MTN 기사만 직접 확인)", "1000만 명의 누적 여부·집계 기간 불명 — 400만 명과 직접 비교하지 않음"])
+
+# --- 신규 지표 ---
+add(id="C1-M-016", type="지표", indicator="C1-T2", importance=3, added_on=CHG,
+    statement="2026년 2월 미국 성인의 49%가 AI 챗봇을 쓴다고 답했다(ChatGPT 44%, 매일 24%, 정보 검색 용도 42%). 2024년 33%는 챗봇을 들어본 사람만 대상이라 직접 비교하지 않는다.",
+    value=49, unit="%", as_of="2026-02-17~23", region="US", definition="Pew Research Center, 미국 성인 5,119명, AI 챗봇 이용",
+    sources=src("pew_ai26"), verified=True, check_flags=["쇼핑 용도 수치는 없음", "Menlo(C1-M-017)와 정의가 달라 섞어 쓰지 않음"])
+add(id="C1-M-017", type="지표", indicator="C1-T2", importance=3, added_on=CHG,
+    statement="2026년 7월 조사에서 미국 성인의 64%가 AI를 쓴다고 답했다(전년 61%, 매일 25%).",
+    value=64, unit="%", as_of="2026-07", region="US", definition="Menlo Ventures State of Consumer AI 2026, 미국 성인 5,067명(Morning Consult 패널 표본 설계), AI 이용", prev_value=61,
+    sources=src("menlo"), verified=True, check_flags=["VC 자체 조사 — Pew(C1-M-016)와 정의가 달라 섞어 쓰지 않음"])
+add(id="C1-M-018", type="지표", indicator="C1-T5", importance=3, added_on=CHG,
+    statement="미국 소비자 42%가 최근 1개월 내 AI 도구로 쇼핑했다(상품 추천 17%, AI 쇼핑 어시스턴트 10%, 완전 자율 에이전트 주문 5%). 쇼핑에 AI를 쓰는 사람 중에서는 가격 비교 50%, 후보 압축 43%, AI 추천으로 최종 결정 37%였다(Menlo).",
+    value=42, unit="%", as_of="2026 초", region="US", definition="NielsenIQ, 미국 월 약 500명 표본, 최근 1개월 내 AI 도구 쇼핑 이용(이용 경험). Menlo 수치의 분모는 '쇼핑에 AI를 쓰는 사람'",
+    extra={"menlo_denominator": "쇼핑 AI 이용자"}, sources=src("niq", "menlo"), verified=True,
+    check_flags=["표본이 월 약 500명이고 'AI tool' 정의가 없음 — 확인 필요", "이용 경험 설문이라 '주로 AI로 한다'는 판정 기준 분모와 다름", "Menlo 비율은 전체 성인 비율이 아님"])
+add(id="C1-M-019", type="지표", indicator="C1-T6", importance=3, added_on=CHG,
+    statement="미국에서 쇼핑에 AI를 쓰는 사람 중 26%가 AI에 구매 완료를 맡겼다(Menlo, 2026-07). 미국 성인 대상으로는 11%가 AI로 거래를 완료했고(NMI, 1,000명), 5%가 완전 자율 에이전트로 주문했다(NIQ).",
+    value=26, unit="%(쇼핑 AI 이용자 중)", as_of="2026-07", region="US", definition="Menlo(분모: 쇼핑 AI 이용자), NMI(미국 성인 1,000명, 분모 정의 없음), NIQ(월 약 500명) 경험 수치",
+    extra={"menlo_no_final_approval": "AI 이용자 중 32%가 최종 승인 없이 AI가 행동한 적 있음(이메일 등 포함)", "nmi": "11%", "niq": "5%"},
+    sources=src("menlo", "nmi", "niq"), verified=True,
+    check_flags=["위임 판정 확인 필요: 분모가 조사마다 달라 직접 비교·환산할 수 없고 'AI가 구매 완료'가 완전 자율인지 불명", "의향 수치(C1-M-011 9%)와 구분해 인용"])
+add(id="C1-M-020", type="지표", indicator="C1-T8", importance=3, added_on=CHG,
+    statement="2026년 7월 한국 모바일 앱 MAU에서 구글(47.02M)이 네이버(46.85M)를 Mobile Index 집계(2021-03~) 이래 처음 앞질렀다. ChatGPT 앱 MAU는 Mobile Index 16.46M, Wiseapp·Retail 23.67M(측정 방식 상이)이다.",
+    value=47.02, unit="백만 MAU(구글 앱)", as_of="2026-07", region="KR", definition="Mobile Index 앱 MAU(네이버 46.85M). ChatGPT는 Mobile Index와 Wiseapp·Retail 값이 달라 합산하지 않음",
+    extra={"naver": "46.85M", "gemini_wiseapp": "9.47M", "claude_wiseapp": "3.44M"},
+    sources=src("dataeconomy"), verified=True, check_flags=["앱 MAU는 검색 사용량·점유율이 아님", "업체별 ChatGPT 수치는 합산·혼용 금지"])
+add(id="C1-M-021", type="지표", indicator="C1-T4", importance=2, added_on=CHG,
+    statement="Adobe가 2026년 홀리데이 시즌(11/1~12/31) 미국 리테일 AI 유입 트래픽이 전년 대비 130% 늘 것으로 예측했다(2026-09-28).",
+    value=130, unit="% YoY(예측)", as_of="2026-11~12 예측", region="US", definition="Adobe 홀리데이 2026 예측(Relevant Audience 재인용), 실적이 아닌 예측",
+    sources=src("relevant_audience"), verified=True, verified_note="Relevant Audience 기사만 직접 확인",
+    check_flags=["Adobe 원문 미확인 — 확인 필요", "예측치이며 실적이 아님"])
+
+# --- 사건 ---
+revise("C1-E-002", "누락정정", "OpenAI는 Instant Checkout 단독 기능만 후순위로 돌렸고 ChatGPT 안 앱 구매와 판매자 자체 체크아웃은 병행된다.",
+    statement="OpenAI가 Instant Checkout 단독 기능을 후순위로 돌리고, 구매는 ChatGPT 안의 리테일러 앱이나 판매자 자체 체크아웃에서 끝내는 방식을 병행하기로 했다.",
+    sources=src("openai_pivot", "m4e", "techcrunch_oai", "shopify"))
+revise("C1-E-003", "누락정정", "Google 원문은 UCP가 발표일부터 사용 가능하고 AI Mode·Gemini의 구매 버튼은 '곧' 열린다고 적었다.",
+    statement="Google이 개방형 Universal Commerce Protocol(UCP)을 발표했다. UCP는 발표일부터 사용할 수 있고, AI Mode·Gemini의 구매 버튼(Google Pay 결제)은 곧 열린다고 밝혔다.",
+    sources=src("google_nrf", "emarketer"), verified=True, check_flags=["구매 버튼의 실제 공개 시점은 미확인"])
+revise("C1-E-010", "누락정정", "Google 기조연설 원문에서 월 10억 명은 확인되나 '질의량이 분기마다 2배 이상' 문구는 이 페이지에 없다.",
+    statement="Google이 I/O 2026(5-19) 기조연설에서 AI Mode 월 활성 사용자가 출시 1년 만에 10억 명을 넘었고 Gemini 앱은 월 9억 명을 넘었다고 밝혔다.",
+    date="2026-05-19", sources=src("google_io", "sparktoro"), verified=True,
+    check_flags=["SparkToro가 인용한 '질의량이 분기마다 2배 이상' 문구는 기조연설 페이지에서 확인되지 않아 뺐음 — 확인 필요", "AI Mode 월 활성 10억 명과 미국 브라우저 패널 0.34%는 범위·정의가 달라 조정하지 않음"])
+add(id="C1-E-012", type="사건", importance=3, added_on=CHG,
+    statement="Amazon이 Rufus를 Alexa for Shopping으로 바꾸고 'Buy for Me'로 Amazon 밖 쇼핑몰의 구매를 대행하게 했다(미국 출시).",
+    date="2026-05-13", actor="Amazon", sources=src("resultsense"), verified=True, check_flags=["Amazon 원문·TechCrunch(5/13) 미확인 — 출시 일자는 기사 인용", "출시만 확인되고 이용 데이터는 없음"])
+add(id="C1-E-013", type="사건", importance=2, added_on=CHG,
+    statement="미 제9순회항소법원이 Amazon의 Perplexity Comet 쇼핑 에이전트 접근 금지 가처분을 파기했다(CFAA 위반 가능성 입증 부족, 에이전트는 사용자가 지시할 때만 작동). 본안은 계속된다.",
+    date="2026-08-04", actor="미 제9순회항소법원", sources=src("engadget"), verified=True, check_flags=["판결문 미확인 — 일자는 기사 게재일", "본안 진행 중"])
+add(id="C1-E-014", type="사건", importance=2, added_on=CHG,
+    statement="카카오가 2분기 실적 콜에서 카카오톡 AI 에이전트의 첫 외부 파트너로 쿠팡이츠를 밝혔다(채팅방 안에서 메뉴 추천·주문·결제 예정, 출시는 '가까운 시일').",
+    date="2026-08-06", actor="카카오", sources=src("digitaltoday", "coupang_news"), verified=True,
+    check_flags=["파트너십 최종 체결 전", "쿠팡 8/07 보도자료에는 요약·비교 기능만 있고 대리 구매 언급 없음"])
+
+# --- 해석 ---
+revise("C1-I-001", "갱신", "전용 AI 검색 이용이 '작다'는 단정은 측정 범위에 따라 달라, 미국 브라우저 패널 0.34%와 Google의 월 활성 10억 명이 함께 있다.",
+    statement="정보 탐색의 끝점이 웹사이트에서 검색 결과 화면의 AI 답변으로 옮겨가고 있다. 전용 AI 검색(AI Mode)은 미국 브라우저 패널(앱 제외)에서 구글 검색의 0.34%이지만 Google은 월 활성 10억 명을 넘었다고 밝혀, 범위가 달라 이용 규모를 한쪽으로 단정하기 어렵다.",
+    basis=["C1-M-003", "C1-M-004", "C1-M-005", "C1-E-010"])
+revise("C1-I-003", "누락정정", "ChatGPT 대화 안 결제 철회와 리테일러 중심 수렴은 단정이고, Instant Checkout 단독 기능만 후퇴했으며 Amazon은 타 쇼핑몰 구매 대행을 출시했다.",
+    statement="소비자는 조건부 선택까지는 맡기겠다고 하지만 결제 위임은 소수다. 공급 쪽은 OpenAI가 Instant Checkout 단독 기능을 후순위로 돌리고 앱·판매자 체크아웃을 병행하는 한편, Amazon은 Buy for Me로 다른 쇼핑몰 구매까지 대행해, 위임이 한 가지 형태로 수렴하지 않고 여러 방식이 병행되고 있다.",
+    basis=["C1-M-011", "C1-M-012", "C1-M-019", "C1-E-001", "C1-E-002", "C1-E-012"])
+revise("C1-I-004", "상충", "구글 앱 MAU가 네이버를 처음 앞섰고 ChatGPT 앱도 1,646만~2,367만 MAU인 반면 네이버 AI탭은 1000만 명 돌파를 발표해, 기존 플랫폼의 탐색 흡수를 한쪽으로 단정할 수 없다.",
+    statement="한국에서 네이버 같은 기존 플랫폼 안의 AI가 탐색을 흡수하고 있다고 단정하기는 이르다. 네이버 AI탭은 이용자 1000만 명 돌파를 발표했지만 2026년 7월 앱 MAU에서 구글이 네이버를 처음 앞섰고 ChatGPT 앱도 1,646만~2,367만 MAU다(앱 MAU는 검색 사용량이 아니고 업체별 값이 다르다). 탐색 시작점으로는 마켓플레이스 이용 비중이 높다.",
+    direction="중립", basis=["C1-M-009", "C1-M-010", "C1-M-014", "C1-M-015", "C1-M-020", "C1-E-007", "C1-E-009"])
+revise("C1-I-006", "누락정정", "Adobe 홀리데이 2026 예측(+130%)이 7월 +62%보다 높아 증가율이 단조 감소하지 않으며, 둔화 원인은 확인되지 않았다.",
+    statement="미국 AI 유입 트래픽의 증가율은 1분기 393%에서 7월 62%로 낮아졌지만 Adobe의 홀리데이 2026 예측은 130%로 다시 높아, 증가율이 단조 감소하지는 않는다. 둔화의 원인은 확인되지 않았고, 전환율은 7월에도 비AI 유입보다 60% 높게 유지됐다.",
+    basis=["C1-M-006", "C1-M-007", "C1-M-021"])
+
+# --- 전망 ---
+_f1 = _get("C1-F-001")
+revise("C1-F-001", "전망 점검", "Adobe가 2026-09-28 홀리데이 예측으로 AI 유입 +130% YoY를 내놓아 100% 미만 전망과 상반되는 근거가 생겼다. 예측이며 실적은 아니다.",
+    basis=["C1-M-006", "C1-M-007", "C1-M-021", "C1-I-006"],
+    check_flags=["Adobe 홀리데이 예측 +130%(C1-M-021)는 실적이 아닌 예측이고 Adobe 원문 미확인 — 확인 필요"])
+revise("C1-F-002", "판정 기준 보완", "2026-03-24 이후에도 ChatGPT 안 앱·앱 내 브라우저 구매가 가능해, 판정 대상을 'Instant Checkout 복귀'로 한정해야 맞고 틀림을 가릴 수 있다.",
+    statement="2027년 3월 말까지 OpenAI가 Instant Checkout(ChatGPT 대화 안에서 결제까지 끝내는 기능)을 미국 전체 사용자 대상으로 다시 출시하지 않을 것이다.",
+    method="OpenAI 공식 발표·도움말에서 Instant Checkout 복귀 여부 확인. ChatGPT 안 앱·판매자 체크아웃 연결 방식은 이미 가능하므로 판정에서 제외",
+    basis=["C1-E-002", "C1-M-012", "C1-I-003"],
+    check_flags=["현재 ChatGPT 안 판매자 결제 방식은 미확인"])
+revise("C1-F-003", "판정 기준 보완", "언론은 네이버가 4분기 중 AI탭 광고를 '검토'한다고 전했을 뿐 직접 발언이 없고, AI브리핑 광고(2026-07-21 적용)는 다른 상품이다.",
+    statement="네이버는 2026년 안에 AI탭 광고 상품 도입을 공식 발표할 것이다.",
+    method="네이버 보도자료·실적발표·공식 발언에서 AI탭 광고 도입 확인. 언론의 '검토' 보도와 AI브리핑 광고(2026-07-21 적용)는 제외",
+    check_flags=["첫 판정 기회는 3분기 실적 발표(11월 초 예상, 날짜 미확인)"])
+revise("C1-F-101", "판정 기준 보완", "마일스톤과 판정 방법의 대상(ChatGPT·Gemini / 미국 주요 AI 서비스, 장바구니 담기 / 장바구니·결제 연결)이 달랐고 15%의 조사 출처가 없었다.",
+    statement="2027년 말까지 AI는 반복 구매와 저관여 상품에서 '결정'을 대신하기 시작한다. 미국에서는 ChatGPT·Gemini 중 하나 이상에서 대화 안 결제가 전체 사용자에게 다시 열리고, 한국에서는 네이버 쇼핑 에이전트에 대화 중 장바구니 담기가 들어간다. Accenture 조사에서 결제까지 AI에 맡기겠다는 소비자는 15%를 넘는다.",
+    milestones=[
+        {"by": "2026-12", "text": "네이버 쇼핑 에이전트에 대화 중 장바구니 담기 출시, AI탭 광고 도입 발표"},
+        {"by": "2027-06", "text": "ChatGPT·Gemini 중 하나 이상이 미국 전체 사용자에게 대화 내 결제 제공(Copilot 제외)"},
+        {"by": "2027-12", "text": "Accenture 조사에서 결제 위임 의향 15% 이상, 한국 '결정' 단계가 확산으로 이동"}],
+    method="세 가지 중 두 가지 이상 충족 시 적중: (1) ChatGPT 또는 Gemini가 미국 전체 사용자에게 대화 안 결제 제공(이미 라이브인 Copilot Checkout 제외) (2) Accenture Consumer Pulse의 완전 자율 구매 허용 응답 15% 이상(다른 조사의 경험 수치는 제외) (3) 네이버 쇼핑 에이전트의 대화 중 장바구니 담기 출시")
+revise("C1-F-102", "판정 기준 보완", "낙관 시나리오(F-101)의 판정 대상을 Instant Checkout 복귀, Accenture 15%, 대화 중 장바구니 담기로 정의한 것에 맞췄다.",
+    statement="2027년 말에도 AI는 '추천'까지만 대신한다. 결정과 결제는 리테일러 사이트와 앱에 남고, AI는 그 앞의 검색·비교 창구 역할에 머문다. Accenture 조사의 결제 위임 의향은 10% 안팎에 머물고, 한국은 기존 플랫폼 안 AI가 검색을 대체할 뿐 구매 결정은 소비자가 계속 쥔다.",
+    milestones=[
+        {"by": "2027-01", "text": "Adobe 연말 집계에서 AI 유입 트래픽 증가율이 100% 아래로 둔화"},
+        {"by": "2027-03", "text": "ChatGPT Instant Checkout 복귀 없음, 리테일러 앱 연결 방식 유지"},
+        {"by": "2027-12", "text": "Accenture 조사 결제 위임 의향 15% 미만 유지, 한국 '결정' 단계는 얼리어답터에 머묾"}])
 
 # ---------- 검증 ----------
 ids = {r["id"] for r in records}

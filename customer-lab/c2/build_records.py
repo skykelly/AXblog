@@ -145,6 +145,156 @@ add(id="C2-F-102", type="전망", importance=3, status="유효", forecast_status
     basis=["C2-E-002", "C2-M-001", "C2-M-004", "C2-M-007", "C2-E-007"],
     signposts=[{"id": "C2-F-001", "on_hit": "비관"}, {"id": "C2-F-004", "on_hit": "비관"}, {"id": "C2-F-005", "on_hit": "비관"}], result=None)
 
+
+# ---------- 정정·추가 (2026-10-11 검증 반영, probe_20261011/verification_report.md) ----------
+# 원본 기록은 ID를 유지한 채 고치고, 고치기 전 진술과 이유를 revisions에 남긴다. 새 기록은 added_on으로 구분한다.
+CHG = "2026-10-11"
+SRC.update({
+ "amzn_q2": {"url": "https://www.aboutamazon.com/news/company-news/amazon-ceo-andy-jassy-stores-growth-ai-shopping-q2-2026-earnings", "publisher": "Amazon (2026 2분기 실적 발표)", "date": "2026-07-30", "grade": "A"},
+ "amzn_q2_pdf": {"url": "https://s2.q4cdn.com/299287126/files/doc_earnings/2026/q2/earnings-result/AMZN-Q2-2026-Earnings-Release.pdf", "publisher": "Amazon (2026 2분기 실적 릴리스)", "date": "2026-07-30", "grade": "A"},
+ "amzn_q1_sec": {"url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000012/amzn-20260331xex991.htm", "publisher": "Amazon (2026 1분기 실적 릴리스, SEC)", "date": "2026-04-30", "grade": "A"},
+ "fn_naver_shop": {"url": "https://www.fnnews.com/news/202609270633124595", "publisher": "파이낸셜뉴스", "date": "2026-09-27", "grade": "B"},
+ "zdnet_kakao": {"url": "https://zdnet.co.kr/view/?no=20260806111654", "publisher": "ZDNet Korea (카카오 2분기 콜)", "date": "2026-08-06", "grade": "B"},
+ "newsis_kakao_q2": {"url": "https://www.newsis.com/view/NISX20260806_0003738743", "publisher": "뉴시스 (카카오 2분기 콜)", "date": "2026-08-06", "grade": "B"},
+ "naver_q2_pr": {"url": "https://www.navercorp.com/media/pressReleasesDetail?seq=10034577", "publisher": "네이버 보도자료 (2분기 실적)", "date": "2026-08", "grade": "A"},
+ "daum_naver_brief": {"url": "https://v.daum.net/v/20260703000247237", "publisher": "다음 뉴스 (네이버 AI 브리핑 광고)", "date": "2026-07-03", "grade": "B"},
+ "openai_ads": {"url": "https://openai.com/index/testing-ads-in-chatgpt/", "publisher": "OpenAI (Testing ads in ChatGPT)", "date": "2026-02-09", "grade": "A"},
+ "yahoo_oai_ads": {"url": "https://finance.yahoo.com/media-advertising/articles/openai-chatgpt-ads-hit-1-132117654.html", "publisher": "Yahoo Finance (CNBC 인용)", "date": "2026-08-31", "grade": "B"},
+ "mr_ic": {"url": "https://www.modernretail.co/technology/what-went-wrong-with-chatgpts-instant-checkout/", "publisher": "Modern Retail", "date": "2026-03", "grade": "B"},
+ "dc360_oai": {"url": "https://www.digitalcommerce360.com/2026/03/24/openai-agentic-commerce-updates-chatgpt-walmart/amp/", "publisher": "Digital Commerce 360", "date": "2026-03-24", "grade": "B"},
+ "dc360_perplexity": {"url": "https://digitalcommerce360.com/2026/03/18/court-grants-perplexity-access-amazon-agentic-ai/", "publisher": "Digital Commerce 360", "date": "2026-03-18", "grade": "B"},
+ "mediapost_9c": {"url": "https://www.mediapost.com/publications/article/417793/appeals-court-again-rejects-amazon-bid-to-block-pe.html", "publisher": "MediaPost", "date": "2026-09-11", "grade": "B"},
+ "cooley_9c": {"url": "https://www.cooley.com/news/insight/2026/2026-08-06-ninth-circuit-rules-on-ai-agent-access-to-third-party-websites-under-cfaa", "publisher": "Cooley (법률 해설)", "date": "2026-08-06", "grade": "A"},
+ "google_blog_ucp": {"url": "https://blog.google/products/ads-commerce/agentic-commerce-ai-tools-protocol-retailers-platforms/", "publisher": "Google 블로그 (UCP 발표)", "date": "2026-01-11", "grade": "A"},
+ "gartner_0708": {"url": "https://www.gartner.com/en/newsroom/press-releases/2026-07-08-gartner-survey-finds-customers-are-three-times-more-likely-to-use-third-party-genai-than-company-provided-chatbots-for-customer-service", "publisher": "Gartner 보도자료 (7월 8일)", "date": "2026-07-08", "grade": "A"},
+ "axios_msft": {"url": "https://www.axios.com/2026/01/08/microsoft-ai-copilot-checkout", "publisher": "Axios (Microsoft Copilot Checkout)", "date": "2026-01-08", "grade": "B"},
+ "ppc_muse": {"url": "https://ppc.land/amazon-blocks-metas-muse-ai-agent-from-shopping-on-its-site/", "publisher": "PPC Land (Amazon의 Meta Muse 차단)", "date": "2026-09-21", "grade": "B"},
+ "tc_agents": {"url": "https://techcrunch.com/2026/10/06/the-next-hurdle-for-ai-agents-getting-websites-to-let-them-in", "publisher": "TechCrunch", "date": "2026-10-06", "grade": "B"},
+ "mc_kr": {"url": "https://www.mastercard.com/news/ap/en/newsroom/press-releases/en/2026/mastercard-completes-korea-s-first-live-agentic-transactions-unlocking-trusted-ai-powered-commerce/", "publisher": "Mastercard 보도자료 (한국 첫 라이브 에이전틱 거래)", "date": "2026-03-17", "grade": "A"},
+ "amzn_branded": {"url": "https://advertising.amazon.com/library/news/branded-conversations-review-requests", "publisher": "Amazon Ads (Branded Conversations)", "date": "2026-09-29", "grade": "A"},
+ "emarketer_pplx": {"url": "https://www.emarketer.com/content/perplexity-retreat-ads-marks-split-on-ai-monetization-models", "publisher": "eMarketer", "date": "2026", "grade": "B"},
+})
+def _get(i): return next(r for r in records if r["id"] == i)
+def revise(i, kind, why, **ch):
+    r = _get(i)
+    r.setdefault("revisions", []).append({"on": CHG, "kind": kind, "before": r.get("statement") if "statement" in ch else None, "why": why})
+    r.update(ch)
+
+# --- 지표 ---
+revise("C2-M-001", "갱신", "Rufus와 Alexa+가 2026-05-13 'Alexa for Shopping'으로 통합됐고, 2분기 기준 값(최근 12개월 이용 고객 3.5억 명 이상)이 나와 기간이 다른 값을 함께 적었다.",
+    statement="Amazon 쇼핑 Agent Rufus는 2025년 고객 3억 명이 썼고, 연환산 약 120억 달러의 증분 매출을 만들었다. 2026-05-13 Rufus와 Alexa+는 'Alexa for Shopping'으로 통합됐고, 2분기(7월 30일 발표) 기준 최근 12개월 이용 고객은 3.5억 명 이상이다(기간이 달라 증가율로 계산하지 않는다).",
+    check_flags=["3억 명(2025년)과 3.5억 명(최근 12개월)은 기간이 달라 비교 금지", "2025년 값 원문(Q4'25 실적)은 직접 열람 못 하고 Modern Retail(B)로 확인 — 확인 필요", "미국 이용 고객의 주문당 지출 40% 이상은 이용자-비이용자 비교이며 인과 아님"],
+    sources=src("mr_rufus", "amzn_q2", "amzn_q2_pdf"))
+revise("C2-M-004", "갱신", "2분기 값(198.09억 달러, +26%)이 나왔고, 1분기 +24%는 환율 제외 시 +22%다.",
+    statement="Amazon 광고 매출은 2026년 2분기 198.09억 달러로 전년 대비 26%(환율 영향 없음) 늘었다. 1분기 172.43억 달러의 +24%는 환율 제외 시 +22%다.",
+    value=26, as_of="2026-Q2", prev_value=24, extra={"ad_revenue": "198.09억 달러", "q1_ad_revenue": "172.43억 달러(+24%, 환율 제외 +22%)"},
+    check_flags=["2분기는 Prime Day가 대부분 국가에서 2분기로 이동해 전년 동기 대비가 부풀려질 수 있음", "분기끼리 성장률을 비교하지 않음"],
+    sources=src("amzn_q2_pdf", "amzn_q1_sec"))
+revise("C2-M-005", "상충", "Amazon 원문은 '프롬프트와 상호작용한 쇼핑객의 거의 20%가 그 브랜드 대화를 이어간다'이며 '스폰서'라는 한정이 없다.",
+    statement="Rufus 안의 브랜드 프롬프트와 상호작용한 쇼핑객의 거의 20%가 그 브랜드에 대한 대화를 이어갔다(Amazon 1분기 릴리스 표현, 스폰서 한정 없음).",
+    check_flags=["스폰서 프롬프트는 2025-11 무료 베타 후 2026-03-25 클릭당 과금으로 전환", "2분기 구매 전환 +48%·지출 +21%는 ppc.land(B) 인용이라 실적 원문에서 확인 못 함 — 확인 필요"],
+    sources=src("amzn_q1_sec", "mr_rufus"))
+revise("C2-M-006", "전망 점검", "C등급 단일 모니터링 업체 값이며 글 날짜와 기준 시점이 달라 판단 근거에서 계속 제외한다. OpenAI 1차 페이지는 노출 비율을 공개하지 않는다.",
+    check_flags=["출처 등급 C(단일 모니터링 업체) — 판단 근거에서 제외", "글 날짜(2026-09-15)와 기준 시점(2026-07)이 달라 확인 필요"])
+revise("C2-M-007", "누락정정", "Gartner 원문은 '약 3배 더 이용할 가능성'이고 가장 최근 서비스 상호작용 기준이며 절대 이용률과 조사 지역은 공개되지 않았다. 3배 비율의 출처는 7월 8일 릴리스다.",
+    statement="최근 고객 서비스 상호작용에서 고객은 기업이 제공한 챗봇보다 ChatGPT·Gemini 같은 서드파티 AI를 약 3배 더 이용할 가능성이 높았다(절대 이용률은 공개되지 않음). 서드파티 생성형 AI 이용은 1년간 거의 2배가 됐고 기업 챗봇 이용은 2022년 이후 통계적으로 변하지 않았다.",
+    unit="배(이용 가능성)", region="미명시", check_flags=["조사 지역이 릴리스에 명시되지 않음", "58%(생성형 AI 이용자 분모)·87%(전체 응답자 분모)는 분모가 달라 혼용 금지"],
+    sources=src("gartner_0708", "gartner_cs"))
+revise("C2-M-010", "상충", "공동 개발 5곳과 지지(endorse) 20곳 이상을 구분하지 않았다.",
+    statement="Google의 Universal Commerce Protocol은 Shopify·Etsy·Wayfair·Target·Walmart 5곳이 공동 개발했고, Adyen·Amex·Best Buy·Stripe·Visa 등 20곳 이상이 지지했다. 출시 시점 체크아웃과 Business Agent는 미국 리테일러 한정이었다.",
+    sources=src("google_blog_ucp", "aa_ucp"), check_flags=["9to5google은 공동 개발을 4곳(Walmart 제외)으로 적었으나 Google 1차 글(5곳)을 따름"])
+revise("C2-M-012", "상충", "3,100만 명은 '카나나 인 카카오톡을 내려받을 수 있는 이용자(연말 전망)'이지 에이전트를 쓰는 이용자가 아니다. 2분기 콜에는 3,100만이 나오지 않았다.",
+    statement="카카오는 1분기 콜에서 카카오톡 안 AI 서비스(카나나)를 내려받을 수 있는 이용자가 2026년 말 3,100만 명(1분기 카톡 MAU 4,957.5만 명의 약 62%)이 될 것으로 봤다. 2분기 콜(2026-08-06)에는 이 수치가 나오지 않았고, 연말 목표는 카톡 안에서 AI를 접하는 월간 활성 이용자 1,000만 명이며 챗GPT 포 카카오 누적 이용자는 1,300만 명이다.",
+    unit="만 명(다운로드 가능 이용자 전망)", check_flags=["3,100만(다운로드 가능)·1,000만(MAU 목표)·1,300만(누적)은 분모가 달라 같은 규모로 읽지 않음", "카카오 IR 원문은 미열람 — 기사 기준"],
+    sources=src("kakao", "zdnet_kakao"))
+revise("C2-M-013", "갱신", "6월 값(거래액 2.7배 이상)이 8월 기준 값(월간 이용자 약 5배, 일평균 거래액 약 4배)으로 이어졌다. 지표 정의가 달라 섞지 않는다.",
+    statement="네이버 쇼핑 AI 에이전트는 출시 초기(3월) 대비 8월 기준 월간 이용자·일평균 대화 수가 약 5배, 에이전트 일평균 거래액이 약 4배로 늘었다(2026-09-27 보도). 6월 시점 값은 거래액 2.7배 이상이었다. 에이전트 안 결제는 연내 일부 상품군 시범 적용을 계획 중이다.",
+    value=4, unit="배(에이전트 일평균 거래액, 3월 대비 8월)", prev_value=2.7, as_of="2026-08",
+    check_flags=["6월 지표와 8월 지표는 정의가 달라 섞지 않음", "절대 이용자 수·거래액은 미공개", "기준 시점 '지난달'은 보도일 기준 8월로 추정"],
+    sources=src("fn_naver_shop", "naver_shop_ga"))
+
+# --- 사건 ---
+revise("C2-E-002", "누락정정", "광고 시험을 실제로 시작한 날은 2026-02-09이고 1월 16일은 '곧 보이겠다'는 계획 발표다.",
+    statement="OpenAI가 미국 ChatGPT 무료·Go 요금제에서 광고 시험을 시작했다(2026-02-09). 1월 16일에는 시작 계획을 발표했다. 광고는 '스폰서' 라벨로 유기적 답변과 구분되는 지면에 붙는다.",
+    date="2026-02-09", sources=src("openai_ads", "sa_ads"))
+revise("C2-E-003", "누락정정", "2026-03-09 가처분은 시행 직전인 03-16 제9순회 항소법원의 행정정지로 일시 효력이 멈췄고, 효력 범위는 Amazon의 비밀번호 보호 영역으로 한정됐다.",
+    statement="미국 법원이 Perplexity의 쇼핑 Agent(Comet)가 Amazon에서 대신 쇼핑하는 것을 막는 가처분을 내렸다(2026-03-09). 시행 직전인 3월 16일 제9순회 항소법원의 행정정지로 효력이 일시 멈췄고(Comet은 계속 접근 가능), 효력 범위는 Amazon의 비밀번호 보호 영역으로 한정됐다.",
+    check_flags=["정지가 정식 '항소 중 집행정지'인지는 MediaPost가 불명확하다고 적음"], sources=src("gw_amzn", "dc360_perplexity"))
+revise("C2-E-004", "누락정정", "정확한 날짜는 2026-03-24이고, 완전 폐지가 아니라 '이동'이다(ChatGPT 안 앱 방식은 유지).",
+    statement="OpenAI는 2026-03-24 블로그에서 Instant Checkout 초기 버전이 유연성이 부족했다며 판매자가 자체 체크아웃을 쓰게 하고 상품 발견에 집중하겠다고 밝혔다. Target·Sephora·Nordstrom·Lowe's·Best Buy·Home Depot·Wayfair가 ACP로 상품 발견에 연동했고, Walmart는 계정 연결·자사 결제를 쓰는 앱을 ChatGPT 안에 냈다.",
+    date="2026-03-24", check_flags=["OpenAI 블로그 원문은 못 읽고 B 기사 2건으로 확인", "Walmart 임원의 '챗봇 안 결제 전환율 외부 클릭 대비 약 3배 낮음'은 회사 측 발언"],
+    sources=src("mr_ic", "dc360_oai", "forklog"))
+revise("C2-E-006", "갱신", "2분기 콜(2026-08-06)에서 카톡 에이전트의 첫 외부 버티컬로 쿠팡이츠 연동 계획이 나왔으나 출시일 없이 '구현되면' 단계이고, 3,100만 목표는 언급되지 않았다.",
+    statement="카카오가 카카오톡 안에서 검색·추천·결제까지 이어지는 AI 에이전트를 하반기에 내겠다고 밝혔고(5월 1분기 콜), 4월부터 '선물하기' 연동 베타를 운영 중이다. 8월 6일 2분기 콜에서는 첫 외부 버티컬로 쿠팡이츠 연동(추천→주문→결제를 카톡 안에서)을 밝혔으나 출시일은 없다. 에이전트 커머스 수수료·AI 구독 수익화는 2027년부터, AI 광고는 2028년이 목표다.",
+    check_flags=["결제 연동의 실제 동작은 확인되지 않음"], sources=src("kakao", "newsis_kakao_q2"))
+revise("C2-E-007", "누락정정", "AI탭 정식 출시 발표일은 2026-06-26이다. 네이버는 AI 브리핑에 광고를 이미 붙였고(7월 21일 노출 시작), AI탭 광고는 4분기 '추진·검토' 단계다.",
+    statement="네이버가 AI탭을 전체 이용자에게 정식 출시했고(2026-06-26 발표), 4분기에 AI탭 광고 도입을 추진한다고 밝혔다. 이미 AI 브리핑(검색 상단 AI 요약)에는 광고를 붙였다. 5월 7일~7월 2일 광고주 베타 후 7월 21일부터 노출을 시작했고, 네이버는 기존 검색광고 대비 클릭 전환율 30% 이상·구매 전환율 3배 이상(회사 주장)이라 밝혔다.",
+    date="2026-06-26", check_flags=["AI탭 광고는 확정 일정이 아닌 '4분기 추진' 단계", "AI 브리핑 광고 노출 시작일은 기사(7/21)와 공식(7월 말)이 다름", "전환율 수치는 네이버 주장"],
+    sources=src("segye_ai_tab", "naver_q2_pr", "daum_naver_brief"))
+revise("C2-E-010", "누락정정", "가처분 단계에서 연방 해킹법(CFAA·CDAFA) 청구 성립 가능성이 낮다고 본 것이며 약관·계약 청구는 열려 있고, 9월 10일 재심리 요청이 받아들여지지 않았다.",
+    statement="미국 항소법원(제9순회)이 2026-08-04 Perplexity 쇼핑 Agent에 대한 가처분을 뒤집었다. CFAA·CDAFA 청구만 다뤘고 약관·계약·불법행위 청구는 열려 있으며 본안은 판단하지 않았다. 9월 10일 재심리 요청은 받아들여지지 않아 판결이 유지됐다.",
+    check_flags=["Amazon의 9월 21일 수정 소장 보도는 AI Weekly(등급 C) 단일 출처 — 확인 필요", "판결 원문은 못 읽고 Cooley·eWeek·MediaPost 해설 기준"],
+    sources=src("ew_amzn", "cooley_9c", "mediapost_9c"))
+
+# --- 신규 사건 ---
+add(id="C2-E-012", type="사건", importance=3, added_on=CHG, statement="ChatGPT 광고가 미국 밖으로 확대됐다. OpenAI는 3월 26일 캐나다·호주·뉴질랜드 시범을, 5월 7일 영국·멕시코·브라질·일본·한국 확대를 예고했고 8월 11일 그 5개 시장 출시를 밝혔다. 8월 31일에는 연환산 매출 약 10억 달러, 40개국 이상이 보도됐다.",
+    date="2026-08-11", actor="OpenAI", sources=src("openai_ads", "yahoo_oai_ads"), verified=True,
+    check_flags=["10억 달러·40개국은 Yahoo Finance(CNBC 인용) 2차 — 확인 필요", "한국 시점은 6월 파일럿 보도와 8월 출시 발표가 달라 구분 확인 필요"])
+add(id="C2-E-013", type="사건", importance=2, added_on=CHG, statement="Microsoft가 Copilot 대화 안에서 결제까지 끝내는 Copilot Checkout을 미국에서 발표했다(Shopify·PayPal·Stripe 연동, 리테일러가 판매자 지위 유지).",
+    date="2026-01-08", actor="Microsoft", sources=src("axios_msft"), verified=True, check_flags=["이용 규모 미공개"])
+add(id="C2-E-014", type="사건", importance=3, added_on=CHG, statement="Amazon이 Meta의 개인 에이전트 Muse(9월 8일 출시)가 Amazon.com에서 주문하는 것을 막았다. 무허가 AI 에이전트의 접근은 이용약관 위반이라는 입장이며 법적 조치 여부는 답하지 않았다. Walmart는 Muse와 제휴 관계라고 밝혔다.",
+    date="2026-09-20", actor="Amazon·Meta", sources=src("ppc_muse", "tc_agents"), verified=True, check_flags=["Walmart 언급은 TechCrunch에만 있음"])
+add(id="C2-E-015", type="사건", importance=2, added_on=CHG, statement="Mastercard가 한국 첫 라이브 인증 에이전틱 거래를 완료했다고 발표했다(AI 에이전트가 인천공항→광화문 호텔 차량 예약·결제, Agent Pay 사용). 발급 카드사·은행은 공개되지 않았다.",
+    date="2026-03-17", actor="Mastercard", sources=src("mc_kr"), verified=True, check_flags=["시범성 1건이며 일반 소비자 상용은 아님"])
+add(id="C2-E-016", type="사건", importance=2, added_on=CHG, statement="Amazon이 'Branded Conversations'를 발표했다. 브랜드가 자사 제품 지식을 제공하면 Alexa for Shopping이 '스폰서' 표시로 더 깊은 상담을 하는 광고 상품이며 2027년 1월 미국에서 출시된다.",
+    date="2026-09-29", actor="Amazon", sources=src("amzn_branded"), verified=True)
+
+# --- 해석 ---
+revise("C2-I-001", "단정반증", "'플랫폼 일반'이 광고로 팔기 시작했다는 서술은 Perplexity의 광고 철수, Anthropic·Google(Gemini 앱)의 부인 사례와 맞지 않는다.",
+    statement="발견 접점은 AI 답변 안으로 옮겨가고 있고, 그 지면을 OpenAI·Amazon·Google(AI Mode 테스트)·네이버 등 일부 플랫폼이 광고로 팔기 시작했다. 브랜드는 AI 답변에 노출되려면 그 플랫폼에 광고비를 내는 구조가 생기고 있다. Amazon은 브랜드의 제품 지식까지 광고 상품(Branded Conversations)에 넣으려 한다. Perplexity는 광고에서 철수했다(FT 인용).",
+    basis=["C2-E-002", "C2-M-005", "C2-M-004", "C2-E-007", "C2-E-012", "C2-E-016"])
+revise("C2-I-002", "상충", "근거 수치가 '이용할 가능성의 배수'라 이용 규모(이용 비중)를 직접 보여주지 못한다.",
+    statement="상담 접점은 브랜드 밖으로 빠져나가고 있다. 고객은 기업 챗봇보다 범용 AI를 이용할 가능성이 약 세 배 높다(절대 이용률은 공개되지 않음). 다만 87%가 사람 연결을 요구해, 브랜드 상담의 차별점은 'AI 안내 + 사람 연결'로 좁혀지고 있다.")
+revise("C2-I-003", "갱신", "Microsoft Copilot Checkout이 빠져 'AI 화면 안 결제' 주체가 둘 이상임이 드러나지 않았다.",
+    statement="결제 접점은 아직 주인이 정해지지 않았다. Google과 Microsoft는 AI 화면 안 결제로 들어왔고 OpenAI는 Instant Checkout을 판매자 자체 체크아웃 쪽으로 돌렸으며, Amazon은 Perplexity와 법정에서, Meta Muse와는 약관으로 고객 Agent의 접근권을 다투고 있다.",
+    basis=["C2-E-001", "C2-E-004", "C2-E-003", "C2-E-010", "C2-E-013", "C2-E-014"])
+revise("C2-I-004", "단정반증", "외부 범용 AI의 쇼핑 이용 규모를 1차 수치로 확인하지 못해 '가장 앞선'을 비교할 근거가 없고, Rufus는 5월에 Alexa for Shopping으로 통합됐다.",
+    statement="공개된 수치가 가장 많은 쇼핑 Agent는 Amazon의 Alexa for Shopping(옛 Rufus) 같은 플랫폼 자체 Agent다. 이용 고객·매출·전환이 숫자로 공개돼 있고 브랜드 프롬프트로 광고까지 붙었다. 외부 범용 AI와의 이용 규모 비교 수치는 없다.",
+    check_flags=["외부 범용 AI(ChatGPT·Gemini 등)의 쇼핑 이용 규모는 A·B 등급 1차 수치로 확인하지 못함"])
+revise("C2-I-005", "단정반증", "네이버 에이전트 안 결제는 연내 일부 상품군 시범 계획 단계이고, 카카오의 외부 연동은 출시 전이다.",
+    statement="한국은 네이버(검색·쇼핑)와 카카오(메신저·선물하기)가 발견부터 결제까지 자사 안에 묶으려는 단계다. 네이버 에이전트 안 결제는 연내 일부 상품군 시범 계획이고, 카카오는 선물하기 연동 베타 외에 쿠팡이츠 연동을 계획 중이다. 브랜드는 두 플랫폼 안에 입점하는 형태로 Agent 채널에 들어가게 된다.")
+revise("C2-I-006", "단정반증", "3월 Mastercard 한국 라이브 거래가 빠졌고, Visa 명단은 카드사 5곳과 카카오뱅크다.",
+    statement="Agent 결제의 인프라는 준비 단계다. 한국에서는 카드사 5곳과 카카오뱅크가 Visa 프로그램에 들어갔고 Mastercard가 3월 라이브 거래 1건을 시범으로 마쳤지만, 일반 소비자 대상 상용 출시는 확인되지 않았다.",
+    basis=["C2-M-011", "C2-E-005", "C2-E-015"],
+    check_flags=["한국 카드사 발급 상용 서비스가 없다는 것을 직접 확인한 1차 근거는 없음 — 확인 필요"])
+
+# --- 전망 ---
+revise("C2-F-001", "판정 기준 보완", "AI 브리핑 광고(7월 이미 출시)는 AI탭 광고와 다른 지면이다. 지면 단위로 판정 대상을 정했다.",
+    method="네이버 공지로 AI탭 화면에 별도 광고 지면이 열린 것을 확인. AI 브리핑 광고(2026-07 출시)는 제외", basis=["C2-E-007"])
+revise("C2-F-002", "판정 기준 보완", "카카오가 밝힌 첫 외부 연동은 배달 서비스 쿠팡이츠이고 출시 전이며, 카나나 독립 앱 종료로 서비스명이 바뀔 수 있다.",
+    statement="2026년 안에 카카오 공식 발표로 카카오톡 안 주문·결제가 일반 이용자에게 열린 외부 사업자가 1곳 이상 생길 것이다(카톡 안 AI 에이전트 기준).",
+    method="카카오 공식 발표로 카톡 안 주문·결제가 일반 이용자에게 열린 외부 사업자(선물하기 제외) 1곳 이상 확인. 서비스 이름이 바뀌어도 카톡 안 AI 에이전트이면 인정")
+revise("C2-F-003", "전망 점검", "연방 해킹법 쟁점은 8월 판결·9월 재심리 거부로 정리됐으나 Amazon이 주법·불법 간섭·약관 청구로 소송을 이어가고 있어 판정 변수가 바뀌었다. '막힘'의 범위를 명시했다.",
+    method="Amazon v. Perplexity에서 본안 판결·가처분·합의로 접근이 제한된 경우를 모두 '막힘'으로 보고, 법원 명령·합의 내용으로 확인. Perplexity의 자발적 중단(5월 iOS Comet, C등급 보도)은 제외",
+    check_flags=["Amazon의 9월 21일 수정 소장 보도는 C등급 단일 출처 — 확인 필요"], basis=["C2-E-010", "C2-E-003", "C2-E-014"])
+revise("C2-F-004", "판정 기준 보완", "Rufus 명칭이 2026-05-13 사라졌고 2분기 릴리스는 증분 매출 금액 없이 활성 이용자·주문당 지출만 제시해 같은 지표가 이어질지 불확실하다.",
+    method="Amazon 2026년 4분기 실적 발표의 Alexa for Shopping(옛 Rufus) 관련 증분 매출 금액 확인. 금액이 공개되지 않으면 이용 고객 수(최근 12개월)로 대체하지 않고 '판정 불가'로 둠")
+revise("C2-F-005", "판정 기준 보완", "이번 지표가 '이용할 가능성의 배수'이고 절대 이용률이 공개되지 않아 비교 지표를 고정했다.",
+    method="Gartner 2027 고객 서비스 조사에서 서드파티 생성형 AI 이용 가능성이 기업 챗봇보다 높다(배수 1 초과)고 공개되는지 확인. 같은 방식으로 공개되지 않으면 '판정 불가'")
+revise("C2-F-006", "판정 기준 보완", "Mastercard 한국 라이브 거래(3/17, 발급사 비공개)와 Visa Agentic Ready가 이미 있어 '상용 출시'의 경계를 정했다.",
+    method="국내 카드사가 자사 이름으로 일반 회원이 실결제할 수 있는 AI Agent 결제를 공지한 것을 확인. 카드망 사업자(Visa·Mastercard)의 시범 거래와 발급사 비공개 거래는 제외")
+revise("C2-F-101", "판정 기준 보완", "전제와 판정 방법 (1)이 Amazon의 9월 20일 Meta Muse 차단(법원 명령 없는 자체 차단)을 잡지 못했다.",
+    condition="대형 플랫폼이 법원 명령 없이 약관·기술로 외부 Agent를 차단하는 일이 일반화하지 않을 경우",
+    method="세 가지 중 두 가지 이상 충족 시 적중: (1) 고객 Agent의 대형 마켓플레이스 쇼핑 접근이 법원 명령이나 플랫폼의 약관·기술 차단으로 막히지 않음(Amazon의 Meta Muse 차단 이후 상태 기준) (2) 브랜드 자체 Agent가 둘 이상의 AI 플랫폼에서 일반 이용자에게 새로 제공됨(2026-10 시점 기존 사례 제외) (3) 한국 메신저·포털 Agent에 외부 브랜드몰 결제 연결",
+    basis=["C2-E-001", "C2-E-010", "C2-M-010", "C2-E-006", "C2-E-014"])
+revise("C2-F-102", "전망 교체", "이정표 '2026-12 ChatGPT 광고 미국 밖으로 확대'는 기록 시점에 이미 달성돼 있어 판정 변별력이 없다. 광고주 셀프서브 개방 기준으로 바꿨다.",
+    milestones=[
+        {"by": "2026-12", "text": "네이버 AI탭 광고 출시, ChatGPT 광고주 셀프서브가 한국을 포함한 10개국 이상에 개방(미국 밖 확대는 이미 달성)"},
+        {"by": "2027-02", "text": "Amazon의 Alexa for Shopping(옛 Rufus) 기여 매출 또는 이용 고객이 2025년보다 커짐"},
+        {"by": "2027-12", "text": "고객 상담의 첫 창구가 기업 챗봇이 아닌 범용 AI로 굳어짐"}],
+    statement="(브랜드 관점) 2027년 말까지 소수 플랫폼이 발견부터 결제까지 장악한다. AI 답변 안 노출은 광고로 사야 하고, 쇼핑 Agent는 Amazon의 Alexa for Shopping(옛 Rufus)·네이버·카카오처럼 플랫폼 자체 Agent가 주도한다. 브랜드는 판매 데이터와 고객 관계를 플랫폼에 넘기고 상품 공급자 위치로 밀린다.",
+    basis=["C2-E-002", "C2-M-001", "C2-M-004", "C2-M-007", "C2-E-007", "C2-E-012"])
+
 # ---------- 검증 ----------
 ids = {r["id"] for r in records}
 _t = {r["id"]: r["type"] for r in records}

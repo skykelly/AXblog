@@ -136,6 +136,138 @@ add(id="C4-F-102", type="전망", importance=3, status="유효", forecast_status
     basis=["C4-M-001", "C4-M-002", "C4-M-003", "C4-E-004"],
     signposts=[{"id": "C4-F-003", "on_hit": "비관"}, {"id": "C4-F-004", "on_hit": "비관"}], result=None)
 
+
+# ---------- 정정·추가 (2026-10-11 검증 반영, probe_20261011/verification_report.md) ----------
+CHG = "2026-10-11"
+SRC.update({
+ "lg_press": {"url": "https://www.lg.co.kr/media/release/29491", "publisher": "LG전자 보도자료 (씽큐 온)", "date": "2025-10-22", "grade": "A"},
+ "google_home_help": {"url": "https://support.google.com/googlehome/answer/15962877", "publisher": "Google Home 도움말 (Gemini for Home 지원 국가)", "date": "2026-09-30", "grade": "A"},
+ "droidlife_gh": {"url": "https://www.droid-life.com/2025/10/01/gemini-just-replaced-google-assistant-on-your-home-and-nest-devices/", "publisher": "Droid Life (Gemini for Home 발표)", "date": "2025-10-01", "grade": "B"},
+ "aa_alexa_ga": {"url": "https://www.androidauthority.com/amazon-alexa-plus-available-to-everyone-3637981", "publisher": "Android Authority (Alexa+ 미국 전체 개방)", "date": "2026-02-04", "grade": "B"},
+ "amzn_alexa_intl": {"url": "https://www.aboutamazon.com/news/devices/alexa-plus-international-launch", "publisher": "Amazon (Alexa+ 국제 출시)", "date": "2026-09", "grade": "A"},
+ "thurrott": {"url": "https://www.thurrott.com/?p=322573", "publisher": "Thurrott (Alexa+ 얼리액세스)", "date": "2025-06-25", "grade": "B"},
+ "mit_tr_robot": {"url": "https://technologyreview.com/2026/10/08/1145923/ai-breakthroughs-in-robotics-wont-change-your-life-any-time-soon", "publisher": "MIT Technology Review", "date": "2026-10-08", "grade": "B"},
+ "storyboard": {"url": "https://www.storyboard18.com/digital/97-amazon-devices-compatible-with-alexa-as-company-pushes-ai-assistant-adoption-87493.htm", "publisher": "Storyboard18 (Amazon 부사장 발언)", "date": "2026-01", "grade": "B"},
+ "samsung_stnow": {"url": "https://news.samsung.com/global/samsung-introduces-smartthings-now-in-new-platform-update-that-brings-more-intuitive-user-experiences", "publisher": "삼성전자 보도자료 (SmartThings Now)", "date": "2026-10-06", "grade": "A"},
+ "lg_ifa26": {"url": "https://www.lg.com/global/newsroom/news/home-appliance-solution/lg-electronics-unveils-the-next-evolution-of-ai-home-at-ifa-2026/", "publisher": "LG전자 글로벌 뉴스룸 (IFA 2026)", "date": "2026-08-31", "grade": "A"},
+ "aol_romo": {"url": "https://www.aol.com/articles/hacker-says-accidentally-breached-7-224926567.html", "publisher": "AOL (DJI Romo 해킹 보도)", "date": "2026-02", "grade": "B"},
+ "oecd_incident": {"url": "https://oecd.ai/en/incidents/2026-03-10-00b4", "publisher": "OECD.AI 사고 기록", "date": "2026-03-10", "grade": "A"},
+ "pipc_sbs": {"url": "https://biz.sbs.co.kr/amp/article/20000334411", "publisher": "SBS Biz (개인정보위 로봇청소기 점검)", "date": "2026-09-14", "grade": "B"},
+ "sateconomy": {"url": "https://sateconomy.co.kr/news/view/1065619612051680", "publisher": "토요경제", "date": "2025-06-11", "grade": "B"},
+ "x1_neo": {"url": "https://www.1x.tech/discover/neo-factory", "publisher": "1X (NEO 공장)", "date": "2026-04-30", "grade": "A"},
+ "bizwatch_lg": {"url": "https://news.bizwatch.co.kr/article/industry/2026/04/29/0044", "publisher": "비즈워치 (LG CFO 발언)", "date": "2026-04-29", "grade": "B"},
+ "security_info": {"url": "https://www.securityinfowatch.com/residential-technologies/article/55141640/the-smart-money-smart-video-automation-and-ecosystems", "publisher": "Security Business (Parks Associates 인용)", "date": "2024-10-21", "grade": "B"},
+})
+def _get(i): return next(r for r in records if r["id"] == i)
+def revise(i, kind, why, **ch):
+    r = _get(i)
+    r.setdefault("revisions", []).append({"on": CHG, "kind": kind, "before": r.get("statement") if "statement" in ch else None, "why": why})
+    r.update(ch)
+def _more(i, *keys): return _get(i)["sources"] + src(*keys)
+_POP = "오픈서베이 원문: 전국 20~64세 1,500명 중 본 조사 대상은 '가전 구매 결정권자이자 AI 가전 구매 의향자' 1,000명(한국경제는 1,500명 소비자로 표기)"
+
+# --- 지표 ---
+revise("C4-M-001", "상충", "표본 설명 '약 1,500명'이 원문과 다르다. 원문은 구매 의향자 1,000명이 본 조사 대상이라 '한국 소비자 전체'가 아니다.",
+    statement="한국 AI 가전 구매 의향자 중 '신중한 수용자'(45.7%)가 '긍정 수용자'(36.3%)를 처음으로 넘었다. 1년 전에는 긍정 41.1%, 신중 39.7%였다.",
+    definition="오픈서베이 AI 가전 트렌드 리포트, 가전 구매 결정권자이자 AI 가전 구매 의향자 1,000명(전국 20~64세 1,500명 중)",
+    check_flags=["조사 연령이 20~59세에서 20~64세로 넓어져 전년 비교에 주의", _POP, "절대 비율(45.7%·36.3%)은 한국경제(B)에만 있고 오픈서베이 원문은 '+6.0%p, 긍정 수용자를 처음 역전'만 적음"])
+revise("C4-M-002", "상충", "표본이 구매 의향자 1,000명이다. 가격 58.3%와 개인정보 58.2%는 같은 수준일 뿐 개인정보가 앞선 것이 아니다.",
+    statement="AI 가전의 걱정거리로 개인정보 유출을 꼽은 한국 AI 가전 구매 의향자는 58.2%로 1년 새 6.9%p 늘어 가격(58.3%)과 같은 수준이 됐다. 음성·영상 수집 우려도 30.4%(+4.2%p)였다.",
+    definition="오픈서베이, AI 가전 우려 요인(중복응답), 구매 의향자 1,000명", check_flags=[_POP, "58.2%는 한국경제(B)에만 있고 오픈서베이 원문은 '개인정보 유출 6.9% 증가'(%p 여부 불명)만 적음"])
+revise("C4-M-003", "상충", "표본이 구매 의향자 1,000명이다.",
+    statement="'AI가 스스로 판단하는 것이 불편하다'는 응답은 한국 AI 가전 구매 의향자의 15.8%로 1년 새 5.1%p 늘었다.",
+    definition="오픈서베이, AI 가전 우려 요인(중복응답), 구매 의향자 1,000명", check_flags=[_POP])
+revise("C4-M-004", "상충", "일반 인구 비율이 아니라 AI 가전 구매 의향자 중 비율이다. 값은 원문과 일치한다.",
+    statement="AI 기능을 써 본 한국 AI 가전 구매 의향자는 생활가전 51%, 주방가전 39.1%로 1년 새 각각 5.9%p, 6.6%p 늘었다(1위 품목은 주방 냉장고 49.5%, 생활 TV 40.1%).",
+    definition="오픈서베이, AI 기능 경험률, 구매 의향자 1,000명", check_flags=[_POP, "2025 조사(실제 이용 약 10%, 20~59세, 정의 상이)와 직접 비교 금지"])
+revise("C4-M-005", "상충", "표본이 구매 의향자 1,000명이다.",
+    statement="AI 가전을 직접 써 본 한국 AI 가전 구매 의향자는 기대(88%)와 우려(55.4%)가 함께 높아졌다. 1년 전에는 기대 82.7%, 우려 47.5%였다.",
+    definition="오픈서베이, AI 가전 경험자(구매 의향자 1,000명 중)", check_flags=[_POP, "경험자 우려 55.4%는 개인정보 우려 문항(58.2%)과 다른 문항"])
+revise("C4-M-006", "갱신", "'1만 대 이상 예약 5일 만에'는 1X 자체 주장이고 시점은 2025-10-28 출시 직후다. 독립 검증된 주문 수는 없고 배송은 올해 후반 예정이다.",
+    statement="1X는 가정용 휴머노이드 NEO의 첫해 생산분 1만 대 이상이 사전 구매로 5일 만에 팔렸다고 주장했다(2025-10-28 출시 직후, 독립 검증 없음). 가격은 2만 달러 또는 월 499달러 구독이다. 배송은 올해 후반 예정이고 대부분의 일에 원격 운영자가 필요하다고 MIT Technology Review가 전했다.",
+    as_of="2025-10", check_flags=["회사 주장·사전 주문·배송 전", "1X가 EQT와 맺은 최대 1만 대·5년 공급 계약(기업 파일럿)과 개인 예약 1만 대를 혼동하지 않음", "1X 1차 페이지는 가격·원격 운영 정책을 담지 않음"],
+    sources=_more("C4-M-006", "mit_tr_robot", "x1_neo"))
+revise("C4-M-008", "상충", "Amazon 공식 페이지는 '기기 6억 대 이상'만 적고 97%는 CES 때 Amazon 부사장 발언을 전한 Storyboard18에만 있다. 서로 다른 두 진술을 합쳤다.",
+    statement="Amazon 부사장 발언을 전한 보도에 따르면, Amazon이 출하한 Alexa 기기 6억 대 이상 가운데 97%가 Alexa+를 지원할 수 있다(지원 가능 기준이며 실제 사용 수는 아니다).",
+    check_flags=["6억 대(공식, 서드파티 포함 여부 불명)와 97%(Amazon 출하 기기, B 단일 출처)의 분모가 다를 수 있음", "공식 1차 출처에서 97%를 확인하지 못함 — 확인 필요", "Alexa+ 사용 수는 미공개"],
+    sources=_more("C4-M-008", "storyboard"))
+revise("C4-M-010", "누락정정", "토요경제는 '삼성전자 발표'가 아니라 '업계에 따르면 삼성전자가 집계'라고 적었고 지역 표기가 없다.",
+    definition="업계 집계(삼성전자 자료 인용), AI 탑재 모델 판매 비중, 2025년 상반기", region="미표기",
+    check_flags=["기준 시점이 조사 기간 밖 — 기준선 용도", "2026 신규값은 찾지 못함(LG는 AI 에어컨 판매 증가만 언급)"], sources=_more("C4-M-010", "sateconomy"))
+revise("C4-M-011", "상충", "as_of '2024'는 Security Business 기사일(2024-10-21)이고 기사에 조사 시점·표본·방법이 적혀 있지 않다.",
+    as_of="2024-10(기사일, 조사 시점 미상)",
+    check_flags=["조사 시점이 2024년 — 다음 조사에서 최신값 확인", "기사에 조사 시점·표본·방법이 없음(Parks Associates 연구 인용)", "한국 자료 없이 2년 된 미국 B등급 단일 기사 — R2에서 최신 Parks 자료나 한국 사용 비율 확인"])
+revise("C4-M-012", "상충", "as_of '2024'는 기사일이고 조사 시점·표본·방법이 기사에 없다.",
+    as_of="2024-10(기사일, 조사 시점 미상)",
+    check_flags=["조사 시점이 2024년 — 다음 조사에서 최신값 확인", "기사에 조사 시점·표본·방법이 없음"])
+
+# --- 신규 지표·사건 ---
+add(id="C4-M-013", type="지표", indicator="C4-T2", importance=2, added_on=CHG, statement="삼성전자는 SmartThings 등록 이용자가 4.7억 명이고 지원 인증 브랜드가 430곳 이상이라고 밝혔다(2026-10-06). 5월 기준 4.6억 명, 등록 가전 3,300만 대(2025-11), 한국 등록 기기 2,000만 대 초과(2025-12)는 언론 인용이며 단위(계정·기기)가 다르다.",
+    value=4.7, unit="억 명(SmartThings 등록 이용자)", as_of="2026-10", region="GLOBAL", definition="삼성전자 보도자료, SmartThings 등록 이용자와 인증 브랜드 수",
+    sources=src("samsung_stnow"), verified=True, check_flags=["단위가 계정과 기기로 달라 Amazon 6억 대와 직접 비교 금지"])
+add(id="C4-E-008", type="사건", importance=2, added_on=CHG, statement="LG전자가 텍스트 채팅형 AI 에이전트 'ThinQ Claw'(가전·캘린더 연동, 선호 기억)를 IFA 2026에서 시연한다고 공개했다. 출시일·지역·가격은 밝히지 않았다.",
+    date="2026-08-31", actor="LG전자", sources=src("lg_ifa26"), verified=True, check_flags=["시연이며 출하 제품이 아님"])
+add(id="C4-E-009", type="사건", importance=2, added_on=CHG, statement="삼성전자가 'SmartThings Now'를 발표했다. 홈 탭 상단 카드로 정보와 즉시 실행 동작을 묶어 보여주고(가족 돌봄 무활동 알림, 귀가 시 조명·공기청정기 켜기 제안), 자율 실행은 없고 사용자가 결정한다.",
+    date="2026-10-06", actor="삼성전자", sources=src("samsung_stnow"), verified=True)
+add(id="C4-E-010", type="사건", importance=2, added_on=CHG, statement="DJI Romo 로봇청소기 해킹이 보도됐다. 연구자가 약 7,000대에 접근해 도면·라이브 카메라·마이크가 노출됐고, 3월 OECD.AI가 같은 계열 사고를 AI 사고로 기록했다(한국 사업자 사고 아님).",
+    date="2026-02", actor="DJI", sources=src("aol_romo", "oecd_incident"), verified=True, check_flags=["패치 후 판매 중단 보도는 AOL 단독 — 확인 필요"])
+add(id="C4-E-011", type="사건", importance=2, added_on=CHG, statement="개인정보보호위원회가 국내 판매 로봇청소기 5개 브랜드(로보락·삼성전자·LG전자·에코백스·샤오미)를 점검해 '특별한 침해 위험 없음'으로 발표했다. 수집·이용·국외 이전 안내, 선택권, 접근통제·전송 암호화 일부는 미흡해 시정 권고를 의결했다.",
+    date="2026-09-14", actor="개인정보보호위원회", sources=src("pipc_sbs"), verified=True)
+
+# --- 사건 수정 ---
+revise("C4-E-001", "갱신", "제습기 자동 작동은 사용자가 베란다·드레스룸에 온습도 센서를 설치하면 작동한다는 LG 원문의 예시이고, 복합 명령은 '기억해 순차 실행'이다. 요청서 정의표에서 같은 기능이 L2의 예시다.",
+    statement="LG전자가 생성형 AI 홈 허브 '씽큐 온'을 국내 출시했다(출하가 246,000원, Matter 인증). 여러 기기에 걸친 복합 명령을 기억해 순서대로 실행하고, 사용자가 온습도 센서를 설치하면 습도가 높을 때 제습기나 에어컨이 자동으로 작동한다.",
+    check_flags=["소개문의 '루틴 학습·예측'은 홍보 문구이며 검증 자료·사용 비율 없음"], sources=_more("C4-E-001", "lg_press"))
+revise("C4-E-002", "갱신", "발표일은 2025-10-01이고 '2025-11'은 기사일이다. 한국은 확인한 확대 목록에 없다.",
+    statement="Google이 Google Assistant를 대체하는 Gemini for Home을 발표했다(2025-10-01, 미국 스피커·디스플레이부터 얼리액세스). 이후 캐나다(3/17)·멕시코(3/31)·16개국(4/7)으로 넓어졌지만 한국은 확인한 목록에 없고, 9월 30일 현재도 Early Access로 표기돼 있다.",
+    date="2025-10-01", check_flags=["한국 미지원은 '확인한 목록에 없음'이지 공식 부인이 아님", "구글 도움말은 앞 100,000자만 읽어 2026-03 이전 항목과 마지막 부분 미확인", "'19개 국가'의 정확한 목록은 확인 필요"],
+    sources=_more("C4-E-002", "google_home_help", "droidlife_gh"))
+revise("C4-E-005", "갱신", "미국 전체 출시(2026-02-04) 이후 12개국으로 넓어졌고 한국은 목록에 없다.",
+    statement="Amazon이 생성형 AI 비서 Alexa+를 미국 전체에 출시했다(2026-02-04). 프라임 회원은 무료, 비회원은 월 19.99달러다. 이후 캐나다·멕시코·영국·이탈리아·스페인·독일·프랑스·브라질·호주 등으로 넓어졌고(인도는 얼리액세스) 한국은 목록에 없다.",
+    check_flags=["같은 Amazon 페이지의 소개부와 목록이 서로 달라 국가 수는 소개부 기준", "호주 시점은 Amazon 페이지(8/6)를 따름"], sources=_more("C4-E-005", "aa_alexa_ga", "amzn_alexa_intl"))
+
+# --- 해석 ---
+revise("C4-I-001", "단정반증", "핵심 근거였던 씽큐 온의 제습기 자동 작동은 L2의 예시와 같은 기능이고, Alexa+ 출시는 자율 판단 사례 없이 출시 사실만 있어 L3 출하 근거가 비어 있다. Alexa+ 얼리액세스는 2025-03 시작, Gemini for Home은 아직 얼리액세스다.",
+    statement="제품으로 나온 집 안 AI는 '정해준 조건대로 알아서 하는 L2'가 표준이다. 생성형 AI 허브(Alexa+ 미국 전체 2026년 2월, 씽큐 온 국내 2025년 10월, Gemini for Home 얼리액세스)가 나왔지만, 상황을 판단해 여러 기기를 엮는 L3를 출하 제품에서 보인 사례는 확인하지 못해 L3는 입구 단계(잠정)다.",
+    check_flags=["Alexa+ 날짜 근거는 Thurrott 기사이며 Amazon 원문은 열지 못함", "L3 출하 근거 후보(Google Home 카메라 이벤트 자동화, 씽큐 온 '루틴 학습·예측')는 얼리액세스·홍보 문구라 제외"],
+    basis=["C4-E-001", "C4-E-002", "C4-E-005", "C4-M-008"])
+revise("C4-I-002", "단정반증", "NEO는 선판매 단계에서도 대부분의 일에 원격 운영자가 필요해 L4 정의에 못 미치고, 삼성은 Ballie 중단을 공식 발표하지 않았다.",
+    statement="물리 작업까지 맡는 홈 로봇은 시연에서 선판매로 넘어가는 단계다. 스타트업(1X)은 사전 구매를 받아 공장을 돌리지만 현재 선판매 제품은 원격 사람 운영에 의존한다. 대형 가전사는 시연(LG)이나 보류(삼성은 중단을 공식 발표하지 않고 혁신 플랫폼으로 돌렸다고 밝힘)에 머물러 있다.",
+    check_flags=["삼성 Ballie 공식 문구는 직접 확인 못 함(Bloomberg 인용 보도 기반)", "중국 대형 가전사·로봇 업체는 조사하지 못함"])
+revise("C4-I-004", "단정반증", "가장 큰 우려는 가격(58.3%)이고 개인정보(58.2%)는 같은 수준일 뿐이며 'AI가 알아서 판단하는 게 불편'은 15.8%로 소수다. 가사 물리 작업(L4)은 기술 한계가 직접 병목이다.",
+    statement="한국 AI 가전 구매 의향자의 걸림돌은 가격과 개인정보다. 개인정보 유출 우려(58.2%)가 가격(58.3%)과 같은 수준까지 올라왔고, AI 가전의 체감 가치가 가격 프리미엄을 납득시키기엔 아직 부족하다고 오픈서베이는 풀이했다. 'AI가 스스로 판단하는 것이 불편하다'는 응답은 15.8%로 소수지만 1년 새 5.1%p 늘었다. 물리 작업(L4)은 기술 한계가 직접 병목이다(NEO는 대부분의 일에 원격 운영자 필요).",
+    basis=["C4-M-002", "C4-M-003", "C4-M-006"])
+revise("C4-I-005", "단정반증", "'AI가 하고 사람이 확인' 메시지는 삼성 SmartThings Now(제안 카드, 자율 실행 없음)에 부합하지만, LG ThinQ Claw 시연과 삼성의 'CES 집안일 제로화' 메시지는 위임형이다. 주력 메시지가 한쪽으로 단정되지 않는다.",
+    statement="고객이 받아들이는 자율은 사람이 조건을 정하거나 결과를 바로 확인하는 형태다. 가전사 메시지는 한쪽으로 모이지 않았다. 부재 중 보안 알림, 센서 조건 자동화, 삼성 SmartThings Now의 제안 카드처럼 'AI가 하고 사람이 확인'하는 기능이 있는 한편, LG ThinQ Claw 시연과 삼성의 'CES 2026 집안일 제로화' 같은 위임형 메시지도 함께 나온다.",
+    basis=["C4-E-007", "C4-E-001", "C4-E-008", "C4-E-009", "C4-M-003"])
+revise("C4-I-006", "단정반증", "삼성 SmartThings는 등록 이용자 4.7억 명(10월)이라 '가전사 허브는 설치 기반을 별도로 쌓아야 한다'가 삼성에는 맞지 않고, Alexa 6억 대는 Alexa+ 전용이 아니다.",
+    statement="생성형 AI 홈 허브 경쟁은 설치 기반이 크게 좌우한다. Amazon은 Alexa 기기 6억 대 이상(Alexa+ 전용 아님)과 프라임 무료 제공을, 삼성은 SmartThings 등록 이용자 4.7억 명(계정 기준, 단위가 달라 직접 비교하지 않음)을 갖고 있다. 가전사 허브는 자사 가전 연동이 강점이다.",
+    basis=["C4-M-008", "C4-M-013", "C4-E-005", "C4-E-002", "C4-E-001"])
+
+revise("C4-I-003", "상충", "근거 조사의 모집단이 한국 소비자 전체가 아니라 AI 가전 구매 의향자 1,000명이다.",
+    statement="한국 AI 가전 구매 의향자의 수용은 한 걸음 물러섰다. 기대는 여전히 80%대지만 신중한 수용자가 긍정 수용자를 넘었고, 직접 써 본 사람일수록 우려도 커졌다.")
+# --- 전망 ---
+revise("C4-F-001", "판정 기준 보완", "'일반 고객'의 범위(원격 운영자 지원 포함 여부, 사전 구매자·기업 파일럿 구분)가 정의돼 있지 않았다.",
+    method="1X 발표 또는 주요 언론에서 원격 운영 지원 여부와 무관하게 개인 구매자 가정 설치를 확인. 사내 테스트와 기업 파일럿(EQT 등)은 제외", basis=["C4-E-006", "C4-M-006"],
+    check_flags=["2026-10-11 현재 일반 고객 배송은 확인되지 않음(MIT TR 10/8: 올해 후반 예정, 1X: 직원 가정 테스트 우선)"])
+revise("C4-F-002", "판정 기준 보완", "'출시 일정 발표'에 LG CFO의 '2028년 홈로봇 상용화 기반'이 이미 해당하는지 불명이었다.",
+    method="LG전자 보도자료·실적발표에서 CLOiD의 판매 가격이나, 연도 이하 단위로 명시된 출시·판매 개시 시점을 확인. '상용화 기반 마련' 같은 방향 언급은 제외",
+    check_flags=["CFO(4/29)는 2028년 홈로봇 상용화 기반 마련과 상반기 실증을 말했으나 CLOiD를 직접 언급하지 않음", "CEO 발언 보도(1월)와 시기가 달라 확인 필요"], basis=["C4-E-003"])
+revise("C4-F-003", "판정 기준 보완", "오픈서베이 원문은 절대 비율 없이 '+6.0%p, 긍정 수용자를 처음 역전'만 적는다. 같은 모집단이 아니면 비교할 수 없다.",
+    method="오픈서베이 AI 가전 트렌드 리포트 2027에서 같은 정의의 구매 의향자 모집단일 때만, 절대값 또는 가장 큰 세그먼트 서술로 확인. 모집단이 다르면 판정 불가")
+revise("C4-F-004", "판정 기준 보완", "기준값 58.2%는 한국경제(B)에만 있고 오픈서베이 원문은 절대 비율을 싣지 않는다.",
+    method="오픈서베이 2027 리포트의 개인정보 우려 문항 절대 비율이 공개될 때만 판정(경험자 우려 55.4% 등 다른 문항은 제외). 미공개 시 판정 보류")
+revise("C4-F-005", "판정 기준 보완", "Gemini for Home은 9/30 현재도 얼리액세스이고 한국은 확대 목록에 없다. '출시'가 얼리액세스를 포함하는지 정했다.",
+    method="Google Home 지원 국가 목록에 한국이 오르는 날(한국어 지원 시작 또는 한국 Early Access 시작)을 기준일로 확인. 정식 출시 여부는 따로 표기",
+    check_flags=["2026-10-11 현재 미달성, Google의 '다른 시장 2026년 1분기' 계획은 한국에 지켜지지 않음"], basis=["C4-E-002"])
+revise("C4-F-101", "판정 기준 보완", "전제 '대형 개인정보 사고가 없을 경우'의 기준이 없고, 기록 시점에 이미 DJI Romo 해킹이 있었다. 판정 방법에 L3 허브 항목이 없었다.",
+    condition="AI 홈 기기 관련 대형 개인정보 사고(한국 판매 기기 기준 피해 기기 1,000대 이상 또는 사업자 공식 인정)가 없을 경우",
+    method="세 가지 중 두 가지 이상 충족 시 적중: (1) 범용 홈 로봇의 일반 고객 배송 확인 (2) 국내 대형 가전사의 홈 로봇 판매 일정 발표 (3) 오픈서베이 2027에서 긍정 수용자 비중이 신중 수용자 이상. 서술의 L3 허브 기본 기능화와 Gemini 한국 출시는 판정에 넣지 않고 신호로만 본다",
+    basis=["C4-E-006", "C4-E-003", "C4-E-001", "C4-M-004", "C4-E-010"],
+    check_flags=["DJI Romo 사고는 한국 사업자 사고가 아니며 개인정보위 9/14 점검은 한국 판매 5개 브랜드에 '특별한 침해 위험 없음'으로 결론"])
+revise("C4-F-102", "판정 기준 보완", "비관 서술의 '소량 판매'에 판정 기준이 없었다. 서술을 방법에 맞춰 단순화했다.",
+    statement="2027년 말까지 기술은 L3로 가지만 고객은 L2에 머문다. 개인정보와 통제감 우려 때문에 자동화는 사람이 정한 조건까지만 쓰이고, 상황 판단 실행은 꺼 두는 기능이 된다. 범용 홈 로봇은 일반 배송이 늦어지거나 국내 대형 가전사가 판매 일정을 내놓지 않는다.")
+
 # ---------- 검증 ----------
 ids = {r["id"] for r in records}
 _t = {r["id"]: r["type"] for r in records}
