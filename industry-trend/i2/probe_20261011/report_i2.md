@@ -1,0 +1,158 @@
+# I2 AI Products & Applications 검증 결과 (2026-10-11)
+
+백지 재조사(blind_i2.md) → 기록 대조 → 단정 반박 → 전망 점검. records.jsonl 등 기존 파일은 변경하지 않음. 판정 영향 → 문장 수정 → 참고 순.
+
+## I2 AI 제품·응용 (29건)
+
+- 건수: 판정 영향 3 · 문장 수정 18 · 참고 8 (유형별: 갱신 6, 신규 5, 상충 4, 누락정정 4, 전망 점검 4, 판정 기준 보완 4, 단정반증 2)
+- 판정 영향 항목: I2-E-004(업무형 Agent: Codex 이용량 공개), I2-I-003(기업 내 Agent 도입: KPMG·Microsoft), I2-I-004(휴머노이드: 상반기 출하 공개)
+- 모두 단계 상향 '후보'이며 확정 못 함(확신 낮음-중간). 업무형 Agent는 Codex가 Coding Agent에도 계상돼 이중 집계 가능, 기업 도입은 설문 정의(개발 중 포함), 휴머노이드는 출하≠가동·단일 조사사.
+- 칩/게이지는 안 바뀌지만 문장·시나리오 판정에 큰 영향: I-002 'Waymo 하나' 반증(Baidu·Tesla), F-003·F-101 이정표가 기록 시점에 이미 달성, F-102 비관 전제 약화.
+- 열지 못한 것: OpenAI·Anthropic·Tesla IR·Microsoft 실적 원문, Waymo Q2 콜의 '50만 이상' 문구(C 인용), Agility S-4 본문. 이들은 B/C 보도 기준.
+
+- **[판정 영향] 갱신 · I2-E-004** — OpenAI는 ChatGPT Work를 낼 때 같은 발표문에서 Codex 주간 이용자 500만 명 이상, 그중 100만 명 이상이 소프트웨어 개발 밖 업무에 쓴다고 공개했다(2026-07-09). 'ChatGPT Work 이용량은 공개하지 않았다'는 유지되지만, 시간 단위 업무 Agent 계열의 이용량이 전혀 없다는 서술은 맞지 않는다.
+  - 비고: 판정 영향: 업무형 Agent는 현재 '정식 출시'(2단계)이고 기준은 '이용량·성과·매출이 공개됨'이다. Codex(ChatGPT Work와 같은 데스크톱 앱·같은 사용량 구조) 이용량이 이 기준에 해당하면 '대규모 운영'(3단계)으로 올라가 칩이 '3개 영역'에서 '4개 영역'으로, 게이지가 3/6에서 4/6으로 바뀔 수 있다. 반대로 Codex는 Coding Agent에 이미 계상돼 있고, 100만 명이 시간 단위 작업을 하는지·성과가 있는지는 공개되지 않았다(확신 낮음-중간). 후속 수치 800만 명(7월 14일)은 해설 사이트(C) 인용이라 단독 근거로 쓰지 않는다. 같은 날 Bloomberg Government 제목은 'OpenAI 모델이 10억 명 이상, 200만 기업, 주간 출력 토큰의 99.8%가 Codex 기반 에이전트 작업'이라 하나 분모·정의 미확인(제목만 읽음).
+  - 출처(A): [OpenAI 'ChatGPT Work' 발표](https://openai.com/index/chatgpt-for-your-most-ambitious-work/) 2026-07-09
+  - 출처(B): [Bloomberg Government (OpenAI 10억·200만 기업)](https://news.bgov.com/artificial-intelligence/openai-has-more-than-1-billion-users-2-million-businesses) 2026-07-31
+  - 출처(C): [FourWeekMBA (Codex 800만 주간 이용자)](https://fourweekmba.com/ai-ai-openai-codex-7-million-weekly-users-harness-war/) 2026-07
+- **[판정 영향] 상충 · I2-I-003** — 기업 에이전트 도입 단계를 '써 보는 단계'로만 적은 서술에 반하는 수치가 나왔다. KPMG Q3 2026(매출 10억 달러 이상 미국 기업 314명, 7~8월 조사)은 62%가 에이전트를 '구축·배치·개발 중'(직전 분기 53%), 약 60%가 측정 가능한 사업 가치를 보고, 70%가 AI 모니터링 대시보드를 쓴다고 했다. Microsoft는 M365 Copilot 유료 3천만 석, Agent 365 등록 에이전트 4천만 개를 밝혔다.
+  - 비고: 판정 영향: '기업 내 Agent 도입'은 현재 2단계(정식 출시, 잠정 표시)다. KPMG(성과)·Microsoft(이용 규모)·Meta(주 100만 기업)를 규모 근거로 받아들이면 3단계로 올라갈 수 있고, 게이지 '대규모 운영' 개수가 바뀔 수 있다. 그러나 KPMG 62%는 '개발 중'을 포함해 운영 비율이 아니며 '측정 가능한 가치'는 자기 평가 설문, Microsoft 4천만은 등록 수(해설자도 실제 업무 수행 여부 의심), 반대로 Liferay는 KPI로 성과를 재는 곳을 25%로 봤다. 정의가 서로 달라 단계 변경은 확정할 수 없다(확신 낮음). 기록의 '기업 절반·4분의 1'은 R1 시점 단일 벤더 조사 기준이므로 KPMG를 병기하고 정의를 구분해야 한다.
+  - 출처(A): [KPMG Q3 2026 AI Pulse](https://kpmg.com/us/en/media/news/q3-ai-pulse-2026.html) 2026-09-24
+  - 출처(B): [Microsoft 365 for IT Pros (FY26 Q4 해설)](https://office365itpros.com/2026/07/30/fy26-q4-microsoft-results/) 2026-07-30
+  - 출처(A): [Meta Q2 2026 Prepared Remarks](https://s21.q4cdn.com/399680738/files/doc_financials/2026/q2/META-Q2-2026-Prepared-Remarks.pdf) 2026-07-29
+  - 출처(B): [Liferay 조사 (CMSWire)](https://www.cmswire.com/the-wire/new-liferay-study-finds-54-of-companies-are-running-ai-agents-yet-only-25-measure-their-impact/) 2026-08-12
+- **[판정 영향] 상충 · I2-I-004** — 2026년 상반기 휴머노이드 출하는 AgiBot 약 8,400대(점유 44%), Unitree 약 5,900대(31%), 전 세계 약 19,100대(전년 대비 +272%)이고 중국 업체가 97% 이상이다(Smart Analytics Global). '출하 대수는 Unitree가 앞선다'는 상반기 기준으로 맞지 않는다.
+  - 비고: 판정 영향(낮음): 휴머노이드는 2단계로 판정돼 있다. 요청서가 지표 T5에 '출하량'을 넣었으므로 상반기 약 1.9만 대 공개를 '대규모 운영'(규모 공개)으로 읽으면 3단계 후보가 된다. 다만 출하는 가동이 아니고 연구·교육·전시 구매가 섞여 있을 수 있으며, 단일 조사사(SAG) 값이라 B 등급 단독이다(확신 낮음). 고객 현장 가동·시간 공개는 Agility 약 6.5만 시간(자체 발표)뿐이다. 기록의 '단일 고객 대량 배치는 없다'는 반증을 못 찾았다(Agility 단일 고객 최대 8대 보도는 C).
+  - 출처(B): [eWeek (SAG 상반기 휴머노이드 출하)](https://www.eweek.com/news/china-humanoid-robots-agibot-unitree-apac/) 2026-08-11
+  - 출처(B): [SCMP (AgiBot, Unitree 추월)](https://www.scmp.com/tech/tech-trends/article/3363544/agibot-overtakes-unitree-top-global-humanoid-robot-vendor-first-half-amid-ipo-push) 2026-08-10
+  - 출처(B): [Humanoid.guide (기업 발표 정리)](https://humanoid.guide/humanoid-deployments-in-2026-favor-figure-and-agility/) 2026-07-19
+- **[문장 수정] 갱신 · I2-M-001** — ChatGPT는 2026-09-08 OpenAI가 주간 이용자 10억 명 이상(8월 중순 기준)을 확인했다는 보도가 나왔고, 기업 고객은 250만 곳이다. 2026-02 9억 명·유료 5천만 명은 최신값이 아니다. Gemini 앱은 월간 이용자 9억 5천만 명 이상(2026 Q2, 일간 이용자 3배)이다.
+  - 비고: 기준(주간 vs 월간)이 달라 ChatGPT와 Gemini를 같은 선에 놓으면 안 된다. 10억의 대상이 'ChatGPT 단독'인지 'OpenAI 제품군'인지 기사마다 표현이 다르고(CryptoBriefing: 제품군 포함, Bloomberg Government 제목: '활성 이용자'로 주간 명시 없음), OpenAI 원문은 못 열었다. 7월 29일 TNW는 'The Information 인용, 아직 10억 미달'이라 적어 시점 차이도 있다. 유료 구독자는 2월 5천만 이후 새 공식 수치를 못 찾았다.
+  - 출처(B): [CryptoBriefing (ChatGPT 10억, OpenAI 확인 보도)](https://cryptobriefing.com/chatgpt-one-billion-weekly-users/) 2026-09-29
+  - 출처(B): [The Next Web (ChatGPT 10억 직전)](https://thenextweb.com/news/chatgpt-1-billion-weekly-active-users-openai-target) 2026-07-29
+  - 출처(B): [Bloomberg Government (OpenAI 10억·200만 기업)](https://news.bgov.com/artificial-intelligence/openai-has-more-than-1-billion-users-2-million-businesses) 2026-07-31
+  - 출처(A): [Alphabet Q2 2026 CEO 발언 (Google 블로그)](https://blog.google/company-news/inside-google/message-ceo/alphabet-earnings-q2-2026/) 2026-07-22
+  - 출처(B): [TechCrunch (ChatGPT 9억)](https://techcrunch.com/2026/02/27/chatgpt-reaches-900m-weekly-active-users) 2026-02-27
+- **[문장 수정] 갱신 · I2-M-002** — Coding Agent 매출·이용: Anthropic 연환산 매출은 2025년 말 약 90억 달러, 5월 470억 달러(회사 공식 최신), 7월 말 650억 달러 이상(Bloomberg·Reuters, 익명 소식통). Claude Code 단독 최신 수치는 찾지 못했고 2월 25억 달러 이상이 마지막이다. Cursor는 40억 달러 이상(6월, 익명), Cognition(Devin)은 약 9억 달러(8월), OpenAI Codex는 주간 500만 명 이상(7월 9일 공식)이다.
+  - 비고: 기록(M-002)은 2월 값을 6월 14일자 2차 글(Enterprise DNA)로만 달아 둘 다 낡았고, 그 글은 제목('13개월에 25억 달러')과 본문('2월 달성')이 맞지 않는다. 650억은 회사 발표가 아닌 보도·익명 소식통이라 '추정'으로 써야 한다. Cursor·Cognition은 C 등급이라 단독 근거 금지. Anthropic 전체 매출과 Claude Code 매출은 다르므로 섞지 말 것. Coding Agent '대규모 운영' 판정은 유지된다.
+  - 출처(B): [Unite.AI (Anthropic 650억 달러, Bloomberg 인용)](https://www.unite.ai/?p=453467) 2026-08-17
+  - 출처(B): [Enterprise DNA (Claude Code 25억 달러)](https://enterprisedna.co/resources/news/claude-code-25-billion-arr-anthropic-2026) 2026-06-14
+  - 출처(C): [Dealroom (Cursor 40억 달러, 익명 소식통)](https://dealroom.co/news/134107-cursor-tops-4b-annualized-revenue/) 2026-06-09
+  - 출처(C): [KuCoin·CryptoBriefing (Cognition 9억 달러)](https://www.kucoin.com/news/flash/cognition-ai-hits-900m-arr-plans-800m-cash-burn-in-2026) 2026-08-28
+  - 출처(A): [OpenAI 'ChatGPT Work' 발표](https://openai.com/index/chatgpt-for-your-most-ambitious-work/) 2026-07-09
+- **[문장 수정] 갱신 · I2-M-004** — Waymo는 2026-09-01 덴버·샌디에이고·탬파에서 유료 공개를 시작해 14개 시장이 됐고, 10월 8일 Waymo 블로그는 '지난달 15번째 미국 도시를 열었다'고 밝혔다. 주간 유료 탑승 '50만 회 이상'은 Q1 실적 시점 수치이며 Q2 실적(7월 22일)에서도 '50만 이상'으로 재인용돼 이후 새 공식 수치는 없다. 차량은 4,000대 이상으로 보도됐다.
+  - 비고: 기록의 '11개 도시·차량 3,500대·as_of 2026-07'은 낡았다(Electrek 자체가 3,500대와 3,000대를 섞어 씀). 15번째 도시는 Waymo 블로그에서 직접 확인(A), 9월 1일 시작·4,000대는 CryptoBriefing(B), Q2 '50만 이상' 재인용은 예측 서비스 페이지(C)라 단독 근거로 못 쓴다. Waymo 블로그 목록과 10/8 글 어디에도 주간 탑승·차량 수치는 없다. '약 50만 회'는 as_of를 Q1로 고쳐야 한다.
+  - 출처(A): [Waymo 블로그 (50억 달러 부채 조달)](https://waymo.com/blog/2026/10/waymo-closes-5-billion-debt-financing/) 2026-10-08
+  - 출처(B): [CryptoBriefing (Waymo 덴버·샌디에이고·탬파)](https://cryptobriefing.com/waymo-paid-robotaxi-denver-san-diego-tampa/) 2026-09-01
+  - 출처(B): [Electrek (Waymo 라스베이거스)](https://electrek.co/2026/07/08/waymo-driverless-las-vegas-four-new-cities/) 2026-07-08
+  - 출처(C): [FutureSearch (Waymo 예측 페이지)](https://futuresearch.ai/waymo-financial-forecast/) 2026-08-20
+- **[문장 수정] 단정반증 · I2-I-002** — '물리 세계에서 대규모 운영에 들어선 AI 제품은 Waymo 하나이고 경쟁 사업자는 무인 운행을 공식 확인하지 못했다'는 반증된다. Baidu Apollo Go는 2026 Q2 완전 무인 약 100만 회·누적 2,300만 회 이상·28개 도시를 공개했고, Tesla는 7월 22일 Q2 업데이트에서 6개 도시 무감독 운행을 밝힌 것으로 보도됐다.
+  - 비고: Baidu: 도시 28개·완전 무인 2.4억 km는 실적 릴리스(A)에서 확인, 100만 회·2,300만 회는 콜 요약(B). 중국 일부 도시는 규제로 운행이 일시 조정됐다가 8월 재개. Tesla: 3개 보도가 Q2 주주 업데이트를 인용하나 Tesla 원문(ir.tesla.com)은 열지 못했고 회사 자체 수치(무감독 38만 마일, 사고 0건 주장)다. 로보택시 판정 단계(대규모 운영)는 유지되지만 '하나'라는 표현과 시나리오 판정 기준(두 사업자 이상)에 영향이 있다.
+  - 출처(A): [Baidu Q2 2026 실적 릴리스 (SEC 6-K)](https://www.sec.gov/Archives/edgar/data/0001329099/000119312526355431/d112854dex991.htm) 2026-08-18
+  - 출처(B): [MarketBeat (Baidu Q2 콜 요약)](https://www.marketbeat.com/instant-alerts/baidu-q2-earnings-call-highlights-2026-08-18/) 2026-08-18
+  - 출처(B): [EVwire (Tesla Q2 주주 업데이트)](https://evwire.com/p/tesla-robotaxi-2-4-million-paid-miles-six-metros) 2026-07-22
+  - 출처(B): [Smart Cities Dive (Tesla Q2 콜)](https://smartcitiesdive.com/news/tesla-robotaxis-cybercab-safety/825988) 2026-07-23
+- **[문장 수정] 상충 · I2-M-007** — '미국 기업의 54%가 AI 에이전트를 운영하거나 시범 운영한다'는 Liferay 조사로, 응답자는 기업이 아니라 미국 AI 의사결정·실무자 500명이고 벤더 조사(Pollfish)이며 '운영'·'시범'·'KPI'의 정의가 없다. KPMG Q3 2026은 대기업 62%가 '구축·배치·개발 중'이라 했다.
+  - 비고: 두 수치는 분모(개인 500명 vs 매출 10억 달러 이상 기업 314명)·정의가 달라 합산·비교 금지. 한 해설 페이지(Ampcome)는 54%를 KPMG Q1 값으로 적어 출처가 뒤섞인다. '성과를 지표로 측정하는 곳 25%'는 KPMG의 '약 60%가 측정 가능한 사업 가치 보고'와 질문 문항이 달라 같은 선에 놓을 수 없다. Liferay 조사 시점은 기사에 없고(발표 8월 12일) 응답자 가중치도 미공개.
+  - 출처(B): [Liferay 조사 (CMSWire)](https://www.cmswire.com/the-wire/new-liferay-study-finds-54-of-companies-are-running-ai-agents-yet-only-25-measure-their-impact/) 2026-08-12
+  - 출처(A): [KPMG Q3 2026 AI Pulse](https://kpmg.com/us/en/media/news/q3-ai-pulse-2026.html) 2026-09-24
+- **[문장 수정] 전망 점검 · I2-F-003** — F-003('2026년 말까지 2개 이상 도시에서 안전요원 없는 유료 로보택시 운행을 Tesla가 공식 확인')은 기록 시점(10월 9일)에 이미 충족돼 있었다. Tesla Q2 업데이트(7월 22일)가 6개 도시 무감독 운행과 유료 주행 240만 마일을 밝힌 것으로 3개 보도가 일치한다.
+  - 비고: 단, Tesla 원문은 열지 못했다(B 3건 일치). '무감독'과 '유료'가 같은 지표로 묶여 공개되는지 불분명하다(무감독 38만 마일 vs 유료 240만 마일은 별개 지표, 샌프란시스코 베이는 안전요원 탑승). 판정 방법을 '도시별로 무감독 + 유료 승객 운행을 Tesla가 공식 발표'로 고정하고, 이미 달성한 이정표로 표시하거나 기준을 올려야(예: 도시 수·차량 수·원격 운전 배제) 변별력이 생긴다. F-101 이정표 'Tesla 무인 유료 2개 도시'도 같은 상태.
+  - 출처(B): [EVwire (Tesla Q2 주주 업데이트)](https://evwire.com/p/tesla-robotaxi-2-4-million-paid-miles-six-metros) 2026-07-22
+  - 출처(B): [Smart Cities Dive (Tesla Q2 콜)](https://smartcitiesdive.com/news/tesla-robotaxis-cybercab-safety/825988) 2026-07-23
+  - 출처(B): [Not a Tesla App (Q2 콜 요약)](https://notateslaapp.com/news/4481/summary-of-teslas-2026-q2-earnings-call-cybercab-fsd-ai4-and-more) 2026-07-22
+  - 출처(B): [Engadget (오스틴 무감독 추정, The Verge 인용)](https://engadget.com/2240859/tesla-robotaxi-fleet-might-finally-be-driving-around-austin-unsupervised) 2026-08-20
+- **[문장 수정] 판정 기준 보완 · I2-F-002** — F-002('OpenAI 또는 Anthropic이 2027-06 말까지 시간 단위 업무 Agent의 이용자 수나 작업 수를 공개')는 정의가 모호해 이미 부분 충족으로 읽힌다. OpenAI는 7월 9일 Codex 주간 이용자 500만 명·비개발 업무 100만 명 이상을 공개했다.
+  - 비고: '시간 단위 업무 Agent'가 ChatGPT Work 한정인지, Codex·Claude Cowork 등을 포함하는지 방법에 없다. ChatGPT Work와 Codex는 같은 앱·같은 사용량 구조라 Codex 이용자를 업무 Agent 이용자로 볼 여지가 있다. 'ChatGPT Work 또는 Claude 업무 Agent의 이용자·작업 수를 제품명으로 명시 공개'처럼 대상과 지표를 고정하길 제안. 기록 시점에 비개발 업무 100만 명 공개가 있었음에도 F-002를 미결로 둔 근거가 없다.
+  - 출처(A): [OpenAI 'ChatGPT Work' 발표](https://openai.com/index/chatgpt-for-your-most-ambitious-work/) 2026-07-09
+- **[문장 수정] 판정 기준 보완 · I2-F-005** — F-005('서울 자율주행 택시는 2027-06 말까지 운전석에 사람이 없는 유상 운행 시작')는 서울 상암 11월 도입(안전관리자 조수석 탑승, 요금 미확인)이 있어 판정이 갈린다. 운전석에 사람이 없어도 조수석 안전관리자가 있으면 적중인지, 유료·상용과 실증을 구분할지 방법에 없다.
+  - 비고: 방법은 '서울시·국토교통부·운영사 발표 확인'뿐이다. '운전석 무인'(조수석 안전관리자 허용)과 '차량 내 무인'을 나눠 쓰고, '유상'은 요금 부과 공지, '운행'은 일반 이용자 호출 가능 여부로 정의하길 제안. 카카오모빌리티 강남 심야가 4월 유료로 전환됐다면(미확인) 이미 '운전석 무인 유상'일 수 있으나 안전요원 탑승 여부가 기사에 없다(E-002 check_flags와 동일).
+  - 출처(B): [다음뉴스 (서울 상암 레벨4 로보택시)](https://v.daum.net/v/20260630111713463) 2026-06-30
+  - 출처(B): [아시아경제 (하반기 달라지는 서울생활)](https://view.asiae.co.kr/article/2026070210170759922) 2026-07-02
+  - 출처(B): [트윅24 (서울 레벨4 무인 로보택시 실증)](https://www.twig24.com/news/2026/01/27/20260127019003) 2026-01-27
+  - 출처(B): [SBS Biz (카카오모빌리티 강남 심야)](https://biz.sbs.co.kr/amp/article/20000297494) 2026-03-15
+- **[문장 수정] 전망 점검 · I2-F-101** — 낙관 시나리오 판정 방법 3개 중 상당 부분이 기록 시점에 이미 충족돼 있다. (2) '로보택시 2개 이상 사업자의 무인 유료 운행'은 Waymo·Baidu·Tesla 모두 해당하고, 남은 조건은 Waymo 주 100만 회뿐이다. (1) 업무형 Agent '이용량·성과 공식 공개'는 Codex 이용자(500만 명)로 부분 충족. 이정표 'Tesla 무인 유료 2개 도시(2026-12)'는 이미 달성.
+  - 비고: '세 가지 중 두 가지 이상 충족 시 적중'이라 (1)·(2)만으로 낙관 적중이 가능해져 비관과의 변별력이 사라질 수 있다. (3) 휴머노이드 단일 고객 100대는 미충족(Agility 최대 8대 보도, C). 이정표 문구를 '이미 달성'과 '미달성'으로 구분하고, (1)은 위 F-002 정의를, (2)는 Waymo 100만 회 필수 여부를 명시하길 제안. 낙관 전제('대형 에이전트 사고·로보택시 중대 사고로 규제가 강화되지 않을 경우')에는 Waymo 고속도로 중단·리콜이 있었으나 규제 강화로 이어졌는지는 확인 못 했다.
+  - 출처(B): [EVwire (Tesla Q2 주주 업데이트)](https://evwire.com/p/tesla-robotaxi-2-4-million-paid-miles-six-metros) 2026-07-22
+  - 출처(A): [Baidu Q2 2026 실적 릴리스 (SEC 6-K)](https://www.sec.gov/Archives/edgar/data/0001329099/000119312526355431/d112854dex991.htm) 2026-08-18
+  - 출처(A): [OpenAI 'ChatGPT Work' 발표](https://openai.com/index/chatgpt-for-your-most-ambitious-work/) 2026-07-09
+  - 출처(A): [Waymo 블로그 (50억 달러 부채 조달)](https://waymo.com/blog/2026/10/waymo-closes-5-billion-debt-financing/) 2026-10-08
+- **[문장 수정] 전망 점검 · I2-F-102** — 비관 시나리오 서술('2027년 말에도 대규모 운영은 Assistant·Coding Agent·Waymo 세 곳에 머문다')은 전제가 흔들린다. Baidu·Tesla 무인 유료 운행이 이미 있고 업무형 Agent 이용량도 일부 공개돼 '세 곳'의 정의가 맞지 않는다.
+  - 비고: 판정 방법은 '낙관 조건 세 가지 중 하나 이하만 충족'으로 명확하나, 위 F-101처럼 (1)·(2)가 이미 충족 쪽이라 비관 적중 가능성은 낮아 보인다(확신 중간). 이정표 '업무형 Agent 이용량 비공개 지속'은 F-002 정의에 따라 이미 어긋날 수 있다. '에이전트의 운영 데이터 손상 사고 공식 확인'은 F-006 정의가 정리돼야 판정 가능.
+  - 출처(A): [Baidu Q2 2026 실적 릴리스 (SEC 6-K)](https://www.sec.gov/Archives/edgar/data/0001329099/000119312526355431/d112854dex991.htm) 2026-08-18
+  - 출처(B): [EVwire (Tesla Q2 주주 업데이트)](https://evwire.com/p/tesla-robotaxi-2-4-million-paid-miles-six-metros) 2026-07-22
+  - 출처(A): [OpenAI 'ChatGPT Work' 발표](https://openai.com/index/chatgpt-for-your-most-ambitious-work/) 2026-07-09
+- **[문장 수정] 누락정정 · I2-I-001** — 대화형 Assistant 이용 규모에는 ChatGPT 외에 Gemini 앱 월 9.5억 명 이상(Alphabet Q2), Microsoft 365 Copilot 유료 3천만 석(FY26 Q4, 1,500만→2,000만→3,000만으로 분기마다 증가), GitHub 2.25억 명 중 5천만 명이 Copilot 이용이 공개돼 있다.
+  - 비고: R1 지표에는 ChatGPT만 있어 'Assistant 대규모 운영'의 근거가 한 회사에 치우쳤다. Microsoft 수치는 해설 사이트(office365itpros) 인용이라 실적 원문은 확인 못 했다. Meta는 Meta AI 전체 이용자를 공개하지 않았고 일간 이용자 증가율(+60%)만 밝혔다. 판정 단계(대규모 운영)는 바뀌지 않는다.
+  - 출처(A): [Alphabet Q2 2026 CEO 발언 (Google 블로그)](https://blog.google/company-news/inside-google/message-ceo/alphabet-earnings-q2-2026/) 2026-07-22
+  - 출처(B): [Microsoft 365 for IT Pros (FY26 Q4 해설)](https://office365itpros.com/2026/07/30/fy26-q4-microsoft-results/) 2026-07-30
+  - 출처(A): [Meta Q2 2026 Prepared Remarks](https://s21.q4cdn.com/399680738/files/doc_financials/2026/q2/META-Q2-2026-Prepared-Remarks.pdf) 2026-07-29
+- **[문장 수정] 상충 · I2-M-003** — Uber의 Claude Code 이용(엔지니어 약 5천 명 중 84%가 매월, 커밋 코드 70% AI 작성, 2026-04)은 기록이 단 출처에서 별도 근거가 확인되지 않는다.
+  - 비고: 기록의 출처 Enterprise DNA 글은 수치를 본문에 쓰면서 Uber 수치에는 출처를 달지 않았고, 그 글이 출처로 건 Anthropic 'Claude Partner Network' 페이지에는 Uber가 없다. 결과적으로 '대형 고객 사용률·AI 작성 코드 비중' 지표(T2)의 단독 근거가 2차 글 하나다. 문장을 '2차 보도에 따르면'으로 낮추거나 Uber·Anthropic 원문을 찾아야 한다. 대안 근거로 Google 신규 코드 75% AI 생성(2026-04, Pichai 발언 보도, B)이 있으나 원문 블로그는 못 열었다.
+  - 출처(B): [Enterprise DNA (Claude Code 25억 달러)](https://enterprisedna.co/resources/news/claude-code-25-billion-arr-anthropic-2026) 2026-06-14
+  - 출처(A): [Anthropic 'Claude Partner Network'](https://www.anthropic.com/news/claude-partner-network) 2026-03-12
+  - 출처(B): [The Decoder (Google 신규 코드 75%)](https://the-decoder.com/google-says-75-percent-of-its-new-code-is-now-written-by-ai/) 2026-04
+- **[문장 수정] 갱신 · I2-E-003** — Waymo는 라스베이거스 완전 무인(7월 8일)에 이어 덴버·샌디에이고·탬파 유료 공개를 9월 1일 실제로 시작했다. '다음 지역으로 예고'는 이미 실현됐다.
+  - 비고: Electrek 7월 8일 기사는 세 도시의 시작일을 적지 않았다. 9월 1일은 CryptoBriefing(B) 한 편이고, Waymo 블로그 목록에서는 같은 달 Dallas(8월 4일)·Houston(8월 20일) '전 이용자 개방'이 확인된다(A).
+  - 출처(B): [CryptoBriefing (Waymo 덴버·샌디에이고·탬파)](https://cryptobriefing.com/waymo-paid-robotaxi-denver-san-diego-tampa/) 2026-09-01
+  - 출처(B): [Electrek (Waymo 라스베이거스)](https://electrek.co/2026/07/08/waymo-driverless-las-vegas-four-new-cities/) 2026-07-08
+  - 출처(A): [Waymo 블로그 (50억 달러 부채 조달)](https://waymo.com/blog/2026/10/waymo-closes-5-billion-debt-financing/) 2026-10-08
+- **[문장 수정] 갱신 · I2-E-006** — Tesla는 Q2 주주 업데이트(2026-07-22)에서 오스틴·댈러스·휴스턴·마이애미·올랜도·탬파 6개 도시 무감독 운행과 누적 유료 주행 약 240만 마일을 밝힌 것으로 보도됐고, Cybercab 승객 탑승은 9월 3일 시작했다. 8월 20일 '공식 확인 안 함' 서술은 시점상 7월 22일 이후와 어긋난다.
+  - 비고: 8월 20일 Engadget은 크라우드소싱 추적 앱 기준으로 '회사 미확인'이라 적었지만 같은 기사 안에서 Q2 보고를 다루지 않았다. 6개 도시 수치는 EVwire·Smart Cities Dive·Not a Tesla App(모두 B)이 Tesla 발표를 인용하며 일치하나 Smart Cities Dive 제목은 '4개 도시'라 불일치가 있다. 240만 마일은 유료 전체(샌프란시스코 베이 안전요원 포함)이고 무감독은 38만 마일이라 '무감독 유료'를 곧바로 240만으로 읽으면 안 된다. Cybercab은 텍사스 등록 314~420대·Cybercab 45~67대로 출처별 상이.
+  - 출처(B): [EVwire (Tesla Q2 주주 업데이트)](https://evwire.com/p/tesla-robotaxi-2-4-million-paid-miles-six-metros) 2026-07-22
+  - 출처(B): [Smart Cities Dive (Tesla Q2 콜)](https://smartcitiesdive.com/news/tesla-robotaxis-cybercab-safety/825988) 2026-07-23
+  - 출처(B): [Not a Tesla App (Q2 콜 요약)](https://notateslaapp.com/news/4481/summary-of-teslas-2026-q2-earnings-call-cybercab-fsd-ai4-and-more) 2026-07-22
+  - 출처(B): [Engadget (오스틴 무감독 추정, The Verge 인용)](https://engadget.com/2240859/tesla-robotaxi-fleet-might-finally-be-driving-around-austin-unsupervised) 2026-08-20
+  - 출처(B): [Engadget (Cybercab 승객 탑승)](https://engadget.com/2250874/tesla-offering-cybercab-robotaxi-rides/) 2026-09
+- **[문장 수정] 누락정정 · I2-M-008** — 에이전트 데이터 삭제 사고 9건 집계는 2026-04 PocketOS 사건(Cursor+Claude Opus 4.6이 운영 DB와 백업을 9초 만에 삭제, 3개월 전 백업으로 복구, 30시간 이상 장애)을 빠뜨렸다. 집계는 하한이다.
+  - 비고: Adversa 목록 9건(2025-06~2026-07)에 PocketOS가 없다. 원문은 TechRepublic·Aviatrix(보안 업체)이며 창업자 주장 중심이고 Cursor·Anthropic 응답은 기사에 없다. Aviatrix 페이지는 다른 사건(OpenClaw·Meta) 내용이 섞인 흔적이 있어 해당 부분은 쓰지 말 것. Railway는 해당 API 엔드포인트에 지연 삭제를 적용했다고 밝혔다. Amazon은 Kiro 건을 '잘못 설정된 권한'으로 반박해 Adversa 집계 자체가 분쟁 있는 건을 포함한다. '10건 이상'처럼 하한 표기를 권한다.
+  - 출처(B): [Adversa AI (보안 업체 집계)](https://adversa.ai/blog/ai-coding-agent-incidents/) 2026-08-04
+  - 출처(B): [TechRepublic (PocketOS 삭제 사고)](https://www.techrepublic.com/fr/article/ai-agent-deletes-company-database-admits-violating-guardrails/) 2026-05-04
+  - 출처(B): [Aviatrix Threat Research (PocketOS)](https://aviatrix.ai/threat-research-center/pocketos-ai-agent-deletes-production-database-2026/) 2026-05-22
+- **[문장 수정] 단정반증 · I2-I-005** — '에이전트의 운영 데이터 삭제 사고가 업무형 Agent 확산의 가장 직접적인 걸림돌이다'와 '사람의 승인 단계를 우회하거나 지시를 무시한 사례가 많다'는 근거가 부족하다.
+  - 비고: 사고 집계는 포럼·이슈 기반 10건 안팎의 공개 사례이고 이용 규모 대비 비율을 알 수 없다. Gartner는 에이전틱 AI 프로젝트 40% 이상이 2027년 말까지 중단될 것이라며 비용·불분명한 가치·위험 통제 부족을 이유로 들었고(2025-06 전망, 웨비나 응답자 3,412명), KPMG Q3 2026은 거버넌스 항목으로 비용 검토(74%)·모니터링 대시보드(70%)를 꼽는다. 사고가 '가장 직접적'이라는 순위 근거는 없다. 일부 사건은 개발자 자신의 개인·시험용 환경이었다(Opus 5 건). '반복되는 사고는 확산의 위험 요인 중 하나'로 낮추는 것을 권한다.
+  - 출처(B): [Silicon.eu (Gartner)](https://www.silicon.eu/gartner-over-40-percent-of-agentic-ai-projects-will-be-discontinued-by-the-end-of-2027-18197.html) 2025-06-27
+  - 출처(A): [KPMG Q3 2026 AI Pulse](https://kpmg.com/us/en/media/news/q3-ai-pulse-2026.html) 2026-09-24
+  - 출처(B): [Adversa AI (보안 업체 집계)](https://adversa.ai/blog/ai-coding-agent-incidents/) 2026-08-04
+- **[문장 수정] 누락정정 · I2-I-006** — 한국: 서울시는 2026-11 마포 상암동에서 '레벨4 로보택시'를 앱 호출로 본격 도입한다(초기에는 안전관리자가 조수석 탑승, 평일 운행). 요금은 기사에 없다. 올해 3대로 시작해 2027년까지 10대 이상으로 늘린다는 1월 계획 보도가 있다. 서울은 레벨3 새벽동행 자율주행버스 4개 노선을 운영 중이고, 2026-10-01 협약으로 레벨4 버스를 2029년 도입·2030년 500대 목표로 잡았다.
+  - 비고: 기록(I-006·E-002)은 강남 심야(카카오모빌리티, 3월 16일 시작·무료, 4월 유료 전환 '예정')만 적었다. 카카오 유료 전환이 실제로 이뤄졌는지는 확인 못 했다. 상암 11월은 계획 단계이고 서울시 1차 자료는 열지 못했다(다음뉴스·아시아경제 B). 한국 '발표·제한 운행 단계' 서술은 유지되지만, 무인(운전석)·유료 여부를 구분해야 한다.
+  - 출처(B): [다음뉴스 (서울 상암 레벨4 로보택시)](https://v.daum.net/v/20260630111713463) 2026-06-30
+  - 출처(B): [아시아경제 (하반기 달라지는 서울생활)](https://view.asiae.co.kr/article/2026070210170759922) 2026-07-02
+  - 출처(B): [트윅24 (서울 레벨4 무인 로보택시 실증)](https://www.twig24.com/news/2026/01/27/20260127019003) 2026-01-27
+  - 출처(B): [SBS Biz (카카오모빌리티 강남 심야)](https://biz.sbs.co.kr/amp/article/20000297494) 2026-03-15
+  - 출처(B): [경향신문 (서울 자율주행버스 협약)](https://khan.co.kr/article/202610011400001) 2026-10-01
+- **[문장 수정] 판정 기준 보완 · I2-F-006** — F-006('2027-06 말까지 주요 AI 기업 에이전트가 기업 고객 운영 데이터를 손상한 사건이 공식 사후 보고로 공개')은 '손상'·'기업 고객'·'공식 사후 보고' 정의가 없다. Microsoft Copilot Studio·Salesforce Agentforce 프롬프트 인젝션 데이터 유출(2026-04, 양사 패치)은 유출이지 손상이 아니고, PocketOS 사건은 Railway(대상 5개사 아님)가 대응했다.
+  - 비고: 방법의 대상 회사는 OpenAI·Anthropic·Google·Microsoft·Amazon이다. 패치 공지·CVE·블로그 설명 중 어디까지 '사후 보고'인지, 에이전트 제작사(Cursor)·인프라(Railway)·모델사(Anthropic) 중 누가 보고해야 하는지 불분명하다. Amazon은 Kiro 사고를 두고 '잘못 설정된 권한'이라고 공식 반박했는데 이것이 '공식 확인'인지도 모호하다. 'AI 에이전트가 고객 데이터를 삭제·변조한 사실을 해당 회사가 사후 보고서 형태로 인정'처럼 좁히길 제안.
+  - 출처(B): [OECD.AI 사고 데이터베이스 (Copilot Studio·Agentforce)](https://oecd.ai/en/incidents/2026-04-15-d934) 2026-04-15
+  - 출처(B): [TechRepublic (PocketOS 삭제 사고)](https://www.techrepublic.com/fr/article/ai-agent-deletes-company-database-admits-violating-guardrails/) 2026-05-04
+  - 출처(B): [Adversa AI (보안 업체 집계)](https://adversa.ai/blog/ai-coding-agent-incidents/) 2026-08-04
+- **[참고] 전망 점검 · I2-F-001** — F-001('2026년 말까지 Waymo 주 100만 회 달성 발표')은 아직 미결이나 근거가 약해졌다. 주간 탑승은 Q1 이후 새 공식 수치가 없고(Q2에서도 '50만 이상' 재인용), 5~7월 고속도로 운행 중단·약 3,871대 소프트웨어 리콜·캘리포니아 일 탑승 감소 보도가 있다.
+  - 비고: 방법 'Waymo 공식 발표 확인'에서 무엇을 발표로 볼지 불명확: 'rides'(유료 한정?)·'주간' 기준·발표 수단(블로그·실적 콜·인터뷰). Waymo 블로그(10/8까지)에는 주간 수치가 없고, 마감(2027-01-31)을 지나 연초 실적 콜에서만 공개될 수 있다. 리콜·감소 수치는 예측 서비스 페이지(C)·미리보기 기사(B)라 단독 근거 금지. 예측 서비스 페이지의 4분기 중앙값 71.3만 회는 제3자 예측이며 판정 근거가 아님.
+  - 출처(A): [Waymo 블로그 (50억 달러 부채 조달)](https://waymo.com/blog/2026/10/waymo-closes-5-billion-debt-financing/) 2026-10-08
+  - 출처(C): [FutureSearch (Waymo 예측 페이지)](https://futuresearch.ai/waymo-financial-forecast/) 2026-08-20
+  - 출처(B): [Electrek (Waymo 라스베이거스)](https://electrek.co/2026/07/08/waymo-driverless-las-vegas-four-new-cities/) 2026-07-08
+- **[참고] 신규 · I2-I-003** — Meta Business Agents는 WhatsApp·Messenger에서 전 세계 제공되며 주 100만 개 이상 기업이 고객 응대·판매에 쓴다(2026 Q2). 사례(Movida)에서 에이전트가 대화의 85%를 사람 없이 해결했고 일간 WhatsApp 예약이 전년 대비 44% 늘었다. 개인 에이전트는 미출시다.
+  - 비고: Meta 실적 발표문 직접 확인(A). 사례 수치는 회사 선택 사례(Movida 1건)로 일반화 불가, 주 100만 기업의 '사용' 정의(시험 포함)와 성과 측정은 미공개. 기업 내 Agent 도입 판단의 규모 근거로는 쓸 수 있으나 단독 근거는 약하다.
+  - 출처(A): [Meta Q2 2026 Prepared Remarks](https://s21.q4cdn.com/399680738/files/doc_financials/2026/q2/META-Q2-2026-Prepared-Remarks.pdf) 2026-07-29
+- **[참고] 판정 기준 보완 · I2-F-004** — F-004('Figure 또는 Agility가 2027-06 말까지 단일 고객 현장에 휴머노이드 100대 이상 상용 배치 발표')는 판정 방법에 '배치'와 '주문·계약'의 구분이 없다. Agility는 9개 시설에 100대 이상 가동 중이고 Schaeffler가 8대로 최대라고 보도됐다(C).
+  - 비고: 방법에 '중국 업체(AgiBot·Unitree·UBTech)를 제외한다'는 근거가 없어 AgiBot 같은 업체의 단일 고객 100대 배치가 나와도 미적중이 된다. Agility는 SPAC 합병(Churchill Capital Corp XI, S-4/A 2026-09-30)으로 공식 공시 문서가 생겨 'Agility S-4·후속 공시의 고객별 가동 대수'를 공식 확인 수단으로 추가할 수 있다. S-4 'Information About Agility' 부분은 읽지 못했다(문서 앞 10만 자만 확인).
+  - 출처(C): [KuCoin (Agility SPAC·배치 현황)](https://www.kucoin.com/news/flash/agility-to-pursue-spac-listing-via-ccxi-in-q4-secures-640m-in-private-financing) 2026-07-05
+  - 출처(A): [SEC S-4/A (Agility–Churchill Capital XI 합병, 2026-09-30 수정본)](https://www.sec.gov/Archives/edgar/data/0002074973/000121390026105334/ea0297114-05.htm) 2026-09-30
+  - 출처(B): [Humanoid.guide (기업 발표 정리)](https://humanoid.guide/humanoid-deployments-in-2026-favor-figure-and-agility/) 2026-07-19
+- **[참고] 누락정정 · I2-I-006** — 한국 업무 Agent 사례(R1에 없음): 포스코DX는 운영 AI 에이전트 110개로 재무팀 업무량 80% 감소(2026-02 도입 이후), LG유플러스는 고객 응대 시간 60% 단축을 밝혔다. 한국 휴머노이드는 현대차그룹이 2028년 연 3만 대 생산 체계를 목표(초기 2.5만 대는 현대·기아 공장 투입)로 한다.
+  - 비고: 모두 기업 주장을 언론이 2차 인용한 값(한국경제, 뉴시스)이고 정부·기업 1차 자료는 못 열었다. 한국 상용화 현황(T8)에 업무형 Agent 항목이 비어 있어 보강 후보. Atlas 계획은 '2028년 HMGMA 단계적 안전 검증, 2030년 확대'로 기록 E-001의 조지아 부품 분류 서술과 시기는 일치하나 부품 분류 공정은 이번에 확인 못 했다.
+  - 출처(B): [한국경제 (국내 기업 AI 에이전트 도입 사례)](https://www.hankyung.com/article/2026050328881) 2026-05-03
+  - 출처(B): [뉴시스 (현대차그룹 Atlas 양산 계획)](https://www.newsis.com/view/NISX20260721_0003717549) 2026-07-25
+- **[참고] 신규 · I2-M-006** — Tesla Optimus: Q2 콜 요약에 따르면 2026 Q3에 Fremont 공간에서 초기 제조를 시작하고 초기 물량은 데이터 수집용 'Optimus Academy'로 간다. 7월 2일 출하 보고에 Optimus 수치가 없다. 기록의 '공개 판매 2027년 말 예상'은 이번에 근거를 찾지 못했다.
+  - 비고: Not a Tesla App 요약(비공식 요약)과 Humanoid.guide(B) 기준. Tesla 원문 열람 실패. 판정 영향 없음.
+  - 출처(B): [Not a Tesla App (Q2 콜 요약)](https://notateslaapp.com/news/4481/summary-of-teslas-2026-q2-earnings-call-cybercab-fsd-ai4-and-more) 2026-07-22
+  - 출처(B): [Humanoid.guide (기업 발표 정리)](https://humanoid.guide/humanoid-deployments-in-2026-favor-figure-and-agility/) 2026-07-19
+- **[참고] 신규 · I2-E-001** — 현대차그룹은 Atlas를 2028년 연 3만 대 생산 체계로 양산하고 초기 2.5만 대(83%)를 현대·기아 공장에 투입하며, 2028년 HMGMA 단계적 안전 검증 후 2030년부터 조립 라인 확대를 계획한다(2026-07-21~25 보도). 현대차는 보스턴다이나믹스 지분 100%를 보유했다.
+  - 비고: 계획·전망이며 가동 실적이 아니다. 뉴시스 본문 확인(B). 기록 E-001의 조지아 공장 '부품 분류' 공정 서술은 헤럴드경제 기사 원문을 이번에 열지 않아 확인하지 못했다.
+  - 출처(B): [뉴시스 (현대차그룹 Atlas 양산 계획)](https://www.newsis.com/view/NISX20260721_0003717549) 2026-07-25
+- **[참고] 신규 · I2-M-003** — Google은 신규 코드의 75%를 AI가 생성하고 사람이 검토한다고 밝혔다(Pichai 발언 보도, 2026-04). 2024-10 25%, 2025 가을 50%에서 늘었다.
+  - 비고: Semafor·The Decoder(B) 보도이며 Pichai 원문 블로그는 못 열었다. 정의는 '생성 후 사람 검토'로 R1 M-003(Uber 70%)과 정의가 다를 수 있다. Coding Agent 대규모 운영 판정 보강용.
+  - 출처(B): [The Decoder (Google 신규 코드 75%)](https://the-decoder.com/google-says-75-percent-of-its-new-code-is-now-written-by-ai/) 2026-04
+- **[참고] 신규 · I2-M-004** — Waymo는 운영 차질도 있었다: 5~7월 고속도로 운행 중단, 약 3,800대(3,871대 보도) 소프트웨어 리콜, 일부 도시 침수 우려로 운행 중단(2026).
+  - 비고: 예측 서비스 페이지(C)와 Korea Business Review 미리보기(B)에서만 확인. 날짜·정확한 범위는 확인 못 했고 Waymo 공식 자료는 못 찾았다. 단독 근거 금지.
+  - 출처(C): [FutureSearch (Waymo 예측 페이지)](https://futuresearch.ai/waymo-financial-forecast/) 2026-08-20

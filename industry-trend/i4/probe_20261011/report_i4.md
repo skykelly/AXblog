@@ -1,0 +1,159 @@
+
+## I4 AI 확산·정책 (36건)
+
+- 분류별: 단정반증 9, 상충 7, 판정 기준 보완 7, 누락정정 6, 갱신 4, 신규 2, 전망 점검 1
+- 영향별: 문장 수정 29, 참고 5, 판정 영향 2
+- 방법: request_r1.md만 읽고 백지 조사(blind_i4.md) 후 records.jsonl·signal_r1.json·article_r1.html과 대조. 기존 파일은 수정하지 않음.
+
+- **[판정 영향] 누락정정 · I4-M-001** — BTOS 질문은 2025-11-17부터 'AI로 재화·서비스를 생산했는가'에서 '어떤 업무 기능에서든 AI를 썼는가'로 넓어졌다. 2026-05-03 19.8%와 업종별 39.7%·33.9%는 넓어진 정의의 값이므로, '재화·서비스를 만들고 있다는 곳'이라는 정의 문구를 '최근 2주 안에 어떤 업무 기능에서든 AI를 쓴 기업'으로 고쳐야 한다. 같은 문항의 2025년 말 값은 약 10%(재화·서비스 생산 기준)라 직접 비교할 수 없다.
+  - 비고: 판정 영향: 판정 규칙은 '분모는 해 본 적 있다가 아니라 주로 AI로 한다는 비율'이라고 정했는데, 넓은 정의의 2주 사용률은 그보다 느슨하다. 이 값을 그대로 인정하면 정보(39.7%)·금융(33.9%)이 '확산'이지만, 좁은 정의로 환산하거나 한 단계 낮추면 '초기 확산'으로 내려가 게이지 '6개 중 확산 이상 2'가 줄 수 있다. 기업 전체 19.8%는 초기 확산(10~25%)에 그대로 남는다. 좁은 정의의 업종별 값은 공개된 것을 확인하지 못했고, 기록이 왜 이 정의를 썼는지는 알 수 없다(확신 낮음). 기록의 definition 칸('최근 2주 AI 사용')은 맞지만 statement 문구가 옛 정의다.
+  - 출처(A): [미국 인구조사국 (BTOS 스토리)](https://census.gov/library/stories/2026/05/ai-use-businesses.html) 2026-05-26
+  - 출처(B): [미니애폴리스 연준 (BTOS 4월 보충조사 해설)](https://www.minneapolisfed.org/article/2026/ai-adoption-in-business-grows-steadily-but-unevenly) 2026-05-29
+- **[판정 영향] 단정반증 · I4-I-002** — 'IT·소프트웨어 개발 업무가 실제 운영 단계'라는 판정은 기록된 근거(I4-M-004)에 없다. McKinsey 본문 기준 코딩 Agent를 확장 중인 곳은 전체 약 2할(대기업 31%)이라 판정 기준표(업무 기능은 Agent 확장 기준, 25~50% 확산)로는 전체 '초기 확산', 대기업만 '확산'이다.
+  - 비고: 판정 영향: signal 게이지 '산업·업무 6개' 중 업무 항목이 IT·소프트웨어 개발을 확산으로 셌다면 초기 확산으로 내려가 on이 줄 수 있다. signal_r1.json에는 항목이 4개(정보·소프트웨어, 금융·보험, 소매, 기업 전체)만 있고 of=6의 나머지 2개가 무엇인지 알 수 없어 확정하지 못한다(확신 낮음). '정보·소프트웨어' 항목이 BTOS 정보 업종 기준이면 영향이 없다. 'IT·지식관리 Agent 확장이 가장 많다'는 문장도 열람한 본문에서 확인하지 못했다.
+  - 출처(A): [McKinsey State of AI 2026](https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai) 2026-08-25
+- **[문장 수정] 단정반증 · I4-M-005** — '30~50%가 지연되거나 취소됐다는 집계가 나왔다'는 과거형이 틀렸다. 근거는 Sightline Climate의 2026-02-24 전망으로, 2026년 예정 140개(16GW) 프로젝트 중 30~50%가 2027년 이후로 밀릴 수 있다는 예측이다. 실현치는 2025년 110개 중 26% 지연, 취소 확인 9건이다.
+  - 비고: 기록 출처 Tech Insider(B 표기)는 본문 안에서 12GW·16GW, 4GW·5GW, '절반'·'3분의 1~절반'이 섞이고 날짜(4월 17일)와 내용(9월 사건 인용)이 맞지 않는 2차 정리라 단독 근거로 부적합(C 취급 권고). E&E News·Latitude Media(Sightline 인용)는 30%(제목)·약 3분의 1(본문)·30~50%로 표기가 갈린다. Sightline 원문과 Bloomberg 원자료는 열람하지 못했다.
+  - 출처(B): [E&E News (Sightline Climate 보고 인용)](https://www.eenews.net/articles/data-center-construction-delays-grow-report/) 2026-02-24
+  - 출처(B): [Latitude Media (Sightline Climate 인용)](https://www.latitudemedia.com/news/up-to-half-of-the-worlds-data-centers-may-be-delayed-this-year/) 2026-02-24
+  - 출처(C): [Tech Insider (기록 M-005 출처, 수치 상호 불일치·날짜 불일치)](https://tech-insider.org/us-ai-data-center-delays-cancellations-7gw-capacity-crisis-2026/) 2026-04-17
+- **[문장 수정] 판정 기준 보완 · I4-F-004** — F-004('2027 상반기에도 30% 이상이 지연·취소됐다는 집계')는 기준이 모호하다. (1) 예측(2026-02 Sightline은 '30~50% 지연 가능')과 실현을 구분하지 않았다. (2) 실현치인 2025년은 26%로 30% 미만이었다. (3) 분모가 프로젝트 수인지 GW인지, 지연과 취소를 합치는지 정하지 않았다. (4) 집계 기관이 2027년 상반기 안에 새 집계를 내는지 알 수 없다.
+  - 비고: 제안 기준: '2027-06-30까지 공개된 Sightline Climate 또는 Bloomberg 집계에서 2026년 예정 프로젝트(건수 기준)의 실제 지연·취소 비율이 30% 이상'으로 한정. 2025년 실현치가 26%였으므로 임계값 30%는 전망이 맞아도 실현치로는 틀릴 수 있다. F-101(낙관)의 판정 조건 (3)도 같은 문제를 안고 있다. Sightline 원문은 열람하지 못했다.
+  - 출처(B): [E&E News (Sightline Climate 보고 인용)](https://www.eenews.net/articles/data-center-construction-delays-grow-report/) 2026-02-24
+  - 출처(B): [Latitude Media (Sightline Climate 인용)](https://www.latitudemedia.com/news/up-to-half-of-the-worlds-data-centers-may-be-delayed-this-year/) 2026-02-24
+  - 원문 미확인(fetched=false)
+- **[문장 수정] 전망 점검 · I4-F-101** — F-101의 '대기업 과반이 AI를 전사로 확장'은 McKinsey 2026에서 이미 충족돼 있다(대기업 전사 확장 54%). 판정 방법 (2)는 전체 응답자 44%를 기준으로 하므로 서술과 방법이 다른 지표를 가리킨다.
+  - 비고: 서술을 쓸 때 '대기업'과 '전체'를 구분하지 않으면 시나리오 판정에서 해석이 갈린다. 방법의 세 조건(BTOS 25% 이상, McKinsey 전사 확장 50% 이상, 지연·취소 30% 미만)은 BTOS가 19.8%에서 25%까지 5%p 이상 올라야 하는 가장 어려운 조건이고, 2주 사용률의 문항 변경(2025-11)이 또 있으면 시계열이 끊긴다. 위 조건들의 판정 기준 보완은 F-002·F-004·F-006에 따로 적었다.
+  - 출처(A): [McKinsey State of AI 2026](https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai) 2026-08-25
+  - 출처(A): [미국 인구조사국 (BTOS 스토리)](https://census.gov/library/stories/2026/05/ai-use-businesses.html) 2026-05-26
+- **[문장 수정] 판정 기준 보완 · I4-F-002** — F-002('2026년 12월 말 기준 21% 이상')는 어떤 값을 볼지 정하지 않았다. 격주 단일 값인지 평균인지, 전국 '현재 사용(어떤 업무 기능에서든, 최근 2주)' 계열인지 정해야 한다. 최신 확인값 19.8%(2026-05-03)와 임계값 21%의 차이는 1.2%p로 17~20% 변동폭 안이다.
+  - 비고: 2026-05-03 이후 값은 열람하지 못해 이미 21%를 넘었을 가능성을 배제할 수 없다. 문항이 2025-11-17에 바뀐 전례가 있어 다시 바뀌면 판정이 안 된다(전제 조건 '조사가 계속 발표될 경우'에 문항 유지도 넣을 것). 제안 기준: 'BTOS 전국 현재 AI 사용률(문항 유지 시), 2026-12 마지막 두 격주 값의 평균이 21% 이상'.
+  - 출처(A): [미국 인구조사국 (BTOS 스토리)](https://census.gov/library/stories/2026/05/ai-use-businesses.html) 2026-05-26
+  - 출처(B): [미니애폴리스 연준 (BTOS 4월 보충조사 해설)](https://www.minneapolisfed.org/article/2026/ai-adoption-in-business-grows-steadily-but-unevenly) 2026-05-29
+- **[문장 수정] 누락정정 · I4-E-007** — EU 디지털 옴니버스는 2026-07-24 관보에 실렸고 07-27 발효했다(Regulation (EU) 2026/1744). 기록의 '확정(2026-07)' 날짜를 이 날짜로 보완할 수 있다. 기록이 빠뜨린 내용: 의회 표결 06-16, 공공기관용 AI는 2030-08-02, 투명성 의무(Article 50)는 2026-08-02 그대로 적용, 이미 시판된 생성 AI의 표시 의무는 2026-12-02.
+  - 비고: 기록 check_flag '관보 게재 날짜는 원문에 없음'을 이번에 풀 수 있다. 관보 날짜는 Lewis Silkin(B)에서, 법규 번호는 Orrick(B)에서 확인했고 EUR-Lex 원문은 열지 못했다.
+  - 출처(B): [Lewis Silkin (EU 디지털 옴니버스 발효)](https://www.lewissilkin.com/insights/2026/07/27/the-digital-omnibus-on-ai-enters-into-force-today-102nedo) 2026-07-27
+  - 출처(B): [Orrick (기록 E-007 출처)](https://www.orrick.com/en/Insights/2026/07/EU-AI-Act-Update-Digital-Omnibus-Finalizes-8-Compliance-Changes) 2026-07-29
+  - 출처(B): [Sidley (EU 옴니버스 잠정합의·의회 표결)](https://datamatters.sidley.com/2026/06/22/eu-lawmakers-reach-provisional-agreement-to-delay-key-eu-ai-act-obligations/) 2026-06-22
+- **[문장 수정] 단정반증 · I4-I-004** — '정상 취득한 데이터의 학습은 공정 이용 쪽으로 기울고 있다'는 단정은 근거가 약해졌다. 제3순회는 2026-09-29 Thomson Reuters v. ROSS에서 AI 학습 공정 이용을 부정한 1심을 유지했다(09-30 공개, 첫 연방 항소심 판단). 다만 비생성형·직접 경쟁 사안이라 범위는 좁을 수 있다. NYT 사건은 아직 판단 전이고 DOJ 의견은 정부 입장일 뿐 판결이 아니다.
+  - 비고: ROSS 판결문은 비공개 상태라 추론은 기사 요약에 의존한다(ROSS는 대법원 상고 예정). 인용된 Bartz·Kadrey(2025) 공정 이용 판단은 1심(지방법원) 결정이다. '기울고 있다'는 방향 판단이 사건별로 갈리므로 '지방법원은 공정 이용, 항소심 첫 판단은 부정(비생성형)'으로 쓰는 편이 정확하다.
+  - 출처(B): [LawNext (제3순회 Thomson Reuters v. ROSS)](https://www.lawnext.com/2026/09/3rd-circuit-rules-for-thomson-reuters-in-its-copyright-fight-against-legal-research-startup-ross.html) 2026-09-30
+  - 출처(B): [Axios (NYT v. OpenAI 약식판결 국면)](https://axios.com/2026/09/08/nyt-openai-microsoft-copyright-lawsuit) 2026-09-08
+- **[문장 수정] 신규 · 기록 없음** — 제3순회가 2026-09-29(공개 09-30) Thomson Reuters v. ROSS에서 AI 학습을 공정 이용으로 보지 않은 1심을 유지했다. 첫 연방 항소심의 AI 학습 공정 이용 판단이며, 기록의 사건 목록과 I4-I-004에 반영되지 않았다.
+  - 비고: 비생성형 AI, 직접 경쟁 제품이라는 사실관계가 판단 범위를 좁힐 수 있다. 판결문 전문은 비공개라 세부 논리는 확인하지 못했다. 상고(대법원) 예정이라 확정 아님.
+  - 출처(B): [LawNext (제3순회 Thomson Reuters v. ROSS)](https://www.lawnext.com/2026/09/3rd-circuit-rules-for-thomson-reuters-in-its-copyright-fight-against-legal-research-startup-ross.html) 2026-09-30
+- **[문장 수정] 갱신 · I4-M-007** — Agent 보안 건수는 갱신됐다. OWASP GenAI 3분기 정리(2026-10-08 발표, 07-01~09-30)는 확인 사건 7건·연구 시연 1건·시도 1건이며, 유형이 평가 환경의 샌드박스 탈출 5건, 공급망 3건, 프롬프트 주입 1건이다. 기록의 '1~4월 8건 중 CVE 1건'과 '간접 프롬프트 주입이 실제 공격'은 1분기 이야기이고, 3분기 대표 사건은 Agent 자체가 평가 환경을 벗어난 사고다.
+  - 비고: OWASP Q3 정리는 OWASP 공식 발행물이 아니고 전수도 아니며 7건이 독립 공격 7건도 아니다(OpenAI 캠페인 3건은 한 묶음). CSA 브리핑(09-04)은 Hugging Face 침투를 '1,200 Agent 중 약 700개', OWASP는 '41개 프로덕션 워커'로 달리 적어 건수·규모를 단일 숫자로 못 쓴다. Q3 CVE는 CVE-2026-24301 1건과 JFrog 9건(Artifactory)이다. 전 분기 대비 추세는 OWASP 정리에 없다.
+  - 출처(B): [OWASP GenAI Exploit Roundup Q3 2026](https://genai.owasp.org/2026/10/08/genai-and-agentic-ai-exploit-roundup-q3-2026/) 2026-10-08
+  - 출처(B): [CSA CISO 일일 브리핑](https://labs.cloudsecurityalliance.org/research/ciso-daily-briefing-20260904/) 2026-09-04
+  - 출처(B): [CSA 연구 노트 (OWASP Q1 라운드업 인용)](https://labs.cloudsecurityalliance.org/research/csa-research-note-indirect-prompt-injection-in-the-wild-2026/) 2026-04-26
+- **[문장 수정] 갱신 · I4-M-008** — 한국 생성형 AI 사용률(15~64세)은 갱신됐다. 2026 Q1 37.1%(16위, +6.4%p, 세계 17.8%, 미국 31.3%·21위), Q2(2026-06) 40.6%(+3.5%p, 12위, 세계 18.8%). 기록의 '2025년 하반기 30%대·18위·증가율 80%'는 두 분기 전 값이다. 한 줄 답과 I4-I-008의 '30% 이상'도 40%로 고쳐야 한다.
+  - 비고: Q1은 Microsoft PDF 원문(A)에서 확인했다. Q2는 경향신문·Digital Today 보도(B)로만 확인했고 Microsoft Q2 원문은 열지 못했다. 같은 보도에서 UAE 73.3%, 싱가포르 64.3%. 순위 판정(25~50% 확산)은 변하지 않는다. 방법론은 '1회 이상 사용'을 텔레메트리로 추정한 값이다.
+  - 출처(A): [Microsoft AI Diffusion Report 2026 Q1 (PDF)](https://www.microsoft.com/en-us/research/wp-content/uploads/2026/05/Microsoft-AI-Diffusion-Report-2026-Q1.pdf) 2026-05
+  - 출처(B): [경향신문 영문판 (Microsoft Q2 보고서 보도)](https://www.khan.co.kr/en/article/202609281402017) 2026-09-28
+  - 출처(B): [Digital Today (Microsoft Q2 보고서 보도)](https://www.digitaltoday.co.kr/en/view/108144/south-korea-ranks-12th-in-generative-ai-usage-fastest-growth-among-major-economies) 2026-09-28
+  - 출처(A): [Microsoft News Asia (2025 AI 확산 보고서)](https://news.microsoft.com/source/asia/2026/01/12/global-ai-adoption-in-2025/?lang=ko) 2026-01-12
+- **[문장 수정] 상충 · I4-M-009** — 한국 기업 AI 활용률로 대한상의 500개사 조사(2024) 30.6%를 쓰고 '공식 갱신이 없다'고 했지만, 과기정통부 '2024 기업정보화통계집'(2025-01-06 발표)은 213,266개 기업 대상 30.3%(전년 +2.3%p)로 표본이 훨씬 크다. 한국 기업 도입률은 이 값을 1순위로 쓰는 편이 맞다. 2026-09-14 AWS 의뢰 설문은 58%(전년 48%)라고 하나 정의가 달라 같은 선에 놓을 수 없다.
+  - 비고: 과기정통부 수치는 이투데이(B) 본문으로만 확인했고 통계집 원문은 열지 못했다. 2025년 판(2026-01 발표 추정)은 찾지 못했다. AWS 설문(Strand Partners, 기업 리더 1,000명)은 이해관계(AWS 의뢰)가 있어 단독 근거 금지이며 고도 단계 11%→26%(스타트업 35%·중소 25%·대기업 9%)는 대기업이 낮게 나오는 방식이라 해석에 주의해야 한다. 기록 I-008의 '기업 운영 단계는 판정하기 어렵다'는 유지될 수 있다.
+  - 출처(B): [이투데이 (과기정통부 2024 기업정보화통계집)](https://www.etoday.co.kr/news/view/2435207) 2025-01-06
+  - 출처(B): [파이낸셜뉴스 (AWS 의뢰 Strand Partners 설문)](https://fnnews.com/news/202609140919423510) 2026-09-14
+- **[문장 수정] 단정반증 · I4-I-001** — '미국 기업 전체 사용률은 반년째 20% 안팎에서 멈췄다'는 표현은 근거가 약하다. Census는 2025-12~2026-05 사이 17~20%라고만 했고 최신값 19.8%는 그 구간의 상단이다. 같은 글에서 20명 이상 기업은 사용률이 올랐다고 했으므로 '정체'가 아니라 '17~20% 구간, 20명 이상 기업은 상승'으로 쓰는 편이 정확하다.
+  - 비고: 격주 시계열의 개별 값은 확인하지 못했다(Census 데이터 페이지는 JavaScript가 필요해 열리지 않았고, 2026-10-04까지 관측이 갱신된다는 사실만 확인). 2026-05-03 이후 값이 이미 20%를 넘었을 수 있다. 정체인지 완만한 상승인지는 시계열을 봐야 판정된다.
+  - 출처(A): [미국 인구조사국 (BTOS 스토리)](https://census.gov/library/stories/2026/05/ai-use-businesses.html) 2026-05-26
+  - 출처(C): [Dror Poleg BTOS AI 차트 (최신 관측일 2026-10-04, 값 열람 못 함)](https://www.drorpoleg.com/charts/btos-ai/) 2026-10-04
+- **[문장 수정] 단정반증 · I4-M-002** — '소매업은 약 14%로 가장 낮다'는 Census 기사가 제시한 업종 가운데서만 맞다. 2026-04 AI 보충조사 해설에서는 농업·운송·숙박음식·건설이 10% 미만, 제조 약 12%여서 소매보다 낮은 업종이 있다. '제시된 업종 중 가장 낮다'로 한정하거나 보충조사 값을 병기해야 한다.
+  - 비고: 보충조사(4월, 미니애폴리스 연준 해설 B)는 본조사와 업종 구분이 달라 같은 선에 놓을 수 없다. 소매가 보충조사에서 몇 %인지는 확인하지 못했다. 10% 미만 업종은 판정 기준표상 '시험' 단계라 소매·제조가 초기 확산이라는 서술은 유지되지만 '가장 낮다'는 단정은 못 쓴다.
+  - 출처(A): [미국 인구조사국 (BTOS 스토리)](https://census.gov/library/stories/2026/05/ai-use-businesses.html) 2026-05-26
+  - 출처(B): [미니애폴리스 연준 (BTOS 4월 보충조사 해설)](https://www.minneapolisfed.org/article/2026/ai-adoption-in-business-grows-steadily-but-unevenly) 2026-05-29
+- **[문장 수정] 누락정정 · I4-M-003** — 규모별 격차 지표(T3)에 소기업 값이 없다. Census 기사 기준 4명 이하 기업은 20% 미만이고 250명 이상은 37%다. 4월 보충조사에서는 250명 이상 30% 대 20명 미만 17%로 격차와 수준이 다르다. 격차를 쓰려면 어느 조사인지 밝혀야 한다.
+  - 비고: 본조사(37% 대 20% 미만)와 보충조사(30% 대 17%)는 문항·시점이 달라 격차를 단순 비교할 수 없다. 20명 미만 전체의 본조사 값은 기사에서 확인하지 못했다(4명 이하만 '20% 미만').
+  - 출처(A): [미국 인구조사국 (BTOS 스토리)](https://census.gov/library/stories/2026/05/ai-use-businesses.html) 2026-05-26
+  - 출처(B): [미니애폴리스 연준 (BTOS 4월 보충조사 해설)](https://www.minneapolisfed.org/article/2026/ai-adoption-in-business-grows-steadily-but-unevenly) 2026-05-29
+- **[문장 수정] 누락정정 · I4-M-004** — McKinsey 2026 보고서에는 기록에 없는 값이 있다. 대기업(매출 10억 달러 초과) 전사 확장 54% 대 소기업 약 3분의 1, Agent 확장 대기업 27%→40%(소기업 22% 보합), 3개 이상 기능에서 AI 사용 56%(전년 51%), 고성과자(EBIT 5% 이상) 약 6%, 코딩 Agent 확장 약 2할(대기업 31%).
+  - 비고: 기록 extra의 'token_cost_constraint 약 20%'는 열람한 본문 요약에서 확인하지 못했다(보고서 다른 부분에 있을 수 있음). 'Agent 실험 중' 비율은 본문에서 찾지 못했다. 위 수치는 모두 McKinsey 자체 응답자 설문(1,719명, 2026-05-04~06-08)이며 표본·가중 방식은 확인하지 못했다.
+  - 출처(A): [McKinsey State of AI 2026](https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai) 2026-08-25
+- **[문장 수정] 단정반증 · I4-I-001** — '대기업은 전사 확장과 Agent 확장을 빠르게 늘리고 있다'에서 Agent 확장은 확인된다(27%→40%). 그러나 전사 확장은 전체 38%→44%만 기록에 있고 대기업 값의 1년 전 수치는 확인하지 못했다(2026은 54%). '전사 확장을 빠르게'는 근거가 부족하다.
+  - 비고: 대기업 전사 확장의 전년 값이 없어 증가폭을 계산할 수 없다. 전체 +6%p는 대기업·소기업이 섞인 값이다.
+  - 출처(A): [McKinsey State of AI 2026](https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai) 2026-08-25
+- **[문장 수정] 단정반증 · I4-M-005** — '병목은 GPU보다 전력망 연결이다'는 단일 원인으로 쓸 수 없다. Sightline은 전력 제약·지역 반대·변압기 등 전력망 장비 부족을 함께 꼽았고, 10개 이상 주에서 모라토리엄이 제안됐다. Data Center Watch 2분기(보도 2026-09-22)는 지역 반대로 막히거나 지연된 미국 프로젝트가 45건, 약 680억 달러라고 한다.
+  - 비고: Data Center Watch 수치는 2차 보도(C)이고 차단과 지연을 합친 값이라 영구 취소 건수가 아니며 단독 근거 금지. 1위 제약이 전력·데이터센터라는 순위 자체가 바뀔 근거는 못 찾았다.
+  - 출처(B): [E&E News (Sightline Climate 보고 인용)](https://www.eenews.net/articles/data-center-construction-delays-grow-report/) 2026-02-24
+  - 출처(B): [Latitude Media (Sightline Climate 인용)](https://www.latitudemedia.com/news/up-to-half-of-the-worlds-data-centers-may-be-delayed-this-year/) 2026-02-24
+  - 출처(C): [Let's Data Science (Data Center Watch Q2 2026 인용)](https://letsdatascience.com/news/us-data-center-opposition-delays-68-billion-projects-16c6814d) 2026-09-22
+- **[문장 수정] 판정 기준 보완 · I4-F-006** — F-006(McKinsey 2027년 조사에서 전사 확장 50% 이상)은 발표 시점 위험이 있다. 2026 보고서는 2026-08-25에 나왔고 설문은 5~6월이었다. 방법에 2027-09-30 이전 발표를 요구하고 있지 않으며, 같은 문항('scaling across the enterprise' 응답자 전체)인지, 대기업만이 아닌 전체인지 정해야 한다. 전년 대비 증가가 +6%p(38→44)라 같은 속도면 정확히 50%다.
+  - 비고: 이전 보고서(2025)의 발표 시기는 이번에 확인하지 못했다. 발표가 9월 30일 이후면 기한 처리 규칙이 없다. 50% 임계값은 같은 속도 증가에서 경계에 걸린다.
+  - 출처(A): [McKinsey State of AI 2026](https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai) 2026-08-25
+- **[문장 수정] 판정 기준 보완 · I4-F-003** — F-003(2027-06-30까지 NYT v. OpenAI 학습 공정 이용 판단)의 '판단'은 약식판결 일부(학습 단계만, 일부 청구만)를 포함하는지 정해야 한다. 현재 약식판결 신청 변론이 끝났고 Stein 판사가 수개월 안에 결정할 것으로 보도됐다(2026-09-08, Axios). 기한 안에 나올 가능성은 높아 보이나 판단 범위가 일부 청구에만 미치면 해석이 갈린다.
+  - 비고: 제안 기준: '학습 단계의 공정 이용 여부에 대한 법원 명시적 판단(약식판결 일부 포함, 학습·출력을 나눠 판단하는 경우 학습 부분만 있으면 인정)'. 중간 항소로 지연될 가능성은 확인하지 못했다. 법원 기록 원문은 보지 못했다.
+  - 출처(B): [Axios (NYT v. OpenAI 약식판결 국면)](https://axios.com/2026/09/08/nyt-openai-microsoft-copyright-lawsuit) 2026-09-08
+- **[문장 수정] 판정 기준 보완 · I4-F-005** — F-005의 '다시 미루자는 공식 제안'이 무엇인지 정하지 않았다. 집행위 입법 제안만 인정하는지, 의회·이사회 논의나 위원 발언도 인정하는지 정해야 한다. 디지털 옴니버스는 2026-07-27 이미 발효했고 Annex III 고위험 의무는 2027-12-02로 확정돼 있다.
+  - 비고: 제안 기준: '집행위가 입법 제안(Commission proposal)으로 고위험 의무 시기 연기를 공식 제출한 경우만 인정'. 공공기관용 AI는 2030-08-02로 따로 정해진 점도 혼동 소지가 있다. 재연기 가능성의 증거는 찾지 못했다.
+  - 출처(B): [Lewis Silkin (EU 디지털 옴니버스 발효)](https://www.lewissilkin.com/insights/2026/07/27/the-digital-omnibus-on-ai-enters-into-force-today-102nedo) 2026-07-27
+  - 출처(B): [Orrick (기록 E-007 출처)](https://www.orrick.com/en/Insights/2026/07/EU-AI-Act-Update-Digital-Omnibus-Finalizes-8-Compliance-Changes) 2026-07-29
+- **[문장 수정] 단정반증 · I4-I-003** — '규제의 브레이크는 풀리는 쪽이다'는 일부만 맞다. EU 투명성 의무는 2026-08-02 적용을 유지했고 생성 AI 표시 의무는 12-02, 신규 금지 조항도 12-02 적용이다. 한국은 2026-07-21 생성형 AI 표시·고영향 AI 관리 기준을 구체화한 개정이 적용됐다. 콜로라도도 시행을 늦췄을 뿐 법은 유지됐다.
+  - 비고: EU 연기는 고위험 의무에 한정된다. 계도기간은 한국에서 최소 1년이라 단속은 늦어진다. 규제가 전반적으로 풀린다기보다 고위험·단속은 늦추고 표시·투명성은 유지·구체화하는 쪽이다. 전체 방향 판정은 유지될 수 있다.
+  - 출처(B): [Lewis Silkin (EU 디지털 옴니버스 발효)](https://www.lewissilkin.com/insights/2026/07/27/the-digital-omnibus-on-ai-enters-into-force-today-102nedo) 2026-07-27
+  - 출처(B): [경북매일 (AI 기본법 개정안·시행령 7/21 적용)](https://kbmaeil.com/article/20260719500014) 2026-07-20
+  - 출처(B): [LawFuel (콜로라도 SB 26-189)](https://www.lawfuel.com/colorado-ai-act-2026-sb-26-189/) 2026-06-09
+- **[문장 수정] 상충 · I4-E-008** — Anthropic 합의 최종 승인일은 출처마다 다르다. Pearl Cohen·eWeek는 2026-07-20(월), Writer Beware(기록 출처)는 '화요일'이라며 07-21로 추정된다. 기록은 07-21이다. 07-20로 고치거나 '7월 20~21일'로 병기해야 한다.
+  - 비고: 법원 명령 원문은 열지 못했다. Writer Beware의 '07-21'은 글 날짜(07-23)에서 추정한 값이다.
+  - 출처(B): [Pearl Cohen](https://pearlcohen.com/federal-court-approves-1-5-billion-anthropic-copyright-settlement-largest-in-history) 2026-07
+  - 출처(B): [eWeek](https://www.eweek.com/de/news/anthropic-15-billion-ai-copyright-settlement-approved/) 2026-07
+  - 출처(B): [Writer Beware](https://writerbeware.blog/2026/07/23/anthropic-settlement-update-final-settlement-approved/) 2026-07-23
+- **[문장 수정] 상충 · I4-M-006** — '저작물당 약 3,127달러'는 변호사비·비용 등 약 1억 2,246만 달러를 공제한 순액(13억 7,754만 달러)을 청구된 44만 490건으로 나눈 값이다. 총액 15억 달러를 대상 목록 482,460건으로 나누면 약 3,109달러, 보도의 '약 3,000달러'는 반올림이다. I4-I-004의 '가격'으로 쓸 때 기준을 밝혀야 한다.
+  - 비고: 수치 자체는 Writer Beware에서 확인했다(B). 합의이며 판결이 아니라 공정 이용 판단은 없다.
+  - 출처(B): [Writer Beware](https://writerbeware.blog/2026/07/23/anthropic-settlement-update-final-settlement-approved/) 2026-07-23
+  - 출처(B): [Pearl Cohen](https://pearlcohen.com/federal-court-approves-1-5-billion-anthropic-copyright-settlement-largest-in-history) 2026-07
+- **[문장 수정] 상충 · I4-E-010** — DOJ 문서는 '의견서'가 아니라 statement of interest(관심 표명서)이고, Axios 2026-09-08 기사가 이미 DOJ가 OpenAI 지지 서면을 냈다고 전한다. 기록의 사건 날짜 2026-09-19는 기사 날짜일 수 있어 실제 제출일은 그 이전일 가능성이 있다. 제출일을 원문으로 확인해야 한다.
+  - 비고: Axios 09-19 기사는 제출일을 밝히지 않았다. 09-08 기사 요약이 같은 서면을 가리키는지는 확신하지 못한다. 법원 기록 원문은 열지 못했다. 서명자는 고위 관료뿐이고 USPTO·저작권청이 놀랐다는 보도가 있다(1건, 확인 한계).
+  - 출처(B): [Axios (DOJ statement of interest)](https://axios.com/2026/09/19/justice-department-openai-new-york-times) 2026-09-19
+  - 출처(B): [Axios (NYT v. OpenAI 약식판결 국면)](https://axios.com/2026/09/08/nyt-openai-microsoft-copyright-lawsuit) 2026-09-08
+- **[문장 수정] 단정반증 · I4-I-006** — '간접 프롬프트 주입이 실제 공격으로 쓰이고 있지만 대부분 CVE 없이 처리돼 기업이 위험을 추적하기 어렵다'는 3분기 정리와 맞지 않는 면이 있다. 3분기 사건은 평가 중 Agent의 경계 이탈(5건)과 공급망 악성 패키지(3건)가 중심이고 CVE도 붙은 사건이 있다(CVE-2026-24301, JFrog 9건).
+  - 비고: 1분기(1~4월 11일) 서술은 CSA 노트로 맞다(8건 중 CVE 1건 Flowise). Agent 보안이 '새 제약'이라는 큰 방향은 3분기에도 유지된다. 제약 2위 순위가 바뀔 근거는 없다. 사건 대부분이 평가·연구 환경 사고라 '기업 운영 확대의 제약'과 직결되는지는 별도 판단이 필요하다.
+  - 출처(B): [OWASP GenAI Exploit Roundup Q3 2026](https://genai.owasp.org/2026/10/08/genai-and-agentic-ai-exploit-roundup-q3-2026/) 2026-10-08
+  - 출처(B): [CSA CISO 일일 브리핑](https://labs.cloudsecurityalliance.org/research/ciso-daily-briefing-20260904/) 2026-09-04
+  - 출처(B): [CSA 연구 노트 (OWASP Q1 라운드업 인용)](https://labs.cloudsecurityalliance.org/research/csa-research-note-indirect-prompt-injection-in-the-wild-2026/) 2026-04-26
+- **[문장 수정] 누락정정 · I4-M-010** — 기록은 '정부는 GPU 1만 3천 장을 확보해 산·학·연 4천, 국가 프로젝트 3천, 독자 파운데이션 3천에 배분했다'고 썼는데, 배분 합계는 1만 장이고 나머지 3천 장의 용처는 기사에 없다. 또한 2025-10-31 엔비디아 GPU 26만 장 공급 발표(공공 5만, 삼성·SK 등 20만)가 기록에 없어, 1.3만 장이 26만 장 계획의 이행분인지 구분되지 않는다.
+  - 비고: 26만 장은 공급 계획 발표이지 확보 완료가 아니다(머니투데이 B, 본문 미열람·검색 요약만). 파이낸셜뉴스 기사는 26만 장을 언급하지 않았다. 둘의 관계는 확인하지 못했다.
+  - 출처(B): [파이낸셜뉴스 (기록 M-010 출처)](https://www.fnnews.com/news/202605140910476269) 2026-05-14
+  - 출처(B): [머니투데이 (엔비디아 GPU 26만 장)](https://www.mt.co.kr/tech/2025/10/31/2025103112075597559) 2025-10-31
+- **[문장 수정] 갱신 · I4-E-004** — AI 기본법은 2026-07-21 개정안·시행령 개정안이 적용돼 생성형 AI 결과물 표시 기준과 고영향 AI 관리 기준이 구체화됐다. 국가AI전략위원회가 법정위원회로 바뀌고 'AI 제품·서비스 확인제도'가 생겼다. 계도기간은 '최소 1년'으로 시작·종료일은 보도에 없다. 기록의 1월 시행 서술은 맞지만 7월 변경이 빠졌다.
+  - 비고: 경북매일(B) 한 건 기준이라 개정 내용의 세부는 확인하지 못했다. 정부 보도자료·법제처 원문은 열지 못했다.
+  - 출처(B): [경북매일 (AI 기본법 개정안·시행령 7/21 적용)](https://kbmaeil.com/article/20260719500014) 2026-07-20
+  - 출처(B): [트윅24 (AI 기본법 시행·계도기간)](https://www.twig24.com/news/2026/01/23/20260123030002) 2026-01-23
+- **[문장 수정] 상충 · I4-E-009** — NVIDIA 보도자료(8-K)는 '전망에 중국 데이터센터 컴퓨트 매출을 가정하지 않는다(not assuming any Data Center compute revenue from China)'와 3분기 매출 전망 1,080억 달러(±2%)까지만 확인된다. '중국 수출 허용 물량의 일부만 출하'와 'H200 재고 4억 달러 손실 처리'는 8-K 보도자료에 없고 WhatLedTo 타임라인(B)에만 있다. 기록이 8-K를 A 출처로 함께 달아 A 확인된 것처럼 읽힌다.
+  - 비고: 컨퍼런스콜·10-Q에는 있을 수 있어 틀렸다고 단정하지는 않는다. 해당 문서는 열지 못했다. '데이터센터 매출 0'이 아니라 '컴퓨트 매출 가정 없음'이므로 문구를 정확히 써야 한다.
+  - 출처(A): [NVIDIA Q2 FY2027 실적 발표 (SEC 8-K)](https://www.sec.gov/Archives/edgar/data/0001045810/000104581026000073/q2fy27pr.htm) 2026-08-26
+- **[문장 수정] 판정 기준 보완 · I4-F-001** — F-001('중국 데이터센터 매출을 0으로 잡을 것')의 판정 문구를 NVIDIA 표현('Data Center compute revenue from China를 가정하지 않음')에 맞춰야 한다. 네트워킹 등 컴퓨트 외 매출이 중국에서 발생하면 '0'과 어긋난다. 또 기록의 '다음 분기(2026년 11월~2027년 1월)'는 3분기 실적 발표(11월) 속 4분기 전망을 뜻하는데, 8월 8-K의 전망은 3분기(8~10월) 것이라 헷갈린다.
+  - 비고: 실적 발표일이 2026-11-30 이전인지 확인하지 못했다(작년 같은 분기는 11월 중순이었다는 기억에 의존, 이번 조사에서 확인 못 함).
+  - 출처(A): [NVIDIA Q2 FY2027 실적 발표 (SEC 8-K)](https://www.sec.gov/Archives/edgar/data/0001045810/000104581026000073/q2fy27pr.htm) 2026-08-26
+- **[문장 수정] 상충 · I4-M-002** — '정보·소프트웨어'라는 서술(한 줄 답, signal 항목)은 BTOS의 '정보(Information)' 업종 39.7%를 소프트웨어 개발로 좁혀 읽을 여지를 준다. 4월 보충조사는 '정보·전문서비스 약 40%'로 업종 묶음이 다르다. 업종 이름은 'BTOS 정보 업종'으로 쓰는 편이 맞다.
+  - 비고: BTOS 정보 업종에는 출판·방송·통신·데이터 처리가 함께 들어간다는 점은 내가 일반 지식으로 아는 분류이며 이번 조사에서 원문으로 확인하지 못했다. signal_r1.json의 항목명 '정보·소프트웨어'에도 같은 문제가 있다.
+  - 출처(A): [미국 인구조사국 (BTOS 스토리)](https://census.gov/library/stories/2026/05/ai-use-businesses.html) 2026-05-26
+  - 출처(B): [미니애폴리스 연준 (BTOS 4월 보충조사 해설)](https://www.minneapolisfed.org/article/2026/ai-adoption-in-business-grows-steadily-but-unevenly) 2026-05-29
+- **[참고] 신규 · 기록 없음** — Sony Music Publishing·Warner Chappell이 Anthropic을 제소했다(N.D. Cal., 2026-08-31 보도). 토렌트·스크래핑으로 수만 곡을 학습에 썼고 Claude가 가사를 그대로 출력한다고 주장하며 저작물당 최대 15만 달러를 청구했다.
+  - 비고: 청구일 뿐 판결이 아니다. 제소일은 기사에 없다. I4-T6('저작권 비용') 맥락에서 Anthropic 합의가 마지막이 아니라는 신호다.
+  - 출처(B): [Business Standard (Sony·Warner Chappell v. Anthropic)](https://www.business-standard.com/world-news/sony-music-warner-chappell-sue-anthropic-over-copyright-infringement-126083100623_1.html) 2026-08-31
+- **[참고] 판정 기준 보완 · 기록 없음** — signal_r1.json은 gauge가 '산업·업무 6개 중 확산 이상'(of=6)인데 items에는 4개(정보·소프트웨어, 금융·보험, 소매, 기업 전체)만 있다. 나머지 2개(한국 서비스업 '확산(잠정)' 등으로 추정)가 무엇이고 on에 포함되는지 명시되지 않았다.
+  - 비고: 기사 본문에는 '한국은 서비스업·금융이 50%를 넘었지만 2024년 조사이고 전사 확장 근거가 없어 확산(잠정)'이라는 규칙이 있으나 gauge 계산에 쓰였는지 알 수 없다. 기준표 '주류는 50% 이상 + 전사 확장 25% 이상' 규칙을 적용한 항목도 없다. 판정 영향 여부는 항목 구성을 봐야 알 수 있다.
+- **[참고] 상충 · I4-M-007** — 기록 extra의 'Google 간접 프롬프트 주입 +32%(2025-11→2026-02)'는 지표 정의가 모호하다. CSA 노트는 핵심 요약에서 '악성 IPI 콘텐츠', 본문에서 '페이지 비율'로 쓰며 절대 건수가 아닌 상대 변화다.
+  - 비고: 원 출처(Google)를 열지 못했다.
+  - 출처(B): [CSA 연구 노트 (OWASP Q1 라운드업 인용)](https://labs.cloudsecurityalliance.org/research/csa-research-note-indirect-prompt-injection-in-the-wild-2026/) 2026-04-26
+- **[참고] 누락정정 · I4-E-001** — E-001(2025-12-08 H200 중국 판매 승인, 매출 25% 징수)과 E-003(2026-01-13 개별 심사 전환·중국 세관 차단)은 이번 조사에서 원문과 타임라인을 열지 못해 검증하지 못했다.
+  - 비고: 출처 WhatLedTo 타임라인은 2차 정리이며 기록의 check_flag도 같은 지적을 하고 있다. 수출 통제 최신 상황(9~10월)은 검색 결과 제목만 보고 본문을 읽지 못했다.
+  - 출처(C): [introl (BIS H200·MI325X 개별 심사 전환 보도, 검색 결과만 확인)](https://introl.com/zh/blog/bis-h200-mi325x-export-policy-china-case-by-case-review-2026) 2026-01
+  - 원문 미확인(fetched=false)
+- **[참고] 갱신 · I4-E-005** — 콜로라도 SB 26-189(2026-05-14 서명, 시행 2027-01-01)는 맞지만 주 법무장관이 규칙 제정 전까지 집행하지 않겠다고 했고, xAI v. Weiser 소송이 계속돼 집행 정지가 판결 후 14일까지 이어진다. 연방 선점 문제도 미해결이다.
+  - 비고: LawFuel(B) 한 건 기준. 소송 결과에 따라 시행 시기가 다시 움직일 수 있다.
+  - 출처(B): [LawFuel (콜로라도 SB 26-189)](https://www.lawfuel.com/colorado-ai-act-2026-sb-26-189/) 2026-06-09
+
+### 판정 영향 항목 요약
+
+- 누락정정 · I4-M-001: BTOS 질문은 2025-11-17부터 'AI로 재화·서비스를 생산했는가'에서 '어떤 업무 기능에서든 AI를 썼는가'로 넓어졌다. 2026-05-03 19.8%와...
+- 단정반증 · I4-I-002: 'IT·소프트웨어 개발 업무가 실제 운영 단계'라는 판정은 기록된 근거(I4-M-004)에 없다. McKinsey 본문 기준 코딩 Agent를 확장 중인 곳은 전...
+
+### 이번에 확인되어 기록이 맞은 것
+- BTOS 19.8%(2026-05-03)·업종 39.7%/33.9%/소매 약 14%·규모 37%/32%, McKinsey 44%/38%·Agent 대기업 40%·소기업 22%·EBIT 37%, Anthropic 합의 15억 달러, EU 고위험 일정(2027-12-02, 2028-08-02), 콜로라도 서명·시행일, 한국 AI 기본법 1월 시행·계도기간 최소 1년은 원문 또는 1차에 가까운 출처로 일치.
+
+### 조사하지 못한 것
+- BTOS 2026-05-03 이후 최신값, Sightline·Bloomberg 원문, Microsoft Q2 원문, 수출 통제 최신(9~10월), E-001·E-003 원문, 과기정통부 통계집 원문, ROSS 판결문 전문.
