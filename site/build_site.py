@@ -99,6 +99,7 @@ for c in cat["categories"]:
 
 exec(compile((SITE / "changes.py").read_text(encoding="utf-8"), "changes.py", "exec"))
 exec(compile((SITE / "portal.py").read_text(encoding="utf-8"), "portal.py", "exec"))
+exec(compile((SITE / "menu.py").read_text(encoding="utf-8"), "menu.py", "exec"))
 
 # ---------------------------------------------------------------- 점검
 bad = []

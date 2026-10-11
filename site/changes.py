@@ -71,6 +71,7 @@ CHANGES_CSS = """
 .day h2 { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; font: 600 18px var(--mono); margin: 32px 0 12px; padding-top: 14px; border-top: 2px solid var(--ink); }
 .day h2 small { font: 400 13px var(--body); color: var(--muted); }
 .qgrp { margin: 0 0 22px; }
+.qgrp:target { outline: 2px solid var(--signal); outline-offset: 6px; border-radius: 4px; scroll-margin-top: 72px; }
 .qgrp h3 { display: flex; gap: 10px; align-items: baseline; font: 600 15px var(--body); margin: 0 0 8px; }
 .qgrp h3 a { font: 600 14px var(--mono); color: var(--signal-ink); }
 .qgrp h3 span { color: var(--muted); font-weight: 400; font-size: 13px; }
