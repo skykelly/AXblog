@@ -59,8 +59,8 @@ irows = "".join(f"""<tr id="{E(r['id'])}"><td><span class="dir {DIR[r['direction
   for r in recs if r["type"] == "해석")
 
 # 3. 주요 사건 (최신순) ------------------------------------------------
-EVENTS_LEAD = ("여름 이후 규제 쪽 사건이 확산을 미는 방향으로 이어졌다. EU가 고위험 의무를 미뤘고(7월), Anthropic 합의가 확정됐으며(7월), 미국 법무부가 학습의 공정 이용을 지지했다(9월). "
-               "9월 말 제3순회는 ROSS 사건에서 학습 공정 이용을 부정해 판단이 갈렸다. 수출 통제는 반대로 미국·중국 시장을 갈랐고, 한국은 1월 AI 기본법 시행과 5월 행동계획 점검이 주요 사건이다.")
+EVENTS_LEAD = ("여름 이후 규제 쪽 사건이 확산을 미는 방향으로 이어졌다. EU가 고위험 의무를 미뤘고(7월), Anthropic 합의가 확정됐으며(7월), 미국 법무부가 학습의 공정 이용을 지지했다(9월 1일). 9월에는 캘리포니아가 AI 독립 검증기관·감사인 등록부 법을 만들었고, 아모데이가 프런티어 개발 속도 조절을 제안해 알트먼·머스크가 동의했다. 같은 달 D.C. 항소법원은 Anthropic의 국방 공급망 배제를 유지했다. "
+               "9월 말 제3순회는 ROSS 사건에서 학습 공정 이용을 부정해 판단이 갈렸다. 수출 통제는 반대로 미국·중국 시장을 갈랐고, 한국은 1월 AI 기본법 시행, 5월 행동계획 점검, 9월 2027년 AI 예산 9조 4,211억 원(+84.3%) 편성이 주요 사건이다.")
 events = sorted([r for r in recs if r["type"] == "사건" and r.get("verified")], key=lambda r: r["date"], reverse=True)
 erows = "".join(f"""<li id="{E(r['id'])}"><time>{E(r['date'])}</time><div><b>{E(r['actor'])}</b> {E(r['statement'])}
   <div class="src">{src_links(r)} <code>{E(r['id'])}</code></div></div></li>""" for r in events)
@@ -166,7 +166,7 @@ page = f"""<title>I4 AI 확산·정책 R1</title>
 <style>{CSS}</style>
 <main>
   <header class="narrow">
-    <div class="eyebrow"><span>AI Industry Trend</span><span>I4 · AI Adoption, Governance &amp; Geopolitics</span><span>R1 기준 회차 · 2026-10-09</span><span>갱신 2026-10-11 · <a href="../../changes.html#I4">변경 이력</a></span></div>
+    <div class="eyebrow"><span>AI Industry Trend</span><span>I4 · AI Adoption, Governance &amp; Geopolitics</span><span>R1 기준 회차 · 2026-10-09</span><span>갱신 2026-10-12 · <a href="../../changes.html#I4">변경 이력</a></span></div>
     <h1>{E(TITLE)}</h1>
     <p class="question">고정 질문 v1.0 — {E(QUESTION)}</p>
   </header>

@@ -47,7 +47,7 @@ NARRATIVE = [
      ["I3-M-004", "I3-M-006", "I3-I-003"]),
     ("모델 층의 수익성은 갈렸다. Anthropic은 2분기 조정 영업이익 흑자를 냈다고 보도됐지만(회사 보고, 비감사) OpenAI는 1분기 현금 소진 약 37억 달러 등 큰 손실이 이어지는 것으로 보도됐다. 2026년 약 140억 달러 손실 전망은 원 보도를 확인하지 못했다. "
      "매출 선두는 기준에 따라 다르다. 1분기 분기 매출은 OpenAI가 앞섰고, 연환산은 7~8월 Anthropic이 앞섰으며, 인식 기준(Anthropic 총액, OpenAI 순액)도 달라 직접 비교할 수 없다. "
-     "가격은 공식 가격표 기준 Claude Opus 5.5가 Opus 5보다 20% 낮고, GPT-6 Sol의 약 50% 인하는 공식 확인이 없다. 가격 인하는 이용량을 늘리지만 모델 판매의 마진은 압박한다.",
+     "가격은 공식 가격표 기준 Claude Opus 5.5가 Opus 5보다 20% 낮고, GPT-6 Sol·Luna는 GPT-5.6 프로모션 가격보다 50% 낮다(OpenAI 발표). 같은 달 상위 등급 GPT-6 Astra는 더 비싸 인하 폭은 회사·등급마다 갈린다. 가격 인하는 이용량을 늘리지만 모델 판매의 마진은 압박한다.",
      ["I3-M-005", "I3-M-007", "I3-E-007", "I3-I-004", "I3-I-005"]),
     ("돈의 흐름은 서로 얽히고 있다. NVIDIA는 OpenAI의 1,100억 달러 투자 유치에 300억 달러를 넣었고 Hugging Face 인수 계약을 맺었다(약 119억 달러에 직원 보유 프로그램 최대 약 10억 달러 별도, 언론 보도는 약 130억, 종결은 2027년 상반기 예정). 공급자가 고객의 수요를 자금으로 받치는 구조라, 수요가 독립적인지 따져 봐야 한다. "
      "한국은 메모리 호황의 가장 큰 수혜를 받고 있고, NVIDIA GPU 26만 장 우선 공급 약속(배분·일정 미공개)으로 수요자 쪽 기반의 발판도 마련했다.",
@@ -60,7 +60,7 @@ irows = "".join(f"""<tr id="{E(r['id'])}"><td><span class="dir {DIR[r['direction
   for r in recs if r["type"] == "해석")
 
 # 3. 주요 사건 (최신순) ------------------------------------------------
-EVENTS_LEAD = ("8~9월에 흐름이 한꺼번에 드러났다. NVIDIA가 분기 매출 962억 달러를 발표한 직후 Hugging Face 인수 계약을 밝혔고, 같은 달 Anthropic과 OpenAI는 이전 세대보다 낮은 가격의 신모델을 냈다(공식 가격표 기준 Opus 5.5는 Opus 5보다 20% 낮음). "
+EVENTS_LEAD = ("8~9월에 흐름이 한꺼번에 드러났다. NVIDIA가 분기 매출 962억 달러를 발표한 직후 Hugging Face 인수 계약을 밝혔고, 같은 달 Anthropic과 OpenAI는 이전 세대보다 낮은 가격의 신모델을 냈다(9월 22일, 공식 가격표 기준 Opus 5.5는 Opus 5보다 20%, GPT-6 Sol·Luna는 GPT-5.6 프로모션가보다 50% 낮음). 9월 8일에는 삼성전자가 Mistral의 30억 유로 투자를 주도했다. "
                "그 앞에는 OpenAI의 1,100억 달러 투자 유치(2월)와 SK하이닉스의 사상 최대 실적(7월)이 있다.")
 events = sorted([r for r in recs if r["type"] == "사건" and r.get("verified")], key=lambda r: r["date"], reverse=True)
 erows = "".join(f"""<li id="{E(r['id'])}"><time>{E(r['date'])}</time><div><b>{E(r['actor'])}</b> {E(r['statement'])}
@@ -143,7 +143,7 @@ page = f"""<title>I3 AI 산업 돈의 흐름 R1</title>
 <style>{CSS}</style>
 <main>
   <header class="narrow">
-    <div class="eyebrow"><span>AI Industry Trend</span><span>I3 · AI Industry &amp; Economics</span><span>R1 기준 회차 · 2026-10-09</span><span>갱신 2026-10-11 · <a href="../../changes.html#I3">변경 이력</a></span></div>
+    <div class="eyebrow"><span>AI Industry Trend</span><span>I3 · AI Industry &amp; Economics</span><span>R1 기준 회차 · 2026-10-09</span><span>갱신 2026-10-12 · <a href="../../changes.html#I3">변경 이력</a></span></div>
     <h1>{E(TITLE)}</h1>
     <p class="question">고정 질문 v1.0 — {E(QUESTION)}</p>
   </header>

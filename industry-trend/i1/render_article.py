@@ -49,9 +49,9 @@ NARRATIVE = [
     ("성능 우위는 짧아지고 있다. 중국 Moonshot은 2.8조 파라미터의 Kimi K3를 가중치까지 공개했고 성능 지수는 Z.ai의 GLM-5.3(45)과 1점 차이이며, 100만 토큰 문맥은 모든 프런티어 모델의 기본이 됐다. "
      "9월 Anthropic과 OpenAI의 신모델은 성능과 함께 가격 인하를 앞세웠다. 반면 Google은 Gemini 3 Pro 이후 1년 가까이 Pro급 신모델이 없었고, Gemini 4 Argon을 9월 30일 발표했지만 사이버 방어 파트너에게만 열었다.",
      ["I1-M-008", "I1-M-007", "I1-E-009", "I1-E-010", "I1-E-012", "I1-I-004"]),
-    ("월드 모델과 AI 과학은 시연 단계다. Google의 Project Genie는 실시간으로 걸어 다닐 수 있는 세계를 만들지만 한 번에 60초까지이고, OpenAI가 10월에 공개한 수학 원고 719편(에르되시 문제 23개 포함)은 독립 검증을 기다리고, 문제 사이트 운영자도 아직 증명을 면밀히 검토하지 못했다. "
+    ("월드 모델과 AI 과학은 시연 단계다. Google의 Project Genie는 실시간으로 걸어 다닐 수 있는 세계를 만들지만 한 번에 60초까지이고, OpenAI가 10월에 공개한 수학 원고 719편(에르되시 문제 23개 포함)은 독립 검증을 기다리고, 문제 사이트 운영자도 아직 증명을 면밀히 검토하지 못했다. 9월에는 Anthropic이 페르마의 마지막 정리 증명을 Lean으로 형식화했고(새 증명이 아니라 알려진 증명의 기계 검증), OpenAI는 나비에-스토크스 방정식의 특이점을 보였다고 발표했지만 외부 검증은 아직이다. "
      "하드웨어에서는 차세대 가속기용 HBM4(대역폭 2.8TB/s 이상)가 양산에 들어갔지만 공급사 구성은 보도가 엇갈린다. 한국은 정부 프로젝트 평가에서 국가별 3위권으로 평가됐다.",
-     ["I1-E-001", "I1-E-013", "I1-M-009", "I1-M-010", "I1-I-005", "I1-I-006", "I1-I-007"]),
+     ["I1-E-001", "I1-E-013", "I1-E-015", "I1-E-016", "I1-M-009", "I1-M-010", "I1-I-005", "I1-I-006", "I1-I-007"]),
 ]
 narrative_html = "".join(para(t, ids) for t, ids in NARRATIVE)
 DIR = {"강화": "up", "약화": "down", "중립": "flat"}
@@ -156,7 +156,7 @@ page = f"""<title>I1 AI 기술의 경계 R1</title>
 <style>{CSS}</style>
 <main>
   <header class="narrow">
-    <div class="eyebrow"><span>AI Industry Trend</span><span>I1 · AI Technology &amp; Research</span><span>R1 기준 회차 · 2026-10-09</span><span>갱신 2026-10-11 · <a href="../../changes.html#I1">변경 이력</a></span></div>
+    <div class="eyebrow"><span>AI Industry Trend</span><span>I1 · AI Technology &amp; Research</span><span>R1 기준 회차 · 2026-10-09</span><span>갱신 2026-10-12 · <a href="../../changes.html#I1">변경 이력</a></span></div>
     <h1>{E(TITLE)}</h1>
     <p class="question">고정 질문 v1.0 — {E(QUESTION)}</p>
   </header>
