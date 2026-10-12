@@ -124,6 +124,11 @@ add(id="L3-F-102", type="전망", importance=3, status="유효", forecast_status
     method="낙관 시나리오의 판정 조건 세 가지 중 하나 이하만 충족 시 적중",
     basis=["L3-M-001", "L3-M-004", "L3-M-006"], signposts=[], result=None)
 
+# ---------- 수동 입력 (patches.jsonl — tools/intake.py가 쓴다) ----------
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "lib"))
+from records import apply_patches
+apply_patches(records, Path(__file__).parent / "patches.jsonl")
+
 # ---------- 검증 ----------
 ids = {r["id"] for r in records}
 _t = {r["id"]: r["type"] for r in records}

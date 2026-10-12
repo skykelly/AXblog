@@ -262,6 +262,11 @@ revise("C3-F-102", "판정 기준 보완", "F-005의 기준을 42% 이하로 바
         {"by": "2027-03", "text": "젊은 층의 AI 광고 호감 42% 이하로 하락"},
         {"by": "2027-09", "text": "퍼블리셔 Google 검색 유입 감소가 연 20% 이상 지속"}])
 
+# ---------- 수동 입력 (patches.jsonl — tools/intake.py가 쓴다) ----------
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "lib"))
+from records import apply_patches
+apply_patches(records, Path(__file__).parent / "patches.jsonl")
+
 # ---------- 검증 ----------
 ids = {r["id"] for r in records}
 _t = {r["id"]: r["type"] for r in records}

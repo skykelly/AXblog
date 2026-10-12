@@ -35,4 +35,9 @@ Customer `C1~` · Industry Trend `I1~` · Sales & Marketing `S1~` · LG Group `L
 5. 보완 조사
 6. 아티클·Diff 생성 → `render_article.py`
 
+## 수동 지식 입력
+
+채팅으로 자료(텍스트·파일·링크)를 주면 검토 카드로 받고, 승인하면 기록 → 아티클 → 포털 순서로 반영한다. 절차와 규칙은 [`CLAUDE.md`](CLAUDE.md), 도구는 [`tools/intake.py`](tools/intake.py).
+수동 입력분은 질문별 `patches.jsonl`에 쌓이고 `build_records.py`가 마지막에 적용한다. 변경 이력에는 '제공 자료'로 표시된다. 접수 기록은 `intake/`, 원본은 `inbox/`(git 제외).
+
 전체 운영 계획 문서: https://claude.ai/code/artifact/c54e140d-7511-473d-adbb-73c1a3c5f2e7

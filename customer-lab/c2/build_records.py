@@ -295,6 +295,11 @@ revise("C2-F-102", "전망 교체", "이정표 '2026-12 ChatGPT 광고 미국 �
     statement="(브랜드 관점) 2027년 말까지 소수 플랫폼이 발견부터 결제까지 장악한다. AI 답변 안 노출은 광고로 사야 하고, 쇼핑 Agent는 Amazon의 Alexa for Shopping(옛 Rufus)·네이버·카카오처럼 플랫폼 자체 Agent가 주도한다. 브랜드는 판매 데이터와 고객 관계를 플랫폼에 넘기고 상품 공급자 위치로 밀린다.",
     basis=["C2-E-002", "C2-M-001", "C2-M-004", "C2-M-007", "C2-E-007", "C2-E-012"])
 
+# ---------- 수동 입력 (patches.jsonl — tools/intake.py가 쓴다) ----------
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "lib"))
+from records import apply_patches
+apply_patches(records, Path(__file__).parent / "patches.jsonl")
+
 # ---------- 검증 ----------
 ids = {r["id"] for r in records}
 _t = {r["id"]: r["type"] for r in records}

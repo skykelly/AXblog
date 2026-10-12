@@ -317,6 +317,11 @@ revise("C1-F-102", "판정 기준 보완", "낙관 시나리오(F-101)의 판정
         {"by": "2027-03", "text": "ChatGPT Instant Checkout 복귀 없음, 리테일러 앱 연결 방식 유지"},
         {"by": "2027-12", "text": "Accenture 조사 결제 위임 의향 15% 미만 유지, 한국 '결정' 단계는 얼리어답터에 머묾"}])
 
+# ---------- 수동 입력 (patches.jsonl — tools/intake.py가 쓴다) ----------
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "lib"))
+from records import apply_patches
+apply_patches(records, Path(__file__).parent / "patches.jsonl")
+
 # ---------- 검증 ----------
 ids = {r["id"] for r in records}
 facts = {r["id"] for r in records if r["type"] in ("지표", "사건")}

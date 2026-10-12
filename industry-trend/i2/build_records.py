@@ -262,6 +262,11 @@ revise("I2-F-102", "전망 점검", "'Waymo 세 곳' 표현은 Baidu·Tesla 무�
     basis=["I2-M-007", "I2-M-008", "I2-M-006", "I2-M-010"],
     check_flags=["낙관 판정 (1)·(2)가 기록 시점에 이미 충족 쪽 — 비관 적중 가능성 낮음(확신 중간)"])
 
+# ---------- 수동 입력 (patches.jsonl — tools/intake.py가 쓴다) ----------
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "lib"))
+from records import apply_patches
+apply_patches(records, Path(__file__).parent / "patches.jsonl")
+
 # ---------- 검증 ----------
 ids = {r["id"] for r in records}
 _t = {r["id"]: r["type"] for r in records}

@@ -242,6 +242,11 @@ revise("C5-F-101", "전망 교체", "판정 방법의 (1)(2)가 기록 시점에
 revise("C5-F-102", "판정 기준 보완", "낙관 시나리오의 판정 조건을 다시 정의한 데 맞췄다. 비관은 낙관 조건 하나 이하 충족이며, 서술은 2026년 출생·혼인 반등이 꺾인다는 뜻이 아니라 2027년 상반기 이후 증가세가 약해진다는 뜻으로 읽는다.",
     statement="2027년 말까지 출생·혼인 증가세는 기저효과로 약해지고, 이사·입주 침체가 이어진다. 생활 사건이 만드는 새 수요는 줄고, 수요의 성장은 고령·1인 가구의 완만한 증가에만 기댄다.")
 
+# ---------- 수동 입력 (patches.jsonl — tools/intake.py가 쓴다) ----------
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "lib"))
+from records import apply_patches
+apply_patches(records, Path(__file__).parent / "patches.jsonl")
+
 # ---------- 검증 ----------
 ids = {r["id"] for r in records}
 _t = {r["id"]: r["type"] for r in records}

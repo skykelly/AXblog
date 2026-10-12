@@ -268,6 +268,11 @@ revise("C4-F-101", "판정 기준 보완", "전제 '대형 개인정보 사고�
 revise("C4-F-102", "판정 기준 보완", "비관 서술의 '소량 판매'에 판정 기준이 없었다. 서술을 방법에 맞춰 단순화했다.",
     statement="2027년 말까지 기술은 L3로 가지만 고객은 L2에 머문다. 개인정보와 통제감 우려 때문에 자동화는 사람이 정한 조건까지만 쓰이고, 상황 판단 실행은 꺼 두는 기능이 된다. 범용 홈 로봇은 일반 배송이 늦어지거나 국내 대형 가전사가 판매 일정을 내놓지 않는다.")
 
+# ---------- 수동 입력 (patches.jsonl — tools/intake.py가 쓴다) ----------
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "lib"))
+from records import apply_patches
+apply_patches(records, Path(__file__).parent / "patches.jsonl")
+
 # ---------- 검증 ----------
 ids = {r["id"] for r in records}
 _t = {r["id"]: r["type"] for r in records}

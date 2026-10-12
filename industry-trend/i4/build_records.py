@@ -314,6 +314,11 @@ revise("I4-F-101", "전망 점검", "서술의 '대기업 과반이 전사로 �
     method="세 가지 중 두 가지 이상 충족 시 적중: (1) 미국 BTOS 전국 현재 AI 사용률 25% 이상(문항 유지 시) (2) McKinsey 전사 확장 비율(응답자 전체 기준) 50% 이상 (3) Sightline Climate·Bloomberg 집계에서 2026년 예정 미국 데이터센터 프로젝트의 실제 지연·취소 비율(건수 기준) 30% 미만",
     check_flags=["(1)은 BTOS가 19.8%에서 5%p 넘게 올라야 하는 가장 어려운 조건이고, 문항이 다시 바뀌면 시계열이 끊김", "(3)은 2025년 실현치가 26%라 이미 충족 상태에 가까움 — 변별력 확인 필요", "방법 변경은 제안 기준"])
 
+# ---------- 수동 입력 (patches.jsonl — tools/intake.py가 쓴다) ----------
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "lib"))
+from records import apply_patches
+apply_patches(records, Path(__file__).parent / "patches.jsonl")
+
 # ---------- 검증 ----------
 ids = {r["id"] for r in records}
 _t = {r["id"]: r["type"] for r in records}

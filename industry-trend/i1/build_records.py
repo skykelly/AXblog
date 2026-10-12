@@ -215,6 +215,11 @@ revise("I1-F-102", "전망 교체", "표준 조건 점수가 이미 62.7%라 '30
     statement="2027년 말까지 작업 길이 증가가 측정 한계와 신뢰성 문제에 막히고, 처음 보는 환경에서의 추론은 표준 조건 80%를 넘지 못한다. 월드 모델과 AI 과학은 시연 단계에 남고, 경쟁은 성능보다 가격·속도 개선 중심으로 옮겨간다.",
     milestones=[{"by": "2027-03", "text": "24시간 이상 작업 길이 측정 없음"}, {"by": "2027-06", "text": "ARC-AGI-3 표준 조건 최고 점수 80% 미만"}, {"by": "2027-12", "text": "신모델 발표의 중심이 가격 인하와 속도"}])
 
+# ---------- 수동 입력 (patches.jsonl — tools/intake.py가 쓴다) ----------
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "lib"))
+from records import apply_patches
+apply_patches(records, Path(__file__).parent / "patches.jsonl")
+
 # ---------- 검증 ----------
 ids = {r["id"] for r in records}
 _t = {r["id"]: r["type"] for r in records}

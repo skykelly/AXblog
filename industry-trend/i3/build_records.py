@@ -274,6 +274,11 @@ revise("I3-F-101", "판정 기준 보완", "낙관 판정(세 조건 중 둘 이
     basis=["I3-M-004", "I3-M-005", "I3-M-001", "I3-M-002", "I3-M-010"],
     check_flags=["합계 약 1,350억 달러는 Anthropic 총액·OpenAI 순액 혼합이고 OpenAI 700억은 Axios 단독 보도 — 확인 필요", "비관(I3-F-102)은 낙관 조건 하나 이하 충족일 때만 적중이라, 낙관이 거의 확정이면 판정이 사실상 불가", "이정표 2026-11 NVIDIA·SK하이닉스 실적은 I3-F-001·I3-F-005와 중복"])
 
+# ---------- 수동 입력 (patches.jsonl — tools/intake.py가 쓴다) ----------
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "lib"))
+from records import apply_patches
+apply_patches(records, Path(__file__).parent / "patches.jsonl")
+
 # ---------- 검증 ----------
 ids = {r["id"] for r in records}
 _t = {r["id"]: r["type"] for r in records}

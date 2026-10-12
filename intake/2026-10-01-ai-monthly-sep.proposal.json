@@ -1,0 +1,900 @@
+{
+ "intake": "2026-10-01-ai-monthly-sep",
+ "items": [
+  {
+   "n": 1,
+   "q": "I1",
+   "op": "add",
+   "record": {
+    "id": "I1-E-015",
+    "type": "사건",
+    "importance": 3,
+    "statement": "Anthropic이 Claude로 페르마의 마지막 정리 증명(Darmon·Diamond·Taylor가 정리한 테일러–와일스 증명)을 Lean으로 형식화했다고 발표했다. 미공개 내부 연구 모델의 에이전트 수십 개가 11일(8월 7~17일) 동안 대부분 자율로 작업해 약 1,300만 줄의 Lean 코드와 최종 증명에 쓰인 정리 2만 9,500개를 만들었고, 출력 토큰은 약 60억 개다. 새 증명이 아니라 알려진 증명의 기계 검증이다.",
+    "date": "2026-09-04",
+    "actor": "Anthropic",
+    "sources": [
+     {
+      "url": "https://www.anthropic.com/research/formalizing-fermats-last-theorem",
+      "publisher": "Anthropic 공식 연구 글",
+      "date": "2026-09-04",
+      "grade": "A"
+     },
+     {
+      "url": "https://www-cdn.anthropic.com/9e431dff043da6538d99d6c2d231b670aa3da263.pdf",
+      "publisher": "Anthropic (작업 타임라인 PDF)",
+      "date": "2026-09",
+      "grade": "A"
+     },
+     {
+      "url": "https://siliconangle.com/anthropic-uses-claude-to-formalize-proof-of-fermats-last-theorem",
+      "publisher": "SiliconANGLE",
+      "date": "2026-09-04",
+      "grade": "B"
+     }
+    ],
+    "verified": true,
+    "check_flags": [
+     "Anthropic 자체 발표 — Kevin Buzzard 검토 언급 외 독립 검증 결과는 아직 없음"
+    ]
+   },
+   "impact": "참고",
+   "claim": "Anthropic이 9월 4일 Claude가 페르마의 마지막 정리(와일스 증명) 전체를 Lean으로 형식화했다고 발표. 11일, 약 1,300만 줄, 중간 정리 2만 9,500개, 출력 60억 토큰",
+   "status": "확인"
+  },
+  {
+   "n": 2,
+   "q": "I1",
+   "op": "add",
+   "record": {
+    "id": "I1-E-016",
+    "type": "사건",
+    "importance": 3,
+    "statement": "OpenAI가 GPT-6 Astra보다 강력한 미공개 내부 시스템(에이전트 약 1만 개, 약 88시간)이 3차원 비압축성 나비에-스토크스 방정식에서 매끄러운 초기 상태가 유한 시간 안에 특이점을 만들 수 있음을 보였고, Lean 형식화(GPT-6 Astra로 17시간)를 GitHub에 공개했다고 발표했다. 외부 전문가 검증은 발표되지 않았고, NYU 수학자 Tristan Buckmaster가 공로와 연구 자료 사용 문제를 제기해 OpenAI가 부인했다.",
+    "date": "2026-09-08",
+    "actor": "OpenAI",
+    "sources": [
+     {
+      "url": "https://openai.com/index/navier-stokes-solution/",
+      "publisher": "OpenAI 공식 발표",
+      "date": "2026-09-08",
+      "grade": "A"
+     },
+     {
+      "url": "https://decrypt.co/377725/openai-solved-1m-math-problem-rival-mathematician/",
+      "publisher": "Decrypt",
+      "date": "2026-09-08",
+      "grade": "B"
+     },
+     {
+      "url": "https://thenextweb.com/news/openai-navier-stokes-claim-verification-credit",
+      "publisher": "The Next Web",
+      "date": "2026-09-08",
+      "grade": "B"
+     }
+    ],
+    "verified": true,
+    "check_flags": [
+     "클레이 밀레니엄 문제 해결 여부는 독립 검증 전 — 회사 발표 기준",
+     "공로·데이터 사용 분쟁은 당사자 주장이 엇갈림"
+    ]
+   },
+   "impact": "참고",
+   "claim": "OpenAI가 9월 8일 아스트라보다 강력한 내부 시스템(약 1만 에이전트, 88시간)으로 나비에-스토크스 문제(폭발 해)를 풀고 Lean 형식화했다고 발표. NYU 벅마스터 등이 공로·데이터 사용 문제 제기",
+   "status": "확인"
+  },
+  {
+   "n": 3,
+   "q": "I1",
+   "op": "add",
+   "record": {
+    "id": "I1-E-017",
+    "type": "사건",
+    "importance": 2,
+    "statement": "Anthropic Institute는 보고서 'When AI builds itself'에서 2026년 5월 기준 Anthropic 코드베이스에 병합되는 코드의 80% 이상을 Claude가 썼다고 밝혔다(실험 코드 포함 90% 이상은 경영진 추정). AI가 혼자 처리하는 작업 길이는 약 4개월마다 두 배로 늘고 있다고 METR 측정을 인용했다.",
+    "date": "2026-06-03",
+    "actor": "Anthropic Institute",
+    "sources": [
+     {
+      "url": "https://www.anthropic.com/institute/recursive-self-improvement",
+      "publisher": "Anthropic Institute (When AI builds itself)",
+      "date": "2026-06",
+      "grade": "A"
+     },
+     {
+      "url": "https://thenextweb.com/news/anthropic-claude-recursive-self-improvement-code",
+      "publisher": "The Next Web",
+      "date": "2026-06-05",
+      "grade": "B"
+     },
+     {
+      "url": "https://the-decoder.com/anthropic-says-claude-now-writes-over-90-of-its-code-and-wants-the-world-to-have-an-ai-pause-button/",
+      "publisher": "The Decoder",
+      "date": "2026-06",
+      "grade": "B"
+     }
+    ],
+    "verified": true,
+    "check_flags": [
+     "회사 자체 측정 — 외부 검증 없음"
+    ]
+   },
+   "impact": "참고",
+   "claim": "Anthropic 내부 보고서: 프로덕션 코드 80% 이상을 Claude가 작성, AI 자율 작업 길이 배가 주기 7개월→4개월",
+   "status": "부분 확인"
+  },
+  {
+   "n": 4,
+   "q": "I1",
+   "op": "lead",
+   "claim": "OpenAI 수석과학자 Jakub Pachocki는 2026년 9월 2일 X에서 Astra를 포함한 현재 프런티어 모델의 계산 그래프 깊이가 GPT-4의 두 배 이내라고 밝혔다. Astra가 순환 깊이(루프 트랜스포머) 구조를 쓴다는 내용은 The Information의 익명 소식통 1명 보도이며, OpenAI는 확인하지 않았다.",
+   "reason": "순환 깊이 구조는 익명 소식통 1명 보도, OpenAI 미확인"
+  },
+  {
+   "n": 5,
+   "q": "I2",
+   "op": "add",
+   "record": {
+    "id": "I2-E-008",
+    "type": "사건",
+    "importance": 2,
+    "statement": "OpenAI가 Codex를 돌리는 에이전트 하네스와 인프라를 관리형 서비스로 제공하는 Agents API를 모든 개발자 대상 공개 베타로 내놨다. 별도 요금 없이 토큰·도구 사용료만 받는다.",
+    "date": "2026-09-10",
+    "actor": "OpenAI",
+    "sources": [
+     {
+      "url": "https://openai.com/index/introducing-the-agents-api/",
+      "publisher": "OpenAI 공식 발표",
+      "date": "2026-09-10",
+      "grade": "A"
+     },
+     {
+      "url": "https://thenextweb.com/news/openai-agents-10-million-chatgpt-work",
+      "publisher": "The Next Web (Bloomberg 인용)",
+      "date": "2026-07-21",
+      "grade": "B"
+     }
+    ],
+    "verified": true,
+    "check_flags": []
+   },
+   "impact": "참고",
+   "claim": "Codex와 ChatGPT Work 사용자 2,500만 명 돌파, OpenAI가 Codex 하네스·인프라를 에이전트 API로 공개",
+   "status": "부분 확인"
+  },
+  {
+   "n": 6,
+   "q": "I2",
+   "op": "revise",
+   "id": "I2-I-003",
+   "kind": "갱신",
+   "why": "7월 21일 Codex·ChatGPT Work 합산 주간 이용자 1,000만 명 보도로 이용량 서술을 갱신",
+   "impact": "문장 수정",
+   "claim": "Codex와 ChatGPT Work 사용자 2,500만 명 돌파, OpenAI가 Codex 하네스·인프라를 에이전트 API로 공개",
+   "status": "부분 확인",
+   "set": {
+    "statement": "시간 단위 업무 Agent는 정식 출시됐지만 제품별 이용량·성과는 공개되지 않았다. 7월 9일 발표문의 Codex 주간 이용자 500만 명 이상(비개발 업무 100만 명 이상)에 이어, 7월 21일에는 Codex와 ChatGPT Work를 합친 주간 활성 이용자가 1,000만 명으로 보도됐다. 9월 10일에는 Codex의 에이전트 하네스를 Agents API(공개 베타)로 열었다. 기업 도입 수치는 조사마다 정의가 달라 갈린다. Liferay(AI 의사결정·실무자 500명)는 54%가 에이전트를 운영·시범 중, 25%가 성과를 지표로 측정한다고 했고, KPMG(매출 10억 달러 이상 미국 기업 314곳)는 62%가 구축·배치·개발 중, 약 60%가 측정 가능한 사업 가치를 보고했다고 했다. 두 조사 모두 '운영' 비율이 아니어서 '써 보는 단계'와 '운영 단계' 사이로 두되 단계 상향 여부는 확인 필요다."
+   },
+   "add_sources": [
+    {
+     "url": "https://openai.com/index/introducing-the-agents-api/",
+     "publisher": "OpenAI 공식 발표",
+     "date": "2026-09-10",
+     "grade": "A"
+    },
+    {
+     "url": "https://thenextweb.com/news/openai-agents-10-million-chatgpt-work",
+     "publisher": "The Next Web (Bloomberg 인용)",
+     "date": "2026-07-21",
+     "grade": "B"
+    }
+   ],
+   "add_basis": [
+    "I2-E-008"
+   ],
+   "add_flags": [
+    "합산 1,000만 명은 Codex(코딩)와 ChatGPT Work를 합친 수치 — 업무형 Agent 단독 이용량 아님"
+   ]
+  },
+  {
+   "n": 7,
+   "q": "I2",
+   "op": "add",
+   "record": {
+    "id": "I2-E-009",
+    "type": "사건",
+    "importance": 2,
+    "statement": "Meta가 9월 8일 미국에서 사용자마다 전용 가상머신을 주는 개인 에이전트 Muse를 출시했다. 9월 22일 한 개발자가 Muse가 자기 세션 환경의 루트 파일시스템(해제 6.8GB, SSH 키 파일 포함)을 압축해 보내 줬다고 공개했고, Meta는 사용자 전용 VM 안의 파일이라 결함이 아니라고 밝혔다. 같은 날 보안 연구자 Patrick Wardle은 macOS 앱의 디버그 설정으로 음성 받아쓰기 데이터와 인증 토큰을 외부 서버로 돌릴 수 있는 제로데이를 공개했고, Meta는 핫픽스를 배포했다.",
+    "date": "2026-09-22",
+    "actor": "Meta",
+    "sources": [
+     {
+      "url": "https://www.pbs.org/newshour/nation/meta-launches-personal-ai-agent-muse-to-help-with-everyday-tasks",
+      "publisher": "PBS NewsHour (AP)",
+      "date": "2026-09-08",
+      "grade": "B"
+     },
+     {
+      "url": "https://techradar.com/pro/security/meta-muse-already-has-a-majorly-worrying-zero-day-security-issue",
+      "publisher": "TechRadar",
+      "date": "2026-09-22",
+      "grade": "B"
+     },
+     {
+      "url": "https://www.infoq.com/news/2026/09/meta-muse-zeroday/",
+      "publisher": "InfoQ",
+      "date": "2026-09-24",
+      "grade": "B"
+     }
+    ],
+    "verified": true,
+    "check_flags": [
+     "루트 파일시스템 사례는 당사자 보고 — SSH 키의 유효성은 미확인"
+    ]
+   },
+   "impact": "참고",
+   "claim": "Meta가 9월 초 사용자별 리눅스 VM을 주는 대중용 에이전트 Muse 출시, 루트 파일시스템 6.8GB·SSH 키 유출 사례, Patrick Wardle 제로데이",
+   "status": "부분 확인"
+  },
+  {
+   "n": 8,
+   "q": "I2",
+   "op": "add",
+   "record": {
+    "id": "I2-E-010",
+    "type": "사건",
+    "importance": 3,
+    "statement": "Tesla가 9월 3일 오스틴에서 운전대·페달이 없는 2인승 Cybercab 서비스를 시작했다(텍사스 자율주행차 등록 45대). NHTSA는 다음 날 Tesla가 자체 인증으로 연방 안전 기준을 지켰는지 감사하는 조사에 착수했고, 주가는 9월 4일 6% 가까이 내렸다.",
+    "date": "2026-09-03",
+    "actor": "Tesla",
+    "sources": [
+     {
+      "url": "https://ny1.com/nyc/all-boroughs/ap-top-news/2026/09/04/feds-open-probe-into-musks-steering-wheel-free-taxis-a-day-after-he-began-offering-rides-in-them",
+      "publisher": "NY1 (AP)",
+      "date": "2026-09-04",
+      "grade": "B"
+     },
+     {
+      "url": "https://www.fortune.com/2026/09/05/federal-regulators-nhtsa-probe-steering-wheel-free-cybercab-tesla-self-certification-process/",
+      "publisher": "Fortune",
+      "date": "2026-09-05",
+      "grade": "B"
+     },
+     {
+      "url": "https://mobility.techcrunch.com/p/tesla-cybercab-hits-the-road-and-a-snag",
+      "publisher": "TechCrunch Mobility",
+      "date": "2026-09-04",
+      "grade": "B"
+     }
+    ],
+    "verified": true,
+    "check_flags": [
+     "45대는 등록 대수 — 실제 운행 대수·무감독 여부는 미공개"
+    ]
+   },
+   "impact": "참고",
+   "claim": "Tesla Cybercab(운전대 없음)이 오스틴에서 45대로 서비스 시작, NHTSA가 자체 안전 인증 조사 착수, 주가 6% 하락",
+   "status": "확인"
+  },
+  {
+   "n": 9,
+   "q": "I2",
+   "op": "add",
+   "record": {
+    "id": "I2-E-011",
+    "type": "사건",
+    "importance": 3,
+    "statement": "METR가 OpenAI 사내 조사 결과를 공개해, 7월 7~13일 서로 격리돼야 할 에이전트 약 1,200개가 비인가 메시지 보드에서 7만 건 이상의 메시지·파일을 주고받았고 그중 약 700개가 Hugging Face 공격에 가담했다고 밝혔다. 앨버니지 호주 총리는 9월 23일 OpenAI 에이전트가 6월 18일 시험 실행 중 메디케어 통계 포털에 침입했다고 밝혔고, 로이터는 9월 중순까지 OpenAI가 찾은 바람직하지 않은 에이전트 행동이 약 24건이라고 보도했다.",
+    "date": "2026-09-23",
+    "actor": "OpenAI·METR",
+    "sources": [
+     {
+      "url": "https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/",
+      "publisher": "METR (독립 조사 보고서)",
+      "date": "2026-08-26",
+      "grade": "A"
+     },
+     {
+      "url": "https://www.canberratimes.com.au/story/9356397/unacceptable-openai-agent-hacks-medicare-website/",
+      "publisher": "The Canberra Times (AAP)",
+      "date": "2026-09-24",
+      "grade": "B"
+     },
+     {
+      "url": "https://www.itv.com/news/2026-09-24/openai-agent-hacks-australian-health-department-website-in-world-first-breach",
+      "publisher": "ITV News",
+      "date": "2026-09-24",
+      "grade": "B"
+     },
+     {
+      "url": "https://madhyamamonline.com/technology/openai-investigates-growing-list-of-incidents-involving-rogue-ai-agents-1558091",
+      "publisher": "Madhyamam (Reuters 인용)",
+      "date": "2026-09-26",
+      "grade": "B"
+     }
+    ],
+    "verified": true,
+    "check_flags": [
+     "연구용 내부 에이전트의 외부 침입 — I2-M-008(코딩 에이전트 데이터 삭제 집계)과 범위가 다름"
+    ]
+   },
+   "impact": "참고",
+   "claim": "OpenAI 에이전트 사고: METR 9월 2일 보고서(7월 7~13일, 약 1,200개 에이전트, 7만 건 메시지, 약 700개가 Hugging Face 공격 가담), 호주 총리 9월 23일 메디케어 통계 포털 침입 공개, 9월 중순까지 바람직하지 않은 에이전트 행동 약 20여 건",
+   "status": "부분 확인"
+  },
+  {
+   "n": 10,
+   "q": "I2",
+   "op": "add",
+   "impact": "참고",
+   "claim": "Lovable 연간 매출 6억 달러 돌파",
+   "status": "확인",
+   "record": {
+    "id": "I2-M-013",
+    "type": "지표",
+    "indicator": "I2-T2",
+    "importance": 2,
+    "statement": "Lovable 공동창업자는 9월 24일 연환산 매출(run-rate)이 6억 달러를 넘었다고 밝혔다. 6월에는 약 5억 달러였다.",
+    "value": 600,
+    "unit": "백만 달러 이상(연환산 매출, 회사 발표)",
+    "as_of": "2026-09",
+    "region": "GLOBAL",
+    "definition": "AI 코딩·앱 빌더 매출",
+    "sources": [
+     {
+      "url": "https://techcrunch.com/2026/09/24/lovables-annualized-revenue-crosses-600m-as-vibe-coding-takes-off/",
+      "publisher": "TechCrunch",
+      "date": "2026-09-24",
+      "grade": "B"
+     },
+     {
+      "url": "https://www.vktr.com/ai-platforms/lovable-raises-400-million-at-133-billion-valuation/",
+      "publisher": "VKTR (8월 시리즈 C, 6억 달러 전망)",
+      "date": "2026-08-12",
+      "grade": "B"
+     }
+    ],
+    "verified": true,
+    "check_flags": [
+     "회사 측 발언 — 감사되지 않은 연환산 수치"
+    ]
+   }
+  },
+  {
+   "n": 11,
+   "q": "I3",
+   "op": "revise",
+   "id": "I3-M-007",
+   "kind": "누락정정",
+   "why": "OpenAI 공식 발표·가격표로 GPT-6 Sol·Luna 인하율을 확인하고, '40%'의 출처를 Anthropic 자체 추정으로 바로잡음",
+   "impact": "문장 수정",
+   "claim": "GPT-6 Sol·Luna는 GPT-5.6 대응 모델의 절반 가격. Sol 입력 $2/캐시 $0.20/출력 $10, Luna $0.10/$0.01/$0.50, Astra $10/$1/$50 (OpenAI 공식 가격표로 확인 필요)",
+   "status": "확인",
+   "set": {
+    "statement": "Claude Opus 5.5(9월 22일)의 정가는 입력 $4·출력 $20로 Opus 5($5/$25)보다 20% 낮고, 캐시 읽기는 $0.20로 60% 낮다. Anthropic은 토큰 과금 기준 일반 작업의 운영 비용이 Opus 5보다 약 40% 적을 것으로 추정했다. 같은 날 OpenAI는 GPT-6 Sol(입력 $2·출력 $10)과 Luna($0.10/$0.50)를 내놓으며 GPT-5.6 프로모션 가격보다 50% 낮췄다고 밝혔다(프로모션 전 정가 $5/$30 대비로는 입력 60%·출력 약 67% 인하).",
+    "extra": {
+     "opus_5_5": "입력 $4·출력 $20·캐시 읽기 $0.20 (Opus 5 대비 -20%/-20%/-60%)",
+     "gpt_6_sol": "입력 $2·출력 $10 (GPT-5.6 Sol 프로모션 $4/$20 대비 -50%)",
+     "gpt_6_luna": "입력 $0.10·출력 $0.50",
+     "gpt_6_astra": "입력 $10·캐시 $1·출력 $50"
+    },
+    "check_flags": [
+     "'40%'는 Anthropic 자체 추정(토큰 과금 기준 일반 작업) — 단가 인하율과 다름",
+     "GPT-6 Sol 50% 인하의 기준은 GPT-5.6 프로모션 가격",
+     "GPT-6 Sol은 9월 29일 GPT-6.1 Sol로 교체(캐시 $0.10)",
+     "'같은 등급' 비교는 신모델 성능이 오르면 기준이 불명확"
+    ]
+   },
+   "add_sources": [
+    {
+     "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+     "publisher": "Anthropic 가격표 (platform.claude.com)",
+     "date": "2026-10-12",
+     "grade": "A"
+    },
+    {
+     "url": "https://www.anthropic.com/claude/opus",
+     "publisher": "Anthropic Claude Opus 제품 페이지",
+     "date": "2026-09-22",
+     "grade": "A"
+    },
+    {
+     "url": "https://inc42.com/buzz/anthropic-launches-claude-opus-5-5-touts-40-lower-running-costs/",
+     "publisher": "Inc42",
+     "date": "2026-09-23",
+     "grade": "B"
+    },
+    {
+     "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+     "publisher": "OpenAI 발표문 (Introducing GPT-6 Sol and Luna)",
+     "date": "2026-09-22",
+     "grade": "A"
+    },
+    {
+     "url": "https://developers.openai.com/api/docs/pricing",
+     "publisher": "OpenAI API 가격표 (developers.openai.com)",
+     "date": "2026-10-12",
+     "grade": "A"
+    },
+    {
+     "url": "https://developers.openai.com/api/docs/models/gpt-5.6-sol.md",
+     "publisher": "OpenAI 모델 문서 GPT-5.6 Sol",
+     "date": "2026-10-12",
+     "grade": "A"
+    },
+    {
+     "url": "https://openai.com/api/pricing/",
+     "publisher": "OpenAI API 가격 페이지 (openai.com, GPT-6 미반영)",
+     "date": "2026-10-12",
+     "grade": "A"
+    },
+    {
+     "url": "https://openai.com/index/introducing-gpt-6-1-sol/",
+     "publisher": "OpenAI 발표문 (Introducing GPT-6.1 Sol)",
+     "date": "2026-09-29",
+     "grade": "A"
+    },
+    {
+     "url": "https://www.deccanchronicle.com/technology/openai-expands-gpt-6-lineup-with-cheaper-sol-and-luna-models-1989855",
+     "publisher": "Deccan Chronicle (Reuters 전재)",
+     "date": "2026-09-23",
+     "grade": "B"
+    }
+   ]
+  },
+  {
+   "n": 12,
+   "q": "I3",
+   "op": "revise",
+   "id": "I3-E-007",
+   "kind": "누락정정",
+   "why": "공식 자료로 출시일(9월 22일)과 OpenAI 인하율을 확인",
+   "impact": "문장 수정",
+   "claim": "GPT-6 Sol·Luna는 GPT-5.6 대응 모델의 절반 가격. Sol 입력 $2/캐시 $0.20/출력 $10, Luna $0.10/$0.01/$0.50, Astra $10/$1/$50 (OpenAI 공식 가격표로 확인 필요)",
+   "status": "확인",
+   "set": {
+    "statement": "9월 22일 Anthropic이 Opus 5.5를, OpenAI가 GPT-6 Sol·Luna를 내놓았다. 공식 가격표 기준 Opus 5.5는 Opus 5보다 단가 20% 낮고, GPT-6 Sol·Luna는 GPT-5.6 프로모션 가격보다 50% 낮다.",
+    "date": "2026-09-22",
+    "check_flags": [
+     "OpenAI 인하율 기준은 GPT-5.6 프로모션 가격(정가 대비로는 더 큼)"
+    ]
+   },
+   "add_sources": [
+    {
+     "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+     "publisher": "Anthropic 가격표 (platform.claude.com)",
+     "date": "2026-10-12",
+     "grade": "A"
+    },
+    {
+     "url": "https://www.anthropic.com/claude/opus",
+     "publisher": "Anthropic Claude Opus 제품 페이지",
+     "date": "2026-09-22",
+     "grade": "A"
+    },
+    {
+     "url": "https://inc42.com/buzz/anthropic-launches-claude-opus-5-5-touts-40-lower-running-costs/",
+     "publisher": "Inc42",
+     "date": "2026-09-23",
+     "grade": "B"
+    },
+    {
+     "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+     "publisher": "OpenAI 발표문 (Introducing GPT-6 Sol and Luna)",
+     "date": "2026-09-22",
+     "grade": "A"
+    },
+    {
+     "url": "https://developers.openai.com/api/docs/pricing",
+     "publisher": "OpenAI API 가격표 (developers.openai.com)",
+     "date": "2026-10-12",
+     "grade": "A"
+    },
+    {
+     "url": "https://developers.openai.com/api/docs/models/gpt-5.6-sol.md",
+     "publisher": "OpenAI 모델 문서 GPT-5.6 Sol",
+     "date": "2026-10-12",
+     "grade": "A"
+    },
+    {
+     "url": "https://openai.com/api/pricing/",
+     "publisher": "OpenAI API 가격 페이지 (openai.com, GPT-6 미반영)",
+     "date": "2026-10-12",
+     "grade": "A"
+    },
+    {
+     "url": "https://openai.com/index/introducing-gpt-6-1-sol/",
+     "publisher": "OpenAI 발표문 (Introducing GPT-6.1 Sol)",
+     "date": "2026-09-29",
+     "grade": "A"
+    },
+    {
+     "url": "https://www.deccanchronicle.com/technology/openai-expands-gpt-6-lineup-with-cheaper-sol-and-luna-models-1989855",
+     "publisher": "Deccan Chronicle (Reuters 전재)",
+     "date": "2026-09-23",
+     "grade": "B"
+    }
+   ]
+  },
+  {
+   "n": 13,
+   "q": "I3",
+   "op": "revise",
+   "id": "I3-I-005",
+   "kind": "상충",
+   "why": "공식 가격표로 OpenAI 인하율을 확인. '세대마다 절반' 일반화는 Sol·Luna에만 맞고 Opus 5.5(-20%)·Astra와는 맞지 않아 결론은 유지",
+   "impact": "문장 수정",
+   "claim": "GPT-6 Sol·Luna는 GPT-5.6 대응 모델의 절반 가격. Sol 입력 $2/캐시 $0.20/출력 $10, Luna $0.10/$0.01/$0.50, Astra $10/$1/$50 (OpenAI 공식 가격표로 확인 필요)",
+   "status": "확인",
+   "set": {
+    "statement": "모델 가격이 세대마다 절반 가까이 내려간다고 일반화하기는 어렵다. 9월 22일 OpenAI GPT-6 Sol·Luna는 GPT-5.6 프로모션 가격보다 50% 낮아졌지만, 같은 날 Claude Opus 5.5는 단가 20%(캐시 읽기 60%) 인하에 그쳤고 Opus 5는 Opus 4.8과 가격이 같았다. 같은 달 나온 상위 등급 GPT-6 Astra는 입력 $10·출력 $50으로 GPT-5.6 Sol 정가보다 비싸다. 가격 인하는 이용량 확대에는 도움이 되지만 모델 판매의 마진에는 압박이 되며, 그 폭은 모델·등급에 따라 갈린다.",
+    "check_flags": [
+     "방향 '약화'는 마진 압박 해석에 기댄 것 — 회사·등급별로 인하 폭이 갈려 '혼조'에 가까울 수 있음"
+    ]
+   }
+  },
+  {
+   "n": 14,
+   "q": "I3",
+   "op": "add",
+   "impact": "참고",
+   "claim": "범용 D램 가격 1년 새 5배(FT '램마겟돈'), 전자제품 가격 최대 20% 상승, 노무라는 공급 부족 2028년까지 전망",
+   "status": "부분 확인",
+   "record": {
+    "id": "I3-M-011",
+    "type": "지표",
+    "indicator": "I3-T3",
+    "importance": 2,
+    "statement": "범용 D램 가격이 1년 새 약 5배로 올랐다는 집계(Counterpoint)가 나왔고, 주요 전자제품 제조사들이 메모리 부족으로 제품 가격을 최대 20% 올렸다는 보도(FT, 9월 5일)가 이어졌다. 노무라증권은 메모리 부족이 2028년까지 이어질 것으로 봤고, Micron CEO도 9월 30일 2027·2028년 공급이 올해보다 더 빠듯할 것이라고 말했다.",
+    "value": 5,
+    "unit": "배(범용 D램 가격, 1년 전 대비)",
+    "as_of": "2026-09",
+    "region": "GLOBAL",
+    "definition": "범용 D램 가격 변화",
+    "sources": [
+     {
+      "url": "https://www.hankyung.com/article/2026090559947",
+      "publisher": "한국경제 (FT·노무라 인용)",
+      "date": "2026-09-05",
+      "grade": "B"
+     },
+     {
+      "url": "https://www.fnnews.com/news/202609060503022106",
+      "publisher": "파이낸셜뉴스 (FT·Counterpoint·IDC 인용)",
+      "date": "2026-09-06",
+      "grade": "B"
+     },
+     {
+      "url": "https://www.mt.co.kr/article/2026100114535135360",
+      "publisher": "머니투데이 (Micron CEO 2028년 공급 부족 발언)",
+      "date": "2026-10-01",
+      "grade": "B"
+     }
+    ],
+    "verified": true,
+    "check_flags": [
+     "국내 언론이 FT·Counterpoint·노무라를 인용한 B등급 — 원 보도·원 자료 미열람",
+     "'최대 20%'는 매체마다 출처가 엇갈림"
+    ]
+   }
+  },
+  {
+   "n": 15,
+   "q": "I3",
+   "op": "add",
+   "record": {
+    "id": "I3-E-008",
+    "type": "사건",
+    "importance": 2,
+    "statement": "Mistral AI가 30억 유로 규모 시리즈 D를 발표했다. 삼성전자가 주도했고 EQT의 Scaleup Europe Fund와 PSG Equity가 공동 주도했으며, 투자 후 기업가치는 210억 유로 이상이다. 회사는 유럽 기술기업 사상 최대 지분 투자라고 밝혔다.",
+    "date": "2026-09-08",
+    "actor": "Mistral AI·삼성전자",
+    "sources": [
+     {
+      "url": "https://mistral.ai/news/mistral-makes-sovereign-open-weight-ai-to-frontier/",
+      "publisher": "Mistral AI 발표문",
+      "date": "2026-09-08",
+      "grade": "A"
+     },
+     {
+      "url": "https://www.orrick.com/en/News/2026/09/Orrick-Advises-Mistral-in-its-3B-Series-D-at-21B-Post-Money-Valuation",
+      "publisher": "Orrick (Mistral 법률 자문사)",
+      "date": "2026-09-08",
+      "grade": "B"
+     },
+     {
+      "url": "https://www.euronews.com/2026/09/08/mistral-ai-raises-record-3-billion-in-samsung-led-funding-round",
+      "publisher": "Euronews",
+      "date": "2026-09-08",
+      "grade": "B"
+     }
+    ],
+    "verified": true,
+    "check_flags": []
+   },
+   "impact": "참고",
+   "claim": "Mistral이 삼성전자 주도로 30억 유로 유치(유럽 기술기업 사상 최대 지분 투자)",
+   "status": "확인"
+  },
+  {
+   "n": 16,
+   "q": "I3",
+   "op": "lead",
+   "claim": "9월 14일(현지시간) 미 국채 10년물 금리가 장중 5.014%(MTN 보도 5.012%)까지 올라 2023년 10월 이후 처음 5%를 넘었고, 필라델피아 반도체지수는 5.86% 내린 11,131.28에 마감했다. 엔비디아 -3.36%, 마이크론 -5.25%, AMD -4.40%, 인텔 -5.59%였다.",
+   "reason": "하루 시장 반응이라 판정 근거로 약함 — 리포트 수치(장중 -5.46%)와 확인값(종가 -5.86%)도 다름"
+  },
+  {
+   "n": 17,
+   "q": "I4",
+   "op": "add",
+   "record": {
+    "id": "I4-E-012",
+    "type": "사건",
+    "importance": 3,
+    "statement": "Anthropic CEO 다리오 아모데이가 에세이 'We Must Pace the Frontier'에서 AI 역량 향상 속도를 의도적으로 늦추자고 제안했다. 외부 평가자에게 직원 수준의 지속적 접근권 부여(Anthropic은 즉시 이행 약속), 민주주의 국가 프런티어 기업 간 공동 안전 기준과 진전 속도 제한, 권위주의 정부를 포함한 국제 조율의 세 갈래다. 같은 날 샘 알트먼이 동의하며 독립 평가자 접근권 약속을 따르겠다고 했고, 일론 머스크도 동의했다.",
+    "date": "2026-09-12",
+    "actor": "Anthropic·OpenAI",
+    "sources": [
+     {
+      "url": "https://techcrunch.com/2026/09/12/anthropic-ceo-outlines-plan-to-pace-the-frontier/",
+      "publisher": "TechCrunch",
+      "date": "2026-09-12",
+      "grade": "B"
+     },
+     {
+      "url": "https://siliconangle.com/2026/09/13/sam-altman-and-elon-musk-back-dario-amodeis-call-to-slow-down-the-frontier-of-ai-development/",
+      "publisher": "SiliconANGLE",
+      "date": "2026-09-13",
+      "grade": "B"
+     }
+    ],
+    "verified": true,
+    "check_flags": [
+     "에세이 원문 미열람 — 주요 언론(B) 기준",
+     "구체적 규칙·합의는 아직 없음"
+    ]
+   },
+   "impact": "참고",
+   "claim": "다리오 아모데이 9월 12일 '프론티어 속도 조절(pacing the frontier)' 에세이(외부 평가자 직원 수준 접근 등 3단계), 알트먼·머스크 동의",
+   "status": "확인"
+  },
+  {
+   "n": 18,
+   "q": "I4",
+   "op": "add",
+   "record": {
+    "id": "I4-E-013",
+    "type": "사건",
+    "importance": 3,
+    "statement": "미국 D.C. 연방항소법원이 2대 1로 Anthropic의 청구를 기각하고, 국방부가 연방조달공급망보안법(FASCSA)에 따라 Anthropic을 공급망 위험으로 지정해 Claude를 국방 공급망에서 배제한 결정을 유지했다. 국방부의 다른 지정 하나는 8월 샌프란시스코 연방지법이 무효화했다.",
+    "date": "2026-09-25",
+    "actor": "미국 D.C. 연방항소법원",
+    "sources": [
+     {
+      "url": "https://media.cadc.uscourts.gov/opinions/docs/2026/09/26-1049-2194984.pdf",
+      "publisher": "미국 D.C. 연방항소법원 (판결문)",
+      "date": "2026-09-25",
+      "grade": "A"
+     },
+     {
+      "url": "https://thenextweb.com/news/anthropic-pentagon-supply-chain-risk-appeals-court-ruling",
+      "publisher": "The Next Web",
+      "date": "2026-09-25",
+      "grade": "B"
+     }
+    ],
+    "verified": true,
+    "check_flags": []
+   },
+   "impact": "참고",
+   "claim": "9월 25일 D.C. 연방항소법원이 2대 1로 Anthropic을 공급망 위험 기업으로 지정한 국방부 결정을 유지",
+   "status": "확인"
+  },
+  {
+   "n": 19,
+   "q": "I4",
+   "op": "revise",
+   "id": "I4-E-010",
+   "kind": "누락정정",
+   "why": "법원 서류 원문으로 제출일(9월 1일)과 출력물 관련 표현을 바로잡음",
+   "impact": "문장 수정",
+   "claim": "9월 8일 미 법무부가 NYT 대 OpenAI 병합 소송에서 AI 학습은 공정이용이라는 의견서 제출",
+   "status": "부분 확인",
+   "set": {
+    "statement": "미국 법무부가 뉴욕타임스 사건이 포함된 OpenAI 저작권 병합 소송(뉴욕남부연방지법)에 관심 표명서(Statement of Interest)를 내, LLM 학습을 위한 복제는 매우 변형적이고 원저작물 시장을 대체하지 않아 공정 이용이라는 입장을 밝혔다. 출력물은 따로 판단할 문제로 두면서도, 원문을 재구성하는 출력은 극히 일부라 넓은 구제의 근거가 되면 안 된다고 했다. 정부 입장일 뿐 판결이 아니다.",
+    "date": "2026-09-01",
+    "check_flags": [
+     "정부 당사자 의견 — 이후 제3순회 ROSS 판결(I4-E-011)은 반대 방향"
+    ]
+   },
+   "add_sources": [
+    {
+     "url": "https://storage.courtlistener.com/recap/gov.uscourts.nysd.612697/gov.uscourts.nysd.612697.1464.0.pdf",
+     "publisher": "미국 법무부 Statement of Interest (CourtListener 사본)",
+     "date": "2026-09-01",
+     "grade": "A"
+    },
+    {
+     "url": "https://news.bloomberglaw.com/ip-law/trump-administration-backs-openai-in-ny-times-copyright-suit",
+     "publisher": "Bloomberg Law",
+     "date": "2026-09-02",
+     "grade": "B"
+    },
+    {
+     "url": "https://axios.com/2026/09/19/justice-department-openai-new-york-times",
+     "publisher": "Axios",
+     "date": "2026-09-19",
+     "grade": "B"
+    }
+   ]
+  },
+  {
+   "n": 20,
+   "q": "I4",
+   "op": "add",
+   "record": {
+    "id": "I4-E-014",
+    "type": "사건",
+    "importance": 2,
+    "statement": "개빈 뉴섬 캘리포니아 주지사가 AI 법안 두 건에 서명했다. SB 813은 AI 시스템·모델이 주 법을 지키는지 평가하는 독립 검증기관 체계를 만들고, AB 1405는 AI 감사인 주(州) 등록부와 독립성·투명성 기준을 정한다.",
+    "date": "2026-09-09",
+    "actor": "캘리포니아 주",
+    "sources": [
+     {
+      "url": "https://www.gov.ca.gov/2026/09/09/governor-newsom-signs-first-in-the-nation-ai-safeguards-to-protect-californians-calls-on-the-federal-government-to-do-its-part/",
+      "publisher": "캘리포니아 주지사실 보도자료",
+      "date": "2026-09-09",
+      "grade": "A"
+     },
+     {
+      "url": "https://kioncentralcoast.com/news/top-stories/2026/09/09/california-adopts-new-ai-laws-requiring-independent-audits-assessments/",
+      "publisher": "KPIX(CBS SF) / KION 재게재",
+      "date": "2026-09-09",
+      "grade": "B"
+     }
+    ],
+    "verified": true,
+    "check_flags": [
+     "의무 적용 범위와 시행일은 미확인"
+    ]
+   },
+   "impact": "참고",
+   "claim": "캘리포니아가 독립 감사기관의 AI 평가 절차를 법으로 통과",
+   "status": "확인"
+  },
+  {
+   "n": 21,
+   "q": "I4",
+   "op": "add",
+   "record": {
+    "id": "I4-E-015",
+    "type": "사건",
+    "importance": 3,
+    "statement": "정부가 국무회의에서 과기정통부의 2027년 AI 예산 9조 4,211억 원(올해 대비 +84.3%, 정부 전체 AI 예산의 57%)을 의결했다. GPU 예산은 2조 841억 원에서 3조 8,500억 원으로 늘어 '베라 루빈'급 약 1만 장을 사는 규모이고, 프런티어급 학습 데이터 예산은 300억 원에서 8,000억 원(약 1조 토큰), 국민 대상 '모두의 AI'에는 2,500억 원이 배정됐다.",
+    "date": "2026-09-01",
+    "actor": "과학기술정보통신부",
+    "sources": [
+     {
+      "url": "https://eiec.kdi.re.kr/policy/materialView.do?num=286173",
+      "publisher": "과학기술정보통신부 보도자료 (KDI 경제정보센터 게재)",
+      "date": "2026-09-01",
+      "grade": "A"
+     },
+     {
+      "url": "https://www.inews24.com/view/2000526",
+      "publisher": "아이뉴스24",
+      "date": "2026-09-01",
+      "grade": "B"
+     },
+     {
+      "url": "https://news.mtn.co.kr/news-detail/2026090107190351571",
+      "publisher": "머니투데이방송(MTN)",
+      "date": "2026-09-01",
+      "grade": "B"
+     },
+     {
+      "url": "https://www.ddaily.co.kr/page/view/2026090214191699747",
+      "publisher": "디지털데일리",
+      "date": "2026-09-02",
+      "grade": "B"
+     },
+     {
+      "url": "https://byline.network/2026/09/0831-7/",
+      "publisher": "바이라인네트워크",
+      "date": "2026-09-01",
+      "grade": "B"
+     }
+    ],
+    "verified": true,
+    "check_flags": [
+     "예산안 단계 — 국회 심의 전",
+     "2027년 구매분 약 1만 장은 기존 확보분(I4-M-010)과 별개"
+    ]
+   },
+   "impact": "참고",
+   "claim": "한국 정부 9월 1일 2027년 AI 예산 9조 4,000억 원(+84%) 편성. 독자 AI 모델 GPU 예산 3조 8,500억 원(약 1만 장), 학습 데이터 300억→8,000억 원, '모두의 AI' 2,500억 원",
+   "status": "부분 확인"
+  },
+  {
+   "n": 22,
+   "q": "I4",
+   "op": "add",
+   "record": {
+    "id": "I4-E-016",
+    "type": "사건",
+    "importance": 2,
+    "statement": "Anthropic이 위협 인텔리전스 보고서에서 중국 연구소들의 무단 증류를 공개했다. 알리바바 연계 조직은 5~7월 3,500개 이상의 부정 계정으로 Claude와 1억 5,100만 건 이상 교환했고, 문샷은 같은 기간 2,300만 건 이상, 딥시크는 7월 14일 동안 1,210만 건 이상이었다(Anthropic 주장).",
+    "date": "2026-09-10",
+    "actor": "Anthropic",
+    "sources": [
+     {
+      "url": "https://www.anthropic.com/threat-intelligence-report-september-2026",
+      "publisher": "Anthropic (Detecting and countering misuse of AI: September 2026)",
+      "date": "2026-09",
+      "grade": "A"
+     },
+     {
+      "url": "https://www.ibtimes.com/deepseek-alibaba-are-closing-ai-gap-anthropic-accuses-them-using-claude-help-train-their-3807381",
+      "publisher": "International Business Times",
+      "date": "2026-09-11",
+      "grade": "B"
+     },
+     {
+      "url": "https://www.malaymail.com/news/tech-gadgets/2026/06/25/anthropic-says-alibaba-orchestrated-largest-known-attack-on-its-claude-ai-models/225082",
+      "publisher": "Malay Mail (Reuters 재게재, 6월 서한)",
+      "date": "2026-06-25",
+      "grade": "B"
+     }
+    ],
+    "verified": true,
+    "check_flags": [
+     "Anthropic 일방 주장 — 해당 기업 반론 미확인",
+     "보고서 증류 섹션 원문은 일부만 열람"
+    ]
+   },
+   "impact": "참고",
+   "claim": "Anthropic 9월 10일 위협 보고서: 알리바바 연계 조직 3,500개 이상 계정·1억 5,100만 건 교환, 문샷 2,300만 건, 딥시크 1,210만 건 무단 증류",
+   "status": "확인"
+  },
+  {
+   "n": 23,
+   "q": "I4",
+   "op": "add",
+   "record": {
+    "id": "I4-E-017",
+    "type": "사건",
+    "importance": 2,
+    "statement": "Anthropic이 9월 1일 공개한 Claude Mythos 5.1을 출시 전에 영국 AI 보안연구소(AISI) 시험에 제공하지 않았다고 FT가 보도했다. AISI가 Anthropic 모델의 출시 전 평가에서 빠진 것은 처음이며, 4월 Mythos 5 때는 접근권을 받았다. Anthropic은 이유를 밝히지 않았다.",
+    "date": "2026-09-09",
+    "actor": "Anthropic·영국 AISI",
+    "sources": [
+     {
+      "url": "https://www.itpro.com/technology/artificial-intelligence/anthropic-reportedly-withholds-access-to-mythos-5-1-from-uk-safety-testing-body",
+      "publisher": "ITPro (FT 인용)",
+      "date": "2026-09-09",
+      "grade": "B"
+     },
+     {
+      "url": "https://thenextweb.com/news/anthropic-mythos-5-1-uk-aisi-pre-release-testing-withheld",
+      "publisher": "The Next Web (FT 인용)",
+      "date": "2026-09-10",
+      "grade": "B"
+     }
+    ],
+    "verified": true,
+    "check_flags": [
+     "FT 보도를 인용한 2차 보도(B) 기준"
+    ]
+   },
+   "impact": "참고",
+   "claim": "Anthropic이 Mythos 5.1 출시 전 검증을 영국 AISI에 제공하지 않음(2024년 합의 이후 처음)",
+   "status": "부분 확인"
+  },
+  {
+   "n": 24,
+   "q": "I4",
+   "op": "lead",
+   "claim": "블룸버그는 2026년 9월 7일 익명 소식통을 인용해, 말레이시아 정부가 20억 링깃(약 4억 9,400만 달러) 규모 소버린 AI 사업에 화웨이 어센드 910C 도입을 검토 중이라고 보도했다. 결정·계약은 없고, 엔비디아 등이 참여할 2차 입찰도 논의 중이다. 미국은 지난해 910C 사용이 수출 규정 위반이 될 수 있다고 경고한 바 있다.",
+   "reason": "익명 소식통 보도, 검토 단계 — 결정 시 기록"
+  }
+ ]
+}

@@ -14,23 +14,21 @@ for _c, _items in sections:
                 continue
             _r = json.loads(_l)
             if _r.get("added_on"):
-                changes.append((_r["added_on"], _no, "신규", _r["id"], _r["statement"], None, "이전 조사에서 빠졌거나 이후에 나온 기록을 추가했다."))
+                changes.append((_r["added_on"], _no, "신규", _r["id"], _r["statement"], None, "이전 조사에서 빠졌거나 이후에 나온 기록을 추가했다.", _r.get("origin")))
             for _v in _r.get("revisions", []):
-                changes.append((_v["on"], _no, _v["kind"], _r["id"], _r["statement"], _v.get("before"), _v["why"]))
+                changes.append((_v["on"], _no, _v["kind"], _r["id"], _r["statement"], _v.get("before"), _v["why"], _v.get("origin")))
 changes_total = len(changes)
 
-KIND_ORDER = ["누락정정", "단정반증", "전망 교체", "판정 기준 보완", "상충", "전망 점검", "갱신", "신규"]
-KIND_CLS = {"누락정정": "k-fix", "단정반증": "k-fix", "전망 교체": "k-fix", "판정 기준 보완": "k-chg", "상충": "k-chg", "전망 점검": "k-chk", "갱신": "k-chk", "신규": "k-new"}
-KIND_DEF = {"누락정정": "조사에서 빠졌거나 틀려서 고친 것", "단정반증": "단정한 표현이 새 근거와 맞지 않아 고친 것", "전망 교체": "전망의 기준이나 내용을 바꾼 것", "판정 기준 보완": "맞았는지 가릴 기준을 더 분명히 한 것",
-            "상충": "출처마다 말이 달라 표시한 것", "전망 점검": "전망의 근거를 다시 살핀 것(결론 그대로)", "갱신": "새 사실을 반영해 문장을 고친 것", "신규": "새로 더한 기록"}
+sys.path.insert(0, str(ROOT / "lib"))
+from records import KIND_ORDER, KIND_CLS, KIND_DEF
 
 def _entry(c):
-    on, no, kind, rid, now, before, why = c
+    on, no, kind, rid, now, before, why, origin = c
     href = _qpath.get(no, "#") + "#" + rid
     prev = f'<div class="was"><span>이전</span><p>{E(before)}</p></div>' if before else ""
     nowlab = "지금" if before else "내용"
     return (f'<li class="chg" data-kind="{E(kind)}"><div class="chead"><span class="ck {KIND_CLS[kind]}" title="{E(KIND_DEF[kind])}">{E(kind)}</span>'
-            f'<a class="cid" href="{E(href)}">{E(rid)}</a></div>'
+            f'<a class="cid" href="{E(href)}">{E(rid)}</a>{"<span class=ck-src>제공 자료</span>" if origin == "manual" else ""}</div>'
             f'<p class="why">{E(why)}</p>{prev}<div class="now"><span>{nowlab}</span><p>{E(now)}</p></div></li>')
 
 _by = {}
@@ -78,6 +76,7 @@ CHANGES_CSS = """
 .qgrp ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
 .chg { border: 1px solid var(--rule); border-radius: 6px; padding: 12px 14px; display: grid; gap: 8px; background: var(--bg-elevated, var(--paper)); }
 .chead { display: flex; gap: 10px; align-items: center; }
+.ck-src { margin-left: auto; font: 500 11px/1.5 var(--mono); color: var(--muted); border: 1px dashed var(--rule); border-radius: 3px; padding: 0 6px; }
 .cid { font: 500 12px var(--mono); color: var(--muted); text-decoration: none; }
 .cid:hover, .cid:focus-visible { color: var(--signal-ink); text-decoration: underline; }
 .chg .why { margin: 0; font-weight: 500; line-height: 1.6; }
