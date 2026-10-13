@@ -41,3 +41,9 @@ Customer `C1~` · Industry Trend `I1~` · Sales & Marketing `S1~` · LG Group `L
 수동 입력분은 질문별 `patches.jsonl`에 쌓이고 `build_records.py`가 마지막에 적용한다. 변경 이력에는 '제공 자료'로 표시된다. 접수 기록은 `intake/`, 원본은 `inbox/`(git 제외).
 
 전체 운영 계획 문서: https://claude.ai/code/artifact/c54e140d-7511-473d-adbb-73c1a3c5f2e7
+
+## 스킬 (다른 주제로 같은 방식 운영하기)
+`.claude/skills/`에 스킬 3개가 있다. 저장소를 받은 Claude Code는 자동으로 읽는다. 사용법은 [.claude/skills/README.md](.claude/skills/README.md).
+- signal-report-setup: 새 주제 프로젝트 만들기
+- signal-report-round: 월간 딥리서치·주간 조사·검증 탐침
+- signal-report-intake: 받은 자료를 검토 후 반영
