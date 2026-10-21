@@ -95,6 +95,6 @@ _page = (f'<!doctype html>\n<html lang="ko"><head><meta charset="utf-8"><meta na
          f'<style>{ARTICLE_CSS}{CHANGES_CSS}</style></head><body>'
          f'<div class="readbar" aria-hidden="true"><span></span></div><nav class="sitebar" aria-label="사이트"><a class="home" href="index.html">AX Signals</a><span class="crumb">/ 변경 이력</span></nav>'
          f'<main class="chgpage"><h1>변경 이력</h1>'
-         f'<p class="lead">아티클에는 늘 최신 내용만 보입니다. 2026-10-21 기준선 이후 배치가 바뀐 기록(신규·갱신·판정·정정)과 이유, 바뀌기 전 문장을 날짜별로 쌓습니다. 변화가 없는 날도 한 줄로 남깁니다. 번호를 누르면 아티클의 해당 기록으로 이동합니다.</p>'
+         f'<p class="lead">아티클에는 늘 최신 내용만 보입니다. 2026-10-09 기준선(첫 회차) 이후 바뀐 기록(신규·갱신·판정·정정)과 이유, 바뀌기 전 문장을 날짜별로 쌓습니다. 변화가 없는 날도 한 줄로 남깁니다. 번호를 누르면 아티클의 해당 기록으로 이동합니다.</p>'
          f'<ul class="legend">{_legend}</ul>{_body}</main>{ARTICLE_UI}</body></html>')
 (DIST / "changes.html").write_text(_page, encoding="utf-8")
