@@ -71,7 +71,7 @@ for ci, (c, items) in enumerate(sections):
         ang = _m.radians(a0 + 90 * (k + 1) / (len(live) + 1))
         rad = 18 + ratio * 70
         radar_dots.append((round(100 + rad * _m.cos(ang), 1), round(100 + rad * _m.sin(ang), 1), it["q"]["no"], it["cur"]["title"], c["id"]))
-radar_svg = ['<svg class="radar" viewBox="-14 -14 228 228" role="img" aria-label="20개 질문의 신호 위치. 사분면은 카테고리, 바깥쪽일수록 판정 점수가 높은 질문">']
+radar_svg = [f'<svg class="radar" viewBox="-14 -14 228 228" role="img" aria-label="{len(radar_dots)}개 질문의 신호 위치. 사분면은 카테고리, 바깥쪽일수록 판정 점수가 높은 질문">']
 for rr in (30, 55, 80):
     radar_svg.append(f'<circle cx="100" cy="100" r="{rr}" class="ring"/>')
 radar_svg.append('<line x1="100" y1="12" x2="100" y2="188" class="axis"/><line x1="12" y1="100" x2="188" y2="100" class="axis"/>')

@@ -111,7 +111,7 @@
         });
       } },
     { name: "search_articles",
-      description: "20개 아티클 전체에서 키워드가 들어간 문장·표 행을 찾습니다. 어느 질문의 어느 섹션인지와 해당 줄을 최대 12건 돌려줍니다. 기업·제품·수치·용어가 어디에 나오는지 찾을 때 씁니다.",
+      description: DATA.questions.length + "개 아티클 전체에서 키워드가 들어간 문장·표 행을 찾습니다. 어느 질문의 어느 섹션인지와 해당 줄을 최대 12건 돌려줍니다. 기업·제품·수치·용어가 어디에 나오는지 찾을 때 씁니다.",
       inputSchema: { type: "object", properties: { query: { type: "string" } }, required: ["query"] },
       execute: function (inp) {
         var terms = String(inp.query || "").toLowerCase().split(/\s+/).filter(Boolean);
@@ -151,7 +151,7 @@
       "- 근거는 질문 번호 [[C1]]이나 기록 번호 [[C1-E-003]]처럼 이중 대괄호로 표기합니다. 화면에서 링크로 바뀝니다.\n" +
       "- 한국어 보고체(\"~습니다\")로, 결론을 먼저 쓰고 간결하게 답합니다. 필요하면 짧은 목록이나 표를 씁니다.\n\n" +
       "판정 규칙: 질문마다 판정 항목을 4단계로 판정합니다. 점수는 항목마다 1단계 0점, 2단계 33점, 3단계 67점, 4단계 100점으로 매긴 평균입니다. '잠정'은 기준을 직접 재는 수치가 없어 간접 근거로 판정한 칸입니다. 단계 정의와 기준은 각 아티클의 판정 섹션에 있습니다.\n\n" +
-      "[카테고리] " + DATA.categories.join(" / ") + "\n\n[20개 질문 현재 상태]\n" + qs + "\n\n[최근 주요 사건]\n" + ev + "\n\n[90일 안에 판정할 전망]\n" + fc;
+      "[카테고리] " + DATA.categories.join(" / ") + "\n\n[" + DATA.questions.length + "개 질문 현재 상태]\n" + qs + "\n\n[최근 주요 사건]\n" + ev + "\n\n[90일 안에 판정할 전망]\n" + fc;
   }
 
   var CHAT = { sample: null, tools: false, turns: [], busy: false, ctl: null, sid: null, col: null };
@@ -167,7 +167,7 @@
   function busy(b) { CHAT.busy = b; var btn = $("chat-send"); btn.textContent = b ? "중지" : "보내기"; btn.classList.toggle("stop", b); $("chat-in").disabled = b; }
   function intro() {
     $("chat-log").innerHTML = "";
-    var d = add("a", '<div class="chat-note">20개 질문의 아티클과 근거 기록을 바탕으로 답합니다. 답변은 위쪽 “포털 기록”과 아래쪽 “종합 답변”(일반 지식 포함) 두 부분으로 나뉩니다. 답변은 보는 사람의 Claude 로그인으로 처리되며, 처음 질문할 때 사용 동의를 묻습니다.</div><div class="chat-sugg"></div>');
+    var d = add("a", '<div class="chat-note">' + DATA.questions.length + '개 질문의 아티클과 근거 기록을 바탕으로 답합니다. 답변은 위쪽 “포털 기록”과 아래쪽 “종합 답변”(일반 지식 포함) 두 부분으로 나뉩니다. 답변은 보는 사람의 Claude 로그인으로 처리되며, 처음 질문할 때 사용 동의를 묻습니다.</div><div class="chat-sugg"></div>');
     var box = d.querySelector(".chat-sugg");
     SUGG.forEach(function (t) { var b = document.createElement("button"); b.type = "button"; b.textContent = t; b.onclick = function () { if (!CHAT.busy) send(t); }; box.appendChild(b); });
   }

@@ -45,7 +45,7 @@
    "id": "industry-trend",
    "no": 2,
    "name": "AI Industry Trend",
-   "desc": "AI 산업 전체의 기술·제품·경쟁·확산 구조를 추적한다.",
+   "desc": "AI 산업 전체의 기술·제품·경쟁·확산 구조와, 산업 안에서 AI 자동화가 일자리와 현장 운영을 바꾸는 정도를 추적한다.",
    "questions": [
     {
      "id": "i1",
@@ -70,6 +70,18 @@
      "no": "I4",
      "area": "AI Adoption, Governance & Geopolitics",
      "question": "AI는 어느 산업·업무까지 실제 운영에 들어갔고, 확산을 가장 크게 밀거나 막는 요인은 무엇인가?"
+    },
+    {
+     "id": "i5",
+     "no": "I5",
+     "area": "AI & Work (산업 내 AI 자동화)",
+     "question": "AI는 어떤 직무의 채용과 고용을 실제로 줄이고 있고, 대신 어떤 새 직무와 업종이 생겨나고 있는가?"
+    },
+    {
+     "id": "i6",
+     "no": "I6",
+     "area": "Autonomous Operations (산업 내 AI 자동화)",
+     "question": "사람 없이 돌아가는 생산·물류·이동은 어디까지 진행되고 있는가?"
     }
    ],
    "prefix": "I",
