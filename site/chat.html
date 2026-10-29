@@ -40,7 +40,7 @@
 </style>
 <button class="chat-fab" id="chat-fab" type="button" hidden aria-controls="chat" aria-expanded="false"><img class="ai-ico" src="%%ICON%%" alt="" width="24" height="24">AI Chat</button>
 <section class="chat" id="chat" hidden aria-label="AI Chat">
-  <div class="chat-h"><img class="ai-ico" src="%%ICON%%" alt="" width="22" height="22"><b>AI Chat</b><button type="button" id="chat-new">새 대화</button><button type="button" id="chat-close" aria-label="닫기">닫기</button></div>
+  <div class="chat-h"><img class="ai-ico" src="%%ICON%%" alt="" width="22" height="22"><b>AI Chat</b><button type="button" id="chat-hist" hidden>이전 대화</button><button type="button" id="chat-new">새 대화</button><button type="button" id="chat-close" aria-label="닫기">닫기</button></div>
   <div class="chat-log" id="chat-log" aria-live="polite"></div>
   <form class="chat-f" id="chat-form"><textarea id="chat-in" rows="1" placeholder="AX Signals 내용에 대해 질문하세요" aria-label="질문 입력"></textarea><button type="submit" id="chat-send">보내기</button></form>
 </section>
@@ -48,6 +48,7 @@
 <script>
 (function () {
   var DATA = %%DATA%%;
+  var HERE = %%HERE%%;
   var $ = function (id) { return document.getElementById(id); };
   var esc = function (s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
   var BY_NO = {}; DATA.questions.forEach(function (q) { BY_NO[q.no] = q; });
@@ -140,7 +141,8 @@
     }).join("\n");
     var ev = DATA.events.map(function (e) { return e.date + " " + e.id + " " + e.text; }).join("\n");
     var fc = DATA.forecasts.map(function (f) { return f.due + " " + f.id + " " + f.text; }).join("\n");
-    return '당신은 "AX Signals" 포털의 질의응답 도우미입니다. AX Signals는 고객·산업·영업·LG의 AI 변화를 같은 질문으로 매달 다시 묻고, 근거 기록(지표·사건·해석·전망)으로 아티클을 쓰는 AI 전환 리포트입니다. 데이터 기준일은 ' + DATA.generated + "입니다.\n\n" +
+    return (HERE ? "[사용자가 지금 보고 있는 페이지] " + HERE + "\n'이 페이지', '여기'라고 물으면 이 페이지의 질문을 뜻합니다. get_article로 해당 번호 아티클을 읽고 답합니다.\n\n" : "") +
+      '당신은 "AX Signals" 포털의 질의응답 도우미입니다. AX Signals는 고객·산업·영업·LG의 AI 변화를 같은 질문으로 매달 다시 묻고, 근거 기록(지표·사건·해석·전망)으로 아티클을 쓰는 AI 전환 리포트입니다. 데이터 기준일은 ' + DATA.generated + "입니다.\n\n" +
       "답변 형식(항상 두 블록, 이 순서):\n" +
       "## 포털 기록\n- 포털 데이터(아래 요약, 필요하면 도구로 아티클 읽기·검색)에서 찾은 내용만 3~5줄로 씁니다. 근거 번호를 붙입니다. 관련 기록이 없으면 \"해당 기록 없음\" 한 줄만 씁니다. 일반 지식을 섞지 않습니다.\n" +
       "## 종합 답변\n- 일반 지식과 맥락을 모두 써서 일반 Claude처럼 충실하고 자유롭게 답합니다. 포털 기록을 반복하지 않고, 포털 기록과 다르거나 보완되는 점이 있으면 짚습니다. 최신 여부를 확인하지 못한 내용은 \"최신 여부 확인되지 않음\"이라고 표시합니다.\n" +
@@ -152,12 +154,14 @@
       "[카테고리] " + DATA.categories.join(" / ") + "\n\n[20개 질문 현재 상태]\n" + qs + "\n\n[최근 주요 사건]\n" + ev + "\n\n[90일 안에 판정할 전망]\n" + fc;
   }
 
-  var CHAT = { sample: null, tools: false, turns: [], busy: false, ctl: null };
+  var CHAT = { sample: null, tools: false, turns: [], busy: false, ctl: null, sid: null, col: null };
   var ERR = { rate_limited: "요청이 많아 잠시 멈췄습니다. 조금 뒤 다시 질문해 주세요.", session_expired: "Claude 로그인이 만료되었습니다. 다시 로그인한 뒤 질문해 주세요.",
               refused: "이 질문에는 답할 수 없습니다. 질문을 바꿔 주세요.", empty_completion: "답변이 비어 있습니다. 질문을 조금 바꿔 다시 시도해 주세요.",
               prompt_too_large: "대화가 너무 길어졌습니다. 새 대화로 시작해 주세요.", upstream_error: "연결이 끊겼습니다. 다시 보내 주세요." };
   var OFF = ["not_granted", "sampling_disabled", "not_declared", "capability_disabled", "capability_removed"];
   var SUGG = ["이번 달 가장 큰 변화는 무엇인가요?", "LG가 AI 데이터센터에서 확인한 계약을 정리해 주세요", "점수가 가장 낮은 질문과 그 이유는?", "앞으로 90일 안에 판정할 전망은?"];
+
+  if (HERE && BY_NO[HERE]) SUGG = ["이 페이지의 핵심을 세 줄로 요약해 주세요", "이 질문에서 확인되지 않은 항목은 무엇인가요?", "이 질문의 분석 전망과 근거를 알려 주세요"].concat(SUGG.slice(0, 1));
 
   function add(cls, html) { var d = document.createElement("div"); d.className = "msg " + cls; d.innerHTML = html; $("chat-log").append(d); $("chat-log").scrollTop = $("chat-log").scrollHeight; return d; }
   function busy(b) { CHAT.busy = b; var btn = $("chat-send"); btn.textContent = b ? "중지" : "보내기"; btn.classList.toggle("stop", b); $("chat-in").disabled = b; }
@@ -179,6 +183,7 @@
     CHAT.sample([{ role: "user", content: context() }].concat(CHAT.turns), opts).then(function (r) {
       bub.innerHTML = md(r.text) + (r.truncated ? '<div class="err">답변이 길이 제한으로 잘렸습니다. 범위를 좁혀 다시 질문해 주세요.</div>' : "");
       CHAT.turns.push({ role: "assistant", content: r.text });
+      save();
     }).catch(function (e) {
       CHAT.turns.pop();
       var kept = e && e.text && e.code !== "refused" ? md(e.text) : "";
@@ -206,7 +211,7 @@
       $("chat-fab").hidden = false;
       $("chat-fab").onclick = function () { open(true); };
       $("chat-close").onclick = function () { open(false); };
-      $("chat-new").onclick = function () { if (CHAT.ctl) CHAT.ctl.abort(); CHAT.turns = []; intro(); $("chat-in").focus(); };
+      $("chat-new").onclick = function () { if (CHAT.ctl) CHAT.ctl.abort(); CHAT.turns = []; CHAT.sid = null; intro(); $("chat-in").focus(); };
       var ta = $("chat-in");
       ta.addEventListener("input", function () { ta.style.height = "auto"; ta.style.height = Math.min(ta.scrollHeight, 140) + "px"; });
       ta.addEventListener("keydown", function (e) { if (e.key === "Enter" && !e.shiftKey && !e.isComposing) { e.preventDefault(); $("chat-form").requestSubmit(); } });
@@ -218,6 +223,46 @@
       document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !$("chat").hidden) open(false); });
     }).catch(function () {});
   }
-  init();
+  function newSid() { return "c" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
+  function save() {
+    if (!CHAT.col || !CHAT.turns.length) return;
+    if (!CHAT.sid) CHAT.sid = newSid();
+    CHAT.col.doc(CHAT.sid).set({ title: (CHAT.turns[0].content || "").slice(0, 60), updated: Date.now(), page: HERE || "", turns: CHAT.turns.slice(-16) }).catch(function () {});
+  }
+  function showHist() {
+    if (!CHAT.col) return;
+    if (CHAT.ctl) CHAT.ctl.abort();
+    $("chat-log").innerHTML = "";
+    var d = add("a", '<div class="chat-note">이전 대화는 본인 계정에만 저장됩니다. 최근 20개를 보여줍니다.</div><div class="chat-sugg"></div>');
+    var box = d.querySelector(".chat-sugg");
+    CHAT.col.orderBy("updated", "desc").limit(20).get().then(function (snap) {
+      if (snap.empty) { box.textContent = "저장된 대화가 없습니다."; return; }
+      snap.docs.forEach(function (doc) {
+        var v = doc.data() || {}, row = document.createElement("div"), b = document.createElement("button"), x = document.createElement("button");
+        b.type = "button"; b.textContent = new Date(v.updated || 0).toLocaleDateString("ko-KR") + " " + (v.title || "대화");
+        b.onclick = function () { restore(doc.id, v); };
+        x.type = "button"; x.textContent = "삭제"; x.onclick = function () { CHAT.col.doc(doc.id).delete().then(function () { row.remove(); }).catch(function () {}); };
+        row.appendChild(b); row.appendChild(x); box.appendChild(row);
+      });
+    }).catch(function () { box.textContent = "이전 대화를 불러오지 못했습니다."; });
+  }
+  function restore(id, v) {
+    if (CHAT.ctl) CHAT.ctl.abort();
+    CHAT.sid = id; CHAT.turns = (v.turns || []).filter(function (t) { return t && typeof t.content === "string"; });
+    $("chat-log").innerHTML = "";
+    CHAT.turns.forEach(function (t) { add(t.role === "user" ? "u" : "a", t.role === "user" ? esc(t.content) : md(t.content)); });
+    $("chat-in").focus();
+  }
+  function initStore() {
+    if (!window.claude || typeof window.claude.use !== "function") return;
+    Promise.all([window.claude.use("db"), window.claude.use("user")]).then(function (r) {
+      if (!r[0] || !r[1] || typeof r[1].id !== "function") return;
+      return r[1].id().then(function (id) {
+        CHAT.col = r[0].collection("data/users/" + id + "/chats");
+        $("chat-hist").hidden = false; $("chat-hist").onclick = showHist;
+      });
+    }).catch(function () {});
+  }
+  init(); initStore();
 })();
 </script>

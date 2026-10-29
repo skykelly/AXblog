@@ -11,6 +11,7 @@
 - 아티클 본문에는 사실과 기준만 쓴다. "검증 결과에 따르면" 같은 과정 문구는 넣지 않는다.
 - 문장을 바꾸면 이전 문장과 이유를 남긴다(revisions). 변경 종류는 `lib/records.py`의 KIND_ORDER만 쓴다.
 - 반영 후: `render_article.py` → `python3 site/build_site.py`(깨진 링크 0) → PC·폰 폭 화면 점검 → 커밋 → 포털 게시.
+- 포털 AI Chat은 모든 페이지(포털·변경 이력·아티클 20개)에 붙는다(`site/portal.py chat_for`). 아티클에서는 현재 질문 번호를 알고, 이전 대화는 db `data/users/<id>/chats`에 본인 전용으로 저장된다. 게시할 때 `capabilities`는 sample·db·user를 유지한다.
 - 보고 형식: 반영·건너뜀 건수, 판정 전→후, 새 칩·점수, '확인 필요' 목록, 한계.
 - 검증 에이전트는 C(고객)·I(산업) 카테고리만 정기적으로 돌린다. S·L은 정기 수집으로 갱신한다.
 
